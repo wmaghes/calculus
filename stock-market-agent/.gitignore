@@ -1,0 +1,5 @@
+# The repo-wide .gitignore excludes *.html and *.json as LaTeX build
+# artifacts. Those extensions are real source/output here, not build junk.
+!*.html
+!*.json
+!data/

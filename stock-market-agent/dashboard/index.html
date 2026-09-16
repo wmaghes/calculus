@@ -1,0 +1,339 @@
+<title>Market Scanner</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F3F4F7;
+    --surface: #FFFFFF;
+    --surface-2: #EAEBF0;
+    --ink: #14161C;
+    --ink-muted: #5B5F6B;
+    --ink-faint: #8A8E9B;
+    --border: #DBDDE4;
+    --accent: #A5711F;
+    --accent-soft: #F1E3C8;
+    --growth: #A5711F;
+    --growth-soft: #F1E3C8;
+    --stability: #2B5F94;
+    --stability-soft: #DCE7F3;
+    --nextgen: #6A45C9;
+    --nextgen-soft: #E7DFF9;
+    --short: #B23F2C;
+    --short-soft: #F5DFDA;
+    --pos: #1E8E5A;
+    --neg: #B23F2C;
+    --shadow: 0 1px 2px rgba(20,22,28,0.04), 0 8px 24px -12px rgba(20,22,28,0.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0B0E14;
+      --surface: #12151D;
+      --surface-2: #1A1E29;
+      --ink: #ECEEF4;
+      --ink-muted: #9CA3B2;
+      --ink-faint: #6B7280;
+      --border: #262B38;
+      --accent: #E0A83E;
+      --accent-soft: #3A2E12;
+      --growth: #E0A83E;
+      --growth-soft: #3A2E12;
+      --stability: #79ABE0;
+      --stability-soft: #1B2A3D;
+      --nextgen: #B39CF2;
+      --nextgen-soft: #26203E;
+      --short: #E48168;
+      --short-soft: #3A2019;
+      --pos: #4CBB85;
+      --neg: #E48168;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0B0E14;
+    --surface: #12151D;
+    --surface-2: #1A1E29;
+    --ink: #ECEEF4;
+    --ink-muted: #9CA3B2;
+    --ink-faint: #6B7280;
+    --border: #262B38;
+    --accent: #E0A83E;
+    --accent-soft: #3A2E12;
+    --growth: #E0A83E;
+    --growth-soft: #3A2E12;
+    --stability: #79ABE0;
+    --stability-soft: #1B2A3D;
+    --nextgen: #B39CF2;
+    --nextgen-soft: #26203E;
+    --short: #E48168;
+    --short-soft: #3A2019;
+    --pos: #4CBB85;
+    --neg: #E48168;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", system-ui, sans-serif;
+    padding-inline: 16px;
+    padding-block: 28px 64px;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; }
+
+  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; text-wrap: balance; margin: 0; }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+
+  header.hero {
+    display: flex; flex-direction: column; gap: 10px;
+    padding-bottom: 22px; margin-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11.5px; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  h1.title { font-size: clamp(28px, 4.5vw, 40px); font-weight: 600; line-height: 1.05; }
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 8px 18px;
+    font-size: 13px; color: var(--ink-muted);
+    font-family: "IBM Plex Mono", monospace;
+  }
+  .hero-meta b { color: var(--ink); font-weight: 500; }
+
+  .disclaimer {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    font-size: 12.5px; line-height: 1.55; color: var(--ink-muted);
+    margin-bottom: 32px;
+  }
+  .disclaimer strong { color: var(--ink); }
+
+  nav.toc {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 36px;
+  }
+  nav.toc a {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px; text-decoration: none;
+    color: var(--ink);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 7px 13px;
+    display: inline-flex; align-items: center; gap: 7px;
+    background: var(--surface);
+  }
+  nav.toc a .dot { width: 7px; height: 7px; border-radius: 50%; }
+
+  section.category { margin-bottom: 44px; scroll-margin-top: 16px; }
+  .cat-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+  .cat-head .name { display: flex; align-items: center; gap: 10px; }
+  .cat-head .swatch { width: 11px; height: 11px; border-radius: 3px; flex: none; }
+  .cat-head h2 { font-size: 21px; font-weight: 600; }
+  .cat-head .count { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-faint); }
+  .cat-sub { font-size: 13px; color: var(--ink-muted); margin: 0 0 16px; max-width: 62ch; }
+
+  .rows { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
+  .row {
+    display: grid;
+    grid-template-columns: 96px 1fr 128px;
+    gap: 16px;
+    align-items: center;
+    padding: 13px 4px;
+    border-bottom: 1px solid var(--border);
+  }
+  .row:hover { background: var(--surface); }
+  .id { display: flex; flex-direction: column; gap: 2px; }
+  .id .ticker { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 15px; }
+  .id .company { font-size: 11.5px; color: var(--ink-faint); }
+  .mid { min-width: 0; }
+  .mid .blurb { font-size: 13px; color: var(--ink-muted); line-height: 1.45; margin: 0 0 6px; }
+  .mid .metaline {
+    display: flex; flex-wrap: wrap; gap: 6px 14px;
+    font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--ink-faint);
+  }
+  .mid .metaline .metric-val { color: var(--ink); font-weight: 500; }
+  .metaline .price-chg.pos { color: var(--pos); }
+  .metaline .price-chg.neg { color: var(--neg); }
+  .metaline a { color: inherit; text-decoration: none; border-bottom: 1px dotted var(--ink-faint); }
+
+  .gauge { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
+  .gauge .score-num { font-family: "IBM Plex Mono", monospace; font-size: 13px; font-weight: 600; }
+  .gauge .bar-track {
+    width: 100%; max-width: 118px; height: 6px; border-radius: 4px;
+    background: var(--surface-2); overflow: hidden;
+  }
+  .gauge .bar-fill { height: 100%; border-radius: 4px; }
+  .dots { display: flex; gap: 4px; }
+  .dots .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--surface-2); }
+  .dots .dot.on { background: var(--dotcolor); }
+
+  .rating-pill {
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: 0.03em;
+    padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+  }
+
+  footer {
+    margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--border);
+    font-size: 12px; color: var(--ink-faint); font-family: "IBM Plex Mono", monospace;
+    line-height: 1.7;
+  }
+
+  @media (max-width: 620px) {
+    .row { grid-template-columns: 1fr; gap: 8px; padding: 14px 4px; }
+    .gauge { flex-direction: row; align-items: center; justify-content: space-between; }
+    .gauge .bar-track { max-width: none; flex: 1; }
+    .id { flex-direction: row; align-items: baseline; gap: 8px; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Automated market scan &middot; generated <span id="genTime">&mdash;</span></div>
+    <h1 class="title">Market Scanner</h1>
+    <div class="hero-meta">
+      <span><b id="totalCount">&mdash;</b> names tracked</span>
+      <span>4 desks: Growth &middot; Stability &middot; Next-Gen &middot; Short Interest</span>
+    </div>
+  </header>
+
+  <div class="disclaimer">
+    <strong>How this is built.</strong> Prices, growth, dividend, beta and short-interest figures are pulled from free public sources (search-grounded snapshots today; the checked-in <code>run.py</code> agent uses yfinance + RSS feeds when run with normal internet access). Growth and Next-Gen Growth are ranked by an explicit <strong>conviction tier</strong> (1&ndash;5), not a blended score, because their underlying metrics use incompatible units (revenue growth vs. price momentum vs. analyst upside). Stability and Short Interest use a single consistent metric, so those two get a real normalized 0&ndash;100 score. <strong>This is not financial advice</strong> &mdash; it's a research starting point; verify anything before acting on it.
+  </div>
+
+  <nav class="toc">
+    <a href="#growth"><span class="dot" style="background:var(--growth)"></span>Biggest Growth</a>
+    <a href="#stability"><span class="dot" style="background:var(--stability)"></span>Stability</a>
+    <a href="#nextgen"><span class="dot" style="background:var(--nextgen)"></span>Next-Gen Growth</a>
+    <a href="#shorts"><span class="dot" style="background:var(--short)"></span>Short Candidates</a>
+  </nav>
+
+  <main id="categories"></main>
+
+  <footer>
+    <div>Sources: search-grounded public financial data (see per-row links) &middot; methodology in <span class="mono">scoring.py</span> of the companion repo.</div>
+    <div>Not investment advice. Data may be delayed, incomplete, or approximate.</div>
+  </footer>
+</div>
+
+<script>
+const CATEGORY_META = {
+  growth:    { title: "Biggest Growth", color: "var(--growth)", soft: "var(--growth-soft)",
+               sub: "Large/mid-cap names posting the fastest revenue growth or price momentum right now. Ranked by conviction tier, not a blended score \u2014 see disclaimer above." },
+  stability: { title: "Stability", color: "var(--stability)", soft: "var(--stability-soft)",
+               sub: "Low-beta, dividend-consistent names built to hold up when growth stocks wobble. Score blends low beta (60%) and dividend yield (40%)." },
+  nextgen:   { title: "Next-Gen Growth", color: "var(--nextgen)", soft: "var(--nextgen-soft)",
+               sub: "Smaller, thematic bets \u2014 quantum computing, AI infrastructure, gene editing, space \u2014 with outsized upside and outsized risk. Ranked by conviction tier." },
+  shorts:    { title: "Short Candidates", color: "var(--short)", soft: "var(--short-soft)",
+               sub: "Highest short interest and clearest negative catalysts (guidance cuts, structural decline). Score is a normalized blend of short-%-of-float plus momentum/valuation flags." },
+};
+
+function fmtPrice(p) {
+  if (p === null || p === undefined) return null;
+  return "$" + Number(p).toFixed(2);
+}
+
+function renderRow(item, catKey) {
+  const meta = CATEGORY_META[catKey];
+  const priceStr = fmtPrice(item.price);
+  const chgVal = item.momentum ?? null;
+  let chgHtml = "";
+  if (typeof chgVal === "number") {
+    const cls = chgVal >= 0 ? "pos" : "neg";
+    chgHtml = `<span class="price-chg ${cls}">${chgVal >= 0 ? "+" : ""}${chgVal.toFixed(1)}%</span>`;
+  }
+
+  const metaBits = [];
+  if (priceStr) metaBits.push(priceStr);
+  if (item.mktCap) metaBits.push(item.mktCap);
+  if (item.metric_label) {
+    const val = typeof item.metric === "number" ? (Number.isInteger(item.metric) ? item.metric : item.metric.toFixed(1)) : item.metric;
+    metaBits.push(`${item.metric_label}: <span class="metric-val">${val}${typeof item.metric === "number" ? "%" : ""}</span>`);
+  }
+  if (item.divYield) metaBits.push(`Yield: <span class="metric-val">${item.divYield}%</span>`);
+  if (item.streak) metaBits.push(`Streak: <span class="metric-val">${item.streak}</span>`);
+  if (item.theme) metaBits.push(item.theme);
+  if (item.flag) metaBits.push(`<span class="metric-val">${item.flag}</span>`);
+
+  let gaugeHtml = "";
+  if (typeof item.score === "number") {
+    gaugeHtml = `
+      <div class="gauge">
+        <div class="score-num">${item.score.toFixed(0)}<span style="color:var(--ink-faint);font-weight:400"> /100</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:${item.score}%; background:${meta.color}"></div></div>
+      </div>`;
+  } else if (typeof item.conviction === "number") {
+    let dots = "";
+    for (let i = 1; i <= 5; i++) {
+      dots += `<div class="dot ${i <= item.conviction ? "on" : ""}" style="--dotcolor:${meta.color}"></div>`;
+    }
+    gaugeHtml = `
+      <div class="gauge">
+        <span class="rating-pill" style="background:${meta.soft}; color:${meta.color}">${item.rating || "conviction"}</span>
+        <div class="dots">${dots}</div>
+      </div>`;
+  }
+
+  return `
+    <div class="row">
+      <div class="id">
+        <div class="ticker">${item.ticker}</div>
+        <div class="company">${item.name || ""}</div>
+      </div>
+      <div class="mid">
+        <p class="blurb">${item.blurb || ""}</p>
+        <div class="metaline">${metaBits.map(b => `<span>${b}</span>`).join("")}${chgHtml ? `<span>${chgHtml}</span>` : ""}</div>
+      </div>
+      ${gaugeHtml}
+    </div>`;
+}
+
+function renderCategory(catKey, items) {
+  const meta = CATEGORY_META[catKey];
+  const rows = items.map(item => renderRow(item, catKey)).join("");
+  return `
+    <section class="category" id="${catKey}">
+      <div class="cat-head">
+        <div class="name">
+          <span class="swatch" style="background:${meta.color}"></span>
+          <h2>${meta.title}</h2>
+        </div>
+        <span class="count">${items.length} names</span>
+      </div>
+      <p class="cat-sub">${meta.sub}</p>
+      <div class="rows">${rows}</div>
+    </section>`;
+}
+
+async function boot() {
+  let data;
+  try {
+    const res = await fetch("./data.json");
+    data = await res.json();
+  } catch (e) {
+    document.getElementById("categories").innerHTML =
+      `<p style="color:var(--neg)">Could not load data.json \u2014 ${e.message}</p>`;
+    return;
+  }
+
+  document.getElementById("genTime").textContent = data.generated || "\u2014";
+  const total = Object.values(data.categories).reduce((n, arr) => n + arr.length, 0);
+  document.getElementById("totalCount").textContent = total;
+
+  const order = ["growth", "stability", "nextgen", "shorts"];
+  document.getElementById("categories").innerHTML =
+    order.map(k => renderCategory(k, data.categories[k] || [])).join("");
+}
+
+boot();
+</script>
