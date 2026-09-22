@@ -1,11 +1,11 @@
 {
-  "generated": "2026-09-21",
+  "generated": "2026-09-22",
   "categories": {
     "growth": [
       {
         "ticker": "NVDA",
         "name": "NVIDIA",
-        "price": 222.27,
+        "price": 227.38,
         "mktCap": "$5.36T",
         "metric_label": "Revenue growth (FY26)",
         "metric": 65.5,
@@ -14,14 +14,25 @@
         "rating": "Strong Buy"
       },
       {
+        "ticker": "META",
+        "name": "Meta Platforms",
+        "price": 747.46,
+        "mktCap": "$1.70T",
+        "metric_label": "1-day price change",
+        "metric": 12.27,
+        "conviction": 5,
+        "blurb": "Jumped +12.3% today, adding roughly $200B in market value in a single session \u2014 a standout move worth digging into before treating it as the new baseline.",
+        "rating": "Buy"
+      },
+      {
         "ticker": "DELL",
         "name": "Dell Technologies",
         "price": 568.06,
         "mktCap": "$361.2B",
-        "metric_label": "Revenue growth (FY26)",
-        "metric": 18.8,
+        "metric_label": "1-day price change",
+        "metric": 1.28,
         "conviction": 5,
-        "blurb": "Holding its recent all-time high; Q2 FY27 revenue of $47.0B, up 58% YoY, on soaring AI server backlog.",
+        "blurb": "Just joined the S&P 100; holding its recent all-time high on soaring AI server backlog (Q2 FY27 revenue +58% YoY).",
         "rating": "Buy"
       },
       {
@@ -29,32 +40,21 @@
         "name": "Palantir Technologies",
         "price": 177.32,
         "mktCap": "$426.6B",
-        "metric_label": "Revenue growth (2025)",
-        "metric": 56.2,
-        "conviction": 4,
-        "blurb": "Enterprise/government AI analytics; revenue +56% YoY, extending its rebound.",
-        "rating": "Buy"
-      },
-      {
-        "ticker": "META",
-        "name": "Meta Platforms",
-        "price": 668.57,
-        "mktCap": "$1.70T",
         "metric_label": "1-day price change",
-        "metric": 0.0,
+        "metric": 3.1,
         "conviction": 4,
-        "blurb": "AI-driven ad targeting keeps digital-ad dominance compounding; ~$500M/day in revenue.",
+        "blurb": "Enterprise/government AI analytics; revenue +56% YoY (2025), +3.1% today, extending its rebound.",
         "rating": "Buy"
       },
       {
         "ticker": "AVGO",
         "name": "Broadcom",
-        "price": 357.61,
-        "mktCap": "$1.71T",
+        "price": 360.0,
+        "mktCap": "$1.73T",
         "metric_label": "Weekly price change",
-        "metric": 3.96,
+        "metric": 4.16,
         "conviction": 4,
-        "blurb": "AI networking/custom-silicon leader; up +4.0% this week, fully past last week's cautious Q4 forecast reaction.",
+        "blurb": "AI networking/custom-silicon leader; opened +4.2% higher this week, fully past its earlier cautious Q4 forecast reaction.",
         "rating": "Buy"
       },
       {
@@ -63,31 +63,31 @@
         "price": 119.01,
         "mktCap": "$154.9B",
         "metric_label": "1-day price change",
-        "metric": -1.5,
+        "metric": 0.0,
         "conviction": 3,
-        "blurb": "E-commerce infrastructure grower; continuing to give back gains from earlier this month.",
+        "blurb": "E-commerce infrastructure grower; consolidating after giving back gains earlier this month.",
         "rating": "Buy"
       },
       {
         "ticker": "SNDK",
         "name": "SanDisk",
-        "price": 1791.82,
+        "price": 1766.64,
         "mktCap": "$262.4B",
-        "metric_label": "Weekly price change",
-        "metric": 2.5,
+        "metric_label": "1-day price change",
+        "metric": -1.4,
         "conviction": 3,
-        "blurb": "2026's best-performing large-cap on AI-driven flash/HBM memory demand; volatile day-to-day but still climbing \u2014 a reminder that momentum this extreme cuts both ways.",
+        "blurb": "2026's best-performing large-cap on AI-driven flash/HBM memory demand; volatile day-to-day but still near its highs \u2014 a reminder that momentum this extreme cuts both ways.",
         "rating": "Momentum"
       },
       {
         "ticker": "AAOI",
         "name": "Applied Optoelectronics",
-        "price": 105.17,
-        "mktCap": "$8.93B",
-        "metric_label": "Weekly price change",
-        "metric": -9.12,
+        "price": 114.35,
+        "mktCap": "$9.73B",
+        "metric_label": "1-day price change",
+        "metric": 8.43,
         "conviction": 2,
-        "blurb": "AI-datacenter optics demand story intact, but shares down -9.1% this week on supply-chain strain and dilution risk from a recent $600M raise.",
+        "blurb": "AI-datacenter optics demand story intact; +8.4% today, clawing back part of last week's -9% drop. Still volatile \u2014 supply-chain strain and dilution risk from a recent $600M raise remain live.",
         "rating": "Speculative"
       }
     ],
@@ -95,7 +95,7 @@
       {
         "ticker": "PG",
         "name": "Procter & Gamble",
-        "price": 143.5,
+        "price": 146.06,
         "mktCap": null,
         "metric_label": "Beta (5yr)",
         "metric": 0.39,
@@ -135,22 +135,22 @@
         "mktCap": "$234.6B",
         "metric_label": "Beta (5yr)",
         "metric": 0.71,
-        "divYield": 2.89,
+        "divYield": 2.9,
         "blurb": "31 years of dividend growth; enterprise AI/hybrid-cloud pivot. Shares have pulled back from their recent highs.",
         "streak": "31 yrs",
-        "score": 81.4
+        "score": 81.6
       },
       {
         "ticker": "KO",
         "name": "Coca-Cola",
-        "price": 88.29,
+        "price": 87.12,
         "mktCap": "$381.7B",
         "metric_label": "Beta (5yr)",
         "metric": 0.32,
-        "divYield": 2.4,
+        "divYield": 2.45,
         "blurb": "Global beverage staple with highly predictable cash flows.",
         "streak": "60+ yrs",
-        "score": 80.1
+        "score": 80.9
       },
       {
         "ticker": "JNJ",
@@ -191,9 +191,20 @@
     ],
     "nextgen": [
       {
+        "ticker": "RKLB",
+        "name": "Rocket Lab",
+        "price": 76.51,
+        "mktCap": null,
+        "metric_label": "1-day price change",
+        "metric": 5.52,
+        "conviction": 5,
+        "blurb": "Neutron rocket + space services; +5.5% today after its 96th Electron mission and a raised price target ($73 from Deutsche Bank); trailing revenue +59% YoY.",
+        "theme": "Space"
+      },
+      {
         "ticker": "IONQ",
         "name": "IonQ",
-        "price": 39.13,
+        "price": 40.43,
         "mktCap": "$14.7B",
         "metric_label": "Revenue growth (2025)",
         "metric": 201.9,
@@ -204,24 +215,13 @@
       {
         "ticker": "IREN",
         "name": "IREN Limited",
-        "price": 46.68,
+        "price": 46.39,
         "mktCap": "$17.0B",
         "metric_label": "Analyst upside",
         "metric": 71.8,
         "conviction": 5,
         "blurb": "Ex-bitcoin miner pivoted to AI cloud; landed a new $9.7B Microsoft AI-cloud agreement. Strong Buy with $80 target (+72% upside).",
         "theme": "AI infrastructure"
-      },
-      {
-        "ticker": "RKLB",
-        "name": "Rocket Lab",
-        "price": 64.57,
-        "mktCap": null,
-        "metric_label": "Revenue growth (trailing 12mo)",
-        "metric": 59.2,
-        "conviction": 4,
-        "blurb": "Neutron rocket + space services; just flew its 96th Electron mission and posted record revenue; trailing revenue +59% YoY, Buy-rated with $109 target (+72% upside).",
-        "theme": "Space"
       },
       {
         "ticker": "TEM",
@@ -237,8 +237,8 @@
       {
         "ticker": "RGTI",
         "name": "Rigetti Computing",
-        "price": 16.12,
-        "mktCap": "$5.27B",
+        "price": 15.46,
+        "mktCap": "$5.12B",
         "metric_label": "1-day price change",
         "metric": 0.0,
         "conviction": 3,
@@ -248,19 +248,19 @@
       {
         "ticker": "CRSP",
         "name": "CRISPR Therapeutics",
-        "price": 51.83,
-        "mktCap": "$5.0B",
+        "price": 56.56,
+        "mktCap": "$5.47B",
         "metric_label": "Analyst upside",
         "metric": 65.3,
         "conviction": 3,
-        "blurb": "Gene-editing therapeutics (Casgevix); lumpy revenue but Street sees +65% upside, Buy-rated.",
+        "blurb": "Gene-editing therapeutics (Casgevix); lumpy revenue but Street sees upside, Buy-rated.",
         "theme": "Biotech / gene editing"
       },
       {
         "ticker": "QBTS",
         "name": "D-Wave Quantum",
-        "price": 16.42,
-        "mktCap": "$2-10B",
+        "price": 17.12,
+        "mktCap": "$6.33B",
         "metric_label": "Government funding secured",
         "metric": 100,
         "conviction": 2,
@@ -270,10 +270,10 @@
       {
         "ticker": "RXRX",
         "name": "Recursion Pharmaceuticals",
-        "price": 3.33,
-        "mktCap": "$1.72B",
+        "price": 3.94,
+        "mktCap": "$2.13B",
         "metric_label": "1-day price change",
-        "metric": 1.8,
+        "metric": 0.0,
         "conviction": 2,
         "blurb": "AI-driven drug discovery platform partnered with large pharma; still pre-profit micro-cap.",
         "theme": "AI drug discovery"
@@ -318,7 +318,7 @@
         "metric": 27.07,
         "blurb": "Structural department-store decline; ~27% of shares still sold short.",
         "flag": "High short interest",
-        "score": 22.5
+        "score": 22.4
       },
       {
         "ticker": "SMCI",
@@ -328,7 +328,7 @@
         "metric": 25.65,
         "blurb": "Prior accounting controversy; days-to-cover has fallen to ~3.0 \u2014 a fast squeeze is now easier if sentiment flips.",
         "flag": "Rising short interest + weak print",
-        "score": 20.9
+        "score": 20.7
       },
       {
         "ticker": "TMDX",
@@ -338,7 +338,17 @@
         "metric": 22.25,
         "blurb": "Organ-transport technology; growth deceleration and valuation concerns; 12.8 days to cover.",
         "flag": "High short interest",
-        "score": 16.9
+        "score": 16.8
+      },
+      {
+        "ticker": "LULU",
+        "name": "lululemon athletica",
+        "price": 98.37,
+        "metric_label": "Short % of float",
+        "metric": 11.86,
+        "blurb": "Cut its full-year guidance again after a Q2 miss (revenue now seen down 5-7%); short interest has climbed as the stock keeps sliding under $100.",
+        "flag": "Guidance cut (twice) + leadership change",
+        "score": 4.7
       },
       {
         "ticker": "CPB",
@@ -348,16 +358,6 @@
         "metric": 7.81,
         "blurb": "36% dividend cut, sales -8% YoY, and a weak FY27 guide.",
         "flag": "Guidance cut",
-        "score": 0.2
-      },
-      {
-        "ticker": "LULU",
-        "name": "lululemon athletica",
-        "price": 98.37,
-        "metric_label": "Short % of float",
-        "metric": 7.65,
-        "blurb": "Stock has kept sliding since its guidance cut and a CEO change (Heidi O'Neill), now trading under $100.",
-        "flag": "Guidance cut + leadership change",
         "score": 0.0
       }
     ]
