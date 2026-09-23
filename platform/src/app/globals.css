@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+/*
+  Design tokens. Tailwind's default palette is switched off entirely
+  (--color-*: initial) so only these colors exist. Nothing can drift back to
+  stock blue/gray/purple.
+
+  Direction: near-black base, one warm amber accent used sparingly
+  (CTAs, progress, active state). Success/danger exist only for answer
+  feedback.
+*/
+@theme {
+  --color-*: initial;
+
+  --color-ink-950: #08080a; /* page */
+  --color-ink-900: #0f0f12; /* raised surface */
+  --color-ink-850: #141418; /* card */
+  --color-ink-800: #1b1b20; /* hover / input */
+  --color-ink-700: #26262d; /* strong border */
+  --color-line: rgb(255 255 255 / 0.07);
+  --color-line-strong: rgb(255 255 255 / 0.13);
+
+  --color-fg: #f2f1ee; /* primary text, slightly warm */
+  --color-fg-muted: #a3a2a8;
+  --color-fg-subtle: #6c6b73;
+
+  --color-accent: #ffb224;
+  --color-accent-hover: #ffc557;
+  --color-accent-ink: #1a1203; /* text on accent */
+  --color-accent-soft: rgb(255 178 36 / 0.12);
+  --color-accent-line: rgb(255 178 36 / 0.35);
+
+  --color-success: #4fd18b;
+  --color-success-soft: rgb(79 209 139 / 0.12);
+  --color-danger: #ff6b6b;
+  --color-danger-soft: rgb(255 107 107 / 0.12);
+
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-heading), var(--font-body), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-code), ui-monospace, monospace;
+
+  /* Strong contrast between display and body sizes. */
+  --text-display: 4rem;
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.035em;
+  --text-h1: 2.75rem;
+  --text-h1--line-height: 1.08;
+  --text-h1--letter-spacing: -0.03em;
+  --text-h2: 1.75rem;
+  --text-h2--line-height: 1.2;
+  --text-h2--letter-spacing: -0.02em;
+  --text-h3: 1.1875rem;
+  --text-h3--line-height: 1.35;
+  --text-h3--letter-spacing: -0.01em;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.14em;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  --shadow-card: 0 1px 0 rgb(255 255 255 / 0.04) inset, 0 12px 32px -16px rgb(0 0 0 / 0.8);
+  --shadow-glow: 0 0 0 1px var(--color-accent-line), 0 8px 30px -8px rgb(255 178 36 / 0.35);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-draw: draw 480ms var(--ease-out-soft) forwards;
+  --animate-pop: pop 360ms var(--ease-out-soft);
+  --animate-ring: ring-fill 900ms var(--ease-out-soft);
+  --animate-bar: bar-fill 700ms var(--ease-out-soft);
+  --animate-rise: rise 420ms var(--ease-out-soft) both;
+
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes pop {
+    0% {
+      transform: scale(0.6);
+      opacity: 0;
+    }
+    60% {
+      transform: scale(1.08);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  /* "from" only: animates up to whatever the element's value is. */
+  @keyframes ring-fill {
+    from {
+      stroke-dashoffset: var(--ring-circumference);
+    }
+  }
+  @keyframes bar-fill {
+    from {
+      transform: scaleX(0);
+    }
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    background: var(--color-ink-950);
+  }
+  body {
+    background: var(--color-ink-950);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+}
