@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-22",
+  "generated": "2026-09-23",
   "categories": {
     "growth": [
       {
@@ -49,96 +49,96 @@
       {
         "ticker": "AVGO",
         "name": "Broadcom",
-        "price": 360.0,
-        "mktCap": "$1.73T",
-        "metric_label": "Weekly price change",
-        "metric": 4.16,
-        "conviction": 4,
-        "blurb": "AI networking/custom-silicon leader; opened +4.2% higher this week, fully past its earlier cautious Q4 forecast reaction.",
-        "rating": "Buy"
-      },
-      {
-        "ticker": "SHOP",
-        "name": "Shopify",
-        "price": 119.01,
-        "mktCap": "$154.9B",
+        "price": 366.12,
+        "mktCap": "$1.74T",
         "metric_label": "1-day price change",
-        "metric": 0.0,
-        "conviction": 3,
-        "blurb": "E-commerce infrastructure grower; consolidating after giving back gains earlier this month.",
+        "metric": 1.5,
+        "conviction": 4,
+        "blurb": "AI networking/custom-silicon leader; +1.5% today as chipmakers regain footing, fully past its earlier cautious Q4 forecast reaction.",
         "rating": "Buy"
       },
       {
         "ticker": "SNDK",
         "name": "SanDisk",
-        "price": 1766.64,
-        "mktCap": "$262.4B",
+        "price": 1887.04,
+        "mktCap": "$228.9B",
         "metric_label": "1-day price change",
-        "metric": -1.4,
-        "conviction": 3,
-        "blurb": "2026's best-performing large-cap on AI-driven flash/HBM memory demand; volatile day-to-day but still near its highs \u2014 a reminder that momentum this extreme cuts both ways.",
+        "metric": 6.8,
+        "conviction": 4,
+        "blurb": "2026's best-performing large-cap on AI-driven flash/HBM memory demand; +6.8% today, back near its highs \u2014 a reminder that momentum this extreme cuts both ways.",
         "rating": "Momentum"
+      },
+      {
+        "ticker": "SHOP",
+        "name": "Shopify",
+        "price": 120.22,
+        "mktCap": "$156.8B",
+        "metric_label": "1-day price change",
+        "metric": 0.9,
+        "conviction": 3,
+        "blurb": "E-commerce infrastructure grower; steady, consolidating after giving back gains earlier this month.",
+        "rating": "Buy"
       },
       {
         "ticker": "AAOI",
         "name": "Applied Optoelectronics",
-        "price": 114.35,
-        "mktCap": "$9.73B",
+        "price": 107.12,
+        "mktCap": "$9.09B",
         "metric_label": "1-day price change",
-        "metric": 8.43,
+        "metric": 0.0,
         "conviction": 2,
-        "blurb": "AI-datacenter optics demand story intact; +8.4% today, clawing back part of last week's -9% drop. Still volatile \u2014 supply-chain strain and dilution risk from a recent $600M raise remain live.",
+        "blurb": "AI-datacenter optics demand story intact, but shares remain choppy day to day. Supply-chain strain and dilution risk from a recent $600M raise remain live.",
         "rating": "Speculative"
       }
     ],
     "stability": [
+      {
+        "ticker": "MCD",
+        "name": "McDonald's",
+        "price": 250.75,
+        "mktCap": null,
+        "metric_label": "Beta (5yr)",
+        "metric": 0.41,
+        "divYield": 3.11,
+        "blurb": "Franchise-driven cash flows; long multi-decade dividend growth streak.",
+        "streak": "18+ yrs",
+        "score": 90.2
+      },
       {
         "ticker": "PG",
         "name": "Procter & Gamble",
         "price": 146.06,
         "mktCap": null,
         "metric_label": "Beta (5yr)",
-        "metric": 0.39,
-        "divYield": 3.05,
+        "metric": 0.43,
+        "divYield": 2.98,
         "blurb": "70 consecutive years of dividend increases; 136 years of uninterrupted dividends.",
         "streak": "70 yrs",
-        "score": 88.7
-      },
-      {
-        "ticker": "MCD",
-        "name": "McDonald's",
-        "price": 248.0,
-        "mktCap": null,
-        "metric_label": "Beta (5yr)",
-        "metric": 0.42,
-        "divYield": 3.0,
-        "blurb": "Franchise-driven cash flows; long multi-decade dividend growth streak.",
-        "streak": "18+ yrs",
-        "score": 87.5
+        "score": 87.9
       },
       {
         "ticker": "XOM",
         "name": "ExxonMobil",
-        "price": 162.21,
+        "price": 166.0,
         "mktCap": "$681.3B",
         "metric_label": "Beta (5yr)",
-        "metric": 0.18,
-        "divYield": 2.52,
+        "metric": 0.29,
+        "divYield": 2.6,
         "blurb": "Low-beta energy major; steady cash generation and buybacks.",
         "streak": "\u2014",
-        "score": 84.0
+        "score": 84.3
       },
       {
         "ticker": "IBM",
         "name": "IBM",
-        "price": 229.55,
+        "price": 231.93,
         "mktCap": "$234.6B",
         "metric_label": "Beta (5yr)",
         "metric": 0.71,
-        "divYield": 2.9,
+        "divYield": 2.89,
         "blurb": "31 years of dividend growth; enterprise AI/hybrid-cloud pivot. Shares have pulled back from their recent highs.",
         "streak": "31 yrs",
-        "score": 81.6
+        "score": 82.6
       },
       {
         "ticker": "KO",
@@ -147,34 +147,34 @@
         "mktCap": "$381.7B",
         "metric_label": "Beta (5yr)",
         "metric": 0.32,
-        "divYield": 2.45,
+        "divYield": 2.41,
         "blurb": "Global beverage staple with highly predictable cash flows.",
         "streak": "60+ yrs",
-        "score": 80.9
+        "score": 81.1
       },
       {
         "ticker": "JNJ",
         "name": "Johnson & Johnson",
-        "price": 269.97,
+        "price": 269.99,
         "mktCap": null,
         "metric_label": "Beta (5yr)",
-        "metric": 0.2,
-        "divYield": 2.0,
+        "metric": 0.23,
+        "divYield": 1.99,
         "blurb": "64 consecutive years of dividend increases; healthcare defensiveness.",
         "streak": "64 yrs",
-        "score": 76.0
+        "score": 76.1
       },
       {
         "ticker": "WMT",
         "name": "Walmart",
-        "price": 106.55,
+        "price": 110.12,
         "mktCap": "$850.0B",
         "metric_label": "Beta (5yr)",
-        "metric": 0.59,
+        "metric": 0.58,
         "divYield": 0.92,
         "blurb": "Retail scale leader; low beta, resilient through downturns; dividend just hit its 53rd straight annual increase.",
         "streak": "53 yrs",
-        "score": 54.1
+        "score": 55.3
       },
       {
         "ticker": "PEP",
@@ -182,8 +182,8 @@
         "price": 129.75,
         "mktCap": "$212.2B",
         "metric_label": "Dividend yield",
-        "metric": 4.14,
-        "divYield": 4.14,
+        "metric": 4.42,
+        "divYield": 4.42,
         "blurb": "Highest yield of the group, now near a two-year high; diversified snacks & beverages.",
         "streak": "50+ yrs",
         "score": 40.0
@@ -198,18 +198,18 @@
         "metric_label": "1-day price change",
         "metric": 5.52,
         "conviction": 5,
-        "blurb": "Neutron rocket + space services; +5.5% today after its 96th Electron mission and a raised price target ($73 from Deutsche Bank); trailing revenue +59% YoY.",
+        "blurb": "Neutron rocket + space services; +5.5% after its 96th Electron mission; Cantor Fitzgerald just raised its target to $122 (Overweight); trailing revenue +59% YoY.",
         "theme": "Space"
       },
       {
         "ticker": "IONQ",
         "name": "IonQ",
-        "price": 40.43,
+        "price": 46.4,
         "mktCap": "$14.7B",
         "metric_label": "Revenue growth (2025)",
         "metric": 201.9,
         "conviction": 5,
-        "blurb": "Trapped-ion quantum computing leader; raised its 2026 revenue outlook to $450-460M at its Sep 8 Investor Day; Strong Buy with $69 target (+77% upside). Choppy day-to-day, so treat any single day's move as noise.",
+        "blurb": "Trapped-ion quantum computing leader; raised its 2026 revenue outlook to $450-460M at its Sep 8 Investor Day; Wedbush sees $75 target (+85% upside). Choppy day-to-day, so treat any single day's move as noise.",
         "theme": "Quantum computing"
       },
       {
@@ -218,9 +218,9 @@
         "price": 46.39,
         "mktCap": "$17.0B",
         "metric_label": "Analyst upside",
-        "metric": 71.8,
+        "metric": 81.5,
         "conviction": 5,
-        "blurb": "Ex-bitcoin miner pivoted to AI cloud; landed a new $9.7B Microsoft AI-cloud agreement. Strong Buy with $80 target (+72% upside).",
+        "blurb": "Ex-bitcoin miner pivoted to AI cloud; landed a new $9.7B Microsoft AI-cloud agreement. Consensus Buy with $78 average target (+81% upside).",
         "theme": "AI infrastructure"
       },
       {
@@ -229,16 +229,16 @@
         "price": 68.73,
         "mktCap": "$10.7B",
         "metric_label": "Revenue growth (2025)",
-        "metric": 83.4,
-        "conviction": 3,
-        "blurb": "AI-driven precision medicine/diagnostics; 2025 revenue +83% YoY, but Q2 growth cooled to +22% YoY \u2014 watch for further deceleration.",
+        "metric": 89.5,
+        "conviction": 4,
+        "blurb": "AI-driven precision medicine/diagnostics; latest quarter beat estimates with revenue +89.5% YoY; Guggenheim just raised its target to $95 (+23% upside).",
         "theme": "AI healthcare"
       },
       {
         "ticker": "RGTI",
         "name": "Rigetti Computing",
-        "price": 15.46,
-        "mktCap": "$5.12B",
+        "price": 16.53,
+        "mktCap": "$5.07B",
         "metric_label": "1-day price change",
         "metric": 0.0,
         "conviction": 3,
@@ -248,8 +248,8 @@
       {
         "ticker": "CRSP",
         "name": "CRISPR Therapeutics",
-        "price": 56.56,
-        "mktCap": "$5.47B",
+        "price": 52.96,
+        "mktCap": "$5.00B",
         "metric_label": "Analyst upside",
         "metric": 65.3,
         "conviction": 3,
@@ -259,8 +259,8 @@
       {
         "ticker": "QBTS",
         "name": "D-Wave Quantum",
-        "price": 17.12,
-        "mktCap": "$6.33B",
+        "price": 17.69,
+        "mktCap": "$6.14B",
         "metric_label": "Government funding secured",
         "metric": 100,
         "conviction": 2,
@@ -270,12 +270,12 @@
       {
         "ticker": "RXRX",
         "name": "Recursion Pharmaceuticals",
-        "price": 3.94,
+        "price": 4.05,
         "mktCap": "$2.13B",
-        "metric_label": "1-day price change",
-        "metric": 0.0,
+        "metric_label": "Weekly price change",
+        "metric": 12.3,
         "conviction": 2,
-        "blurb": "AI-driven drug discovery platform partnered with large pharma; still pre-profit micro-cap.",
+        "blurb": "AI-driven drug discovery platform partnered with large pharma; +12.3% this week, still pre-profit micro-cap.",
         "theme": "AI drug discovery"
       }
     ],
@@ -335,10 +335,10 @@
         "name": "TransMedics Group",
         "price": 86.43,
         "metric_label": "Short % of float",
-        "metric": 22.25,
-        "blurb": "Organ-transport technology; growth deceleration and valuation concerns; 12.8 days to cover.",
+        "metric": 23.3,
+        "blurb": "Organ-transport technology; growth deceleration and valuation concerns; short interest still climbing.",
         "flag": "High short interest",
-        "score": 16.8
+        "score": 18.0
       },
       {
         "ticker": "LULU",
