@@ -1,60 +1,49 @@
 {
-  "generated": "2026-09-24",
+  "generated": "2026-09-25",
   "categories": {
     "growth": [
       {
         "ticker": "NVDA",
         "name": "NVIDIA",
-        "price": 228.91,
-        "mktCap": "$5.53T",
-        "metric_label": "Revenue growth (FY26)",
-        "metric": 65.5,
+        "price": 222.32,
+        "mktCap": "$5.47T",
+        "metric_label": "1-day price change",
+        "metric": -1.47,
         "conviction": 5,
-        "blurb": "AI GPU dominance; FY26 revenue +65% YoY, at a fresh high; Street still sees further upside.",
+        "blurb": "AI GPU dominance; FY26 revenue +65% YoY; -1.5% today but still near its highs, Street sees further upside.",
         "rating": "Strong Buy"
       },
       {
         "ticker": "META",
         "name": "Meta Platforms",
-        "price": 744.1,
-        "mktCap": "$1.88T",
+        "price": 777.59,
+        "mktCap": "$1.90T",
         "metric_label": "1-day price change",
-        "metric": 1.02,
+        "metric": 4.43,
         "conviction": 5,
-        "blurb": "Holding its huge gain from earlier this week (+12% that day, adding ~$200B in market value); +1.0% more today.",
-        "rating": "Buy"
-      },
-      {
-        "ticker": "DELL",
-        "name": "Dell Technologies",
-        "price": 563.37,
-        "mktCap": "$354.2B",
-        "metric_label": "1-day price change",
-        "metric": 2.6,
-        "conviction": 5,
-        "blurb": "Just joined the S&P 100; +2.6% today on soaring AI server backlog (Q2 FY27 revenue +58% YoY).",
-        "rating": "Buy"
-      },
-      {
-        "ticker": "SHOP",
-        "name": "Shopify",
-        "price": 138.79,
-        "mktCap": "$190.0B",
-        "metric_label": "1-day price change",
-        "metric": -2.49,
-        "conviction": 4,
-        "blurb": "E-commerce infrastructure grower; up sharply over the past week despite today's -2.5% pullback.",
+        "blurb": "Extending its huge move from earlier this week (+12% that day, adding ~$200B in market value); +4.4% more today.",
         "rating": "Buy"
       },
       {
         "ticker": "PLTR",
         "name": "Palantir Technologies",
-        "price": 184.99,
-        "mktCap": "$460.4B",
+        "price": 189.8,
+        "mktCap": "$444.5B",
         "metric_label": "1-day price change",
-        "metric": 1.04,
+        "metric": 0.16,
         "conviction": 4,
-        "blurb": "Enterprise/government AI analytics; revenue +56% YoY (2025), +1.0% today, extending its rebound.",
+        "blurb": "Enterprise/government AI analytics; revenue +56% YoY (2025), roughly flat today after a strong run.",
+        "rating": "Buy"
+      },
+      {
+        "ticker": "DELL",
+        "name": "Dell Technologies",
+        "price": 545.6,
+        "mktCap": "$340.9B",
+        "metric_label": "1-day price change",
+        "metric": -4.59,
+        "conviction": 4,
+        "blurb": "Pulled back -4.6% today after joining the S&P 100 and hitting an all-time high; AI server backlog (Q2 FY27 revenue +58% YoY) intact.",
         "rating": "Buy"
       },
       {
@@ -63,31 +52,42 @@
         "price": 354.99,
         "mktCap": "$1.69T",
         "metric_label": "1-day price change",
-        "metric": -2.0,
+        "metric": 0.0,
         "conviction": 4,
-        "blurb": "AI networking/custom-silicon leader; pulled back with the broader tech sell-off today, still up strongly this month.",
+        "blurb": "AI networking/custom-silicon leader; steadying after pulling back with the broader tech sell-off.",
         "rating": "Buy"
       },
       {
         "ticker": "SNDK",
         "name": "SanDisk",
-        "price": 1816.57,
-        "mktCap": "$266.0B",
+        "price": 1753.62,
+        "mktCap": "$256.8B",
         "metric_label": "1-day price change",
-        "metric": -3.7,
+        "metric": -3.5,
         "conviction": 4,
         "blurb": "2026's best-performing large-cap on AI-driven flash/HBM memory demand; volatile day-to-day but still near its highs \u2014 a reminder that momentum this extreme cuts both ways.",
         "rating": "Momentum"
       },
       {
-        "ticker": "AAOI",
-        "name": "Applied Optoelectronics",
-        "price": 107.0,
-        "mktCap": "$9.08B",
+        "ticker": "SHOP",
+        "name": "Shopify",
+        "price": 120.22,
+        "mktCap": "$156.8B",
         "metric_label": "1-day price change",
         "metric": 0.0,
+        "conviction": 3,
+        "blurb": "E-commerce infrastructure grower; consolidating after a volatile stretch.",
+        "rating": "Buy"
+      },
+      {
+        "ticker": "AAOI",
+        "name": "Applied Optoelectronics",
+        "price": 98.44,
+        "mktCap": "$8.58B",
+        "metric_label": "1-day price change",
+        "metric": -8.0,
         "conviction": 2,
-        "blurb": "AI-datacenter optics demand story intact, but shares remain choppy day to day. Supply-chain strain and dilution risk from a recent $600M raise remain live.",
+        "blurb": "AI-datacenter optics demand story intact, but shares remain choppy day to day (-8% today). Supply-chain strain and dilution risk from a recent $600M raise remain live.",
         "rating": "Speculative"
       }
     ],
@@ -99,10 +99,10 @@
         "mktCap": null,
         "metric_label": "Beta (5yr)",
         "metric": 0.32,
-        "divYield": 3.0,
+        "divYield": 3.23,
         "blurb": "Franchise-driven cash flows; long multi-decade dividend growth streak.",
         "streak": "18+ yrs",
-        "score": 89.0
+        "score": 93.3
       },
       {
         "ticker": "PG",
@@ -111,10 +111,10 @@
         "mktCap": null,
         "metric_label": "Beta (5yr)",
         "metric": 0.43,
-        "divYield": 2.98,
+        "divYield": 2.97,
         "blurb": "70 consecutive years of dividend increases; 136 years of uninterrupted dividends.",
         "streak": "70 yrs",
-        "score": 87.2
+        "score": 87.8
       },
       {
         "ticker": "XOM",
@@ -122,23 +122,23 @@
         "price": 158.3,
         "mktCap": "$681.3B",
         "metric_label": "Beta (5yr)",
-        "metric": 0.17,
-        "divYield": 2.6,
+        "metric": 0.35,
+        "divYield": 2.68,
         "blurb": "Low-beta energy major; steady cash generation and buybacks.",
         "streak": "\u2014",
-        "score": 85.2
+        "score": 84.7
       },
       {
         "ticker": "IBM",
         "name": "IBM",
-        "price": 232.76,
+        "price": 227.92,
         "mktCap": "$234.6B",
         "metric_label": "Beta (5yr)",
         "metric": 0.71,
-        "divYield": 2.92,
+        "divYield": 2.9,
         "blurb": "31 years of dividend growth; enterprise AI/hybrid-cloud pivot. Shares have pulled back from their recent highs.",
         "streak": "31 yrs",
-        "score": 82.4
+        "score": 82.8
       },
       {
         "ticker": "KO",
@@ -150,31 +150,31 @@
         "divYield": 2.41,
         "blurb": "Global beverage staple with highly predictable cash flows.",
         "streak": "60+ yrs",
-        "score": 80.3
+        "score": 81.1
       },
       {
         "ticker": "JNJ",
         "name": "Johnson & Johnson",
-        "price": 268.71,
+        "price": 270.97,
         "mktCap": null,
         "metric_label": "Beta (5yr)",
-        "metric": 0.2,
-        "divYield": 1.96,
+        "metric": 0.23,
+        "divYield": 1.99,
         "blurb": "64 consecutive years of dividend increases; healthcare defensiveness.",
         "streak": "64 yrs",
-        "score": 75.3
+        "score": 76.1
       },
       {
         "ticker": "WMT",
         "name": "Walmart",
-        "price": 110.12,
+        "price": 108.31,
         "mktCap": "$850.0B",
         "metric_label": "Beta (5yr)",
-        "metric": 0.58,
-        "divYield": 0.92,
+        "metric": 0.57,
+        "divYield": 0.93,
         "blurb": "Retail scale leader; low beta, resilient through downturns; dividend just hit its 53rd straight annual increase.",
         "streak": "53 yrs",
-        "score": 54.5
+        "score": 55.6
       },
       {
         "ticker": "PEP",
@@ -182,8 +182,8 @@
         "price": 129.75,
         "mktCap": "$212.2B",
         "metric_label": "Dividend yield",
-        "metric": 4.44,
-        "divYield": 4.44,
+        "metric": 4.49,
+        "divYield": 4.49,
         "blurb": "Highest yield of the group, now near a two-year high; diversified snacks & beverages.",
         "streak": "50+ yrs",
         "score": 40.0
@@ -198,7 +198,7 @@
         "metric_label": "Revenue growth (trailing 12mo)",
         "metric": 59.2,
         "conviction": 5,
-        "blurb": "Neutron rocket + space services; now driven by two big storylines \u2014 Neutron's development and a planned $8.1B acquisition of satellite operator Iridium; trailing revenue +59% YoY.",
+        "blurb": "Neutron rocket + space services; already closed its $155M Mynaric acquisition and has a pending ~$8B deal for Iridium; Raymond James sees Neutron expanding its addressable market in 2027; trailing revenue +59% YoY.",
         "theme": "Space"
       },
       {
@@ -209,7 +209,7 @@
         "metric_label": "Revenue growth (Q2 2026)",
         "metric": 287,
         "conviction": 5,
-        "blurb": "Trapped-ion quantum computing leader; record Q2 revenue +287% YoY to $80M, raised FY26 guidance to $280-290M; Wedbush sees $75 target (+85% upside). Choppy day-to-day, so treat any single day's move as noise.",
+        "blurb": "Trapped-ion quantum computing leader; record Q2 revenue +287% YoY to $80M, raised FY26 guidance to $280-290M with ~$3B cash on hand; Wedbush $75 target, consensus Buy. Choppy day-to-day, so treat any single day's move as noise.",
         "theme": "Quantum computing"
       },
       {
@@ -220,7 +220,7 @@
         "metric_label": "Revenue growth (2025)",
         "metric": 89.5,
         "conviction": 5,
-        "blurb": "AI-driven precision medicine/diagnostics; just raised FY2026 revenue guidance to $1.595-1.605B and adjusted EBITDA outlook to ~$65M \u2014 a real profitability signal, not just top-line growth.",
+        "blurb": "AI-driven precision medicine/diagnostics; raised FY2026 revenue guidance to $1.59-1.6B (+25% YoY); consensus target ~$72, Moderate Buy, with bulls eyeing $100 on a path to profitability by late 2026.",
         "theme": "AI healthcare"
       },
       {
@@ -237,8 +237,8 @@
       {
         "ticker": "RGTI",
         "name": "Rigetti Computing",
-        "price": 16.18,
-        "mktCap": "$5.4B",
+        "price": 15.46,
+        "mktCap": "$5.12B",
         "metric_label": "1-day price change",
         "metric": 0.0,
         "conviction": 3,
