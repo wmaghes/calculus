@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-25",
+  "generated": "2026-09-28",
   "categories": {
     "growth": [
       {
         "ticker": "NVDA",
         "name": "NVIDIA",
-        "price": 222.32,
-        "mktCap": "$5.47T",
-        "metric_label": "1-day price change",
-        "metric": -1.47,
+        "price": 225.0,
+        "mktCap": "$5.54T",
+        "metric_label": "Revenue growth (FY26)",
+        "metric": 65.5,
         "conviction": 5,
-        "blurb": "AI GPU dominance; FY26 revenue +65% YoY; -1.5% today but still near its highs, Street sees further upside.",
+        "blurb": "AI GPU dominance; FY26 revenue +65% YoY; still near its highs, Street sees further upside.",
         "rating": "Strong Buy"
       },
       {
@@ -18,52 +18,52 @@
         "name": "Meta Platforms",
         "price": 777.59,
         "mktCap": "$1.90T",
-        "metric_label": "1-day price change",
-        "metric": 4.43,
+        "metric_label": "Weekly price change",
+        "metric": 16.7,
         "conviction": 5,
-        "blurb": "Extending its huge move from earlier this week (+12% that day, adding ~$200B in market value); +4.4% more today.",
+        "blurb": "Up sharply this week (+12% in one session alone, adding ~$200B in market value) on renewed AI/ad-business momentum.",
         "rating": "Buy"
       },
       {
         "ticker": "PLTR",
         "name": "Palantir Technologies",
-        "price": 189.8,
+        "price": 187.0,
         "mktCap": "$444.5B",
         "metric_label": "1-day price change",
-        "metric": 0.16,
+        "metric": -1.5,
         "conviction": 4,
-        "blurb": "Enterprise/government AI analytics; revenue +56% YoY (2025), roughly flat today after a strong run.",
+        "blurb": "Enterprise/government AI analytics; revenue +56% YoY (2025), -1.5% today after a strong run.",
         "rating": "Buy"
       },
       {
         "ticker": "DELL",
         "name": "Dell Technologies",
         "price": 545.6,
-        "mktCap": "$340.9B",
-        "metric_label": "1-day price change",
-        "metric": -4.59,
+        "mktCap": "$357.9B",
+        "metric_label": "Weekly price change",
+        "metric": 3.63,
         "conviction": 4,
-        "blurb": "Pulled back -4.6% today after joining the S&P 100 and hitting an all-time high; AI server backlog (Q2 FY27 revenue +58% YoY) intact.",
+        "blurb": "Opened +3.6% higher this week after joining the S&P 100; AI server backlog (Q2 FY27 revenue +58% YoY) intact.",
         "rating": "Buy"
       },
       {
         "ticker": "AVGO",
         "name": "Broadcom",
-        "price": 354.99,
-        "mktCap": "$1.69T",
-        "metric_label": "1-day price change",
-        "metric": 0.0,
+        "price": 352.81,
+        "mktCap": "$1.68T",
+        "metric_label": "Weekly price change",
+        "metric": 3.74,
         "conviction": 4,
-        "blurb": "AI networking/custom-silicon leader; steadying after pulling back with the broader tech sell-off.",
+        "blurb": "AI networking/custom-silicon leader; up +3.7% this week, past the earlier tech sell-off.",
         "rating": "Buy"
       },
       {
         "ticker": "SNDK",
         "name": "SanDisk",
-        "price": 1753.62,
-        "mktCap": "$256.8B",
+        "price": 1777.8,
+        "mktCap": "$260.3B",
         "metric_label": "1-day price change",
-        "metric": -3.5,
+        "metric": 1.4,
         "conviction": 4,
         "blurb": "2026's best-performing large-cap on AI-driven flash/HBM memory demand; volatile day-to-day but still near its highs \u2014 a reminder that momentum this extreme cuts both ways.",
         "rating": "Momentum"
@@ -82,12 +82,12 @@
       {
         "ticker": "AAOI",
         "name": "Applied Optoelectronics",
-        "price": 98.44,
-        "mktCap": "$8.58B",
+        "price": 101.37,
+        "mktCap": "$8.6B",
         "metric_label": "1-day price change",
-        "metric": -8.0,
+        "metric": 1.4,
         "conviction": 2,
-        "blurb": "AI-datacenter optics demand story intact, but shares remain choppy day to day (-8% today). Supply-chain strain and dilution risk from a recent $600M raise remain live.",
+        "blurb": "AI-datacenter optics demand story intact; bouncing back after last week's -8% drop. Supply-chain strain and dilution risk from a recent $600M raise remain live.",
         "rating": "Speculative"
       }
     ],
@@ -95,26 +95,26 @@
       {
         "ticker": "MCD",
         "name": "McDonald's",
-        "price": 237.35,
+        "price": 236.5,
         "mktCap": null,
         "metric_label": "Beta (5yr)",
-        "metric": 0.32,
-        "divYield": 3.23,
+        "metric": 0.44,
+        "divYield": 3.11,
         "blurb": "Franchise-driven cash flows; long multi-decade dividend growth streak.",
         "streak": "18+ yrs",
-        "score": 93.3
+        "score": 89.6
       },
       {
         "ticker": "PG",
         "name": "Procter & Gamble",
-        "price": 148.13,
+        "price": 146.23,
         "mktCap": null,
         "metric_label": "Beta (5yr)",
         "metric": 0.43,
-        "divYield": 2.97,
+        "divYield": 2.96,
         "blurb": "70 consecutive years of dividend increases; 136 years of uninterrupted dividends.",
         "streak": "70 yrs",
-        "score": 87.8
+        "score": 87.5
       },
       {
         "ticker": "XOM",
@@ -122,8 +122,8 @@
         "price": 158.3,
         "mktCap": "$681.3B",
         "metric_label": "Beta (5yr)",
-        "metric": 0.35,
-        "divYield": 2.68,
+        "metric": 0.21,
+        "divYield": 2.57,
         "blurb": "Low-beta energy major; steady cash generation and buybacks.",
         "streak": "\u2014",
         "score": 84.7
@@ -131,59 +131,59 @@
       {
         "ticker": "IBM",
         "name": "IBM",
-        "price": 227.92,
+        "price": 225.51,
         "mktCap": "$234.6B",
         "metric_label": "Beta (5yr)",
         "metric": 0.71,
-        "divYield": 2.9,
+        "divYield": 2.85,
         "blurb": "31 years of dividend growth; enterprise AI/hybrid-cloud pivot. Shares have pulled back from their recent highs.",
         "streak": "31 yrs",
-        "score": 82.8
+        "score": 82.0
       },
       {
         "ticker": "KO",
         "name": "Coca-Cola",
-        "price": 88.71,
+        "price": 87.81,
         "mktCap": "$381.7B",
         "metric_label": "Beta (5yr)",
         "metric": 0.32,
-        "divYield": 2.41,
+        "divYield": 2.37,
         "blurb": "Global beverage staple with highly predictable cash flows.",
         "streak": "60+ yrs",
-        "score": 81.1
+        "score": 80.3
       },
       {
         "ticker": "JNJ",
         "name": "Johnson & Johnson",
-        "price": 270.97,
+        "price": 271.22,
         "mktCap": null,
         "metric_label": "Beta (5yr)",
         "metric": 0.23,
-        "divYield": 1.99,
+        "divYield": 1.98,
         "blurb": "64 consecutive years of dividend increases; healthcare defensiveness.",
         "streak": "64 yrs",
-        "score": 76.1
+        "score": 75.7
       },
       {
         "ticker": "WMT",
         "name": "Walmart",
-        "price": 108.31,
+        "price": 107.98,
         "mktCap": "$850.0B",
         "metric_label": "Beta (5yr)",
         "metric": 0.57,
-        "divYield": 0.93,
+        "divYield": 0.92,
         "blurb": "Retail scale leader; low beta, resilient through downturns; dividend just hit its 53rd straight annual increase.",
         "streak": "53 yrs",
-        "score": 55.6
+        "score": 55.4
       },
       {
         "ticker": "PEP",
         "name": "PepsiCo",
-        "price": 129.75,
+        "price": 128.15,
         "mktCap": "$212.2B",
         "metric_label": "Dividend yield",
-        "metric": 4.49,
-        "divYield": 4.49,
+        "metric": 4.6,
+        "divYield": 4.6,
         "blurb": "Highest yield of the group, now near a two-year high; diversified snacks & beverages.",
         "streak": "50+ yrs",
         "score": 40.0
@@ -204,12 +204,12 @@
       {
         "ticker": "IONQ",
         "name": "IonQ",
-        "price": 41.35,
+        "price": 44.51,
         "mktCap": "$14.7B",
         "metric_label": "Revenue growth (Q2 2026)",
         "metric": 287,
         "conviction": 5,
-        "blurb": "Trapped-ion quantum computing leader; record Q2 revenue +287% YoY to $80M, raised FY26 guidance to $280-290M with ~$3B cash on hand; Wedbush $75 target, consensus Buy. Choppy day-to-day, so treat any single day's move as noise.",
+        "blurb": "Trapped-ion quantum computing leader; record Q2 revenue +287% YoY to $80M, raised FY26 guidance to $280-290M with ~$3B cash on hand; Strong Buy consensus with $67 average target (+46% upside). Choppy day-to-day, so treat any single day's move as noise.",
         "theme": "Quantum computing"
       },
       {
@@ -237,8 +237,8 @@
       {
         "ticker": "RGTI",
         "name": "Rigetti Computing",
-        "price": 15.46,
-        "mktCap": "$5.12B",
+        "price": 16.69,
+        "mktCap": "$5.55B",
         "metric_label": "1-day price change",
         "metric": 0.0,
         "conviction": 3,
