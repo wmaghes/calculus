@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-28",
+  "generated": "2026-09-29",
   "categories": {
     "growth": [
       {
         "ticker": "NVDA",
         "name": "NVIDIA",
-        "price": 225.0,
-        "mktCap": "$5.54T",
-        "metric_label": "Revenue growth (FY26)",
-        "metric": 65.5,
+        "price": 228.86,
+        "mktCap": "$5.42T",
+        "metric_label": "1-day price change",
+        "metric": 1.68,
         "conviction": 5,
-        "blurb": "AI GPU dominance; FY26 revenue +65% YoY; still near its highs, Street sees further upside.",
+        "blurb": "AI GPU dominance; FY26 revenue +65% YoY; +1.7% today, still near its highs, Street sees further upside.",
         "rating": "Strong Buy"
       },
       {
@@ -21,7 +21,18 @@
         "metric_label": "Weekly price change",
         "metric": 16.7,
         "conviction": 5,
-        "blurb": "Up sharply this week (+12% in one session alone, adding ~$200B in market value) on renewed AI/ad-business momentum.",
+        "blurb": "Up sharply this week (+12% in one session alone, adding ~$200B in market value) on renewed AI/ad-business momentum. (A recurring search result pegging META far lower looks like a stale cache, not a real quote \u2014 worth a live-quote sanity check.)",
+        "rating": "Buy"
+      },
+      {
+        "ticker": "SHOP",
+        "name": "Shopify",
+        "price": 140.0,
+        "mktCap": "$186.8B",
+        "metric_label": "1-day price change",
+        "metric": 15.0,
+        "conviction": 4,
+        "blurb": "E-commerce infrastructure grower; jumped to a new range around $140, up sharply from last week's ~$120.",
         "rating": "Buy"
       },
       {
@@ -30,9 +41,9 @@
         "price": 187.0,
         "mktCap": "$444.5B",
         "metric_label": "1-day price change",
-        "metric": -1.5,
+        "metric": 0.0,
         "conviction": 4,
-        "blurb": "Enterprise/government AI analytics; revenue +56% YoY (2025), -1.5% today after a strong run.",
+        "blurb": "Enterprise/government AI analytics; revenue +56% YoY (2025), holding its recent range.",
         "rating": "Buy"
       },
       {
@@ -49,45 +60,34 @@
       {
         "ticker": "AVGO",
         "name": "Broadcom",
-        "price": 352.81,
+        "price": 349.57,
         "mktCap": "$1.68T",
-        "metric_label": "Weekly price change",
-        "metric": 3.74,
+        "metric_label": "1-day price change",
+        "metric": -0.92,
         "conviction": 4,
-        "blurb": "AI networking/custom-silicon leader; up +3.7% this week, past the earlier tech sell-off.",
+        "blurb": "AI networking/custom-silicon leader; -0.9% today, still up strongly over the past couple of weeks.",
         "rating": "Buy"
       },
       {
         "ticker": "SNDK",
         "name": "SanDisk",
-        "price": 1777.8,
+        "price": 1712.89,
         "mktCap": "$260.3B",
         "metric_label": "1-day price change",
-        "metric": 1.4,
+        "metric": -1.2,
         "conviction": 4,
         "blurb": "2026's best-performing large-cap on AI-driven flash/HBM memory demand; volatile day-to-day but still near its highs \u2014 a reminder that momentum this extreme cuts both ways.",
         "rating": "Momentum"
       },
       {
-        "ticker": "SHOP",
-        "name": "Shopify",
-        "price": 120.22,
-        "mktCap": "$156.8B",
-        "metric_label": "1-day price change",
-        "metric": 0.0,
-        "conviction": 3,
-        "blurb": "E-commerce infrastructure grower; consolidating after a volatile stretch.",
-        "rating": "Buy"
-      },
-      {
         "ticker": "AAOI",
         "name": "Applied Optoelectronics",
-        "price": 101.37,
-        "mktCap": "$8.6B",
+        "price": 101.07,
+        "mktCap": "$8.58B",
         "metric_label": "1-day price change",
-        "metric": 1.4,
+        "metric": 0.0,
         "conviction": 2,
-        "blurb": "AI-datacenter optics demand story intact; bouncing back after last week's -8% drop. Supply-chain strain and dilution risk from a recent $600M raise remain live.",
+        "blurb": "AI-datacenter optics demand story intact; holding its bounce after last week's -8% drop. Supply-chain strain and dilution risk from a recent $600M raise remain live.",
         "rating": "Speculative"
       }
     ],
@@ -95,26 +95,26 @@
       {
         "ticker": "MCD",
         "name": "McDonald's",
-        "price": 236.5,
+        "price": 233.6,
         "mktCap": null,
         "metric_label": "Beta (5yr)",
-        "metric": 0.44,
-        "divYield": 3.11,
+        "metric": 0.29,
+        "divYield": 3.15,
         "blurb": "Franchise-driven cash flows; long multi-decade dividend growth streak.",
         "streak": "18+ yrs",
-        "score": 89.6
+        "score": 92.1
       },
       {
         "ticker": "PG",
         "name": "Procter & Gamble",
-        "price": 146.23,
+        "price": 145.41,
         "mktCap": null,
         "metric_label": "Beta (5yr)",
-        "metric": 0.43,
-        "divYield": 2.96,
+        "metric": 0.39,
+        "divYield": 2.98,
         "blurb": "70 consecutive years of dividend increases; 136 years of uninterrupted dividends.",
         "streak": "70 yrs",
-        "score": 87.5
+        "score": 88.2
       },
       {
         "ticker": "XOM",
@@ -123,46 +123,46 @@
         "mktCap": "$681.3B",
         "metric_label": "Beta (5yr)",
         "metric": 0.21,
-        "divYield": 2.57,
+        "divYield": 2.6,
         "blurb": "Low-beta energy major; steady cash generation and buybacks.",
         "streak": "\u2014",
-        "score": 84.7
+        "score": 85.1
       },
       {
         "ticker": "IBM",
         "name": "IBM",
-        "price": 225.51,
+        "price": 220.67,
         "mktCap": "$234.6B",
         "metric_label": "Beta (5yr)",
         "metric": 0.71,
         "divYield": 2.85,
-        "blurb": "31 years of dividend growth; enterprise AI/hybrid-cloud pivot. Shares have pulled back from their recent highs.",
+        "blurb": "31 years of dividend growth; enterprise AI/hybrid-cloud pivot. Just upgraded to Buy on dividend strength; -2.2% today.",
         "streak": "31 yrs",
-        "score": 82.0
+        "score": 81.9
       },
       {
         "ticker": "KO",
         "name": "Coca-Cola",
-        "price": 87.81,
+        "price": 87.5,
         "mktCap": "$381.7B",
         "metric_label": "Beta (5yr)",
-        "metric": 0.32,
-        "divYield": 2.37,
+        "metric": 0.34,
+        "divYield": 2.41,
         "blurb": "Global beverage staple with highly predictable cash flows.",
         "streak": "60+ yrs",
-        "score": 80.3
+        "score": 80.5
       },
       {
         "ticker": "JNJ",
         "name": "Johnson & Johnson",
-        "price": 271.22,
+        "price": 272.29,
         "mktCap": null,
         "metric_label": "Beta (5yr)",
-        "metric": 0.23,
+        "metric": 0.2,
         "divYield": 1.98,
         "blurb": "64 consecutive years of dividend increases; healthcare defensiveness.",
         "streak": "64 yrs",
-        "score": 75.7
+        "score": 76.0
       },
       {
         "ticker": "WMT",
@@ -170,16 +170,16 @@
         "price": 107.98,
         "mktCap": "$850.0B",
         "metric_label": "Beta (5yr)",
-        "metric": 0.57,
+        "metric": 0.6,
         "divYield": 0.92,
         "blurb": "Retail scale leader; low beta, resilient through downturns; dividend just hit its 53rd straight annual increase.",
         "streak": "53 yrs",
-        "score": 55.4
+        "score": 54.8
       },
       {
         "ticker": "PEP",
         "name": "PepsiCo",
-        "price": 128.15,
+        "price": 128.63,
         "mktCap": "$212.2B",
         "metric_label": "Dividend yield",
         "metric": 4.6,
@@ -204,12 +204,12 @@
       {
         "ticker": "IONQ",
         "name": "IonQ",
-        "price": 44.51,
+        "price": 46.27,
         "mktCap": "$14.7B",
         "metric_label": "Revenue growth (Q2 2026)",
         "metric": 287,
         "conviction": 5,
-        "blurb": "Trapped-ion quantum computing leader; record Q2 revenue +287% YoY to $80M, raised FY26 guidance to $280-290M with ~$3B cash on hand; Strong Buy consensus with $67 average target (+46% upside). Choppy day-to-day, so treat any single day's move as noise.",
+        "blurb": "Trapped-ion quantum computing leader; record Q2 revenue +287% YoY to $80M, raised FY26 guidance to $280-290M with ~$3B cash on hand; +1.7% today amid rising options activity. Strong Buy consensus with $67 average target (+46% upside).",
         "theme": "Quantum computing"
       },
       {
@@ -218,9 +218,9 @@
         "price": 76.32,
         "mktCap": "$10.7B",
         "metric_label": "Revenue growth (2025)",
-        "metric": 89.5,
+        "metric": 89.6,
         "conviction": 5,
-        "blurb": "AI-driven precision medicine/diagnostics; raised FY2026 revenue guidance to $1.59-1.6B (+25% YoY); consensus target ~$72, Moderate Buy, with bulls eyeing $100 on a path to profitability by late 2026.",
+        "blurb": "AI-driven precision medicine/diagnostics; raised FY2026 revenue guidance to $1.59-1.6B (+25% YoY); H.C. Wainwright just raised its target from $90 to $98, Buy-rated.",
         "theme": "AI healthcare"
       },
       {
@@ -235,10 +235,21 @@
         "theme": "AI infrastructure"
       },
       {
+        "ticker": "QBTS",
+        "name": "D-Wave Quantum",
+        "price": 17.42,
+        "mktCap": "$6.61B",
+        "metric_label": "Analyst upside",
+        "metric": 102,
+        "conviction": 3,
+        "blurb": "Secured a Dept. of Commerce agreement for up to $100M; Strong Buy consensus with a $35 average target (+~100% upside); annealing quantum computing, pre-profit.",
+        "theme": "Quantum computing"
+      },
+      {
         "ticker": "RGTI",
         "name": "Rigetti Computing",
-        "price": 16.69,
-        "mktCap": "$5.55B",
+        "price": 16.04,
+        "mktCap": "$5.33B",
         "metric_label": "1-day price change",
         "metric": 0.0,
         "conviction": 3,
@@ -248,8 +259,8 @@
       {
         "ticker": "CRSP",
         "name": "CRISPR Therapeutics",
-        "price": 52.96,
-        "mktCap": "$5.00B",
+        "price": 55.64,
+        "mktCap": "$5.39B",
         "metric_label": "Analyst upside",
         "metric": 65.3,
         "conviction": 3,
@@ -257,25 +268,14 @@
         "theme": "Biotech / gene editing"
       },
       {
-        "ticker": "QBTS",
-        "name": "D-Wave Quantum",
-        "price": 17.69,
-        "mktCap": "$6.14B",
-        "metric_label": "Government funding secured",
-        "metric": 100,
-        "conviction": 2,
-        "blurb": "Secured a Dept. of Commerce agreement for up to $100M; annealing quantum computing, pre-profit.",
-        "theme": "Quantum computing"
-      },
-      {
         "ticker": "RXRX",
         "name": "Recursion Pharmaceuticals",
-        "price": 4.05,
-        "mktCap": "$2.13B",
-        "metric_label": "Weekly price change",
-        "metric": 12.3,
+        "price": 3.89,
+        "mktCap": "$1.98B",
+        "metric_label": "1-day price change",
+        "metric": -0.81,
         "conviction": 2,
-        "blurb": "AI-driven drug discovery platform partnered with large pharma; +12.3% this week, still pre-profit micro-cap.",
+        "blurb": "AI-driven drug discovery platform partnered with large pharma; still pre-profit micro-cap.",
         "theme": "AI drug discovery"
       }
     ],
