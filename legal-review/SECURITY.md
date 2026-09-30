@@ -109,6 +109,38 @@ except the signed synthetic test corpus.
 12. Wrapped transcript lines were cited as fragments; continuation lines are
     now joined to their Q./A. line.
 
+## Controls added in Phase 4
+
+- The model has no tools and no network beyond one allowlisted loopback
+  port; the HTTP client ignores proxy environment variables. There is no
+  hosted-model backend.
+- Prompts: fixed system prompt; document text only in the user message,
+  in blocks delimited by a random per-request nonce, labelled S1..Sn (the
+  model never sees document IDs).
+- Output: strict JSON with size limits; anything else is discarded.
+- Every citation is verified by code against the passage the model was
+  shown. Claims without a verified quote, or containing URLs/e-mail
+  addresses not present in a verified quote, are dropped (count shown).
+- Claim text is stripped of markup and control characters, and the UI
+  escapes it; no links or images are ever generated.
+- Sources with instruction-like text are flagged; claims and ranked
+  documents that rely on them carry a warning.
+- Permission filtering happens at retrieval, so restricted and other-case
+  text never reaches the model (tested with a spy backend).
+- Questions and answers are stored only in the encrypted case DB; the audit
+  log keeps a digest and counts.
+- Tests use deliberately compromised fake models; the defenses do not rely
+  on the model behaving.
+
+## Issues found and fixed during Phase 4
+
+13. Instruction parser read "June 2023" as "June 20" + "23".
+14. Bidirectional control characters were again written into a source file
+    by an editing tool; the security check caught it before commit.
+15. Test isolation: a network test's teardown uninstalled the egress guard
+    for the shared test app; the model-server test now reinstalls it and
+    asserts the blocked call fails safe.
+
 ## Residual risks (known, not solved)
 
 | # | Risk | Notes / mitigation direction |
@@ -136,6 +168,11 @@ except the signed synthetic test corpus.
 | R22 | **Date reading rules.** US month/day is assumed for ambiguous numeric dates (flagged); year inference can be wrong when a document discusses several years (flagged); "the following week"-style references are listed as unplaced, not resolved. | Reviewers check flagged entries; model-assisted resolution in Phase 4 must still cite spans. |
 | R23 | **Entity list side channel.** The people list is built case-wide, so a name first learned from a restricted document can be recognized in visible documents. Only visible mentions are shown or counted. | Build per-restriction entity lists if counsel considers this material. |
 | R24 | **Extraction rebuilds for the whole case** after each ingestion run; slow for very large cases. | Incremental extraction. |
+| R25 | **Verified quote does not mean correct claim.** The claim text is the model's paraphrase; code verifies the quotes exist, not that the claim follows from them (a word-overlap score is shown). A model can pair a true quote with a misleading claim. | UI states that only quotes are verified; reviewers read the quotes. |
+| R26 | **Planted statements verify.** A hostile document can contain a false sentence; a model can quote it and the quote verifies. Mitigated by attribution and the injection flag, not prevented. Detection is keyword-based and can be evaded by rephrasing. | Reviewer judgment; source-provenance labels. |
+| R27 | **Selective omission.** A steered model can leave out relevant passages. Q&A shows only what it cites; use ranking for completeness. | Ranking is retrieval-based (no model needed); recall evaluated. |
+| R28 | **No real model was run in development** (downloads blocked). The local backend is tested against a fake Ollama server only; answer quality with a real model is unmeasured. The default extractive backend returns sentences, not synthesized answers. | Evaluate with the firm's chosen local model before use. |
+| R29 | **Date-range ranking relies on extracted dates.** A document whose dates were missed can appear under "no date found" or "outside range"; both lists are always shown. | Reviewers check all three lists. |
 | R20 | The page viewer renders original pages in the sandbox on every view (no cache); on huge scans this is slow. | Pre-render into encrypted blobs if needed. |
 
 ## Open items before any real data

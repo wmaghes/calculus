@@ -63,7 +63,7 @@ _INJECTION = re.compile(
     r"reveal (your|the) (system|prompt|keys?)|send (the |all )?(full )?(text|contents|documents))", re.I | re.M)
 _URL = re.compile(r"(?:https?|ftp)://[^\s)\]>\"']+|www\.[^\s)\]>\"']+|\b[\w.+-]+@[\w-]+\.[\w.-]+\b", re.I)
 _MD = re.compile(r"!\[[^\]]{0,200}\]\([^)]{0,500}\)|\[([^\]]{0,200})\]\([^)]{0,500}\)|<[^>]{0,500}>")
-_CTRL = re.compile(r"[\x00-\x08\x0b-\x1f\x7f-\x9f‪-‮⁦-⁩]")
+_CTRL = re.compile(r"[\x00-\x08\x0b-\x1f\x7f-\x9f\u202a-\u202e\u2066-\u2069]")
 
 
 def looks_like_injection(text: str) -> bool:

@@ -1,7 +1,8 @@
 # lexreview — citation-backed discovery review assistant
 
-**Status: development build, Phases 1-3 of 5 done (ingestion + security
-foundation; hybrid search + reviewer web app; extraction + cited timeline). Synthetic data only. Not
+**Status: development build, Phases 1-4 of 5 done (ingestion + security
+foundation; hybrid search + reviewer web app; extraction + cited timeline;
+cited Q&A + instruction-driven ranking). Synthetic data only. Not
 approved for real client data.** Decisions are logged in [DECISIONS.md](DECISIONS.md).
 
 lexreview helps attorneys, paralegals and reviewers organize large discovery
@@ -13,7 +14,7 @@ Before any real data is used, read [SECURITY.md](SECURITY.md) (residual risks
 and open items) and [PENTEST_AND_COUNSEL_REVIEW.md](PENTEST_AND_COUNSEL_REVIEW.md).
 Nothing in this repository claims the system is "secure" or "leak-proof".
 
-## What Phases 1-3 do
+## What Phases 1-4 do
 
 | Capability | Where |
 |---|---|
@@ -41,9 +42,25 @@ Nothing in this repository claims the system is "secure" or "leak-proof".
 | Timeline: filter by date range, person/org, topic; every entry quotes and links its source sentence and is re-verified; unplaceable dates listed; table rows hidden but counted | `extract/timeline.py`, `web.py` |
 | Timeline export (CSV/PDF, watermarked) | `export.py` |
 
-Not yet built (later phases): cited Q&A and
-instruction-driven ranking with the local model (4), legal-authority leads
-for Ohio and Michigan with human-approved outbound queries (5).
+| **Phase 4:** cited Q&A: sources sent to the model as nonce-delimited, opaque-id blocks; strict JSON output; every quote verified inside the passage shown; unverified or link-carrying claims dropped; "Not found in the reviewed documents." | `qa.py` |
+| Swappable model backend with no tools: extractive (default, no model) or a local Ollama / llama.cpp server on an allowlisted loopback port | `llm.py` |
+| "Find everything relevant to X": instruction parsed into topic, date range, people/orgs; recall-first document ranking split into ranked / no date found / dated outside range; injection-looking documents flagged | `rank.py` |
+
+Not yet built: legal-authority leads for Ohio and Michigan with
+human-approved outbound queries (Phase 5).
+
+### Using a local model
+
+```bash
+export LEXREVIEW_LLM=ollama                       # or llamacpp
+export LEXREVIEW_LLM_URL=http://127.0.0.1:11434   # loopback only
+export LEXREVIEW_LLM_MODEL=<model name>
+export LEXREVIEW_LOOPBACK_ALLOW=11434             # the egress guard must allow the port
+```
+
+Without these, the extractive backend answers only with verified sentences
+from the retrieved passages (no generative model). There is no hosted-model
+backend by design.
 
 ## Quick start (synthetic data)
 
@@ -81,6 +98,8 @@ lexreview mark <case> <doc_id> relevant --page 4
 lexreview entities <case>
 lexreview timeline <case> --from 2023-03-01 --to 2023-06-30 [--entity-id N] [--rows]
 lexreview export <case> timeline csv --out ./exports
+lexreview ask <case> "When was Harbor Point notified about the 4471 excursion?"
+lexreview rank <case> "find everything about temperature excursions between March and June 2023"
 lexreview export <case> coverage pdf --out ./exports
 
 # Reviewer web app (TLS 1.3 only). Use certificates from the firm PKI.
@@ -113,6 +132,10 @@ limit), `test_logging.py` (canary strings never reach logs), `test_network.py`
 `test_search.py` (verified citations, permission-filtered retrieval,
 cross-case search, not-found, FTS syntax injection, recall),
 `test_web.py` (XSS from hostile documents, CSRF, jump-to-passage),
+`test_qa.py` (compromised-model suite: fabricated quotes, unknown sources,
+quotes from unshown passages, link/image/e-mail exfiltration, malformed
+output, crashes, restricted/cross-case text never in prompts, loopback-only
+model server, ranking recall),
 `test_timeline.py` (date formats and flags, verifiable spans, unplaced
 dates, restricted/cross-case filtering, injection containment, ReDoS),
 `test_datasafety.py`, `test_audit.py`, `test_auth.py`, `test_export.py`.

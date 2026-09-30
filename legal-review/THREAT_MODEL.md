@@ -54,7 +54,7 @@ weights; the model provider (only if a hosted backend is ever enabled).
 | Audit tampering | HMAC hash chain; key held via KMS; external anchor for truncation | Built, tested. Scheduled anchoring: deployment item |
 | Forged or modified access context in code | Context sealed with HMAC over all fields | Built, tested (found and fixed a bypass during Phase 1) |
 
-### 3. Prompt injection *(model arrives in Phase 4)*
+### 3. Prompt injection (built in Phase 4; see SECURITY.md "Controls added in Phase 4" and `tests/test_qa.py`)
 Documents are untrusted. The corpus already contains injection documents
 (exfiltration URLs, markdown image beacons, fake citations, "reveal system
 prompt"). Planned controls: no tools and no network for the model; nonce-
