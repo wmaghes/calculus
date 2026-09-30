@@ -106,7 +106,10 @@ def ingest_path(app, ctx: CaseAccessContext, path: Path, restriction: str | None
 
     # Rebuild the case's semantic index so new documents are searchable.
     app.rebuild_index(ctx)
+    # Rebuild entities, dated events and the timeline (Phase 3).
+    extraction = app.rebuild_extraction(ctx)
     app.audit.record(ctx.user_id, "ingest", "ok", case_id=ctx.case_id,
                      documents=len(doc_ids), files=len(files), duration_ms=int((time.time() - t0) * 1000),
                      **{f"n_{k}": v for k, v in sorted(summary.items())})
-    return {"files": len(files), "documents": len(doc_ids), "by_status": summary, "sandbox_degraded": degraded}
+    return {"files": len(files), "documents": len(doc_ids), "by_status": summary, "sandbox_degraded": degraded,
+            "extraction": extraction}

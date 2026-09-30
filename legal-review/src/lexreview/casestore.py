@@ -71,6 +71,54 @@ CREATE TABLE IF NOT EXISTS queries (
     query_text TEXT NOT NULL,
     n_results INTEGER NOT NULL
 );
+-- Phase 3: extraction. Every row is a span in stored page text.
+CREATE TABLE IF NOT EXISTS entities (
+    entity_id INTEGER PRIMARY KEY,
+    kind TEXT NOT NULL CHECK (kind IN ('person', 'org')),
+    name TEXT NOT NULL,
+    UNIQUE (kind, name)
+);
+CREATE TABLE IF NOT EXISTS mentions (
+    mention_id INTEGER PRIMARY KEY,
+    entity_id INTEGER NOT NULL REFERENCES entities(entity_id),
+    doc_id TEXT NOT NULL REFERENCES documents(doc_id),
+    page_no INTEGER NOT NULL,
+    char_start INTEGER NOT NULL,
+    char_end INTEGER NOT NULL,
+    method TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS mentions_doc ON mentions(doc_id, page_no);
+CREATE TABLE IF NOT EXISTS events (
+    event_id INTEGER PRIMARY KEY,
+    doc_id TEXT NOT NULL REFERENCES documents(doc_id),
+    page_no INTEGER NOT NULL,
+    seg_start INTEGER NOT NULL,
+    seg_end INTEGER NOT NULL,
+    date_start TEXT NOT NULL,
+    date_end TEXT NOT NULL,
+    precision TEXT NOT NULL,
+    date_char_start INTEGER NOT NULL,
+    date_char_end INTEGER NOT NULL,
+    flags TEXT NOT NULL,
+    tags TEXT NOT NULL,
+    source TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS events_date ON events(date_start);
+CREATE TABLE IF NOT EXISTS event_entities (
+    event_id INTEGER NOT NULL REFERENCES events(event_id),
+    entity_id INTEGER NOT NULL REFERENCES entities(entity_id),
+    PRIMARY KEY (event_id, entity_id)
+);
+CREATE TABLE IF NOT EXISTS unresolved_dates (
+    id INTEGER PRIMARY KEY,
+    doc_id TEXT NOT NULL REFERENCES documents(doc_id),
+    page_no INTEGER NOT NULL,
+    char_start INTEGER NOT NULL,
+    char_end INTEGER NOT NULL,
+    seg_start INTEGER NOT NULL,
+    seg_end INTEGER NOT NULL,
+    kind TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS marks (
     mark_id INTEGER PRIMARY KEY,
     doc_id TEXT NOT NULL REFERENCES documents(doc_id),

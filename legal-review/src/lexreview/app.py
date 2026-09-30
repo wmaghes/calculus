@@ -279,6 +279,49 @@ class App:
         self.audit.record(ctx.user_id, "rebuild_index", "ok", case_id=ctx.case_id, chunks=n)
         return n
 
+    def rebuild_extraction(self, ctx: CaseAccessContext) -> dict:
+        from .extract.pipeline import run_extraction
+
+        ctx.require(Perm.INGEST)
+        counts = run_extraction(self.store(ctx), ctx)
+        self.audit.record(ctx.user_id, "rebuild_extraction", "ok", case_id=ctx.case_id, **counts)
+        return counts
+
+    def timeline(self, ctx: CaseAccessContext, date_from=None, date_to=None, entity_id: int | None = None,
+                 tag: str | None = None) -> dict:
+        """Chronology of dated events; every entry cites and re-verifies its
+        source sentence. Carries the coverage report and the list of dates
+        that could not be placed."""
+        from .coverage import coverage_report, coverage_summary_line
+        from .extract.timeline import timeline
+
+        try:
+            ctx.require(Perm.SEARCH)
+        except AccessDenied:
+            self.audit.record(ctx.user_id, "timeline", "denied", case_id=ctx.case_id)
+            raise
+        store = self.store(ctx)
+        res = timeline(store, ctx, date_from, date_to, entity_id, tag)
+        rep = coverage_report(store, ctx)
+        res["coverage"] = rep
+        res["coverage_summary"] = coverage_summary_line(rep)
+        if not res["events"]:
+            res["message"] = "Not found in the reviewed documents."
+        self.audit.record(ctx.user_id, "timeline", "ok", case_id=ctx.case_id,
+                          date_from=date_from.isoformat() if date_from else None,
+                          date_to=date_to.isoformat() if date_to else None, entity_id=entity_id,
+                          tag=tag if tag and re.match(r"^[a-z/]{1,20}$", tag) else None,
+                          n_events=len(res["events"]), integrity_failures=res["integrity_failures"])
+        return res
+
+    def entities(self, ctx: CaseAccessContext) -> list[dict]:
+        from .extract.timeline import entities
+
+        ctx.require(Perm.SEARCH)
+        ents = entities(self.store(ctx), ctx)
+        self.audit.record(ctx.user_id, "list_entities", "ok", case_id=ctx.case_id, count=len(ents))
+        return ents
+
     def _index(self, ctx: CaseAccessContext):
         from .search.hybrid import load_index
 
