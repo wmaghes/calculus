@@ -4,6 +4,9 @@
               statement need not match every word; ranked by ts_rank_cd
   vector:     pgvector cosine distance (HNSW) on a LOCAL query embedding
   fusion:     reciprocal rank fusion, k = 60
+  grouping:   one result per opinion (its best-fused passage), with the
+              other matching passages of that opinion listed, so one long
+              opinion cannot fill the whole result list
 Nothing here makes a network call; the query never leaves the machine.
 """
 
@@ -79,7 +82,18 @@ def search(conn, embedder, query: str, top_k: int = 10, filters: Filters | None 
             "SELECT c.id FROM chunks c JOIN opinions o ON o.id = c.opinion_id "
             f"WHERE c.embedding IS NOT NULL{fsql} ORDER BY c.embedding <=> %s, c.id LIMIT %s",
             [*fparams, qvec, CANDIDATES])]
-    fused = rrf([fts, vec])[:top_k]
+    fused_all = rrf([fts, vec])
+    owner = dict(conn.execute("SELECT id, opinion_id FROM chunks WHERE id = ANY(%s)",
+                              ([cid for cid, _ in fused_all],)).fetchall()) if fused_all else {}
+    best: dict[int, tuple[int, float]] = {}
+    more: dict[int, list[int]] = {}
+    for cid, score in fused_all:
+        oid = owner[cid]
+        if oid in best:
+            more[oid].append(cid)
+        elif len(best) < top_k:
+            best[oid], more[oid] = (cid, score), []
+    fused = list(best.values())
     fts_rank = {cid: i for i, cid in enumerate(fts, 1)}
     vec_rank = {cid: i for i, cid in enumerate(vec, 1)}
     rows = {}
@@ -101,5 +115,6 @@ def search(conn, embedder, query: str, top_k: int = 10, filters: Filters | None 
             "snippet": snip, "snippet_start": r[3] + off, "snippet_end": r[3] + off + len(snip),
             "chunk_start": r[3], "chunk_end": r[4], "source_url": r[11],
             "rrf_score": round(score, 6), "fulltext_rank": fts_rank.get(cid), "vector_rank": vec_rank.get(cid),
+            "other_matching_chunk_ids": more[r[1]],
         })
     return {"results": results, "fulltext_candidates": len(fts), "vector_candidates": len(vec)}

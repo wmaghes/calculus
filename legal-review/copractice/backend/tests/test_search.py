@@ -36,6 +36,26 @@ def seeded(conn):
     return conn
 
 
+def test_one_result_per_opinion(seeded):
+    # Found on the live index: one long opinion filled 6 of 10 results.
+    oid = seeded.execute("SELECT id FROM opinions WHERE case_name LIKE 'FIXTURE Carrier%'").fetchone()[0]
+    extra = "The carrier is liable under the Carmack Amendment for cargo loss in interstate shipment. "
+    ids = []
+    for pos in (1, 2, 3):
+        ids.append(seeded.execute(
+            "INSERT INTO chunks (opinion_id, position, char_start, char_end, text, embedding, embed_model) "
+            "VALUES (%s,%s,0,%s,%s,%s,%s) RETURNING id",
+            (oid, pos, len(extra), extra, EMB.embed_documents([extra])[0], EMB.name)).fetchone()[0])
+    try:
+        out = search(seeded, EMB, "carrier liable for cargo loss in interstate shipment", 3)
+        oids = [r["opinion_id"] for r in out["results"]]
+        assert len(oids) == len(set(oids)) and oids[0] == oid
+        top = out["results"][0]
+        assert len(top["other_matching_chunk_ids"]) == 3 and top["chunk_id"] not in top["other_matching_chunk_ids"]
+    finally:
+        seeded.execute("DELETE FROM chunks WHERE id = ANY(%s)", (ids,))
+
+
 def test_rrf_merges_and_rewards_agreement():
     fused = dict(rrf([[1, 2, 3], [3, 1, 4]]))
     assert fused[1] > fused[3] > fused[2] and 4 in fused

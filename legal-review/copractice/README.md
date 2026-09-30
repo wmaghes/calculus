@@ -43,6 +43,23 @@ Not used yet: the full `opinions-` CSV (54 GB; needed for post-2018
 opinions) and the Caselaw Access Project site (static.case.law), which was
 unreachable from the development environment.
 
+## Current local index (development run, 2026-09-30)
+
+1,000 opinions (the most-cited with a Harvard PDF per jurisdiction; unpublished
+excluded): 500 Sixth Circuit (1968-2017), 465 Supreme Court of Ohio
+(1965-2016), 35 Ohio Court of Appeals (1974-2001); 24,952 chunks, 0 failed
+downloads. Built from the 2026-09-30 bulk files (73.0 M dockets and 9.9 M
+clusters scanned). Embedded with `dev-hash`, so the vector half is
+lexical-ish, not semantic, until `--reindex` is run with bge-small.
+
+Known text-quality limit: many Federal Reporter PDFs are two-column, and the
+extracted text sometimes interleaves the columns ("alle- known harasser").
+Offsets are exact against the stored text, but snippets can read oddly.
+
+```bash
+python -m cp_ingest --reindex   # re-chunk + re-embed stored opinions, no network
+```
+
 ## Setup (Docker Compose)
 
 ```bash
@@ -68,9 +85,10 @@ python -m pytest -q     # needs a local Postgres 16 + pgvector (TEST_DATABASE_AD
 ## API
 
 - `POST /search` `{query, top_k≤50, courts?, date_from?, date_to?}` →
-  results with `case_name, citation, court, date_filed, snippet,
-  source_url, opinion_id, chunk_id, snippet_start/end`, plus the embedder
-  name, the disclaimer and the good-law notice.
+  one result per opinion (its best passage) with `case_name, citation,
+  court, date_filed, snippet, source_url, opinion_id, chunk_id,
+  snippet_start/end, other_matching_chunk_ids`, plus the embedder name, the
+  disclaimer and the good-law notice.
 - `GET /opinions/{id}` → full text and metadata; `snippet_start/end` from a
   search result index into `text` exactly (for highlighting).
 - `GET /health`
