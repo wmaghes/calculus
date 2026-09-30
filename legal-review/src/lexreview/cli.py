@@ -77,6 +77,8 @@ def main(argv: list[str] | None = None) -> int:
     mk = sub.add_parser("mark"); mk.add_argument("case"); mk.add_argument("doc_id"); mk.add_argument("label", choices=["relevant", "not_relevant"]); mk.add_argument("--page", type=int); mk.add_argument("--query-id")
     tl = sub.add_parser("timeline"); tl.add_argument("case"); tl.add_argument("--from", dest="date_from"); tl.add_argument("--to", dest="date_to"); tl.add_argument("--entity-id", type=int); tl.add_argument("--tag"); tl.add_argument("--rows", action="store_true", help="include dated spreadsheet rows")
     en = sub.add_parser("entities"); en.add_argument("case")
+    ak = sub.add_parser("ask"); ak.add_argument("case"); ak.add_argument("question")
+    rk = sub.add_parser("rank", help="find everything relevant to an instruction"); rk.add_argument("case"); rk.add_argument("instruction")
     sv = sub.add_parser("serve", help="run the reviewer web app (TLS 1.3 only)"); sv.add_argument("--host", default="127.0.0.1"); sv.add_argument("--port", type=int, default=8443); sv.add_argument("--cert", required=True); sv.add_argument("--key", required=True)
     ds = sub.add_parser("case-destroy"); ds.add_argument("case"); ds.add_argument("--confirm", required=True)
     args = ap.parse_args(argv)
@@ -223,6 +225,33 @@ def _dispatch(app: App, args) -> int:
             print(f"\n{len(res['unplaced'])} date references could not be placed on the timeline:")
             for u in res["unplaced"]:
                 print(safe_terminal(f"  \"{u['date_text']}\" ({u['reason']}) - {u['source_name']} {u['locator']}  open: {u['link']}"))
+    elif args.cmd == "ask":
+        ctx = app.authorize(p, args.case, Perm.SEARCH)
+        res = app.ask(ctx, args.question)
+        print(safe_terminal(res["coverage_summary"]))
+        print(f"model: {res['backend']} | statements removed (unverified): {res['dropped_claims']}"
+              + (" | model output invalid" if res["model_output_invalid"] else ""))
+        if res["not_found"]:
+            print("Not found in the reviewed documents.")
+        for c in res["claims"]:
+            print(safe_terminal(f"\n[{c['band']}] {c['text']}" + (f"\n  ! {c['warning']}" if c["warning"] else "")))
+            for x in c["citations"]:
+                print(safe_terminal(f"  \"{' '.join(x['quote'].split())}\"\n    {x['source_name']} | {x['locator']} | "
+                                    f"chars {x['char_start']}-{x['char_end']} | open: {x['link']}"))
+    elif args.cmd == "rank":
+        ctx = app.authorize(p, args.case, Perm.SEARCH)
+        res = app.rank(ctx, args.instruction)
+        pr = res["parsed"]
+        print(safe_terminal(res["coverage_summary"]))
+        print(safe_terminal(f"read as: topic '{pr['topic']}', dates {pr['date_from']}..{pr['date_to']}, "
+                            f"names {[e['name'] for e in pr['entities']]} {' '.join(pr['notes'])}"))
+        for title, lst in (("RANKED", res["ranked"]), ("NO DATE FOUND", res["undated"]), ("DATED OUTSIDE RANGE", res["outside_range"])):
+            if lst:
+                print(f"\n{title} ({len(lst)})")
+            for e in lst:
+                print(safe_terminal(f"  {e['rank']:>3}. [{e['band']}] {e['source_name']} - {'; '.join(e['reasons'])}\n       open: {e['best_passage']['link']}"))
+        if not (res["ranked"] or res["undated"] or res["outside_range"]):
+            print("Not found in the reviewed documents.")
     elif args.cmd == "entities":
         ctx = app.authorize(p, args.case, Perm.SEARCH)
         for e in app.entities(ctx):

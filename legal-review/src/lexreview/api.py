@@ -180,6 +180,16 @@ def create_api(app: App) -> FastAPI:
         ctx = app.authorize(principal(request), case_id, Perm.SEARCH)
         return {"entities": app.entities(ctx)}
 
+    @api.post("/cases/{case_id}/ask")
+    def ask(case_id: str, body: SearchBody, request: Request):
+        ctx = app.authorize(principal(request, state_changing=True), case_id, Perm.SEARCH)
+        return app.ask(ctx, body.query)
+
+    @api.post("/cases/{case_id}/rank")
+    def rank(case_id: str, body: SearchBody, request: Request):
+        ctx = app.authorize(principal(request, state_changing=True), case_id, Perm.SEARCH)
+        return app.rank(ctx, body.query)
+
     from .web import create_ui
 
     api.include_router(create_ui(app))

@@ -192,7 +192,7 @@ def create_ui(app: App) -> APIRouter:
         body = (f'<h2>Case {E(case_id)}</h2>'
                 + f'<p><a href="/ui/cases/{E(case_id)}/timeline">Timeline</a> &middot; '
                   f'<a href="/ui/cases/{E(case_id)}/entities">People &amp; organizations</a></p>'
-                + coverage_block(rep, case_id) + search_form(case_id)
+                + coverage_block(rep, case_id) + search_form(case_id) + ask_forms(case_id)
                 + f'<details class="card"><summary>All documents ({len(docs)})</summary><table><tr><th>Document</th><th>Status</th><th>Pages</th></tr>{rows}</table></details>')
         return render(request, "Case", body, username(p))
 
@@ -242,6 +242,82 @@ def create_ui(app: App) -> APIRouter:
         app.mark(ctx, f.get("doc_id", ""), page, f.get("label", ""), f.get("query_id") or None)
         target = f"/ui/cases/{quote(case_id)}/docs/{quote(f.get('doc_id', ''))}" + (f"/pages/{page}" if page else "")
         return RedirectResponse(target + "?marked=1", status_code=303)
+
+    # ---------------------------------------------------------------- ask / rank
+    def ask_forms(case_id: str, q: str = "", instr: str = "") -> str:
+        return (f'<div class="grid"><form method="post" action="/ui/cases/{E(case_id)}/ask" class="card">{PH}'
+                f'<label>Ask a question (answers cite verified quotes only)<textarea name="q" rows="2">{E(q)}</textarea></label>'
+                '<p><button>Ask</button></p></form>'
+                f'<form method="post" action="/ui/cases/{E(case_id)}/rank" class="card">{PH}'
+                f'<label>Find everything relevant to&hellip; (e.g. "temperature excursions between March and June 2023")'
+                f'<textarea name="q" rows="2">{E(instr)}</textarea></label><p><button>Find documents</button></p></form></div>')
+
+    def cite_html(c: dict) -> str:
+        ocr = f' <span class="warn">OCR, confidence {c["ocr_conf"]}</span>' if c["ocr"] else ""
+        return (f'<blockquote class="card"><pre>{E(c["quote"])}</pre>'
+                f'<a href="{E(c["link"])}">{E(c["source_name"])}</a> <span class="muted">{E(c["locator"])} '
+                f'&middot; chars {c["char_start"]}&ndash;{c["char_end"]}</span>{ocr}</blockquote>')
+
+    @ui.post("/cases/{case_id}/ask")
+    @guarded
+    async def ask(request: Request, case_id: str):
+        f = await form(request)
+        p = principal(request)
+        ctx = app.authorize(p, case_id, Perm.SEARCH)
+        res = app.ask(ctx, f.get("q", ""))
+        parts = ['<h2>Answer</h2>', ask_forms(case_id, res["question"]), coverage_block(res["coverage"], case_id),
+                 f'<p class="muted">Model: {E(res["backend"])}. {res["sources_considered"]} passages considered. '
+                 'Each statement below is the model\'s wording; only the quoted passages are verified. '
+                 'Read the quotes and open the sources before relying on anything.</p>']
+        if res["model_output_invalid"]:
+            parts.append('<div class="banner warn">The model returned output that was not in the required format; it was discarded.</div>')
+        if res["dropped_claims"]:
+            parts.append(f'<div class="banner warn">{res["dropped_claims"]} statement(s) from the model were removed because '
+                         'their quotes could not be verified in the sources (or they contained links/addresses not in the sources).</div>')
+        if res["not_found"]:
+            parts.append('<div class="card"><b>Not found in the reviewed documents.</b></div>')
+        for c in res["claims"]:
+            warn = f'<p class="warn"><b>{E(c["warning"])}</b></p>' if c["warning"] else ""
+            parts.append(f'<div class="card"><p><span class="band {E(c["band"])}">{E(c["band"])}</span> {E(c["text"])}</p>{warn}'
+                         + "".join(cite_html(x) for x in c["citations"]) + "</div>")
+        return render(request, "Answer", "".join(parts), username(p))
+
+    @ui.post("/cases/{case_id}/rank")
+    @guarded
+    async def rank(request: Request, case_id: str):
+        f = await form(request)
+        p = principal(request)
+        ctx = app.authorize(p, case_id, Perm.SEARCH)
+        res = app.rank(ctx, f.get("q", ""))
+        pr = res["parsed"]
+        rng = (f'{E(pr["date_from"] or "any")} to {E(pr["date_to"] or "any")}' if (pr["date_from"] or pr["date_to"]) else "none")
+        who = ", ".join(E(e["name"]) for e in pr["entities"]) or "none"
+        parts = ['<h2>Documents relevant to your instruction</h2>', ask_forms(case_id, instr=res["instruction"]),
+                 coverage_block(res["coverage"], case_id),
+                 f'<div class="card"><b>How your instruction was read:</b> topic &ldquo;{E(pr["topic"])}&rdquo;; date range {rng}; '
+                 f'people/organizations {who}.' + "".join(f'<br><span class="warn">{E(n)}</span>' for n in pr["notes"]) + '</div>']
+
+        def table(title: str, lst: list[dict], note: str) -> str:
+            if not lst:
+                return ""
+            rows = "".join(
+                f'<tr><td>{e["rank"]}</td><td><span class="band {E(e["band"])}">{E(e["band"])}</span></td>'
+                f'<td><a href="{E(e["best_passage"]["link"])}">{E(e["source_name"])}</a><br>'
+                f'<span class="muted">{E(e["best_passage"]["locator"])}</span></td>'
+                f'<td>{"<br>".join(("<b class=warn>" + E(r) + "</b>") if r.startswith("WARNING") else E(r) for r in e["reasons"])}'
+                + (f'<br><span class="muted">dates found: {E(", ".join(e["all_dates"][:5]))}</span>' if e["all_dates"] else "")
+                + f'</td><td><pre>{E(e["best_passage"]["snippet"][:300])}</pre></td>'
+                f'<td>{mark_form(case_id, e["best_passage"]["doc_id"], e["best_passage"]["page_no"], None)}</td></tr>'
+                for e in lst)
+            return (f'<h3>{E(title)} ({len(lst)})</h3><p class="muted">{E(note)}</p><table><tr><th>#</th><th>Confidence</th>'
+                    f'<th>Document</th><th>Why included</th><th>Best passage</th><th>Review</th></tr>{rows}</table>')
+        parts.append(table("Ranked", res["ranked"], "Matches your instruction."))
+        parts.append(table("No date found", res["undated"], "Matches the topic, but no date could be read from it. Check manually."))
+        parts.append(table("Dated outside the range", res["outside_range"],
+                           "Matches the topic, but every date found in it is outside your range. Still review: dates can be incomplete."))
+        if not (res["ranked"] or res["undated"] or res["outside_range"]):
+            parts.append('<div class="card"><b>Not found in the reviewed documents.</b></div>')
+        return render(request, "Find documents", "".join(parts), username(p))
 
     # ---------------------------------------------------------------- timeline
     FLAG_TEXT = {
