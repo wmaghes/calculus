@@ -144,10 +144,20 @@ def test_every_lead_is_labelled(ingested, legal):
     for ld in run(w, qid)["leads"]:
         assert ld["label"] == LEAD_LABEL == "Lead for attorney verification"
         assert ld["citator_notice"] == CITATOR_NOTICE and "NOT been checked" in ld["citator_notice"]
-        assert ld["jurisdiction"] in ("Ohio", "Michigan", "Federal (6th Cir. / U.S.)")
+        assert ld["jurisdiction"].startswith(("Ohio", "Michigan", "Federal"))
         assert ld["retrieved_at"] and ld["url"].startswith("https://")
     fx = [ld for ld in run_leads(w, qid) if ld["source_id"] == "900001"][0]
     assert fx["date"] == "2020-05-01" and fx["citation"] == "999 Fixture App.3d 1"
+    assert fx["jurisdiction"] == "Ohio (Court of Appeals)"   # from the deciding court, not the search filter
+
+
+def test_results_outside_requested_courts_are_dropped(ingested, legal):
+    w = ingested
+    qid = propose(w, sources=("courtlistener",), juris=("ohio",))["query_id"]
+    approve(w, qid)
+    leads = run(w, qid)["leads"]
+    assert not any("Texas" in ld["title"] for ld in leads)
+    assert not any(ld["jurisdiction"].startswith("Michigan") for ld in leads)
 
 
 def run_leads(w, qid):

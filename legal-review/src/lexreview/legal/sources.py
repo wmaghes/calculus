@@ -31,6 +31,15 @@ JURISDICTIONS = {
     "michigan": {"label": "Michigan", "courts": ["mich", "michctapp", "mied", "miwd", "ca6"], "code": "mi_code"},
     "federal": {"label": "Federal (6th Cir. / U.S.)", "courts": ["ca6", "scotus"], "code": None},
 }
+# Jurisdiction shown on a case lead comes from the court that decided it,
+# never from the search filter that found it.
+COURT_JURISDICTION = {
+    "ohio": "Ohio (Supreme Court)", "ohioctapp": "Ohio (Court of Appeals)",
+    "mich": "Michigan (Supreme Court)", "michctapp": "Michigan (Court of Appeals)",
+    "ohnd": "Federal (N.D. Ohio)", "ohsd": "Federal (S.D. Ohio)",
+    "mied": "Federal (E.D. Mich.)", "miwd": "Federal (W.D. Mich.)",
+    "ca6": "Federal (6th Cir.)", "scotus": "Federal (U.S. Supreme Court)",
+}
 SOURCES = ("courtlistener", "ohio_code", "mi_code", "ecfr", "govinfo")
 _TAG = re.compile(r"<[^>]{0,500}>")
 
@@ -89,10 +98,13 @@ class CourtListener:
             cid = str(res.get("cluster_id") or "")
             if not cid.isdigit():
                 continue
+            court_id = str(res.get("court_id") or "")
+            if court_id not in j["courts"]:
+                continue  # outside the requested courts (or unknown): not shown
             cites = res.get("citation") or []
             snip = (res.get("opinions") or [{}])[0].get("snippet") if res.get("opinions") else res.get("snippet")
             out.append(Candidate(self.name, cid, "case", clean(res.get("caseName"), 300) or "",
-                                 clean("; ".join(map(str, cites)), 200), j["label"], clean(res.get("court"), 120),
+                                 clean("; ".join(map(str, cites)), 200), COURT_JURISDICTION[court_id], clean(res.get("court"), 120),
                                  clean(res.get("dateFiled"), 10), self._url(res.get("absolute_url"), cid), clean(snip)))
         return out
 

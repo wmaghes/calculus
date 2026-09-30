@@ -12,15 +12,17 @@ import httpx
 
 CL_SEARCH = {"count": 4, "results": [
     {"cluster_id": 900001, "caseName": "Fixture Freight Co. v. Example Cold Storage (FIXTURE)",
-     "citation": ["999 Fixture App.3d 1"], "dateFiled": "2020-05-01", "court": "Court of Appeals of Ohio (FIXTURE)",
+     "citation": ["999 Fixture App.3d 1"], "dateFiled": "2020-05-01", "court": "Court of Appeals of Ohio (FIXTURE)", "court_id": "ohioctapp",
      "absolute_url": "/opinion/900001/fixture-freight-co-v-example-cold-storage/",
      "opinions": [{"snippet": "carrier liable for <mark>temperature</mark> damage <script>alert(1)</script>"}]},
     {"cluster_id": 900002, "caseName": "Nonexistent Holdings v. Ghost (FIXTURE)", "citation": ["1 Fake 1"],
-     "dateFiled": "2019-01-01", "court": "X", "absolute_url": "/opinion/900002/ghost/", "opinions": []},
+     "dateFiled": "2019-01-01", "court": "X", "court_id": "ohio", "absolute_url": "/opinion/900002/ghost/", "opinions": []},
     {"cluster_id": 900003, "caseName": "Mismatch v. Name (FIXTURE)", "citation": [], "dateFiled": "2018-01-01",
-     "court": "X", "absolute_url": "/opinion/900003/mismatch/", "opinions": []},
+     "court": "X", "court_id": "ca6", "absolute_url": "/opinion/900003/mismatch/", "opinions": []},
+    {"cluster_id": 900005, "caseName": "Out Of Filter v. Texas (FIXTURE)", "citation": [], "dateFiled": "2017-01-01",
+     "court": "Texas (FIXTURE)", "court_id": "tex", "absolute_url": "/opinion/900005/x/", "opinions": []},
     {"cluster_id": 900004, "caseName": "Redirect Trick v. Example (FIXTURE)", "citation": [], "dateFiled": "2021-02-02",
-     "court": "Supreme Court of Michigan (FIXTURE)", "absolute_url": "javascript:alert(document.cookie)", "opinions": []},
+     "court": "Supreme Court of Michigan (FIXTURE)", "court_id": "mich", "absolute_url": "javascript:alert(document.cookie)", "opinions": []},
 ]}
 CL_CLUSTERS = {
     "900001": {"id": 900001, "case_name": "Fixture Freight Co. v. Example Cold Storage (FIXTURE)", "date_filed": "2020-05-01",
