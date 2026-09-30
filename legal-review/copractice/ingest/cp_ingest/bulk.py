@@ -59,18 +59,45 @@ class BulkClient:
         if self._audit:
             self._audit("ingest", "download", outbound=True, destination=url, payload=f"GET {url}".encode())
 
+    def _resilient_bytes(self, url: str, retries: int = 8) -> Iterator[bytes]:
+        """Yield the body of `url`, reconnecting after network errors with an
+        HTTP Range request from the exact byte already received, so a stalled
+        multi-GB download resumes instead of restarting. The caller's
+        decompressor state is untouched, so no byte is lost or repeated."""
+        import time
+
+        offset, failures = 0, 0
+        while True:
+            headers = {"Range": f"bytes={offset}-"} if offset else {}
+            try:
+                with self._client.stream("GET", url, headers=headers) as r:
+                    if offset and r.status_code != 206:
+                        raise RuntimeError("server does not support resuming (no 206)")
+                    r.raise_for_status()
+                    for chunk in r.iter_bytes(1 << 20):
+                        offset += len(chunk)
+                        failures = 0
+                        yield chunk
+                    return
+            except (httpx.TransportError, httpx.RemoteProtocolError):
+                failures += 1
+                if failures > retries:
+                    raise
+                if self._audit:
+                    self._audit("ingest", "download_resume", outbound=True, destination=url,
+                                payload=f"GET {url} Range: bytes={offset}-".encode(), offset=offset, attempt=failures)
+                time.sleep(min(60, 2 ** failures))
+
     def rows(self, key: str) -> Iterator[dict]:
         url = f"{self.base}/{key}"
         self._check(url)
-        with self._client.stream("GET", url) as r:
-            r.raise_for_status()
-            text = io.TextIOWrapper(io.BufferedReader(_BZ2Stream(r.iter_bytes(1 << 20)), 1 << 20),
-                                    encoding="utf-8", errors="replace", newline="")
-            reader = csv.reader(text)
-            header = next(reader)
-            for row in reader:
-                if len(row) == len(header):
-                    yield dict(zip(header, row))
+        text = io.TextIOWrapper(io.BufferedReader(_BZ2Stream(self._resilient_bytes(url)), 1 << 20),
+                                encoding="utf-8", errors="replace", newline="")
+        reader = csv.reader(text)
+        header = next(reader)
+        for row in reader:
+            if len(row) == len(header):
+                yield dict(zip(header, row))
 
     def get(self, key: str, max_bytes: int = 50 * 1024 * 1024) -> bytes:
         url = f"{self.base}/{key}"

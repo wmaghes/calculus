@@ -83,6 +83,7 @@ def files() -> dict[str, bytes]:
 class Bulk:
     def __init__(self):
         self.files, self.requests, self.fail_on = files(), [], set()
+        self.stall_once: dict[str, int] = {}   # path -> byte offset at which the first response dies
 
     def __call__(self, request: httpx.Request) -> httpx.Response:
         self.requests.append(str(request.url))
@@ -94,5 +95,25 @@ class Bulk:
         if path in self.fail_on:
             raise httpx.ConnectError("simulated interruption")
         if path in self.files:
-            return httpx.Response(200, content=self.files[path])
+            data = self.files[path]
+            rng = request.headers.get("range")
+            if rng:
+                start = int(rng.split("=")[1].rstrip("-"))
+                return httpx.Response(206, content=data[start:])
+            if path in self.stall_once:
+                cut = self.stall_once.pop(path)
+
+                def body():
+                    yield data[:cut]
+                    raise httpx.ReadTimeout("simulated stall")
+                return httpx.Response(200, stream=_Stream(body()))
+            return httpx.Response(200, content=data)
         return httpx.Response(404)
+
+
+class _Stream(httpx.SyncByteStream):
+    def __init__(self, gen):
+        self._gen = gen
+
+    def __iter__(self):
+        yield from self._gen

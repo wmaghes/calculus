@@ -43,6 +43,20 @@ def test_multistream_bz2_and_bad_rows():
     assert [r["a"] for r in c.rows("bulk-data/y-1.csv.bz2")] == ["1", "4"]
 
 
+def test_stalled_download_resumes_from_byte_offset(monkeypatch):
+    import time
+    monkeypatch.setattr(time, "sleep", lambda s: None)
+    b = Bulk()
+    rows = [[i, f"value {i} " * 20] for i in range(3000)]
+    b.files["bulk-data/big-1.csv.bz2"] = bz2csv(["a", "b"], rows)
+    b.stall_once["bulk-data/big-1.csv.bz2"] = len(b.files["bulk-data/big-1.csv.bz2"]) // 2
+    events = []
+    c = BulkClient(BASE, audit=lambda *a, **k: events.append((a, k)), transport=httpx.MockTransport(b))
+    got = [int(r["a"]) for r in c.rows("bulk-data/big-1.csv.bz2")]
+    assert got == list(range(3000))                        # nothing lost, nothing duplicated
+    assert any(a[1] == "download_resume" for a, k in events)
+
+
 def test_only_configured_host():
     c = BulkClient(BASE, transport=httpx.MockTransport(Bulk()))
     c.base = "https://evil.example"
