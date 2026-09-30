@@ -67,7 +67,29 @@
   .try-it { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--border); font-size: 13.5px; }
   .try-it a { font-weight: 600; }
 
+  .calc { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-top: 16px; }
+  .calc h4 { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); margin: 0 0 10px; font-weight: 600; }
+  .calc-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end; margin-bottom: 10px; }
+  .calc-field { display: flex; flex-direction: column; gap: 4px; }
+  .calc-field label { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; color: var(--ink-faint); }
+  .calc-field input, .calc-field select {
+    font-family: "IBM Plex Sans", sans-serif; font-size: 13px; padding: 7px 9px;
+    border: 1px solid var(--border); border-radius: 7px; background: var(--surface); color: var(--ink); width: 128px;
+  }
+  .calc-btn {
+    font-family: "IBM Plex Mono", monospace; font-size: 12.5px; font-weight: 600; cursor: pointer;
+    border: 1px solid transparent; border-radius: 7px; padding: 8px 14px; background: var(--accent); color: #fff;
+  }
+  .calc-out { margin-top: 8px; font-family: "IBM Plex Mono", monospace; font-size: 13px; line-height: 1.85; color: var(--ink); min-height: 1.2em; }
+  .calc-out b { font-size: 15px; }
+  .calc-out .pos { color: var(--pos); } .calc-out .neg { color: var(--neg); }
+
   footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--ink-faint); font-family: "IBM Plex Mono", monospace; line-height: 1.7; }
+
+  @media (max-width: 480px) {
+    .calc-field input, .calc-field select { width: 100%; }
+    .calc-field { width: 100%; }
+  }
 </style>
 </head>
 <body>
@@ -82,7 +104,7 @@
   <header class="hero">
     <div class="eyebrow">Career guide</div>
     <h1 class="title">How Each Role Uses the Stock Market</h1>
-    <div class="sub">The same ticker means something different depending on who's looking at it. This is a plain-language tour of how eight different finance careers actually relate to public companies and their stock &mdash; what they do day to day, and which parts of that you can practice in the Simulator.</div>
+    <div class="sub">The same ticker means something different depending on who's looking at it. This is a plain-language tour of thirteen finance careers and how each actually relates to public companies and their stock &mdash; what they do day to day, the math they lean on, and which parts of that you can practice in the Simulator. Every role below also has a small calculator so the concept isn't just words.</div>
   </header>
 
   <nav class="toc" id="tocNav">
@@ -91,9 +113,14 @@
     <a href="#private-banker">Private Banker</a>
     <a href="#investment-banker">Investment Banker</a>
     <a href="#trader">Trader</a>
+    <a href="#quant">Quantitative Analyst</a>
     <a href="#private-equity">Private Equity</a>
+    <a href="#venture-capital">Venture Capitalist</a>
     <a href="#hedge-fund">Hedge Fund / Portfolio Manager</a>
+    <a href="#cfo">Chief Financial Officer</a>
+    <a href="#market-maker">Market Maker</a>
     <a href="#research-analyst">Equity Research Analyst</a>
+    <a href="#risk-manager">Risk &amp; Compliance</a>
   </nav>
 
   <section class="role" id="individual">
@@ -108,7 +135,18 @@
         <span class="chip">Buy-and-hold vs. active trading</span><span class="chip">P/E &amp; dividend yield</span>
         <span class="chip">Risk tolerance</span><span class="chip">Tax-advantaged accounts</span>
       </div>
-      <div class="try-it">Try it: <a href="../simulator/index.html?mode=individual">Individual Investor mode in the Simulator &#8599;</a> &mdash; trade the watchlist with a single $100,000 account.</div>
+      <div class="calc">
+        <h4>Try it &mdash; compound growth calculator</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Initial amount ($)</label><input type="number" id="cg-initial" value="10000"></div>
+          <div class="calc-field"><label>Monthly contribution ($)</label><input type="number" id="cg-monthly" value="500"></div>
+          <div class="calc-field"><label>Annual return (%)</label><input type="number" id="cg-return" value="7" step="0.5"></div>
+          <div class="calc-field"><label>Years</label><input type="number" id="cg-years" value="20"></div>
+          <button class="calc-btn" id="cg-calc">Calculate</button>
+        </div>
+        <div class="calc-out" id="cg-out"></div>
+      </div>
+      <div class="try-it">Try it live: <a href="../simulator/index.html?mode=individual">Individual Investor mode in the Simulator &#8599;</a> &mdash; trade a real or fictional watchlist with a single account.</div>
     </div>
   </section>
 
@@ -124,7 +162,7 @@
         <span class="chip">Risk tolerance questionnaires</span><span class="chip">Rebalancing</span>
         <span class="chip">Fee-only vs. commission</span><span class="chip">Compounding projections</span>
       </div>
-      <div class="try-it">Try it: <a href="../simulator/index.html?mode=advisor">Financial Advisor mode in the Simulator &#8599;</a> &mdash; set a target, horizon and risk tolerance, then fund and track the plan.</div>
+      <div class="try-it">Try it live: <a href="../simulator/index.html?mode=advisor">Financial Advisor mode in the Simulator &#8599;</a> &mdash; set a target, horizon and risk tolerance, then fund and track the plan.</div>
     </div>
   </section>
 
@@ -140,7 +178,7 @@
         <span class="chip">Securities-based lending</span><span class="chip">Model portfolios by risk profile</span>
         <span class="chip">Estate &amp; tax planning</span><span class="chip">Alternative investments</span>
       </div>
-      <div class="try-it">Try it: <a href="../simulator/index.html?mode=banker">Private Banker mode in the Simulator &#8599;</a> &mdash; add multiple named clients and trade inside each book separately.</div>
+      <div class="try-it">Try it live: <a href="../simulator/index.html?mode=banker">Private Banker mode in the Simulator &#8599;</a> &mdash; add multiple named clients and trade inside each book separately.</div>
     </div>
   </section>
 
@@ -156,23 +194,50 @@
         <span class="chip">Accretion / dilution analysis</span><span class="chip">Underwriting &amp; deal structuring</span>
         <span class="chip">IPOs &amp; follow-on offerings</span><span class="chip">Pro forma modeling</span>
       </div>
-      <div class="try-it">Try it: <a href="../simulator/index.html?mode=ib">Investment Banker mode in the Simulator &#8599;</a> &mdash; model a merger's EPS accretion/dilution.</div>
+      <div class="try-it">Try it live: <a href="../simulator/index.html?mode=ib">Investment Banker mode in the Simulator &#8599;</a> &mdash; model a merger's EPS accretion/dilution against live prices.</div>
     </div>
   </section>
 
   <section class="role" id="trader">
     <div class="role-card">
-      <div class="role-head"><h2>Trader (Sales &amp; Trading / Prop)</h2><span class="role-tag">Markets &amp; execution</span></div>
-      <p class="role-oneliner">Buys and sells constantly, either to fill client orders or to profit from a firm's own capital.</p>
+      <div class="role-head"><h2>Trader (Sales &amp; Trading / Prop / Day Trader)</h2><span class="role-tag">Markets &amp; execution</span></div>
+      <p class="role-oneliner">Buys and sells constantly, either to fill client orders, to profit from a firm's own capital, or independently from their own account.</p>
       <h3>How they use the market</h3>
-      <p>A sell-side trader sits between clients and the market, executing orders and often making markets (quoting both a buy and sell price and profiting from the spread). A proprietary trader instead risks a firm's own money on short-term views &mdash; on price direction, volatility, or the relationship between related instruments. Time horizons here are usually seconds to weeks, not years, and risk is managed trade-by-trade with hard limits (like value-at-risk), not through a long-term financial plan.</p>
+      <p>A sell-side trader sits between clients and the market, executing orders and often making markets. A proprietary or independent day trader instead risks capital on short-term views &mdash; on price direction, volatility, or the relationship between related instruments &mdash; over minutes or hours rather than years. This is exactly why the Simulator's speed control matters: a day trader needs to see a year's worth of price action in minutes to get enough practice reps, where a long-term investor genuinely wants real-time pacing.</p>
       <h3>Key tools &amp; concepts</h3>
       <div class="chip-row">
-        <span class="chip">Bid-ask spread &amp; order flow</span><span class="chip">Market making</span>
+        <span class="chip">Bid-ask spread &amp; order flow</span><span class="chip">Position sizing</span>
         <span class="chip">Technical analysis</span><span class="chip">Leverage &amp; margin</span>
-        <span class="chip">Value-at-risk (VaR)</span><span class="chip">Execution algorithms</span>
+        <span class="chip">Stop-loss discipline</span><span class="chip">Execution algorithms</span>
       </div>
-      <div class="try-it">Closest hands-on practice: the <a href="../simulator/index.html?mode=individual">Individual Investor mode's buy/sell mechanic &#8599;</a> &mdash; a real trading desk just does this at far higher frequency and size, with tighter risk limits.</div>
+      <div class="calc">
+        <h4>Try it &mdash; position sizing calculator</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Account size ($)</label><input type="number" id="ps-account" value="25000"></div>
+          <div class="calc-field"><label>Risk per trade (%)</label><input type="number" id="ps-risk" value="1" step="0.25"></div>
+          <div class="calc-field"><label>Entry price ($)</label><input type="number" id="ps-entry" value="50" step="0.01"></div>
+          <div class="calc-field"><label>Stop-loss price ($)</label><input type="number" id="ps-stop" value="47" step="0.01"></div>
+          <button class="calc-btn" id="ps-calc">Calculate</button>
+        </div>
+        <div class="calc-out" id="ps-out"></div>
+      </div>
+      <div class="try-it">Try it live: <a href="../simulator/index.html?mode=individual">Individual Investor mode in the Simulator &#8599;</a>, set the speed to <b>Day Trader</b> in the market panel, and watch a year of price action unfold in minutes.</div>
+    </div>
+  </section>
+
+  <section class="role" id="quant">
+    <div class="role-card">
+      <div class="role-head"><h2>Quantitative Analyst / Quant Trader</h2><span class="role-tag">Systematic</span></div>
+      <p class="role-oneliner">Uses math, statistics and code &mdash; not a gut feeling about a company &mdash; to find and automate a trading edge.</p>
+      <h3>How they use the market</h3>
+      <p>Instead of reading a company's story, a quant builds a statistical model of price relationships &mdash; two stocks that usually move together, a pattern in order flow, a seasonal effect &mdash; and lets an algorithm trade it automatically, sometimes thousands of times a day. The model is validated on historical data (a backtest) before ever risking real money, and speed of execution can matter as much as the idea itself. A strategy that works is called "alpha," and it tends to decay the more other funds discover and crowd into the same edge.</p>
+      <h3>Key tools &amp; concepts</h3>
+      <div class="chip-row">
+        <span class="chip">Statistical arbitrage</span><span class="chip">Backtesting</span>
+        <span class="chip">Algorithmic execution</span><span class="chip">Machine learning signals</span>
+        <span class="chip">Latency &amp; infrastructure</span><span class="chip">Alpha decay</span>
+      </div>
+      <div class="try-it">Closest hands-on practice: run the <a href="../simulator/index.html?mode=individual">Individual Investor mode &#8599;</a> at <b>Super Simulator</b> + fastest speed to generate lots of fresh, consequence-free price history to test an idea against.</div>
     </div>
   </section>
 
@@ -188,6 +253,41 @@
         <span class="chip">Capital structure &amp; leverage</span><span class="chip">Operational value creation</span>
         <span class="chip">Exit strategy (sale or IPO)</span><span class="chip">PIPEs</span>
       </div>
+      <div class="calc">
+        <h4>Try it &mdash; IRR / MOIC calculator</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Entry equity check ($M)</label><input type="number" id="pe-entry" value="100"></div>
+          <div class="calc-field"><label>Exit equity value ($M)</label><input type="number" id="pe-exit" value="280"></div>
+          <div class="calc-field"><label>Hold period (years)</label><input type="number" id="pe-years" value="5"></div>
+          <button class="calc-btn" id="pe-calc">Calculate</button>
+        </div>
+        <div class="calc-out" id="pe-out"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="role" id="venture-capital">
+    <div class="role-card">
+      <div class="role-head"><h2>Venture Capitalist</h2><span class="role-tag">Private / early-stage</span></div>
+      <p class="role-oneliner">Funds young private companies long before they'd ever qualify to trade on a public stock exchange.</p>
+      <h3>How they use the market</h3>
+      <p>A VC's money goes in years before a stock ticker exists &mdash; they buy equity directly from a startup, betting that a small number of huge winners will more than pay for the many that fail. The public stock market still matters enormously to them: an IPO (or an acquisition by a public company) is usually the "exit" that turns their paper stake into real, sellable money, so they're effectively underwriting a company's whole journey toward eventually becoming one of the tickers on a watchlist like this project's own.</p>
+      <h3>Key tools &amp; concepts</h3>
+      <div class="chip-row">
+        <span class="chip">Seed / Series A, B, C rounds</span><span class="chip">Cap tables &amp; dilution</span>
+        <span class="chip">Pre-money vs. post-money valuation</span><span class="chip">Power-law returns</span>
+        <span class="chip">IPO or acquisition exit</span><span class="chip">Board seats &amp; governance</span>
+      </div>
+      <div class="calc">
+        <h4>Try it &mdash; ownership dilution calculator</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Your current ownership (%)</label><input type="number" id="vc-own" value="20" step="0.5"></div>
+          <div class="calc-field"><label>Pre-money valuation ($M)</label><input type="number" id="vc-pre" value="40"></div>
+          <div class="calc-field"><label>New round raised ($M)</label><input type="number" id="vc-raise" value="10"></div>
+          <button class="calc-btn" id="vc-calc">Calculate</button>
+        </div>
+        <div class="calc-out" id="vc-out"></div>
+      </div>
     </div>
   </section>
 
@@ -196,12 +296,74 @@
       <div class="role-head"><h2>Hedge Fund Manager / Portfolio Manager</h2><span class="role-tag">Absolute return</span></div>
       <p class="role-oneliner">Manages pooled money from institutions and wealthy investors, aiming to make money in both up and down markets.</p>
       <h3>How they use the market</h3>
-      <p>Unlike a traditional fund that just tries to beat an index, a hedge fund manager is usually judged on absolute return &mdash; making money regardless of what the overall market does. That means being willing to bet a stock will fall (short selling) as well as rise, using derivatives to hedge or amplify bets, and often running very concentrated or leveraged positions guided by a specific strategy (long/short equity, macro, quantitative, event-driven).</p>
+      <p>Unlike a traditional fund that just tries to beat an index, a hedge fund manager is usually judged on absolute return &mdash; making money regardless of what the overall market does. That means being willing to bet a stock will fall (short selling) as well as rise, using derivatives to hedge or amplify bets, and often running very concentrated or leveraged positions guided by a specific strategy (long/short equity, macro, quantitative, event-driven). What matters isn't just the return, but how much risk was taken to get it.</p>
       <h3>Key tools &amp; concepts</h3>
       <div class="chip-row">
         <span class="chip">Long/short equity</span><span class="chip">Short selling</span>
         <span class="chip">Derivatives &amp; hedging</span><span class="chip">Sharpe ratio</span>
         <span class="chip">Leverage</span><span class="chip">Quantitative &amp; algorithmic strategies</span>
+      </div>
+      <div class="calc">
+        <h4>Try it &mdash; Sharpe ratio calculator</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Portfolio annual return (%)</label><input type="number" id="hf-return" value="14" step="0.5"></div>
+          <div class="calc-field"><label>Risk-free rate (%)</label><input type="number" id="hf-rf" value="4.5" step="0.1"></div>
+          <div class="calc-field"><label>Annual volatility (%)</label><input type="number" id="hf-vol" value="18" step="0.5"></div>
+          <button class="calc-btn" id="hf-calc">Calculate</button>
+        </div>
+        <div class="calc-out" id="hf-out"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="role" id="cfo">
+    <div class="role-card">
+      <div class="role-head"><h2>Chief Financial Officer</h2><span class="role-tag">Issuer side</span></div>
+      <p class="role-oneliner">Sits on the other side of the stock market from everyone else in this guide &mdash; their own company is the one being bought and sold.</p>
+      <h3>How they use the market</h3>
+      <p>A CFO decides how their company shows up to the market it trades on: whether to buy back stock (reducing the share count, which lifts earnings per share even if profit doesn't grow), whether to issue new shares to raise cash, how big a dividend to pay, and what guidance to give analysts about future earnings. Every one of those choices moves the same price everyone else in this guide is reacting to &mdash; which is why a public company's own finance team is, in its own way, also a stock market participant.</p>
+      <h3>Key tools &amp; concepts</h3>
+      <div class="chip-row">
+        <span class="chip">Share buybacks</span><span class="chip">Dividend policy</span>
+        <span class="chip">Earnings guidance</span><span class="chip">Capital allocation</span>
+        <span class="chip">Investor relations</span><span class="chip">Credit ratings</span>
+      </div>
+      <div class="calc">
+        <h4>Try it &mdash; buyback EPS impact calculator</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Net income ($M)</label><input type="number" id="cfo-ni" value="500"></div>
+          <div class="calc-field"><label>Shares outstanding (M)</label><input type="number" id="cfo-shares" value="200"></div>
+          <div class="calc-field"><label>Buyback amount ($M)</label><input type="number" id="cfo-buyback" value="50"></div>
+          <div class="calc-field"><label>Buyback price ($/share)</label><input type="number" id="cfo-price" value="25"></div>
+          <button class="calc-btn" id="cfo-calc">Calculate</button>
+        </div>
+        <div class="calc-out" id="cfo-out"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="role" id="market-maker">
+    <div class="role-card">
+      <div class="role-head"><h2>Market Maker / Broker-Dealer</h2><span class="role-tag">Liquidity</span></div>
+      <p class="role-oneliner">Stands ready to buy or sell a stock at any moment, and gets paid for providing that service, not for guessing direction.</p>
+      <h3>How they use the market</h3>
+      <p>A market maker continuously quotes both a price they'll buy at (the bid) and a slightly higher price they'll sell at (the ask), profiting from that small gap (the spread) across high volume rather than betting on whether a stock goes up or down. This is what makes a stock "liquid" &mdash; there's almost always someone on the other side of a trade &mdash; and the real job is risk management: managing the inventory that quoting both sides leaves you holding.</p>
+      <h3>Key tools &amp; concepts</h3>
+      <div class="chip-row">
+        <span class="chip">Bid-ask spread</span><span class="chip">Liquidity provision</span>
+        <span class="chip">Order book</span><span class="chip">Inventory risk</span>
+        <span class="chip">High-frequency quoting</span><span class="chip">Payment for order flow</span>
+      </div>
+      <div class="calc">
+        <h4>Try it &mdash; spread economics calculator</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Bid price ($)</label><input type="number" id="mm-bid" value="49.98" step="0.01"></div>
+          <div class="calc-field"><label>Ask price ($)</label><input type="number" id="mm-ask" value="50.02" step="0.01"></div>
+          <div class="calc-field"><label>Shares traded / day</label><input type="number" id="mm-shares" value="2000000"></div>
+          <div class="calc-field"><label>Spread captured (%)</label><input type="number" id="mm-capture" value="50" step="5"></div>
+          <button class="calc-btn" id="mm-calc">Calculate</button>
+        </div>
+        <div class="calc-out" id="mm-out"></div>
       </div>
     </div>
   </section>
@@ -218,14 +380,192 @@
         <span class="chip">Buy / Hold / Sell ratings</span><span class="chip">Price targets</span>
         <span class="chip">Industry &amp; competitive analysis</span><span class="chip">Sell-side vs. buy-side</span>
       </div>
+      <div class="calc">
+        <h4>Try it &mdash; comps valuation calculator</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Company EBITDA ($M)</label><input type="number" id="eq-ebitda" value="400"></div>
+          <div class="calc-field"><label>Peer avg. EV/EBITDA (x)</label><input type="number" id="eq-multiple" value="9" step="0.1"></div>
+          <div class="calc-field"><label>Net debt ($M)</label><input type="number" id="eq-debt" value="600"></div>
+          <div class="calc-field"><label>Shares outstanding (M)</label><input type="number" id="eq-shares" value="150"></div>
+          <button class="calc-btn" id="eq-calc">Calculate</button>
+        </div>
+        <div class="calc-out" id="eq-out"></div>
+      </div>
       <div class="try-it">See it in action: the <a href="../index.html">Market Scanner &#8599;</a> and <a href="../research/index.html">Company Research &#8599;</a> pages are this job's deliverables, built by an agent instead of a person.</div>
     </div>
   </section>
 
+  <section class="role" id="risk-manager">
+    <div class="role-card">
+      <div class="role-head"><h2>Risk Manager / Compliance Officer</h2><span class="role-tag">Oversight</span></div>
+      <p class="role-oneliner">Doesn't pick stocks at all &mdash; makes sure everyone else at the firm doesn't blow it up.</p>
+      <h3>How they use the market</h3>
+      <p>A risk manager sets and enforces limits on how much any trader or portfolio can lose before someone has to answer for it, using tools like Value-at-Risk to estimate a "worst plausible day" in dollar terms, and stress tests to see what a historical shock would do to the book today. A compliance officer's job overlaps heavily: making sure trades follow securities law, client suitability rules, and insider-trading restrictions. Neither role generates profit directly, but a firm without one is one bad trade away from not existing.</p>
+      <h3>Key tools &amp; concepts</h3>
+      <div class="chip-row">
+        <span class="chip">Value-at-Risk (VaR)</span><span class="chip">Stress testing</span>
+        <span class="chip">Position limits</span><span class="chip">Insider-trading rules</span>
+        <span class="chip">Suitability &amp; KYC</span><span class="chip">Regulatory capital</span>
+      </div>
+      <div class="calc">
+        <h4>Try it &mdash; 1-day Value-at-Risk calculator</h4>
+        <div class="calc-row">
+          <div class="calc-field"><label>Portfolio value ($)</label><input type="number" id="risk-value" value="10000000"></div>
+          <div class="calc-field"><label>Daily volatility (%)</label><input type="number" id="risk-vol" value="1.5" step="0.1"></div>
+          <div class="calc-field"><label>Confidence</label>
+            <select id="risk-conf">
+              <option value="1.65">95%</option>
+              <option value="2.33">99%</option>
+            </select>
+          </div>
+          <button class="calc-btn" id="risk-calc">Calculate</button>
+        </div>
+        <div class="calc-out" id="risk-out"></div>
+      </div>
+    </div>
+  </section>
+
   <footer>
-    Simplified for teaching purposes &mdash; real roles blend across these lines constantly (a hedge fund analyst does equity research; a private banker's client might need investment-banking advice). Not investment or career advice.
+    Simplified for teaching purposes &mdash; real roles blend across these lines constantly (a hedge fund analyst does equity research; a private banker's client might need investment-banking advice). All calculators are illustrative teaching formulas, not professional-grade models. Not investment or career advice.
   </footer>
 </div>
 
+<script>
+function fmtUSD(n, decimals) {
+  decimals = decimals === undefined ? 0 : decimals;
+  const neg = n < 0;
+  const out = "$" + Math.abs(n).toLocaleString("en-US", { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+  return (neg ? "-" : "") + out;
+}
+function pnlSpan(text, isGood) {
+  return `<span class="${isGood ? "pos" : "neg"}">${text}</span>`;
+}
+
+/* Individual Investor: compound growth */
+document.getElementById("cg-calc").addEventListener("click", () => {
+  const initial = Number(document.getElementById("cg-initial").value) || 0;
+  const monthly = Number(document.getElementById("cg-monthly").value) || 0;
+  const annualReturn = (Number(document.getElementById("cg-return").value) || 0) / 100;
+  const years = Math.max(0, Number(document.getElementById("cg-years").value) || 0);
+  const r = annualReturn / 12, n = years * 12;
+  const fvLump = initial * Math.pow(1 + r, n);
+  const fvAnnuity = r === 0 ? monthly * n : monthly * ((Math.pow(1 + r, n) - 1) / r);
+  const fv = fvLump + fvAnnuity;
+  const contributed = initial + monthly * n;
+  const growth = fv - contributed;
+  document.getElementById("cg-out").innerHTML =
+    `Future value: <b>${fmtUSD(fv)}</b><br>Total contributed: ${fmtUSD(contributed)}<br>Investment growth: ${pnlSpan(fmtUSD(growth), growth >= 0)}`;
+});
+
+/* Trader: position sizing */
+document.getElementById("ps-calc").addEventListener("click", () => {
+  const account = Number(document.getElementById("ps-account").value) || 0;
+  const riskPct = Number(document.getElementById("ps-risk").value) || 0;
+  const entry = Number(document.getElementById("ps-entry").value) || 0;
+  const stop = Number(document.getElementById("ps-stop").value) || 0;
+  const perShareRisk = Math.abs(entry - stop);
+  const out = document.getElementById("ps-out");
+  if (perShareRisk <= 0) { out.textContent = "Entry and stop-loss prices must differ."; return; }
+  const riskAmount = account * (riskPct / 100);
+  const shares = Math.floor(riskAmount / perShareRisk);
+  const positionValue = shares * entry;
+  const pctAccount = account > 0 ? (positionValue / account) * 100 : 0;
+  out.innerHTML = `Max shares: <b>${shares.toLocaleString()}</b><br>Position value: ${fmtUSD(positionValue)} (${pctAccount.toFixed(1)}% of account)<br>Dollars at risk if stopped out: ${fmtUSD(riskAmount)}`;
+});
+
+/* Private Equity: IRR / MOIC */
+document.getElementById("pe-calc").addEventListener("click", () => {
+  const entry = Number(document.getElementById("pe-entry").value) || 0;
+  const exit = Number(document.getElementById("pe-exit").value) || 0;
+  const years = Math.max(0.1, Number(document.getElementById("pe-years").value) || 0.1);
+  const out = document.getElementById("pe-out");
+  if (entry <= 0) { out.textContent = "Entry equity must be greater than zero."; return; }
+  const moic = exit / entry;
+  const irr = Math.pow(moic, 1 / years) - 1;
+  out.innerHTML = `MOIC: <b>${moic.toFixed(2)}x</b><br>Approx. IRR: ${pnlSpan((irr * 100).toFixed(1) + "%", irr >= 0)} over ${years} years`;
+});
+
+/* Venture Capitalist: ownership dilution */
+document.getElementById("vc-calc").addEventListener("click", () => {
+  const ownership = Number(document.getElementById("vc-own").value) || 0;
+  const pre = Number(document.getElementById("vc-pre").value) || 0;
+  const raise = Math.max(0, Number(document.getElementById("vc-raise").value) || 0);
+  const out = document.getElementById("vc-out");
+  const post = pre + raise;
+  if (post <= 0) { out.textContent = "Pre-money plus raise must be greater than zero."; return; }
+  const dilutionFactor = pre / post;
+  const newOwnership = ownership * dilutionFactor;
+  const lost = ownership - newOwnership;
+  out.innerHTML = `Post-money valuation: <b>${fmtUSD(post * 1e6)}</b><br>New ownership: <b>${newOwnership.toFixed(2)}%</b><br>Diluted by: ${pnlSpan(lost.toFixed(2) + " points", false)}`;
+});
+
+/* Hedge Fund: Sharpe ratio */
+document.getElementById("hf-calc").addEventListener("click", () => {
+  const ret = Number(document.getElementById("hf-return").value) || 0;
+  const rf = Number(document.getElementById("hf-rf").value) || 0;
+  const vol = Number(document.getElementById("hf-vol").value) || 0;
+  const out = document.getElementById("hf-out");
+  if (vol <= 0) { out.textContent = "Volatility must be greater than zero."; return; }
+  const sharpe = (ret - rf) / vol;
+  let read = "poor";
+  if (sharpe >= 2) read = "excellent";
+  else if (sharpe >= 1) read = "good";
+  else if (sharpe >= 0) read = "sub-par";
+  out.innerHTML = `Sharpe ratio: <b>${sharpe.toFixed(2)}</b><br>Rule-of-thumb read: ${pnlSpan(read, sharpe >= 1)} risk-adjusted return`;
+});
+
+/* CFO: buyback EPS impact */
+document.getElementById("cfo-calc").addEventListener("click", () => {
+  const ni = Number(document.getElementById("cfo-ni").value) || 0;
+  const shares = Number(document.getElementById("cfo-shares").value) || 0;
+  const buyback = Math.max(0, Number(document.getElementById("cfo-buyback").value) || 0);
+  const price = Number(document.getElementById("cfo-price").value) || 0;
+  const out = document.getElementById("cfo-out");
+  if (shares <= 0 || price <= 0) { out.textContent = "Shares outstanding and buyback price must be greater than zero."; return; }
+  const repurchasedM = buyback / price;
+  const newSharesM = Math.max(0.0001, shares - repurchasedM);
+  const oldEPS = ni / shares;
+  const newEPS = ni / newSharesM;
+  const pctChange = ((newEPS - oldEPS) / Math.abs(oldEPS)) * 100;
+  out.innerHTML = `Shares repurchased: <b>${repurchasedM.toFixed(1)}M</b><br>EPS: ${oldEPS.toFixed(2)} &rarr; <b>${newEPS.toFixed(2)}</b><br>EPS impact: ${pnlSpan((pctChange >= 0 ? "+" : "") + pctChange.toFixed(1) + "%", pctChange >= 0)} (no profit growth needed)`;
+});
+
+/* Market Maker: spread economics */
+document.getElementById("mm-calc").addEventListener("click", () => {
+  const bid = Number(document.getElementById("mm-bid").value) || 0;
+  const ask = Number(document.getElementById("mm-ask").value) || 0;
+  const shares = Number(document.getElementById("mm-shares").value) || 0;
+  const capture = Number(document.getElementById("mm-capture").value) || 0;
+  const out = document.getElementById("mm-out");
+  const spread = ask - bid;
+  if (spread <= 0) { out.textContent = "Ask must be higher than bid."; return; }
+  const dailyRevenue = shares * spread * (capture / 100);
+  out.innerHTML = `Spread: <b>${fmtUSD(spread, 4)}</b> per share<br>Estimated daily revenue: <b>${fmtUSD(dailyRevenue)}</b><br>(at ${capture}% of spread captured across ${shares.toLocaleString()} shares/day)`;
+});
+
+/* Equity Research: comps valuation */
+document.getElementById("eq-calc").addEventListener("click", () => {
+  const ebitda = Number(document.getElementById("eq-ebitda").value) || 0;
+  const multiple = Number(document.getElementById("eq-multiple").value) || 0;
+  const debt = Number(document.getElementById("eq-debt").value) || 0;
+  const shares = Number(document.getElementById("eq-shares").value) || 0;
+  const out = document.getElementById("eq-out");
+  if (shares <= 0) { out.textContent = "Shares outstanding must be greater than zero."; return; }
+  const ev = ebitda * multiple;
+  const equityValue = ev - debt;
+  const price = equityValue / shares;
+  out.innerHTML = `Implied enterprise value: <b>${fmtUSD(ev * 1e6)}</b><br>Implied equity value: <b>${fmtUSD(equityValue * 1e6)}</b><br>Implied price/share: <b>${fmtUSD(price, 2)}</b>`;
+});
+
+/* Risk Manager: 1-day VaR */
+document.getElementById("risk-calc").addEventListener("click", () => {
+  const value = Number(document.getElementById("risk-value").value) || 0;
+  const vol = Number(document.getElementById("risk-vol").value) || 0;
+  const z = Number(document.getElementById("risk-conf").value) || 1.65;
+  const varAmount = value * (vol / 100) * z;
+  document.getElementById("risk-out").innerHTML =
+    `1-day Value-at-Risk: <b>${fmtUSD(varAmount)}</b><br>Interpretation: on a typical day, losses shouldn't exceed this &mdash; but the confidence level means it still will, some of the time.`;
+});
+</script>
 </body>
 </html>

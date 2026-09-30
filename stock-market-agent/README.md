@@ -112,43 +112,81 @@ scan.
 ## Stock Market Simulator
 
 `dashboard/simulator/index.html` is a paper-trading sandbox that teaches how
-investing looks from four different professional seats. It's a self-contained
-client-side app (vanilla JS, no backend) with a mode switcher:
+investing looks from four different professional seats, running against a
+**live, speed-controlled market engine** (`dashboard/simulator/engine.js`)
+instead of a static price snapshot.
 
-- **Individual Investor** — a single account: buy/sell watchlist tickers,
-  track cash, holdings and P/L.
+### Market engine: two universes, any speed
+
+A settings panel at the top of the page controls the market itself, before
+you ever pick a profession mode:
+
+- **Real Companies** — the 32-ticker Scanner watchlist, seeded at each
+  company's real snapshot price. From there it moves forward using a
+  geometric Brownian motion (random-walk) model, with drift/volatility
+  *derived* from that same snapshot's own beta, growth and momentum metrics.
+  **This is a disclosed model, not a replay of actual historical prices** —
+  this sandbox has no historical time-series data to replay, and the UI says
+  so directly.
+- **Super Simulator** — an entirely fictional universe: procedurally
+  generated fake tickers, company names, sectors, prices, and financials
+  (net income, shares outstanding), regenerable on demand with a "New Fake
+  Universe" button. Zero connection to any real company, so you can
+  experiment freely.
+- **Speed control** — five presets spanning the full requested range, from a
+  day trader's pace up to real-time: Day Trader (1 simulated year per 10 real
+  minutes), Swing Trader (1 year/hour), Position Trader (1 year/day),
+  Long-Term Investor (1 year/week), and Real-Time (1 year/year). Pause/Resume
+  freezes the clock exactly (no catch-up jump on resume), and a single
+  catch-up step (capped at 5 simulated years) handles time that passed while
+  the tab was closed.
+- An **index chart** (equal-weighted across the active universe, hover for a
+  crosshair + tooltip) and a **sparkline grid** per ticker visualize price
+  action live as the engine ticks (see `references/` under the `dataviz`
+  skill for the chart methodology this follows).
+
+Each of the two universes ("real" and "super") carries its own fully separate
+trading state — switching modes never mixes a fake holding with a real one.
+
+### The four profession modes
+
+- **Individual Investor** — a single account: buy/sell active-universe
+  tickers, track cash, holdings and P/L.
 - **Private Banker** — manage several named clients at once, each with their
   own risk profile, starting AUM, holdings and P/L, plus a book-of-business
   summary table across all of them.
 - **Financial Advisor** — build goal-based plans (target $, time horizon,
-  risk tolerance) that map to a suggested asset mix across the Scanner's own
-  growth/stability/next-gen categories, project a future value with a simple
-  compounding estimate, then "fund" the plan to actually invest the lump sum
-  and add simulated monthly contributions against real watchlist prices.
+  risk tolerance) that map to a suggested asset mix, project a future value
+  with a simple compounding estimate, then "fund" the plan to actually invest
+  the lump sum and add simulated monthly contributions against live prices.
 - **Investment Banker** — a simplified M&A accretion/dilution calculator:
-  pick an acquirer and target from the subset of watchlist companies with
-  usable net income, market cap and price data, set premium/consideration/
-  synergy/financing assumptions, and see pro-forma EPS accretion or dilution.
+  pick an acquirer and target with usable net income, market cap and price
+  data (from either universe), set premium/consideration/synergy/financing
+  assumptions, and see pro-forma EPS accretion or dilution against the
+  *live* ticking price.
 
-All state (cash, holdings, clients, plans) is stored in the browser's
-`localStorage` — nothing is sent anywhere, and it resets if site data is
-cleared. Prices are the Scanner's own `data.json` snapshot (not live), and the
-Investment Banker mode reads net income / market cap from the Research
-Analyst's `research/data.json` (a copy of `research-analyst/data/research_data.json`,
-regenerated automatically by `generate_research_pages.py`). None of this is
-real trading or real investment advice — it's a teaching tool for how each
-role thinks about risk and return.
+All state (cash, holdings, clients, plans, and the engine's own price
+history) is stored in the browser's `localStorage` — nothing is sent
+anywhere, and it resets if site data is cleared. None of this is real
+trading or real investment advice — it's a teaching tool for how each role
+thinks about risk, return and time horizon.
 
 ## Career Guide
 
-`dashboard/guide/index.html` is a fourth tab: a plain-language reference on how
-eight different finance careers actually relate to the stock market —
-Individual Investor, Financial Advisor, Private Banker/Wealth Manager,
-Investment Banker, Trader (sales & trading / prop), Private Equity, Hedge
-Fund/Portfolio Manager, and Equity Research Analyst. Each entry covers what
-the role does day to day, the concepts/tools it relies on, and — where one
-exists — a deep link straight into the matching Simulator mode (the Simulator
-now reads a `?mode=` query param on load, e.g. `simulator/index.html?mode=ib`).
+`dashboard/guide/index.html` is a fourth tab: a plain-language reference on
+how thirteen finance careers actually relate to the stock market — Individual
+Investor, Financial Advisor, Private Banker/Wealth Manager, Investment
+Banker, Trader (sales & trading / prop / day trader), Quantitative Analyst,
+Private Equity, Venture Capitalist, Hedge Fund/Portfolio Manager, Chief
+Financial Officer (the issuer side), Market Maker/Broker-Dealer, Equity
+Research Analyst, and Risk Manager/Compliance Officer. Each entry covers what
+the role does day to day, the concepts/tools it relies on, a small
+interactive calculator so the math isn't just words (compound growth,
+position sizing, IRR/MOIC, ownership dilution, Sharpe ratio, buyback EPS
+impact, bid-ask spread economics, comps valuation, Value-at-Risk), and —
+where one exists — a deep link straight into the matching Simulator mode (the
+Simulator reads a `?mode=` query param on load, e.g.
+`simulator/index.html?mode=ib`).
 
 ## Not financial advice
 

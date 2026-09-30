@@ -106,6 +106,30 @@
 
   select#pb-client-select, select#adv-plan-select { min-width: 220px; }
 
+  .market-panel { margin-bottom: 28px; }
+  .market-head { display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: flex-end; margin-bottom: 10px; }
+  .mode-toggle { display: inline-flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden; }
+  .mode-toggle button {
+    font-family: "IBM Plex Mono", monospace; font-size: 12.5px; cursor: pointer;
+    border: none; background: var(--surface); color: var(--ink); padding: 8px 14px;
+  }
+  .mode-toggle button.active { background: var(--accent); color: #fff; font-weight: 600; }
+  .sim-clock { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-muted); margin-bottom: 14px; }
+  .chart-card { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px 8px; margin-bottom: 14px; }
+  .chart-card svg { width: 100%; display: block; }
+  .chart-endlabel { position: absolute; top: 10px; right: 16px; font-family: "IBM Plex Mono", monospace; font-size: 13px; font-weight: 600; }
+  .chart-tooltip {
+    position: absolute; pointer-events: none; background: var(--ink); color: var(--bg);
+    font-family: "IBM Plex Mono", monospace; font-size: 11.5px; line-height: 1.4;
+    padding: 6px 9px; border-radius: 6px; white-space: nowrap; z-index: 5;
+  }
+  .sparkline-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .spark-card { width: 116px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; }
+  .spark-top { display: flex; justify-content: space-between; align-items: baseline; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; margin-bottom: 2px; }
+  .spark-ticker { font-weight: 600; }
+  .spark-chg { font-size: 10.5px; }
+  .spark-price { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink-muted); margin-top: 2px; }
+
   footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--ink-faint); font-family: "IBM Plex Mono", monospace; line-height: 1.7; }
 
   @media (max-width: 620px) {
@@ -130,8 +154,10 @@
   </header>
 
   <div class="disclaimer">
-    <strong>This is a paper-trading sandbox, not a real brokerage.</strong> Prices come from the Market Scanner's own snapshot (<span class="mono">data.json</span>) and are <strong>not live</strong> &mdash; they only change when that data is refreshed. All cash, positions and plans below are stored locally in your browser (nothing is sent anywhere) and reset if you clear site data. <strong>Nothing here is investment advice</strong>; it's a teaching tool for how each role thinks about risk and return.
+    <strong>This is a paper-trading sandbox, not a real brokerage.</strong> Choose <strong>Real Companies</strong> (the Market Scanner watchlist, starting from real prices and metrics) or <strong>Super Simulator</strong> (a fully fictional universe) below, then pick how fast the market moves &mdash; from a day trader's 1 simulated year per 10 real minutes up to real-time. All cash, positions and plans are stored locally in your browser (nothing is sent anywhere) and reset if you clear site data. <strong>Nothing here is investment advice</strong>; it's a teaching tool for how each role thinks about risk, return and time horizon.
   </div>
+
+  <div class="card market-panel" id="marketPanel"></div>
 
   <nav class="modes" id="modeNav"></nav>
 
@@ -141,33 +167,68 @@
   <section class="mode" id="mode-ib" data-mode="ib"></section>
 
   <footer>
-    <div>All figures are illustrative. Prices are a static snapshot, not real-time market data. Not investment advice.</div>
+    <div>All figures are illustrative. Real Companies mode starts from real snapshot data but moves forward using a disclosed random-walk model calibrated from that snapshot &mdash; not a replay of actual historical prices. Super Simulator mode is entirely fictional. Not investment advice.</div>
     <div>Part of the Stock Market Scanner / Research Analyst project &mdash; see the companion repo's README for methodology.</div>
   </footer>
 </div>
 
+<script src="engine.js"></script>
 <script>
 /* ---------- shared utilities ---------- */
 
-const STORE_KEY = "simState.v1";
+const STORE_KEY = "simState.v2";
+const ENGINE_STORE_KEY = "simEngine.v1";
 const STARTING_CASH_INDIVIDUAL = 100000;
 const STARTING_CASH_CLIENT = 250000;
+const SUPER_UNIVERSE_SIZE = 24;
+const TICK_INTERVAL_MS = 1000;
+
+function freshWorldState() {
+  return {
+    individual: { cash: STARTING_CASH_INDIVIDUAL, startCash: STARTING_CASH_INDIVIDUAL, holdings: {}, history: [] },
+    banker: { clients: {}, nextId: 1 },
+    advisor: { plans: {}, nextId: 1 },
+  };
+}
 
 function loadState() {
   let s = null;
   try { s = JSON.parse(localStorage.getItem(STORE_KEY) || "null"); } catch (e) { s = null; }
   if (!s) s = {};
-  if (!s.individual) s.individual = { cash: STARTING_CASH_INDIVIDUAL, startCash: STARTING_CASH_INDIVIDUAL, holdings: {}, history: [] };
-  if (!s.banker) s.banker = { clients: {}, nextId: 1 };
-  if (!s.advisor) s.advisor = { plans: {}, nextId: 1 };
+  if (s.marketMode !== "real" && s.marketMode !== "super") s.marketMode = "real";
+  if (!s.speedKey) s.speedKey = "position";
+  if (typeof s.running !== "boolean") s.running = true;
+  if (!s.worlds) s.worlds = {};
+  if (!s.worlds.real) s.worlds.real = freshWorldState();
+  if (!s.worlds.super) s.worlds.super = freshWorldState();
   return s;
 }
 function saveState(s) {
   try { localStorage.setItem(STORE_KEY, JSON.stringify(s)); } catch (e) { /* storage unavailable; state stays in-memory only */ }
 }
+function worldState() { return STATE.worlds[STATE.marketMode]; }
+
 let STATE = loadState();
-let UNIVERSE = {};      // ticker -> {ticker, name, price, category}
-let RESEARCH = {};      // ticker -> research_data.json company record
+let UNIVERSE = {};      // ticker -> {ticker, name, price, category, sector}
+let RESEARCH = {};      // ticker -> research/data.json company record (real mode only)
+let SCANNER_DATA = null;
+let ENGINE_REAL = null;
+let ENGINE_SUPER = null;
+let CURRENT_MODE = "individual";
+let tickCounter = 0;
+
+function activeWorld() { return STATE.marketMode === "super" ? ENGINE_SUPER : ENGINE_REAL; }
+
+function loadEngineState() {
+  try { return JSON.parse(localStorage.getItem(ENGINE_STORE_KEY) || "null"); } catch (e) { return null; }
+}
+function saveEngineState() {
+  try { localStorage.setItem(ENGINE_STORE_KEY, JSON.stringify({ real: ENGINE_REAL, super: ENGINE_SUPER })); } catch (e) {}
+}
+function isEditingForm() {
+  const ae = document.activeElement;
+  return !!ae && (ae.tagName === "INPUT" || ae.tagName === "SELECT");
+}
 
 function fmtMoney(n, opts) {
   opts = opts || {};
@@ -201,19 +262,17 @@ function parseMoneyStr(s) {
   return neg ? -val : val;
 }
 
-/* ---------- data loading ---------- */
+/* ---------- engine <-> universe bridge ---------- */
 
-async function loadUniverse() {
-  const res = await fetch("../data.json");
-  const data = await res.json();
+function refreshUniverseFromEngine() {
+  const world = activeWorld();
   const u = {};
-  for (const [cat, arr] of Object.entries(data.categories || {})) {
-    for (const item of arr) {
-      if (!u[item.ticker]) u[item.ticker] = { ticker: item.ticker, name: item.name, price: item.price, category: cat };
-    }
+  for (const t of Object.values(world.tickers)) {
+    u[t.ticker] = { ticker: t.ticker, name: t.name, price: t.price, category: t.category, sector: t.sector };
   }
-  return u;
+  UNIVERSE = u;
 }
+
 async function loadResearch() {
   try {
     const res = await fetch("../research/data.json");
@@ -227,12 +286,13 @@ async function loadResearch() {
 function universeOptions(selectedTicker) {
   const groups = {};
   for (const t of Object.values(UNIVERSE)) {
-    (groups[t.category] = groups[t.category] || []).push(t);
+    const key = t.sector || t.category;
+    (groups[key] = groups[key] || []).push(t);
   }
   const catLabel = { growth: "Growth", stability: "Stability", nextgen: "Next-Gen", shorts: "Shorts / High-risk" };
   let html = "";
-  for (const [cat, items] of Object.entries(groups)) {
-    html += `<optgroup label="${catLabel[cat] || cat}">`;
+  for (const [key, items] of Object.entries(groups)) {
+    html += `<optgroup label="${catLabel[key] || key}">`;
     for (const t of items.sort((a, b) => a.ticker.localeCompare(b.ticker))) {
       html += `<option value="${t.ticker}" ${t.ticker === selectedTicker ? "selected" : ""}>${t.ticker} \u2014 ${t.name}</option>`;
     }
@@ -322,14 +382,14 @@ function renderHistory(portfolio) {
 
 function renderIndividual() {
   const el = document.getElementById("mode-individual");
-  const p = STATE.individual;
+  const p = worldState().individual;
   const total = portfolioTotalValue(p);
   const holdVal = portfolioHoldingsValue(p);
   const pl = total - p.startCash;
   const plPct = (pl / p.startCash) * 100;
 
   el.innerHTML = `
-    <p class="mode-intro">You're a retail investor with a single account. Buy and sell shares from the Market Scanner watchlist and watch your own P&amp;L.</p>
+    <p class="mode-intro">You're a retail investor with a single account. Buy and sell shares from the active universe and watch your own P&amp;L.</p>
     <div class="stat-grid">
       <div class="stat"><div class="label">Cash</div><div class="value">${fmtMoney(p.cash)}</div></div>
       <div class="stat"><div class="label">Holdings Value</div><div class="value">${fmtMoney(holdVal)}</div></div>
@@ -373,14 +433,14 @@ function renderIndividual() {
   });
   document.getElementById("ind-reset").addEventListener("click", () => {
     if (!confirm("Reset your individual portfolio back to " + fmtMoney(STARTING_CASH_INDIVIDUAL) + " cash? This clears all holdings and history.")) return;
-    STATE.individual = { cash: STARTING_CASH_INDIVIDUAL, startCash: STARTING_CASH_INDIVIDUAL, holdings: {}, history: [] };
+    worldState().individual = { cash: STARTING_CASH_INDIVIDUAL, startCash: STARTING_CASH_INDIVIDUAL, holdings: {}, history: [] };
     saveState(STATE); renderIndividual();
   });
 }
 
 /* ---------- mode: Private Banker ---------- */
 
-function bankerClientList() { return Object.entries(STATE.banker.clients); }
+function bankerClientList() { return Object.entries(worldState().banker.clients); }
 
 function renderBanker() {
   const el = document.getElementById("mode-banker");
@@ -441,8 +501,9 @@ function renderBanker() {
     const risk = document.getElementById("pb-risk").value;
     const aum = Math.max(1000, Number(document.getElementById("pb-aum").value) || STARTING_CASH_CLIENT);
     if (!name) return;
-    const id = "c" + (STATE.banker.nextId++);
-    STATE.banker.clients[id] = { name, risk, cash: aum, startCash: aum, holdings: {}, history: [] };
+    const ws = worldState();
+    const id = "c" + (ws.banker.nextId++);
+    ws.banker.clients[id] = { name, risk, cash: aum, startCash: aum, holdings: {}, history: [] };
     el.dataset.selected = id;
     saveState(STATE); renderBanker();
   });
@@ -472,7 +533,7 @@ function renderBanker() {
     });
     document.getElementById("pb-remove").addEventListener("click", () => {
       if (!confirm(`Remove client "${selPortfolio.name}"? This deletes their holdings and history.`)) return;
-      delete STATE.banker.clients[selId];
+      delete worldState().banker.clients[selId];
       el.dataset.selected = "";
       saveState(STATE); renderBanker();
     });
@@ -537,7 +598,7 @@ function investContribution(plan) {
 
 function renderAdvisor() {
   const el = document.getElementById("mode-advisor");
-  const plans = Object.entries(STATE.advisor.plans);
+  const plans = Object.entries(worldState().advisor.plans);
   const selectedId = el.dataset.selected || (plans[0] ? plans[0][0] : null);
   el.dataset.selected = selectedId || "";
 
@@ -555,7 +616,7 @@ function renderAdvisor() {
   const selected = plans.find(([id]) => id === selectedId);
 
   el.innerHTML = `
-    <p class="mode-intro">You build goal-based plans for clients: a target dollar amount, a time horizon and a risk tolerance map to a suggested asset mix. Fund a plan to actually simulate it against the watchlist and compare to the projection.</p>
+    <p class="mode-intro">You build goal-based plans for clients: a target dollar amount, a time horizon and a risk tolerance map to a suggested asset mix. Fund a plan to actually simulate it against the active universe and compare to the projection.</p>
     <div class="card">
       <h3>Plans</h3>
       ${plans.length ? `<table class="data"><thead><tr><th>Client / Goal</th><th>Risk</th><th>Target</th><th>Horizon</th><th>Projected FV</th><th>Actual Sim Value</th></tr></thead><tbody>${rows}</tbody></table>` : `<p class="empty-note">No plans yet \u2014 create one below.</p>`}
@@ -580,7 +641,8 @@ function renderAdvisor() {
     const name = document.getElementById("adv-name").value.trim();
     if (!name) return;
     const risk = document.getElementById("adv-risk").value;
-    const id = "p" + (STATE.advisor.nextId++);
+    const ws = worldState();
+    const id = "p" + (ws.advisor.nextId++);
     const plan = {
       name, risk,
       target: Math.max(1000, Number(document.getElementById("adv-target").value) || 0),
@@ -592,7 +654,7 @@ function renderAdvisor() {
       startCash: Math.max(0, Number(document.getElementById("adv-lump").value) || 0),
       holdings: {}, history: [], funded: false, monthsContributed: 0,
     };
-    STATE.advisor.plans[id] = plan;
+    ws.advisor.plans[id] = plan;
     el.dataset.selected = id;
     saveState(STATE); renderAdvisor();
   });
@@ -632,7 +694,7 @@ function wireAdvisorPlanDetail() {
   planSelect.addEventListener("change", () => { el.dataset.selected = planSelect.value; renderAdvisor(); });
 
   const id = el.dataset.selected;
-  const plan = STATE.advisor.plans[id];
+  const plan = worldState().advisor.plans[id];
   const fundBtn = document.getElementById("adv-fund");
   if (fundBtn) fundBtn.addEventListener("click", () => {
     fundPlan(plan); saveState(STATE); renderAdvisor();
@@ -643,7 +705,7 @@ function wireAdvisorPlanDetail() {
   });
   document.getElementById("adv-remove").addEventListener("click", () => {
     if (!confirm(`Remove plan "${plan.name}"?`)) return;
-    delete STATE.advisor.plans[id];
+    delete worldState().advisor.plans[id];
     el.dataset.selected = "";
     saveState(STATE); renderAdvisor();
   });
@@ -653,11 +715,23 @@ function wireAdvisorPlanDetail() {
 
 function ibUsableTickers() {
   const out = [];
-  for (const [ticker, c] of Object.entries(RESEARCH)) {
-    const ni = c.financials ? parseMoneyStr(c.financials.net_income) : null;
-    const mc = c.market ? parseMoneyStr(c.market.mktCap) : null;
-    const price = c.market ? c.market.price : null;
-    if (ni !== null && mc !== null && price) out.push({ ticker, name: c.name || (c.market && c.market.name) || ticker, ni, mktCap: mc, price });
+  if (STATE.marketMode === "super") {
+    for (const t of Object.values(ENGINE_SUPER.tickers)) {
+      if (t.netIncome != null && t.shares && t.price) {
+        out.push({ ticker: t.ticker, name: t.name, ni: t.netIncome, mktCap: t.shares * t.price, price: t.price });
+      }
+    }
+  } else {
+    for (const [ticker, c] of Object.entries(RESEARCH)) {
+      if (!c.financials || !c.market) continue;
+      const ni = parseMoneyStr(c.financials.net_income);
+      const snapshotMktCap = parseMoneyStr(c.market.mktCap);
+      const snapshotPrice = c.market.price;
+      const liveTicker = ENGINE_REAL.tickers[ticker];
+      if (ni === null || snapshotMktCap === null || !snapshotPrice || !liveTicker) continue;
+      const shares = snapshotMktCap / snapshotPrice;
+      out.push({ ticker, name: c.name || ticker, ni, mktCap: shares * liveTicker.price, price: liveTicker.price });
+    }
   }
   return out.sort((a, b) => a.ticker.localeCompare(b.ticker));
 }
@@ -740,7 +814,177 @@ function renderIB() {
   });
 }
 
-/* ---------- mode nav + boot ---------- */
+/* ---------- market panel: mode toggle, speed, chart, sparklines ---------- */
+
+function speedPreset() {
+  return MarketEngine.SPEED_PRESETS.find(s => s.key === STATE.speedKey) || MarketEngine.SPEED_PRESETS[2];
+}
+function simDateLabel(world) {
+  return new Date(world.createdAt + world.simMs).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+}
+
+function buildIndexChart(world) {
+  const points = MarketEngine.indexSeries(world);
+  if (points.length < 2) return `<div class="empty-note">Collecting price history&hellip;</div>`;
+  const W = 600, H = 150;
+  const values = points.map((p) => p.v);
+  const minV = Math.min(...values, 100), maxV = Math.max(...values, 100);
+  const padV = (maxV - minV) * 0.12 || 2;
+  const yMin = minV - padV, yMax = maxV + padV;
+  const n = points.length;
+  const xAt = (i) => (n === 1 ? 0 : (i / (n - 1)) * W);
+  const yAt = (v) => H - ((v - yMin) / (yMax - yMin)) * H;
+  const path = points.map((p, i) => `${i === 0 ? "M" : "L"}${xAt(i).toFixed(2)},${yAt(p.v).toFixed(2)}`).join(" ");
+  const baselineY = yAt(100);
+  const last = points[n - 1];
+  const up = last.v >= points[0].v;
+  const color = up ? "var(--pos)" : "var(--neg)";
+  const endX = xAt(n - 1), endY = yAt(last.v);
+
+  return `
+    <div class="chart-card" id="indexChartWrap" data-w="${W}" data-h="${H}" data-ymin="${yMin}" data-ymax="${yMax}">
+      <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" id="indexSvg">
+        <line x1="0" y1="${baselineY.toFixed(2)}" x2="${W}" y2="${baselineY.toFixed(2)}" stroke="var(--border)" stroke-width="1" stroke-dasharray="3,4" />
+        <path d="${path}" fill="none" stroke="${color}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        <circle cx="${endX.toFixed(2)}" cy="${endY.toFixed(2)}" r="4" fill="${color}" stroke="var(--surface)" stroke-width="2" />
+        <line id="crosshair" x1="0" y1="0" x2="0" y2="${H}" stroke="var(--ink-faint)" stroke-width="1" style="display:none" />
+        <circle id="crosshairDot" r="4" fill="var(--ink)" stroke="var(--surface)" stroke-width="2" style="display:none" />
+      </svg>
+      <div class="chart-endlabel" style="color:${color}">${last.v.toFixed(1)}<span style="color:var(--ink-faint);font-weight:400"> idx</span></div>
+      <div class="chart-tooltip" id="chartTooltip" style="display:none"></div>
+    </div>`;
+}
+function wireIndexChartHover(world) {
+  const wrap = document.getElementById("indexChartWrap");
+  if (!wrap) return;
+  const svg = document.getElementById("indexSvg");
+  const tooltip = document.getElementById("chartTooltip");
+  const crosshair = document.getElementById("crosshair");
+  const crosshairDot = document.getElementById("crosshairDot");
+  const points = MarketEngine.indexSeries(world);
+  const W = Number(wrap.dataset.w), H = Number(wrap.dataset.h);
+  const yMin = Number(wrap.dataset.ymin), yMax = Number(wrap.dataset.ymax);
+  const n = points.length;
+  if (n < 2) return;
+  const xAt = (i) => (n === 1 ? 0 : (i / (n - 1)) * W);
+  const yAt = (v) => H - ((v - yMin) / (yMax - yMin)) * H;
+
+  svg.addEventListener("mousemove", (ev) => {
+    const rect = svg.getBoundingClientRect();
+    const relX = ((ev.clientX - rect.left) / rect.width) * W;
+    let idx = Math.round((relX / W) * (n - 1));
+    idx = Math.max(0, Math.min(n - 1, idx));
+    const p = points[idx];
+    const x = xAt(idx), y = yAt(p.v);
+    crosshair.setAttribute("x1", x); crosshair.setAttribute("x2", x); crosshair.style.display = "";
+    crosshairDot.setAttribute("cx", x); crosshairDot.setAttribute("cy", y); crosshairDot.style.display = "";
+    const simYears = p.t / MarketEngine.MS_PER_YEAR;
+    tooltip.style.display = "";
+    tooltip.style.left = `${(ev.clientX - rect.left) + 12}px`;
+    tooltip.style.top = `${(ev.clientY - rect.top) - 8}px`;
+    tooltip.textContent = `${p.v.toFixed(1)} idx \u00b7 +${simYears.toFixed(2)}y elapsed`;
+  });
+  svg.addEventListener("mouseleave", () => {
+    crosshair.style.display = "none"; crosshairDot.style.display = "none"; tooltip.style.display = "none";
+  });
+}
+
+function buildSparklineGrid(world) {
+  const list = Object.values(world.tickers).sort((a, b) => a.ticker.localeCompare(b.ticker));
+  let html = `<div class="sparkline-grid">`;
+  for (const t of list) {
+    const hist = t.history.slice(-40);
+    const first = hist[0] ? hist[0].p : t.price;
+    const chgPct = ((t.price - first) / first) * 100;
+    const up = chgPct >= 0;
+    const color = up ? "var(--pos)" : "var(--neg)";
+    let sparkSvg = "";
+    if (hist.length >= 2) {
+      const vals = hist.map((h) => h.p);
+      const minV = Math.min(...vals), maxV = Math.max(...vals);
+      const range = maxV - minV || 1;
+      const W = 100, H = 28;
+      const pts = hist.map((h, i) => {
+        const x = (i / (hist.length - 1)) * W;
+        const y = H - ((h.p - minV) / range) * H;
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      }).join(" ");
+      sparkSvg = `<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" /></svg>`;
+    }
+    html += `
+      <div class="spark-card" title="${t.ticker}: ${fmtMoney(t.price)} (${fmtPct(chgPct)})">
+        <div class="spark-top"><span class="spark-ticker">${t.ticker}</span><span class="spark-chg ${pnlClass(chgPct)}">${fmtPct(chgPct)}</span></div>
+        ${sparkSvg}
+        <div class="spark-price">${fmtMoney(t.price)}</div>
+      </div>`;
+  }
+  html += `</div>`;
+  return html;
+}
+
+function renderMarketPanel() {
+  const el = document.getElementById("marketPanel");
+  const world = activeWorld();
+  const speed = speedPreset();
+  const speedOpts = MarketEngine.SPEED_PRESETS.map((s) => `<option value="${s.key}" ${s.key === STATE.speedKey ? "selected" : ""}>${s.label}</option>`).join("");
+  const tickerCount = Object.keys(world.tickers).length;
+
+  el.innerHTML = `
+    <div class="market-head">
+      <div class="mode-toggle" id="marketModeToggle">
+        <button data-market="real" class="${STATE.marketMode === "real" ? "active" : ""}">Real Companies</button>
+        <button data-market="super" class="${STATE.marketMode === "super" ? "active" : ""}">Super Simulator</button>
+      </div>
+      <div class="field-row" style="margin:0">
+        <div class="field"><label>Speed</label><select id="speedSelect">${speedOpts}</select></div>
+        <button class="action ghost" id="pauseBtn">${STATE.running ? "Pause" : "Resume"}</button>
+        ${STATE.marketMode === "super" ? `<button class="action ghost" id="newUniverseBtn">New Fake Universe</button>` : ""}
+      </div>
+    </div>
+    <div class="sim-clock">Sim date: <b>${simDateLabel(world)}</b> &middot; ${tickerCount} companies &middot; ${STATE.running ? "running" : "paused"} at <b>${speed.label}</b></div>
+    ${buildIndexChart(world)}
+    ${buildSparklineGrid(world)}
+    <div class="note" style="margin-top:14px">
+      <strong>${STATE.marketMode === "real" ? "Real Companies mode:" : "Super Simulator mode:"}</strong>
+      ${STATE.marketMode === "real"
+        ? "starts from each company's real Market Scanner snapshot price, then moves forward using a random-walk model calibrated from that same snapshot's own beta/growth/momentum \u2014 a disclosed model, <strong>not a replay of actual historical prices</strong> (this sandbox has no historical time-series to replay)."
+        : "an entirely fictional universe \u2014 fake tickers, names and financials \u2014 so you can crank the speed and test ideas with zero connection to any real company."}
+    </div>`;
+
+  document.getElementById("speedSelect").addEventListener("change", (ev) => {
+    STATE.speedKey = ev.target.value; saveState(STATE);
+  });
+  document.getElementById("pauseBtn").addEventListener("click", () => {
+    STATE.running = !STATE.running; saveState(STATE); renderMarketPanel();
+  });
+  for (const btn of document.querySelectorAll("#marketModeToggle button")) {
+    btn.addEventListener("click", () => {
+      if (btn.dataset.market === STATE.marketMode) return;
+      STATE.marketMode = btn.dataset.market;
+      saveState(STATE);
+      activeWorld().lastRealMs = Date.now();
+      refreshUniverseFromEngine();
+      renderMarketPanel();
+      const m = MODES.find((m) => m.key === CURRENT_MODE);
+      if (m) m.render();
+    });
+  }
+  const newUniverseBtn = document.getElementById("newUniverseBtn");
+  if (newUniverseBtn) newUniverseBtn.addEventListener("click", () => {
+    if (!confirm("Generate a brand-new fake company universe? This resets all Super Simulator portfolios, clients and plans.")) return;
+    ENGINE_SUPER = MarketEngine.createSuperWorld(SUPER_UNIVERSE_SIZE);
+    STATE.worlds.super = freshWorldState();
+    saveState(STATE); saveEngineState();
+    refreshUniverseFromEngine();
+    renderMarketPanel();
+    const m = MODES.find((m) => m.key === CURRENT_MODE);
+    if (m) m.render();
+  });
+
+  wireIndexChartHover(world);
+}
+
+/* ---------- mode nav, tick loop + boot ---------- */
 
 const MODES = [
   { key: "individual", label: "Individual Investor", render: renderIndividual },
@@ -750,6 +994,7 @@ const MODES = [
 ];
 
 function setMode(key) {
+  CURRENT_MODE = key;
   for (const m of MODES) {
     document.getElementById("mode-" + m.key).classList.toggle("active", m.key === key);
   }
@@ -757,20 +1002,43 @@ function setMode(key) {
     btn.classList.toggle("active", btn.dataset.mode === key);
   }
   try { localStorage.setItem("simMode.v1", key); } catch (e) {}
-  const m = MODES.find(m => m.key === key);
+  const m = MODES.find((m) => m.key === key);
   if (m) m.render();
+}
+
+function runTick() {
+  const world = activeWorld();
+  const speed = speedPreset();
+  const now = Date.now();
+  if (STATE.running) {
+    MarketEngine.tick(world, speed.realMsPerYear, now);
+  } else {
+    world.lastRealMs = now;
+  }
+  refreshUniverseFromEngine();
+  if (!isEditingForm()) {
+    renderMarketPanel();
+    const m = MODES.find((m) => m.key === CURRENT_MODE);
+    if (m) m.render();
+  }
+  tickCounter++;
+  if (tickCounter % 5 === 0) saveEngineState();
 }
 
 async function boot() {
   try {
-    UNIVERSE = await loadUniverse();
+    SCANNER_DATA = await (await fetch("../data.json")).json();
   } catch (e) {
     document.querySelector(".wrap").insertAdjacentHTML("beforeend", `<p style="color:var(--neg)">Could not load ../data.json \u2014 ${e.message}</p>`);
     return;
   }
   RESEARCH = await loadResearch();
 
-  document.getElementById("modeNav").innerHTML = MODES.map(m =>
+  const saved = loadEngineState();
+  ENGINE_REAL = (saved && saved.real) || MarketEngine.createRealWorld(SCANNER_DATA);
+  ENGINE_SUPER = (saved && saved.super) || MarketEngine.createSuperWorld(SUPER_UNIVERSE_SIZE);
+
+  document.getElementById("modeNav").innerHTML = MODES.map((m) =>
     `<button data-mode="${m.key}">${m.label}</button>`).join("");
   for (const btn of document.querySelectorAll("nav.modes button")) {
     btn.addEventListener("click", () => setMode(btn.dataset.mode));
@@ -780,8 +1048,15 @@ async function boot() {
   try { startMode = localStorage.getItem("simMode.v1") || "individual"; } catch (e) {}
   const urlMode = new URLSearchParams(window.location.search).get("mode");
   if (urlMode) startMode = urlMode;
-  if (!MODES.some(m => m.key === startMode)) startMode = "individual";
+  if (!MODES.some((m) => m.key === startMode)) startMode = "individual";
+
+  refreshUniverseFromEngine();
   setMode(startMode);
+  renderMarketPanel();
+
+  setInterval(runTick, TICK_INTERVAL_MS);
+  window.addEventListener("beforeunload", saveEngineState);
+  document.addEventListener("visibilitychange", () => { if (document.hidden) saveEngineState(); });
 }
 
 boot();
