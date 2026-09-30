@@ -32,6 +32,8 @@ class Perm(str, Enum):
     MANAGE = "manage"          # memberships, grants, restriction labels
     VIEW_AUDIT = "view_audit"
     DESTROY = "destroy"        # crypto-shred the case
+    LEGAL_PROPOSE = "legal_propose"  # draft an outside legal-database search
+    LEGAL_APPROVE = "legal_approve"  # approve the exact text of an outside search
 
 
 class Role(str, Enum):
@@ -43,8 +45,9 @@ class Role(str, Enum):
 
 ROLE_PERMS: dict[Role, frozenset[Perm]] = {
     Role.CASE_ADMIN: frozenset(Perm),
-    Role.ATTORNEY: frozenset({Perm.VIEW, Perm.SEARCH, Perm.EXPORT, Perm.MARK, Perm.INGEST}),
-    Role.PARALEGAL: frozenset({Perm.VIEW, Perm.SEARCH, Perm.EXPORT, Perm.MARK, Perm.INGEST}),
+    Role.ATTORNEY: frozenset({Perm.VIEW, Perm.SEARCH, Perm.EXPORT, Perm.MARK, Perm.INGEST,
+                              Perm.LEGAL_PROPOSE, Perm.LEGAL_APPROVE}),
+    Role.PARALEGAL: frozenset({Perm.VIEW, Perm.SEARCH, Perm.EXPORT, Perm.MARK, Perm.INGEST, Perm.LEGAL_PROPOSE}),
     Role.REVIEWER: frozenset({Perm.VIEW, Perm.SEARCH, Perm.MARK}),
 }
 

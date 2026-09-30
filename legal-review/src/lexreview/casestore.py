@@ -128,6 +128,40 @@ CREATE TABLE IF NOT EXISTS answers (
     question TEXT NOT NULL,
     result_json TEXT NOT NULL
 );
+-- Phase 5: outside legal-database searches. The approval is bound to the
+-- SHA-256 of the exact query text and the exact destination list.
+CREATE TABLE IF NOT EXISTS legal_queries (
+    query_id TEXT PRIMARY KEY,
+    text TEXT NOT NULL,
+    text_sha256 TEXT NOT NULL,
+    sources TEXT NOT NULL,
+    jurisdictions TEXT NOT NULL,
+    warnings TEXT NOT NULL,
+    status TEXT NOT NULL CHECK (status IN ('proposed', 'approved', 'rejected', 'sent')),
+    proposed_by TEXT NOT NULL,
+    proposed_at REAL NOT NULL,
+    decided_by TEXT,
+    decided_at REAL,
+    approved_sha256 TEXT,
+    sent_at REAL,
+    source_status TEXT
+);
+CREATE TABLE IF NOT EXISTS legal_leads (
+    lead_id INTEGER PRIMARY KEY,
+    query_id TEXT NOT NULL REFERENCES legal_queries(query_id),
+    source TEXT NOT NULL,
+    source_id TEXT NOT NULL,
+    kind TEXT NOT NULL,
+    title TEXT NOT NULL,
+    citation TEXT,
+    jurisdiction TEXT NOT NULL,
+    body TEXT,
+    date TEXT,
+    url TEXT NOT NULL,
+    snippet TEXT,
+    retrieved_at REAL NOT NULL,
+    verified_at REAL NOT NULL
+);
 CREATE TABLE IF NOT EXISTS marks (
     mark_id INTEGER PRIMARY KEY,
     doc_id TEXT NOT NULL REFERENCES documents(doc_id),
