@@ -118,3 +118,17 @@ def test_search_query_not_in_url(ui, ingested):
     tok = as_user(ui, w, "bob")
     r = ui.post(f"/ui/cases/{w.case_a}/search", data={"csrf": tok, "q": "secretstrategyterm"})
     assert "secretstrategyterm" not in "".join(re.findall(r'href="([^"]+)"', r.text))
+
+
+def test_timeline_page_and_filters(ui, ingested):
+    w = ingested
+    tok = as_user(ui, w, "bob")
+    r = ui.get(f"/ui/cases/{w.case_a}/timeline")
+    assert r.status_code == 200 and "Timeline" in r.text and "could not be placed" in r.text
+    assert re.search(r'href="/ui/cases/[^"]+\?hl=\d+-\d+#hl"', r.text)
+    assert "<script" not in r.text.lower()
+    f = ui.post(f"/ui/cases/{w.case_a}/timeline", data={"csrf": tok, "from": "2023-04-12", "to": "2023-04-13"})
+    dates = re.findall(r"<td><b>(\d{4}-\d{2}-\d{2})", f.text)
+    assert dates and all("2023-04-12" <= d <= "2023-04-13" for d in dates)
+    e = ui.get(f"/ui/cases/{w.case_a}/entities")
+    assert "Dana Okafor" in e.text and e.status_code == 200

@@ -226,6 +226,11 @@ EMAILS = [
      "Dana, the recorder calibration certificates for Meridian trailers are due in February. Priya", ()),
     ("e14", datetime(2023, 9, 14, 16, 0), "voss", "okafor", "Q3 budget",
      "Dana, please send the Q3 opex forecast. Elaine", ()),
+    # Phase 3 extraction edge cases: ambiguous numeric date, two-digit year,
+    # relative date, a person known only by an honorific, a corporate name.
+    ("e15", datetime(2023, 3, 6, 9, 30), "raman", "okafor", "Recorder calibration 4502",
+     "Dana, Ms. Jane Whitcomb of Calibra Testing Services, Inc. calibrated the recorder on trailer 4502 "
+     "on 03/04/2023. The previous check was last Tuesday. Next calibration is due 9/1/23. Priya", ()),
 ]
 
 
