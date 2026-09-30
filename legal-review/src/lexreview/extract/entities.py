@@ -26,7 +26,7 @@ from email.utils import getaddresses
 _NAME = r"[A-Z][a-z'\-]{1,20}(?:\s[A-Z]\.)?\s[A-Z][a-z'\-]{1,24}"
 _HONORIFIC = re.compile(r"\b(?:Mr|Ms|Mrs|Dr|Judge|Hon)\.?\s(" + r"[A-Z][a-z'\-]{1,20}(?:\s[A-Z][a-z'\-]{1,24})?" + r")")
 _DEPO = re.compile(r"DEPOSITION OF ([A-Z][A-Z'\-]{1,20}\s[A-Z][A-Z'\-]{1,24})")
-_ROLE = re.compile(r"\b(?:[Dd]river|[Dd]ispatcher|[Mm]anager|Director(?: of [A-Z][a-z]{1,20})?|CFO|CEO|COO|[Ww]itness|[Dd]eponent|[Cc]ounsel|[Ss]upervisor),?\s(" + _NAME + r")")
+_ROLE = re.compile(r"\b(?:[Dd]river|[Dd]ispatcher|[Mm]anager|Director(?: of [A-Z][a-z]{1,20})?|CFO|CEO|COO|[Ww]itness|[Dd]eponent|[Cc]ounsel|[Ss]upervisor)\s(" + _NAME + r")")
 _SIGNED = re.compile(r"\bSigned(?:[^.\n]{0,40}?\bby)?:?\s(" + _NAME + r")(?:,[^.\n]{0,40})?(?:\sand\s(" + _NAME + r"))?")
 _SIGNED_LIST = re.compile(r"(" + _NAME + r"),\s(?:CFO|CEO|COO|Director|President|Manager)")
 _SUFFIX = r"(?:Inc|LLC|L\.L\.C|Corp|Corporation|Company|Co|Ltd|LLP|LP|PLLC|P\.C)"

@@ -288,7 +288,7 @@ class App:
         return counts
 
     def timeline(self, ctx: CaseAccessContext, date_from=None, date_to=None, entity_id: int | None = None,
-                 tag: str | None = None) -> dict:
+                 tag: str | None = None, include_rows: bool = False) -> dict:
         """Chronology of dated events; every entry cites and re-verifies its
         source sentence. Carries the coverage report and the list of dates
         that could not be placed."""
@@ -301,7 +301,7 @@ class App:
             self.audit.record(ctx.user_id, "timeline", "denied", case_id=ctx.case_id)
             raise
         store = self.store(ctx)
-        res = timeline(store, ctx, date_from, date_to, entity_id, tag)
+        res = timeline(store, ctx, date_from, date_to, entity_id, tag, include_rows)
         rep = coverage_report(store, ctx)
         res["coverage"] = rep
         res["coverage_summary"] = coverage_summary_line(rep)

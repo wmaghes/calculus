@@ -52,6 +52,7 @@ def run_extraction(store: CaseStore, ctx: CaseAccessContext) -> dict:
         f"SELECT doc_id, parent_id, kind, meta_json FROM documents WHERE status IN ({marks})",  # nosec B608 - constant clause, bound params
         SEARCHABLE).fetchall()
     meta = {d[0]: json.loads(d[3] or "{}") for d in docs}
+    kinds = {d[0]: d[2] for d in docs}
     all_parents = dict(c.execute("SELECT doc_id, parent_id FROM documents").fetchall())
     all_meta = {r[0]: json.loads(r[1] or "{}") for r in c.execute("SELECT doc_id, meta_json FROM documents")}
     pages: dict[str, list[tuple[int, str]]] = {}
@@ -62,8 +63,10 @@ def run_extraction(store: CaseStore, ctx: CaseAccessContext) -> dict:
 
     all_texts = [t for pl in pages.values() for _, t in pl]
     email_meta = [m for m in meta.values() if "from" in m or "to" in m]
-    people = sorted(people_candidates(all_texts, email_meta))
     orgs = org_candidates(all_texts)
+    # A "person" that is really an organization name or alias is dropped.
+    org_names = {a for aliases in orgs.values() for a in aliases}
+    people = sorted(n for n in people_candidates(all_texts, email_meta) if n not in org_names)
     surnames: dict[str, list[str]] = {}
     for n in people:
         surnames.setdefault(n.split()[-1], []).append(n)
@@ -138,7 +141,12 @@ def run_extraction(store: CaseStore, ctx: CaseAccessContext) -> dict:
                         continue
                     seen.add(key)
                     seg_text = text[seg[0]:seg[1]]
-                    source = "email_header" if is_email_first and seg_text.startswith("From:") else "text"
+                    if is_email_first and seg_text.startswith("From:"):
+                        source = "email_header"
+                    elif "\t" in seg_text or kinds[doc_id] == "xlsx":
+                        source = "table_row"
+                    else:
+                        source = "text"
                     eid = c.execute(
                         "INSERT INTO events (doc_id, page_no, seg_start, seg_end, date_start, date_end, precision, "
                         "date_char_start, date_char_end, flags, tags, source) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",

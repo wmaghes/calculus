@@ -40,17 +40,27 @@ def segments(text: str) -> list[tuple[int, int]]:
                 out.append(t)
             continue
         buf_start = None
+        unit: tuple[int, int] | None = None  # open transcript/table/header line
         for a, b in lines:
             line = text[a:b]
             if "\t" in line or _LINE_UNIT.match(line) or _HEADER.match(line):
                 if buf_start is not None:
                     out.extend(_sentences(text, buf_start, a))
                     buf_start = None
-                t = _trim(text, a, b)
-                if t:
-                    out.append(t)
-            elif buf_start is None:
-                buf_start = a
+                if unit:
+                    out.append(unit)
+                unit = _trim(text, a, b)
+            elif unit and not text[unit[0]:unit[1]].rstrip().endswith((".", "?", "!", ":")) and "\t" not in text[unit[0]:unit[1]]:
+                # Wrapped continuation of a transcript line.
+                unit = _trim(text, unit[0], b) or unit
+            else:
+                if unit:
+                    out.append(unit)
+                    unit = None
+                if buf_start is None:
+                    buf_start = a
+        if unit:
+            out.append(unit)
         if buf_start is not None:
             out.extend(_sentences(text, buf_start, pe))
     return out

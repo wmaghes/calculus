@@ -38,7 +38,8 @@ PATTERNS = [  # (name, regex) in priority order; earlier wins on overlap
     ("month_day_year", re.compile(_M + r"\.?\s{1,3}(\d{1,2})" + _ORD + r",?\s{1,3}" + _YEAR + r"\b")),
     ("day_month_year", re.compile(r"\b(\d{1,2})" + _ORD + r"\s{1,3}" + _M + r"\.?,?\s{1,3}" + _YEAR + r"\b")),
     ("month_year", re.compile(_M + r"\.?,?\s{1,3}" + _YEAR + r"\b")),
-    ("month_day", re.compile(_M + r"\.?\s{1,3}(\d{1,2})" + _ORD + r"\b")),
+    # No year: weakest pattern, so it may not span a line break ("in May.\n4 Q. ...").
+    ("month_day", re.compile(_M + r"\.?[ \t]{1,3}(\d{1,2})" + _ORD + r"\b")),
 ]
 _RELATIVE = re.compile(
     r"\b(yesterday|today|tomorrow|tonight|overnight|"

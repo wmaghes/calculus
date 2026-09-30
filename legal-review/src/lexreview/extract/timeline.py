@@ -32,7 +32,9 @@ def entities(store: CaseStore, ctx: CaseAccessContext) -> list[dict]:
 
 
 def timeline(store: CaseStore, ctx: CaseAccessContext, date_from: date | None = None, date_to: date | None = None,
-             entity_id: int | None = None, tag: str | None = None) -> dict:
+             entity_id: int | None = None, tag: str | None = None, include_rows: bool = False) -> dict:
+    """Dated spreadsheet/table rows are hidden unless include_rows is set,
+    but always counted in `hidden_table_rows` (never a silent gap)."""
     store._ctx(ctx, Perm.SEARCH)
     vis, vparams = store.visibility_sql(ctx)
     marks = ",".join("?" * len(SEARCHABLE))
@@ -61,7 +63,7 @@ def timeline(store: CaseStore, ctx: CaseAccessContext, date_from: date | None = 
                 f"SELECT ee.event_id, e.kind, e.name FROM event_entities ee JOIN entities e ON e.entity_id = ee.entity_id "  # nosec B608 - constant clause, bound params
                 f"WHERE ee.event_id IN ({q}) ORDER BY e.kind DESC, e.name", ids):
             names.setdefault(ev_id, []).append({"kind": kind, "name": name})
-    out, integrity_failures = [], 0
+    out, integrity_failures, hidden_rows = [], 0, 0
     for (ev_id, doc_id, page_no, ss, se, ds, de, prec, dcs, dce, flags, tags, source, sname, parent, locator,
          text, ocr, ocr_conf) in rows:
         if not (0 <= ss <= dcs < dce <= se <= len(text)):
@@ -69,6 +71,9 @@ def timeline(store: CaseStore, ctx: CaseAccessContext, date_from: date | None = 
             continue
         tags_l = json.loads(tags)
         if tag and tag not in tags_l:
+            continue
+        if source == "table_row" and not include_rows:
+            hidden_rows += 1
             continue
         out.append({
             "event_id": ev_id, "date": ds if ds == de else f"{ds}..{de}", "date_start": ds, "date_end": de,
@@ -89,4 +94,5 @@ def timeline(store: CaseStore, ctx: CaseAccessContext, date_from: date | None = 
         "reason": "relative expression" if r[6] == "relative" else "no year could be determined or the date is invalid",
         "link": viewer_link(ctx.case_id, r[0], r[1], r[4], r[5]),
     } for r in unplaced]
-    return {"events": out, "unplaced": unplaced_out, "integrity_failures": integrity_failures}
+    return {"events": out, "unplaced": unplaced_out, "integrity_failures": integrity_failures,
+            "hidden_table_rows": hidden_rows}
