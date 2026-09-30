@@ -1,16 +1,16 @@
 {
-  "generated": "2026-09-29",
+  "generated": "2026-09-30",
   "categories": {
     "growth": [
       {
         "ticker": "NVDA",
         "name": "NVIDIA",
-        "price": 228.86,
+        "price": 231.14,
         "mktCap": "$5.42T",
         "metric_label": "1-day price change",
-        "metric": 1.68,
+        "metric": 1.0,
         "conviction": 5,
-        "blurb": "AI GPU dominance; FY26 revenue +65% YoY; +1.7% today, still near its highs, Street sees further upside.",
+        "blurb": "AI GPU dominance; FY26 revenue +65% YoY; still near its highs, Street sees further upside.",
         "rating": "Strong Buy"
       },
       {
@@ -28,11 +28,11 @@
         "ticker": "SHOP",
         "name": "Shopify",
         "price": 140.0,
-        "mktCap": "$186.8B",
+        "mktCap": "$265.0B",
         "metric_label": "1-day price change",
-        "metric": 15.0,
+        "metric": 0.0,
         "conviction": 4,
-        "blurb": "E-commerce infrastructure grower; jumped to a new range around $140, up sharply from last week's ~$120.",
+        "blurb": "E-commerce infrastructure grower; holding its jump to a new range around $140, up sharply from two weeks ago's ~$120.",
         "rating": "Buy"
       },
       {
@@ -60,12 +60,12 @@
       {
         "ticker": "AVGO",
         "name": "Broadcom",
-        "price": 349.57,
-        "mktCap": "$1.68T",
+        "price": 355.1,
+        "mktCap": "$1.67T",
         "metric_label": "1-day price change",
-        "metric": -0.92,
+        "metric": 1.58,
         "conviction": 4,
-        "blurb": "AI networking/custom-silicon leader; -0.9% today, still up strongly over the past couple of weeks.",
+        "blurb": "AI networking/custom-silicon leader; +1.6% today, still up strongly over the past couple of weeks.",
         "rating": "Buy"
       },
       {
@@ -74,7 +74,7 @@
         "price": 1712.89,
         "mktCap": "$260.3B",
         "metric_label": "1-day price change",
-        "metric": -1.2,
+        "metric": 0.98,
         "conviction": 4,
         "blurb": "2026's best-performing large-cap on AI-driven flash/HBM memory demand; volatile day-to-day but still near its highs \u2014 a reminder that momentum this extreme cuts both ways.",
         "rating": "Momentum"
@@ -95,74 +95,74 @@
       {
         "ticker": "MCD",
         "name": "McDonald's",
-        "price": 233.6,
+        "price": 233.98,
         "mktCap": null,
         "metric_label": "Beta (5yr)",
-        "metric": 0.29,
-        "divYield": 3.15,
+        "metric": 0.44,
+        "divYield": 3.26,
         "blurb": "Franchise-driven cash flows; long multi-decade dividend growth streak.",
         "streak": "18+ yrs",
-        "score": 92.1
+        "score": 91.3
       },
       {
         "ticker": "PG",
         "name": "Procter & Gamble",
-        "price": 145.41,
+        "price": 148.34,
         "mktCap": null,
         "metric_label": "Beta (5yr)",
-        "metric": 0.39,
-        "divYield": 2.98,
+        "metric": 0.37,
+        "divYield": 2.88,
         "blurb": "70 consecutive years of dividend increases; 136 years of uninterrupted dividends.",
         "streak": "70 yrs",
-        "score": 88.2
-      },
-      {
-        "ticker": "XOM",
-        "name": "ExxonMobil",
-        "price": 158.3,
-        "mktCap": "$681.3B",
-        "metric_label": "Beta (5yr)",
-        "metric": 0.21,
-        "divYield": 2.6,
-        "blurb": "Low-beta energy major; steady cash generation and buybacks.",
-        "streak": "\u2014",
-        "score": 85.1
+        "score": 86.6
       },
       {
         "ticker": "IBM",
         "name": "IBM",
-        "price": 220.67,
+        "price": 219.76,
         "mktCap": "$234.6B",
         "metric_label": "Beta (5yr)",
         "metric": 0.71,
-        "divYield": 2.85,
-        "blurb": "31 years of dividend growth; enterprise AI/hybrid-cloud pivot. Just upgraded to Buy on dividend strength; -2.2% today.",
+        "divYield": 3.05,
+        "blurb": "31 years of dividend growth; enterprise AI/hybrid-cloud pivot. Recently upgraded to Buy on dividend strength.",
         "streak": "31 yrs",
-        "score": 81.9
+        "score": 84.5
+      },
+      {
+        "ticker": "XOM",
+        "name": "ExxonMobil",
+        "price": 164.0,
+        "mktCap": "$681.3B",
+        "metric_label": "Beta (5yr)",
+        "metric": 0.17,
+        "divYield": 2.55,
+        "blurb": "Low-beta energy major; steady cash generation and buybacks.",
+        "streak": "\u2014",
+        "score": 84.4
       },
       {
         "ticker": "KO",
         "name": "Coca-Cola",
-        "price": 87.5,
+        "price": 87.18,
         "mktCap": "$381.7B",
         "metric_label": "Beta (5yr)",
         "metric": 0.34,
         "divYield": 2.41,
         "blurb": "Global beverage staple with highly predictable cash flows.",
         "streak": "60+ yrs",
-        "score": 80.5
+        "score": 80.1
       },
       {
         "ticker": "JNJ",
         "name": "Johnson & Johnson",
-        "price": 272.29,
+        "price": 267.48,
         "mktCap": null,
         "metric_label": "Beta (5yr)",
-        "metric": 0.2,
-        "divYield": 1.98,
+        "metric": 0.23,
+        "divYield": 2.0,
         "blurb": "64 consecutive years of dividend increases; healthcare defensiveness.",
         "streak": "64 yrs",
-        "score": 76.0
+        "score": 75.5
       },
       {
         "ticker": "WMT",
@@ -171,10 +171,10 @@
         "mktCap": "$850.0B",
         "metric_label": "Beta (5yr)",
         "metric": 0.6,
-        "divYield": 0.92,
+        "divYield": 0.91,
         "blurb": "Retail scale leader; low beta, resilient through downturns; dividend just hit its 53rd straight annual increase.",
         "streak": "53 yrs",
-        "score": 54.8
+        "score": 54.3
       },
       {
         "ticker": "PEP",
@@ -182,8 +182,8 @@
         "price": 128.63,
         "mktCap": "$212.2B",
         "metric_label": "Dividend yield",
-        "metric": 4.6,
-        "divYield": 4.6,
+        "metric": 4.61,
+        "divYield": 4.61,
         "blurb": "Highest yield of the group, now near a two-year high; diversified snacks & beverages.",
         "streak": "50+ yrs",
         "score": 40.0
@@ -204,12 +204,12 @@
       {
         "ticker": "IONQ",
         "name": "IonQ",
-        "price": 46.27,
+        "price": 43.91,
         "mktCap": "$14.7B",
         "metric_label": "Revenue growth (Q2 2026)",
         "metric": 287,
         "conviction": 5,
-        "blurb": "Trapped-ion quantum computing leader; record Q2 revenue +287% YoY to $80M, raised FY26 guidance to $280-290M with ~$3B cash on hand; +1.7% today amid rising options activity. Strong Buy consensus with $67 average target (+46% upside).",
+        "blurb": "Trapped-ion quantum computing leader; record Q2 revenue +287% YoY to $80M, raised FY26 guidance to $280-290M with ~$3B cash on hand; BofA just initiated coverage Buy ($60 target). Strong Buy consensus with $67 average target (+46% upside).",
         "theme": "Quantum computing"
       },
       {
