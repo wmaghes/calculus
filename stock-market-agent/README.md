@@ -46,6 +46,41 @@ you already run periodic jobs, e.g. a daily cron entry:
 or a scheduled GitHub Actions workflow that runs `run.py` and commits/publishes
 the refreshed `dashboard/` folder (e.g. to GitHub Pages).
 
+## Research Analyst Agent
+
+`research-analyst/` is a companion agent that answers questions about a
+company's **10-K financials** (revenue, margins, net income, balance sheet)
+and its **market data & ratios** (price, P/E, P/B, P/S, dividend yield, beta,
+52-week range) for every ticker on the watchlist above, and publishes the
+results as a small static site at `dashboard/research/`.
+
+| Script | Purpose |
+|---|---|
+| `research-analyst/fetch_10k.py` | Pulls the latest 10-K's key XBRL facts (revenue, margins, assets, debt) per company from SEC EDGAR's free `data.sec.gov` company-facts API — no API key, but requires a real internet connection and a descriptive `User-Agent` per SEC's fair-access policy. |
+| `research-analyst/fetch_market_ratios.py` | Pulls price, P/E, P/B, P/S, PEG, dividend yield, beta, and 52-week range per ticker via yfinance. |
+| `research-analyst/generate_research_pages.py` | Renders `dashboard/research/<TICKER>/financials.html` and `.../market.html` for every company, plus a `dashboard/research/index.html` hub. |
+
+Each company gets **two separate pages**: a Financials page (sourced from its
+10-K) and a Market Data page (live price/ratios, reusing the scanner's own
+`dashboard/data.json` where possible so the two tools stay consistent). The
+main dashboard links to the research hub, and each research page links back.
+
+Run it (from an environment with normal internet access) with:
+
+```bash
+cd research-analyst
+python3 fetch_10k.py
+python3 fetch_market_ratios.py
+python3 generate_research_pages.py
+```
+
+This sandbox can't reach SEC EDGAR or yfinance either (same network
+restriction as the scanner — see below), so the checked-in
+`dashboard/research/` pages were built from a one-time `assemble_data.py`
+pass using web-search-grounded 10-K and ratio lookups instead. Ask about a
+company's financials or ratios in chat and I'll refresh its two pages the
+same way.
+
 ## Scoring methodology
 
 - **Growth and Next-Gen Growth are ranked by an explicit conviction tier (1–5),
