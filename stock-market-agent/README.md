@@ -109,6 +109,26 @@ onward) are the real, unrestricted-network implementation — run them from any
 normal machine, CI runner, or server to get a full live S&P 500 + Nasdaq-100
 scan.
 
+## Roadmap: investing-education platform
+
+The long-term goal is a teaching tool covering how investing works for
+different professional perspectives, not just individual investors. The
+planned next phase is a third tab — a **Stock Market Simulation** — alongside
+the Scanner and Research Analyst tabs, with selectable modes that change what
+the simulator exposes:
+
+- **Individual investor** — basic buy/sell, portfolio tracking, simple
+  performance metrics.
+- **Private banker** — managing model portfolios across multiple simulated
+  clients with different risk profiles/goals.
+- **Financial advisor** — client-facing planning tools (goal-based investing,
+  risk tolerance, rebalancing recommendations).
+- **Investment banker** — deal-oriented mechanics (valuation, underwriting,
+  M&A-style scenarios) rather than plain portfolio management.
+
+This is intentionally deferred until the Scanner and Research Analyst tabs are
+considered finished; not yet started.
+
 ## Not financial advice
 
 This tool surfaces public data and a transparent scoring formula for research
