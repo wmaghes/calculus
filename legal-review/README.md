@@ -1,7 +1,7 @@
 # lexreview — citation-backed discovery review assistant
 
-**Status: development build, Phases 1-2 of 5 done (ingestion + security
-foundation; hybrid search + reviewer web app). Synthetic data only. Not
+**Status: development build, Phases 1-3 of 5 done (ingestion + security
+foundation; hybrid search + reviewer web app; extraction + cited timeline). Synthetic data only. Not
 approved for real client data.** Decisions are logged in [DECISIONS.md](DECISIONS.md).
 
 lexreview helps attorneys, paralegals and reviewers organize large discovery
@@ -13,7 +13,7 @@ Before any real data is used, read [SECURITY.md](SECURITY.md) (residual risks
 and open items) and [PENTEST_AND_COUNSEL_REVIEW.md](PENTEST_AND_COUNSEL_REVIEW.md).
 Nothing in this repository claims the system is "secure" or "leak-proof".
 
-## What Phases 1-2 do
+## What Phases 1-3 do
 
 | Capability | Where |
 |---|---|
@@ -37,8 +37,11 @@ Nothing in this repository claims the system is "secure" or "leak-proof".
 | Confidence bands from absolute evidence (term coverage + semantic similarity + OCR quality); "Not found in the reviewed documents." | `search/hybrid.py` |
 | Reviewer web app: search, jump-to-passage viewer with highlight, copyable location, original page image (rendered in the sandbox), Relevant/Not relevant marks | `web.py` |
 | Queries stored only inside the encrypted case DB; audit keeps a keyed digest | `casestore.py`, `app.py` |
+| **Phase 3:** rule-based extraction of dates (with precision and flags), people, organizations, and dated events; every item is a span in stored text | `extract/` |
+| Timeline: filter by date range, person/org, topic; every entry quotes and links its source sentence and is re-verified; unplaceable dates listed; table rows hidden but counted | `extract/timeline.py`, `web.py` |
+| Timeline export (CSV/PDF, watermarked) | `export.py` |
 
-Not yet built (later phases): extraction/timeline (3), cited Q&A and
+Not yet built (later phases): cited Q&A and
 instruction-driven ranking with the local model (4), legal-authority leads
 for Ohio and Michigan with human-approved outbound queries (5).
 
@@ -75,6 +78,9 @@ lexreview page <case> <doc_id> <page>
 lexreview verify-quote <case> <doc_id> <page> "exact passage"
 lexreview search <case> "find everything about temperature excursions in April"
 lexreview mark <case> <doc_id> relevant --page 4
+lexreview entities <case>
+lexreview timeline <case> --from 2023-03-01 --to 2023-06-30 [--entity-id N] [--rows]
+lexreview export <case> timeline csv --out ./exports
 lexreview export <case> coverage pdf --out ./exports
 
 # Reviewer web app (TLS 1.3 only). Use certificates from the firm PKI.
@@ -107,6 +113,8 @@ limit), `test_logging.py` (canary strings never reach logs), `test_network.py`
 `test_search.py` (verified citations, permission-filtered retrieval,
 cross-case search, not-found, FTS syntax injection, recall),
 `test_web.py` (XSS from hostile documents, CSRF, jump-to-passage),
+`test_timeline.py` (date formats and flags, verifiable spans, unplaced
+dates, restricted/cross-case filtering, injection containment, ReDoS),
 `test_datasafety.py`, `test_audit.py`, `test_auth.py`, `test_export.py`.
 
 Prompt-injection tests start in Phase 4 (there is no model call yet); the

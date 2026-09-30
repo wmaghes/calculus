@@ -74,6 +74,14 @@ formula injection neutralized in exports.
 | Index tampering / corrupted results | Snippets re-verified against stored page text; vectors sealed with AES-GCM | Built, tested |
 | Rendering hostile PDFs in the web tier | Page images rendered in the parser sandbox | Built, tested |
 
+### 3c. Extraction/timeline threats (Phase 3)
+| Threat | Control | Status |
+|---|---|---|
+| Hostile document plants events or names attributed to other documents | Events and mentions are spans of their own document only | Built, tested |
+| ReDoS via crafted text | Bounded regexes; pathological-input test | Built, tested |
+| Wrong dates presented as fact | Precision + flags on every entry; unplaced list; "extracted by rules, check the source" notice | Built |
+| Restricted content via timeline/entity lists | Same visibility SQL as search; counts over visible docs only | Built, tested |
+
 ### 4. Cross-case leakage
 One DB, one blob dir, one DEK/KEK per case. No global index or cache.
 Stores refuse contexts for other cases. Tested: cross-case authorize, doc-ID

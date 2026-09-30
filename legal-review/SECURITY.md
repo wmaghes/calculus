@@ -85,6 +85,30 @@ except the signed synthetic test corpus.
    unrelated query's hits "strong". Now based on absolute evidence, with a
    semantic similarity floor and an out-of-vocabulary discount.
 
+## Controls added in Phase 3
+
+- Extraction is deterministic (regular expressions, no model), so document
+  text cannot instruct it. Every entity mention and event is a character span
+  of its own document; a hostile document can only create entries that cite
+  itself (tested).
+- All extraction regexes use bounded repetition; a pathological-input test
+  guards against catastrophic backtracking.
+- Timeline entries are re-verified against stored page text before display;
+  restriction labels and case isolation apply exactly as for search.
+- Dates the rules cannot place (relative expressions, no year anchor,
+  impossible dates) are listed, never guessed. Inferred years and ambiguous
+  numeric dates are flagged on every entry.
+- Extracted data lives in the encrypted case DB and is destroyed with it.
+
+## Issues found and fixed during Phase 3
+
+10. An organization alias ("Harbor Point") was classified as a person via a
+    signature line. Names matching an organization are now excluded.
+11. A false "May 4" date was built from "... in May." followed by a
+    transcript line number. Year-less dates may no longer span a line break.
+12. Wrapped transcript lines were cited as fragments; continuation lines are
+    now joined to their Q./A. line.
+
 ## Residual risks (known, not solved)
 
 | # | Risk | Notes / mitigation direction |
@@ -108,6 +132,10 @@ except the signed synthetic test corpus.
 | R17 | **Restricted documents shape the case's LSA model.** The model is trained on all of a case's chunks; a user without a grant cannot see restricted text or hits, but the term associations learned from it slightly influence their semantic ranking of visible documents. | Train separate models per restriction level if counsel considers this material. |
 | R18 | **Index rebuild cost.** The semantic index is rebuilt over the whole case after each ingestion run; very large cases will make this slow. Exact (brute-force) search uses ~4 bytes x 200 dims per chunk of RAM while a case is open. | Incremental indexing / per-batch models. |
 | R19 | **Query history is retained indefinitely** in the encrypted case DB (work product). | Retention policy (counsel item). |
+| R21 | **Rule-based people/org recall is limited.** People named only by first name ("Dana,"), or never in an email header, signature, title or honorific, are not identified; many events therefore show "none identified". Organizations without a corporate suffix are missed unless defined. | Local NER model (needs offline weights) or reviewer-maintained people list. |
+| R22 | **Date reading rules.** US month/day is assumed for ambiguous numeric dates (flagged); year inference can be wrong when a document discusses several years (flagged); "the following week"-style references are listed as unplaced, not resolved. | Reviewers check flagged entries; model-assisted resolution in Phase 4 must still cite spans. |
+| R23 | **Entity list side channel.** The people list is built case-wide, so a name first learned from a restricted document can be recognized in visible documents. Only visible mentions are shown or counted. | Build per-restriction entity lists if counsel considers this material. |
+| R24 | **Extraction rebuilds for the whole case** after each ingestion run; slow for very large cases. | Incremental extraction. |
 | R20 | The page viewer renders original pages in the sandbox on every view (no cache); on huge scans this is slow. | Pre-render into encrypted blobs if needed. |
 
 ## Open items before any real data
