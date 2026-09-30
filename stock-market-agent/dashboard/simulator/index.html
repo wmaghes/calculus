@@ -120,6 +120,7 @@
   <nav class="crumbs">
     <a href="../index.html">&larr; Market Scanner</a>
     <a href="../research/index.html">Company Research</a>
+    <a href="../guide/index.html">Career Guide</a>
   </nav>
 
   <header class="hero">
@@ -777,6 +778,8 @@ async function boot() {
 
   let startMode = "individual";
   try { startMode = localStorage.getItem("simMode.v1") || "individual"; } catch (e) {}
+  const urlMode = new URLSearchParams(window.location.search).get("mode");
+  if (urlMode) startMode = urlMode;
   if (!MODES.some(m => m.key === startMode)) startMode = "individual";
   setMode(startMode);
 }

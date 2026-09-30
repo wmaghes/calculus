@@ -102,6 +102,7 @@ def crumbs(ticker, current):
         + link(f"{ticker} Market Data", "market.html", "market")
         + '<a href="../../index.html">Market Scanner &#8599;</a>'
         + '<a href="../../simulator/index.html">Simulator &#8599;</a>'
+        + '<a href="../../guide/index.html">Career Guide &#8599;</a>'
         + "</nav>"
     )
 
@@ -233,7 +234,7 @@ def render_index(companies):
   .row .links a {{ text-decoration: none; border: 1px solid var(--border); border-radius: 999px; padding: 5px 11px; background: var(--surface); }}
 </style>
 <div class="wrap">
-  <nav class="crumbs"><a href="../index.html">&larr; Market Scanner</a><a href="../simulator/index.html">Stock Market Simulator</a></nav>
+  <nav class="crumbs"><a href="../index.html">&larr; Market Scanner</a><a href="../simulator/index.html">Stock Market Simulator</a><a href="../guide/index.html">Career Guide</a></nav>
   <header class="hero">
     <div class="eyebrow">Research Analyst Agent</div>
     <h1 class="title">Company Research</h1>

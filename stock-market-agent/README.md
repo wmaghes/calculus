@@ -139,6 +139,17 @@ regenerated automatically by `generate_research_pages.py`). None of this is
 real trading or real investment advice — it's a teaching tool for how each
 role thinks about risk and return.
 
+## Career Guide
+
+`dashboard/guide/index.html` is a fourth tab: a plain-language reference on how
+eight different finance careers actually relate to the stock market —
+Individual Investor, Financial Advisor, Private Banker/Wealth Manager,
+Investment Banker, Trader (sales & trading / prop), Private Equity, Hedge
+Fund/Portfolio Manager, and Equity Research Analyst. Each entry covers what
+the role does day to day, the concepts/tools it relies on, and — where one
+exists — a deep link straight into the matching Simulator mode (the Simulator
+now reads a `?mode=` query param on load, e.g. `simulator/index.html?mode=ib`).
+
 ## Not financial advice
 
 This tool surfaces public data and a transparent scoring formula for research

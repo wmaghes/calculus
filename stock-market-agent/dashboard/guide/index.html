@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Career Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F3F4F7; --surface: #FFFFFF; --surface-2: #EAEBF0;
+    --ink: #14161C; --ink-muted: #5B5F6B; --ink-faint: #8A8E9B; --border: #DBDDE4;
+    --accent: #2B5F94; --accent-soft: #DCE7F3;
+    --pos: #1E8E5A; --neg: #B23F2C;
+    --shadow: 0 1px 2px rgba(20,22,28,0.04), 0 8px 24px -12px rgba(20,22,28,0.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0B0E14; --surface: #12151D; --surface-2: #1A1E29;
+      --ink: #ECEEF4; --ink-muted: #9CA3B2; --ink-faint: #6B7280; --border: #262B38;
+      --accent: #79ABE0; --accent-soft: #1B2A3D;
+      --pos: #4CBB85; --neg: #E48168;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0B0E14; --surface: #12151D; --surface-2: #1A1E29;
+    --ink: #ECEEF4; --ink-muted: #9CA3B2; --ink-faint: #6B7280; --border: #262B38;
+    --accent: #79ABE0; --accent-soft: #1B2A3D;
+    --pos: #4CBB85; --neg: #E48168;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans", system-ui, sans-serif; padding-inline: 16px; padding-block: 28px 64px; }
+  .wrap { max-width: 900px; margin: 0 auto; }
+  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; text-wrap: balance; margin: 0; }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+  a { color: var(--accent); }
+
+  nav.crumbs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; font-family: "IBM Plex Mono", monospace; font-size: 12px; }
+  nav.crumbs a { text-decoration: none; border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; color: var(--ink); background: var(--surface); }
+
+  header.hero { display: flex; flex-direction: column; gap: 10px; padding-bottom: 22px; margin-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-faint); }
+  h1.title { font-size: clamp(28px, 4.5vw, 40px); font-weight: 600; line-height: 1.05; }
+  .sub { font-size: 14px; color: var(--ink-muted); max-width: 68ch; }
+
+  nav.toc { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+  nav.toc a {
+    font-family: "IBM Plex Mono", monospace; font-size: 12px; text-decoration: none;
+    color: var(--ink); border: 1px solid var(--border); border-radius: 999px;
+    padding: 7px 13px; background: var(--surface);
+  }
+
+  section.role { margin-bottom: 30px; scroll-margin-top: 16px; }
+  .role-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; box-shadow: var(--shadow); }
+  .role-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
+  .role-head h2 { font-size: 21px; font-weight: 600; }
+  .role-tag { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: 0.03em; padding: 3px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); white-space: nowrap; }
+  .role-oneliner { font-size: 14px; color: var(--ink-muted); margin: 4px 0 14px; max-width: 70ch; }
+  .role-card h3 { font-size: 12.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); font-family: "IBM Plex Mono", monospace; margin: 16px 0 8px; }
+  .role-card h3:first-of-type { margin-top: 0; }
+  .role-card p { font-size: 14px; line-height: 1.6; color: var(--ink); margin: 0; }
+  .chip-row { display: flex; flex-wrap: wrap; gap: 7px; }
+  .chip { font-size: 12px; background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 5px 11px; color: var(--ink-muted); }
+  .try-it { margin-top: 16px; padding-top: 14px; border-top: 1px dashed var(--border); font-size: 13.5px; }
+  .try-it a { font-weight: 600; }
+
+  footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--ink-faint); font-family: "IBM Plex Mono", monospace; line-height: 1.7; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <nav class="crumbs">
+    <a href="../index.html">&larr; Market Scanner</a>
+    <a href="../research/index.html">Company Research</a>
+    <a href="../simulator/index.html">Stock Market Simulator</a>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">Career guide</div>
+    <h1 class="title">How Each Role Uses the Stock Market</h1>
+    <div class="sub">The same ticker means something different depending on who's looking at it. This is a plain-language tour of how eight different finance careers actually relate to public companies and their stock &mdash; what they do day to day, and which parts of that you can practice in the Simulator.</div>
+  </header>
+
+  <nav class="toc" id="tocNav">
+    <a href="#individual">Individual Investor</a>
+    <a href="#advisor">Financial Advisor</a>
+    <a href="#private-banker">Private Banker</a>
+    <a href="#investment-banker">Investment Banker</a>
+    <a href="#trader">Trader</a>
+    <a href="#private-equity">Private Equity</a>
+    <a href="#hedge-fund">Hedge Fund / Portfolio Manager</a>
+    <a href="#research-analyst">Equity Research Analyst</a>
+  </nav>
+
+  <section class="role" id="individual">
+    <div class="role-card">
+      <div class="role-head"><h2>Individual Investor</h2><span class="role-tag">Retail</span></div>
+      <p class="role-oneliner">Manages their own money for their own goals &mdash; retirement, a house, general wealth-building.</p>
+      <h3>How they use the market</h3>
+      <p>They open a brokerage account and buy stocks, funds, or bonds directly with their own cash, holding a single portfolio they're fully accountable for. Decisions are usually driven by a personal time horizon and risk tolerance rather than a mandate from a client or employer, and success is just "did my net worth grow the way I needed it to."</p>
+      <h3>Key tools &amp; concepts</h3>
+      <div class="chip-row">
+        <span class="chip">Diversification</span><span class="chip">Dollar-cost averaging</span>
+        <span class="chip">Buy-and-hold vs. active trading</span><span class="chip">P/E &amp; dividend yield</span>
+        <span class="chip">Risk tolerance</span><span class="chip">Tax-advantaged accounts</span>
+      </div>
+      <div class="try-it">Try it: <a href="../simulator/index.html?mode=individual">Individual Investor mode in the Simulator &#8599;</a> &mdash; trade the watchlist with a single $100,000 account.</div>
+    </div>
+  </section>
+
+  <section class="role" id="advisor">
+    <div class="role-card">
+      <div class="role-head"><h2>Financial Advisor</h2><span class="role-tag">Retail / mass affluent</span></div>
+      <p class="role-oneliner">Builds and manages investment plans for other people's money, tied to their clients' real-life goals.</p>
+      <h3>How they use the market</h3>
+      <p>Instead of picking stocks for themselves, they translate a client's goal &mdash; retire at 60, fund college in 15 years &mdash; into a target return, a risk tolerance, and an asset allocation across stocks, bonds, and cash. They rebalance over time, manage the emotional side of investing (talking clients out of panic-selling), and are usually paid a fee on assets under management rather than a commission per trade.</p>
+      <h3>Key tools &amp; concepts</h3>
+      <div class="chip-row">
+        <span class="chip">Goal-based planning</span><span class="chip">Asset allocation</span>
+        <span class="chip">Risk tolerance questionnaires</span><span class="chip">Rebalancing</span>
+        <span class="chip">Fee-only vs. commission</span><span class="chip">Compounding projections</span>
+      </div>
+      <div class="try-it">Try it: <a href="../simulator/index.html?mode=advisor">Financial Advisor mode in the Simulator &#8599;</a> &mdash; set a target, horizon and risk tolerance, then fund and track the plan.</div>
+    </div>
+  </section>
+
+  <section class="role" id="private-banker">
+    <div class="role-card">
+      <div class="role-head"><h2>Private Banker / Wealth Manager</h2><span class="role-tag">High-net-worth</span></div>
+      <p class="role-oneliner">Runs several client relationships at once for wealthy individuals and families, blending investing with banking.</p>
+      <h3>How they use the market</h3>
+      <p>They manage a book of clients rather than one portfolio, each with a different risk profile, tax situation, and set of goals &mdash; and often a concentrated position in one stock (like a founder's or executive's own company shares) that needs careful, low-key unwinding. On top of investment management, they typically also arrange lending against a portfolio, trust and estate structures, and access to private/alternative investments not open to retail clients.</p>
+      <h3>Key tools &amp; concepts</h3>
+      <div class="chip-row">
+        <span class="chip">Multi-client book management</span><span class="chip">Concentrated stock positions</span>
+        <span class="chip">Securities-based lending</span><span class="chip">Model portfolios by risk profile</span>
+        <span class="chip">Estate &amp; tax planning</span><span class="chip">Alternative investments</span>
+      </div>
+      <div class="try-it">Try it: <a href="../simulator/index.html?mode=banker">Private Banker mode in the Simulator &#8599;</a> &mdash; add multiple named clients and trade inside each book separately.</div>
+    </div>
+  </section>
+
+  <section class="role" id="investment-banker">
+    <div class="role-card">
+      <div class="role-head"><h2>Investment Banker</h2><span class="role-tag">Corporate finance</span></div>
+      <p class="role-oneliner">Advises companies &mdash; not individual investors &mdash; on raising capital and doing deals.</p>
+      <h3>How they use the market</h3>
+      <p>They don't manage a personal portfolio of stocks; they use the stock market as a tool for their corporate clients. That means taking companies public (IPOs), helping already-public companies issue more shares or debt, and advising on mergers and acquisitions &mdash; where a huge part of the job is figuring out whether buying another company will make the acquirer's own stock more or less valuable per share (accretion/dilution).</p>
+      <h3>Key tools &amp; concepts</h3>
+      <div class="chip-row">
+        <span class="chip">DCF &amp; comparable-company valuation</span><span class="chip">Precedent transactions</span>
+        <span class="chip">Accretion / dilution analysis</span><span class="chip">Underwriting &amp; deal structuring</span>
+        <span class="chip">IPOs &amp; follow-on offerings</span><span class="chip">Pro forma modeling</span>
+      </div>
+      <div class="try-it">Try it: <a href="../simulator/index.html?mode=ib">Investment Banker mode in the Simulator &#8599;</a> &mdash; model a merger's EPS accretion/dilution.</div>
+    </div>
+  </section>
+
+  <section class="role" id="trader">
+    <div class="role-card">
+      <div class="role-head"><h2>Trader (Sales &amp; Trading / Prop)</h2><span class="role-tag">Markets &amp; execution</span></div>
+      <p class="role-oneliner">Buys and sells constantly, either to fill client orders or to profit from a firm's own capital.</p>
+      <h3>How they use the market</h3>
+      <p>A sell-side trader sits between clients and the market, executing orders and often making markets (quoting both a buy and sell price and profiting from the spread). A proprietary trader instead risks a firm's own money on short-term views &mdash; on price direction, volatility, or the relationship between related instruments. Time horizons here are usually seconds to weeks, not years, and risk is managed trade-by-trade with hard limits (like value-at-risk), not through a long-term financial plan.</p>
+      <h3>Key tools &amp; concepts</h3>
+      <div class="chip-row">
+        <span class="chip">Bid-ask spread &amp; order flow</span><span class="chip">Market making</span>
+        <span class="chip">Technical analysis</span><span class="chip">Leverage &amp; margin</span>
+        <span class="chip">Value-at-risk (VaR)</span><span class="chip">Execution algorithms</span>
+      </div>
+      <div class="try-it">Closest hands-on practice: the <a href="../simulator/index.html?mode=individual">Individual Investor mode's buy/sell mechanic &#8599;</a> &mdash; a real trading desk just does this at far higher frequency and size, with tighter risk limits.</div>
+    </div>
+  </section>
+
+  <section class="role" id="private-equity">
+    <div class="role-card">
+      <div class="role-head"><h2>Private Equity Professional</h2><span class="role-tag">Ownership &amp; control</span></div>
+      <p class="role-oneliner">Buys whole companies outright &mdash; often taking them private &mdash; rather than trading shares of them.</p>
+      <h3>How they use the market</h3>
+      <p>Instead of buying a small slice of a company on an exchange, a PE firm buys (or takes private) an entire company using a mix of investor capital and borrowed money (a leveraged buyout), then spends several years actively improving how it's run before selling it &mdash; often back onto the public market via an IPO, which is where it reconnects with the stock market this whole site is about. Returns are measured over years, not days, using metrics like IRR and multiple of invested capital rather than daily share-price moves.</p>
+      <h3>Key tools &amp; concepts</h3>
+      <div class="chip-row">
+        <span class="chip">Leveraged buyouts (LBOs)</span><span class="chip">IRR &amp; MOIC</span>
+        <span class="chip">Capital structure &amp; leverage</span><span class="chip">Operational value creation</span>
+        <span class="chip">Exit strategy (sale or IPO)</span><span class="chip">PIPEs</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="role" id="hedge-fund">
+    <div class="role-card">
+      <div class="role-head"><h2>Hedge Fund Manager / Portfolio Manager</h2><span class="role-tag">Absolute return</span></div>
+      <p class="role-oneliner">Manages pooled money from institutions and wealthy investors, aiming to make money in both up and down markets.</p>
+      <h3>How they use the market</h3>
+      <p>Unlike a traditional fund that just tries to beat an index, a hedge fund manager is usually judged on absolute return &mdash; making money regardless of what the overall market does. That means being willing to bet a stock will fall (short selling) as well as rise, using derivatives to hedge or amplify bets, and often running very concentrated or leveraged positions guided by a specific strategy (long/short equity, macro, quantitative, event-driven).</p>
+      <h3>Key tools &amp; concepts</h3>
+      <div class="chip-row">
+        <span class="chip">Long/short equity</span><span class="chip">Short selling</span>
+        <span class="chip">Derivatives &amp; hedging</span><span class="chip">Sharpe ratio</span>
+        <span class="chip">Leverage</span><span class="chip">Quantitative &amp; algorithmic strategies</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="role" id="research-analyst">
+    <div class="role-card">
+      <div class="role-head"><h2>Equity Research Analyst</h2><span class="role-tag">Analysis &amp; ratings</span></div>
+      <p class="role-oneliner">Studies public companies in depth and publishes an opinion on whether their stock is worth buying.</p>
+      <h3>How they use the market</h3>
+      <p>They build detailed financial models of a company (or a whole industry), estimate what its stock is really worth, and publish a rating &mdash; Buy, Hold, or Sell &mdash; and a price target, along with the reasoning behind it. Sell-side analysts do this for outside investors and to support their bank's other business; buy-side analysts do the same work internally to inform a fund's own trades. The <span class="mono">Strong Buy</span>-style rating pills and conviction tiers on this project's own <a href="../index.html">Market Scanner</a> are exactly this job's output, simplified.</p>
+      <h3>Key tools &amp; concepts</h3>
+      <div class="chip-row">
+        <span class="chip">DCF &amp; comps valuation</span><span class="chip">Earnings estimates</span>
+        <span class="chip">Buy / Hold / Sell ratings</span><span class="chip">Price targets</span>
+        <span class="chip">Industry &amp; competitive analysis</span><span class="chip">Sell-side vs. buy-side</span>
+      </div>
+      <div class="try-it">See it in action: the <a href="../index.html">Market Scanner &#8599;</a> and <a href="../research/index.html">Company Research &#8599;</a> pages are this job's deliverables, built by an agent instead of a person.</div>
+    </div>
+  </section>
+
+  <footer>
+    Simplified for teaching purposes &mdash; real roles blend across these lines constantly (a hedge fund analyst does equity research; a private banker's client might need investment-banking advice). Not investment or career advice.
+  </footer>
+</div>
+
+</body>
+</html>
