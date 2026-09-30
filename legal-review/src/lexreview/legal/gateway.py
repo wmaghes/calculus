@@ -33,6 +33,11 @@ LEGAL_HOSTS = frozenset({
     "www.ecfr.gov",
     "codes.ohio.gov",
     "www.legislature.mi.gov",
+    # Copractice additions: SEC EDGAR (public filings) and bar ethics opinions.
+    "efts.sec.gov",
+    "www.sec.gov",
+    "www.bpc.ohio.gov",
+    "www.michbar.org",
 })
 MAX_BYTES = 2 * 1024 * 1024
 TIMEOUT = 20.0

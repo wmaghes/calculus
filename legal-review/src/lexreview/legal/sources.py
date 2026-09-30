@@ -14,6 +14,10 @@ Adapter status (see SECURITY.md R30):
     govinfo        govinfo search + granule summary    - tested with fixtures; needs an api.data.gov key
     ohio_code      codes.ohio.gov HTML (search + section page)      - HTML parsing NOT validated against the live site
     mi_code        legislature.mi.gov HTML (search + MCL section)   - HTML parsing NOT validated against the live site
+    sec_edgar      EDGAR full-text search + filing index JSON       - tested with fixtures shaped on the public endpoints;
+                                                                      SEC requires a User-Agent with contact details
+    ohio_ethics    Ohio Board of Professional Conduct opinions      - HTML/URL patterns NOT validated against the live site
+    mi_ethics      State Bar of Michigan ethics opinions            - HTML/URL patterns NOT validated against the live site
 All must be validated live in the firm's environment before use.
 """
 
@@ -40,7 +44,7 @@ COURT_JURISDICTION = {
     "mied": "Federal (E.D. Mich.)", "miwd": "Federal (W.D. Mich.)",
     "ca6": "Federal (6th Cir.)", "scotus": "Federal (U.S. Supreme Court)",
 }
-SOURCES = ("courtlistener", "ohio_code", "mi_code", "ecfr", "govinfo")
+SOURCES = ("courtlistener", "ohio_code", "mi_code", "ecfr", "govinfo", "sec_edgar", "ohio_ethics", "mi_ethics")
 _TAG = re.compile(r"<[^>]{0,500}>")
 
 
@@ -275,4 +279,124 @@ class MichiganCode:
         return c
 
 
-ADAPTERS = {"courtlistener": CourtListener, "ecfr": ECFR, "govinfo": GovInfo, "ohio_code": OhioCode, "mi_code": MichiganCode}
+# ---------------------------------------------------------------- SEC EDGAR
+class SecEdgar:
+    """Public company filings (facts, not legal authority). Federal only.
+    SEC's fair-access policy requires a descriptive User-Agent with contact
+    details: LEXREVIEW_SEC_USER_AGENT (e.g. "Firm Name it-contact@firm.example")."""
+
+    name = "sec_edgar"
+
+    def __init__(self, gw: LegalGateway):
+        self.gw = gw
+
+    def _headers(self) -> dict:
+        import os
+
+        ua = os.environ.get("LEXREVIEW_SEC_USER_AGENT", "")
+        if not re.fullmatch(r"[A-Za-z0-9 .,&()'\-]{3,80} [\w.+-]{1,64}@[\w-]{1,63}(\.[\w-]{1,63}){1,4}", ua):
+            raise SourceUnavailable("sec_user_agent_not_configured")
+        return {"User-Agent": ua}
+
+    def search(self, query: str, jurisdiction: str) -> list[Candidate]:
+        if jurisdiction != "federal":
+            return []
+        r = self.gw.get("https://efts.sec.gov/LATEST/search-index", params={"q": query}, headers=self._headers())
+        if r.status_code != 200:
+            raise SourceUnavailable(f"http_{r.status_code}")
+        out = []
+        for hit in ((r.json().get("hits") or {}).get("hits") or [])[:10]:
+            src = hit.get("_source") or {}
+            _id = str(hit.get("_id") or "")
+            adsh, _, fname = _id.partition(":")
+            ciks = src.get("ciks") or []
+            if not (re.fullmatch(r"\d{10}-\d{2}-\d{6}", adsh) and re.fullmatch(r"[A-Za-z0-9._\-]{1,120}", fname)
+                    and ciks and re.fullmatch(r"\d{1,10}", str(ciks[0]))):
+                continue
+            cik = str(int(str(ciks[0])))
+            names = src.get("display_names") or []
+            out.append(Candidate(self.name, f"{cik}/{adsh}/{fname}", "filing",
+                                 f"{clean(src.get('form'), 20) or 'Filing'}: {clean(names[0] if names else '', 200) or 'unknown filer'}",
+                                 f"SEC accession {adsh}", "Federal (SEC filing)", "SEC EDGAR", clean(src.get("file_date"), 10),
+                                 f"https://www.sec.gov/Archives/edgar/data/{cik}/{adsh.replace('-', '')}/{fname}", None))
+        return out
+
+    def verify(self, c: Candidate) -> Candidate | None:
+        cik, adsh, fname = c.source_id.split("/", 2)
+        r = self.gw.get(f"https://www.sec.gov/Archives/edgar/data/{cik}/{adsh.replace('-', '')}/index.json",
+                        headers=self._headers())
+        if r.status_code != 200:
+            return None
+        items = ((r.json().get("directory") or {}).get("item") or [])
+        return c if any(isinstance(i, dict) and i.get("name") == fname for i in items) else None
+
+
+# ---------------------------------------------------------------- bar ethics opinions (HTML, unvalidated)
+class _EthicsOpinions:
+    """Advisory ethics opinions. Search results are links on the official
+    site; verification re-fetches the opinion URL on the same host and
+    requires the opinion number in the page (HTML) or a PDF body.
+    URL patterns are ASSUMED and must be validated live."""
+
+    name = ""
+    host = ""
+    juris = ""
+    label = ""
+    body = ""
+    search_path = ""
+    search_param = ""
+    link_re: re.Pattern = re.compile("(?!)")
+
+    def __init__(self, gw: LegalGateway):
+        self.gw = gw
+
+    def search(self, query: str, jurisdiction: str) -> list[Candidate]:
+        if jurisdiction != self.juris:
+            return []
+        r = self.gw.get(f"https://{self.host}{self.search_path}", params={self.search_param: query})
+        if r.status_code != 200:
+            raise SourceUnavailable(f"http_{r.status_code}")
+        out, seen = [], set()
+        for m in self.link_re.finditer(r.text):
+            path, number = m.group("path"), m.group("num")
+            if path in seen:
+                continue
+            seen.add(path)
+            out.append(Candidate(self.name, path, "ethics_opinion", f"{self.label} {number}", f"{self.label} {number}",
+                                 self.juris.capitalize(), self.body, None, f"https://{self.host}{path}", None))
+            if len(out) >= 10:
+                break
+        return out
+
+    def verify(self, c: Candidate) -> Candidate | None:
+        r = self.gw.get(f"https://{self.host}{c.source_id}")
+        if r.status_code != 200:
+            return None
+        number = c.citation.rsplit(" ", 1)[-1]
+        if r.content[:5] == b"%PDF-":
+            c.snippet = "PDF opinion: existence confirmed on the official site; content not parsed. Read it at the source."
+            return c
+        m = re.search(r"<title>([^<]{0,300})</title>", r.text)
+        if number not in r.text:
+            return None
+        if m:
+            c.title = f"{c.citation} | {clean(m.group(1), 200)}"
+        return c
+
+
+class OhioEthics(_EthicsOpinions):
+    name, host, juris = "ohio_ethics", "www.bpc.ohio.gov", "ohio"
+    label, body = "Ohio Bd. Prof. Conduct Adv. Op.", "Ohio Board of Professional Conduct"
+    search_path, search_param = "/", "s"
+    link_re = re.compile(r'href="https://www\.bpc\.ohio\.gov(?P<path>/[A-Za-z0-9/_\-.]{1,200}?(?P<num>\d{4}-\d{2})[A-Za-z0-9_\-.]{0,40})"')
+
+
+class MichiganEthics(_EthicsOpinions):
+    name, host, juris = "mi_ethics", "www.michbar.org", "michigan"
+    label, body = "State Bar of Mich. Ethics Op.", "State Bar of Michigan"
+    search_path, search_param = "/opinions/ethics/search", "q"
+    link_re = re.compile(r'href="(?P<path>/opinions/ethics/numbered_opinions/(?P<num>(?:RI|RE|R|CI)-\d{1,4}))"')
+
+
+ADAPTERS = {"courtlistener": CourtListener, "ecfr": ECFR, "govinfo": GovInfo, "ohio_code": OhioCode, "mi_code": MichiganCode,
+            "sec_edgar": SecEdgar, "ohio_ethics": OhioEthics, "mi_ethics": MichiganEthics}
