@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "copractice"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = ["fastapi", "uvicorn", "psycopg[binary]", "pgvector", "numpy", "pypdfium2", "httpx"]
+
+[project.optional-dependencies]
+# Local embeddings. Loads weights from EMBED_MODEL_PATH only (no downloads).
+embeddings = ["sentence-transformers"]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+where = [".", "../ingest"]
+include = ["app*", "cp_ingest*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests", "../ingest/tests"]
