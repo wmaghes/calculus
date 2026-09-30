@@ -68,9 +68,22 @@ def check_query(store: CaseStore, text: str) -> tuple[list[str], list[str]]:
             blocks.append("contains a 5-word phrase copied from a case document")
             break
     low = text.lower()
-    names = [r[0] for r in store.conn.execute("SELECT name FROM entities")]
-    hits = sorted({n for n in names if n.lower() in low or (len(n.split()[-1]) > 3 and re.search(
-        r"\b" + re.escape(n.split()[-1].lower()) + r"\b", low))})
+    def forms(kind: str, name: str) -> set[str]:
+        """Ways a name can appear: full name; a person's surname; an org's name
+        without its corporate suffix, and its first distinctive word."""
+        out = {name.lower()}
+        parts = name.split()
+        if kind == "person" and len(parts[-1]) > 3:
+            out.add(parts[-1].lower())
+        if kind == "org":
+            base = re.sub(r",?\s(Inc|LLC|L\.L\.C|Corp|Corporation|Company|Co|Ltd|LLP|LP|PLLC|P\.C)\.?$", "", name)
+            out.add(base.lower())
+            if len(parts[0]) >= 5:
+                out.add(parts[0].lower())
+        return out
+
+    hits = sorted({name for kind, name in store.conn.execute("SELECT kind, name FROM entities")
+                   if any(re.search(r"(?<![a-z0-9])" + re.escape(f) + r"(?![a-z0-9])", low) for f in forms(kind, name))})
     if hits:
         warns.append("names a person or organization from this case: " + ", ".join(hits))
     for num in set(_NUM.findall(text)):
