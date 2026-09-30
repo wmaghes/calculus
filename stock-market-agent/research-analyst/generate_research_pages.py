@@ -5,6 +5,7 @@ data/research_data.json.
 
 import json
 import os
+import shutil
 
 import config
 
@@ -254,6 +255,13 @@ def main():
     os.makedirs(config.RESEARCH_DIR, exist_ok=True)
     with open(os.path.join(config.RESEARCH_DIR, "index.html"), "w") as f:
         f.write(render_index(companies))
+
+    # Also copy the raw JSON so the Simulator's Investment Banker mode can
+    # fetch net income / market cap client-side without a backend.
+    shutil.copy(
+        os.path.join(config.DATA_DIR, "research_data.json"),
+        os.path.join(config.RESEARCH_DIR, "data.json"),
+    )
 
     print(f"wrote {len(companies)} companies x 2 pages + index to {config.RESEARCH_DIR}")
 

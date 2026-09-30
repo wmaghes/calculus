@@ -109,25 +109,35 @@ onward) are the real, unrestricted-network implementation — run them from any
 normal machine, CI runner, or server to get a full live S&P 500 + Nasdaq-100
 scan.
 
-## Roadmap: investing-education platform
+## Stock Market Simulator
 
-The long-term goal is a teaching tool covering how investing works for
-different professional perspectives, not just individual investors. The
-planned next phase is a third tab — a **Stock Market Simulation** — alongside
-the Scanner and Research Analyst tabs, with selectable modes that change what
-the simulator exposes:
+`dashboard/simulator/index.html` is a paper-trading sandbox that teaches how
+investing looks from four different professional seats. It's a self-contained
+client-side app (vanilla JS, no backend) with a mode switcher:
 
-- **Individual investor** — basic buy/sell, portfolio tracking, simple
-  performance metrics.
-- **Private banker** — managing model portfolios across multiple simulated
-  clients with different risk profiles/goals.
-- **Financial advisor** — client-facing planning tools (goal-based investing,
-  risk tolerance, rebalancing recommendations).
-- **Investment banker** — deal-oriented mechanics (valuation, underwriting,
-  M&A-style scenarios) rather than plain portfolio management.
+- **Individual Investor** — a single account: buy/sell watchlist tickers,
+  track cash, holdings and P/L.
+- **Private Banker** — manage several named clients at once, each with their
+  own risk profile, starting AUM, holdings and P/L, plus a book-of-business
+  summary table across all of them.
+- **Financial Advisor** — build goal-based plans (target $, time horizon,
+  risk tolerance) that map to a suggested asset mix across the Scanner's own
+  growth/stability/next-gen categories, project a future value with a simple
+  compounding estimate, then "fund" the plan to actually invest the lump sum
+  and add simulated monthly contributions against real watchlist prices.
+- **Investment Banker** — a simplified M&A accretion/dilution calculator:
+  pick an acquirer and target from the subset of watchlist companies with
+  usable net income, market cap and price data, set premium/consideration/
+  synergy/financing assumptions, and see pro-forma EPS accretion or dilution.
 
-This is intentionally deferred until the Scanner and Research Analyst tabs are
-considered finished; not yet started.
+All state (cash, holdings, clients, plans) is stored in the browser's
+`localStorage` — nothing is sent anywhere, and it resets if site data is
+cleared. Prices are the Scanner's own `data.json` snapshot (not live), and the
+Investment Banker mode reads net income / market cap from the Research
+Analyst's `research/data.json` (a copy of `research-analyst/data/research_data.json`,
+regenerated automatically by `generate_research_pages.py`). None of this is
+real trading or real investment advice — it's a teaching tool for how each
+role thinks about risk and return.
 
 ## Not financial advice
 

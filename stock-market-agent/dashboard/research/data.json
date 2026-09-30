@@ -1,0 +1,1036 @@
+{
+  "generated": "2026-09-30",
+  "companies": {
+    "NVDA": {
+      "ticker": "NVDA",
+      "name": "NVIDIA Corporation",
+      "financials": {
+        "period": "FY2026 (ended Jan 25, 2026)",
+        "revenue": "$215.9B",
+        "revenue_growth": 65.0,
+        "gross_margin": 71.1,
+        "net_income": "$120.1B",
+        "net_income_growth": 65.0,
+        "total_assets": "$206.8B",
+        "total_debt": "$12.03B",
+        "note": "Gross margin fell 3.9pp YoY on the Hopper-to-Blackwell transition and a $4.5B H20 inventory charge.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm"
+      },
+      "ratios": {
+        "trailing_pe": 28.79,
+        "forward_pe": 25.64,
+        "week52_low": 164.27,
+        "week52_high": 236.54
+      },
+      "market": {
+        "ticker": "NVDA",
+        "name": "NVIDIA",
+        "price": 231.14,
+        "mktCap": "$5.42T",
+        "metric_label": "1-day price change",
+        "metric": 1.0,
+        "conviction": 5,
+        "blurb": "AI GPU dominance; FY26 revenue +65% YoY; still near its highs, Street sees further upside.",
+        "rating": "Strong Buy"
+      }
+    },
+    "META": {
+      "ticker": "META",
+      "name": "Meta Platforms, Inc.",
+      "financials": {
+        "period": "FY2025 (ended Dec 31, 2025)",
+        "revenue": "$200.97B",
+        "revenue_growth": null,
+        "gross_margin": 82.0,
+        "net_income": "$60.46B",
+        "net_income_margin": 30.08,
+        "total_assets": "$366.02B",
+        "total_debt": "$28.83B (FY2024)",
+        "note": "Total liabilities were $148.78B against $366.02B in total assets.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026003942/meta-20251231.htm"
+      },
+      "ratios": {
+        "trailing_pe": 27.38,
+        "forward_pe": 22.16
+      },
+      "market": {
+        "ticker": "META",
+        "name": "Meta Platforms",
+        "price": 777.59,
+        "mktCap": "$1.90T",
+        "metric_label": "Weekly price change",
+        "metric": 16.7,
+        "conviction": 5,
+        "blurb": "Up sharply this week (+12% in one session alone, adding ~$200B in market value) on renewed AI/ad-business momentum. (A recurring search result pegging META far lower looks like a stale cache, not a real quote \u2014 worth a live-quote sanity check.)",
+        "rating": "Buy"
+      }
+    },
+    "SHOP": {
+      "ticker": "SHOP",
+      "name": "Shopify Inc.",
+      "financials": {
+        "period": "FY2025 (ended Dec 31, 2025)",
+        "revenue": "$11,556M",
+        "revenue_growth": 30.0,
+        "gross_margin": 48.0,
+        "net_income": "$1,231M",
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": null,
+        "note": "Net income was down from $2,019M the prior year, mainly on losses in equity/equity-method investments; operating income rose to $1,468M.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1594805/000159480526000007/shop-20251231.htm"
+      },
+      "ratios": {
+        "trailing_pe": 95.76,
+        "forward_pe": 67.82
+      },
+      "market": {
+        "ticker": "SHOP",
+        "name": "Shopify",
+        "price": 140.0,
+        "mktCap": "$265.0B",
+        "metric_label": "1-day price change",
+        "metric": 0.0,
+        "conviction": 4,
+        "blurb": "E-commerce infrastructure grower; holding its jump to a new range around $140, up sharply from two weeks ago's ~$120.",
+        "rating": "Buy"
+      }
+    },
+    "PLTR": {
+      "ticker": "PLTR",
+      "name": "Palantir Technologies Inc.",
+      "financials": {
+        "period": "FY2025 (ended Dec 31, 2025)",
+        "revenue": "$4.48B",
+        "revenue_growth": 56.2,
+        "gross_margin": null,
+        "net_income": "$1.63B",
+        "net_income_growth": null,
+        "total_assets": "$8.90B",
+        "total_debt": null,
+        "note": "Total liabilities were $1.41B, giving a very light balance sheet relative to assets.",
+        "source_url": "https://investors.palantir.com/files/2025%20FY%20PLTR%2010-K.pdf"
+      },
+      "ratios": {
+        "trailing_pe": 160.34,
+        "forward_pe": 98.85,
+        "week52_low": 106.37,
+        "week52_high": 207.52
+      },
+      "market": {
+        "ticker": "PLTR",
+        "name": "Palantir Technologies",
+        "price": 187.0,
+        "mktCap": "$444.5B",
+        "metric_label": "1-day price change",
+        "metric": 0.0,
+        "conviction": 4,
+        "blurb": "Enterprise/government AI analytics; revenue +56% YoY (2025), holding its recent range.",
+        "rating": "Buy"
+      }
+    },
+    "DELL": {
+      "ticker": "DELL",
+      "name": "Dell Technologies Inc.",
+      "financials": {
+        "period": "FY2026 (ended ~Jan 2026)",
+        "revenue": "$113.5B",
+        "revenue_growth": 18.8,
+        "gross_margin": null,
+        "net_income": "$5.94B",
+        "net_income_growth": null,
+        "total_assets": "$101.3B",
+        "total_debt": "$25.99B (FY2024 figure)",
+        "note": "AI-optimized server backlog was the main growth driver cited in recent quarters.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199624000036/dell-20240202.htm"
+      },
+      "ratios": {
+        "trailing_pe": 33.57,
+        "forward_pe": 20.44,
+        "week52_low": 110.22,
+        "week52_high": 595.51
+      },
+      "market": {
+        "ticker": "DELL",
+        "name": "Dell Technologies",
+        "price": 545.6,
+        "mktCap": "$357.9B",
+        "metric_label": "Weekly price change",
+        "metric": 3.63,
+        "conviction": 4,
+        "blurb": "Opened +3.6% higher this week after joining the S&P 100; AI server backlog (Q2 FY27 revenue +58% YoY) intact.",
+        "rating": "Buy"
+      }
+    },
+    "AVGO": {
+      "ticker": "AVGO",
+      "name": "Broadcom Inc.",
+      "financials": {
+        "period": "FY2025 (ended ~Nov 2025)",
+        "revenue": "$63.89B",
+        "revenue_growth": 23.9,
+        "gross_margin": 68.0,
+        "net_income": "$23.13B",
+        "net_income_growth": null,
+        "total_assets": "$171.1B",
+        "total_debt": "$67.97B",
+        "note": "Gross profit of $43.29B, up from $32.51B in FY2024.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016825000121/avgo-20251102.htm"
+      },
+      "ratios": {
+        "trailing_pe": 45.03,
+        "price_to_book": 17.46,
+        "price_to_sales": 19.02,
+        "week52_low": 289.96,
+        "week52_high": 495.0
+      },
+      "market": {
+        "ticker": "AVGO",
+        "name": "Broadcom",
+        "price": 355.1,
+        "mktCap": "$1.67T",
+        "metric_label": "1-day price change",
+        "metric": 1.58,
+        "conviction": 4,
+        "blurb": "AI networking/custom-silicon leader; +1.6% today, still up strongly over the past couple of weeks.",
+        "rating": "Buy"
+      }
+    },
+    "SNDK": {
+      "ticker": "SNDK",
+      "name": "SanDisk Corporation",
+      "financials": {
+        "period": "FY2025 (partial year, spun off from Western Digital Feb 21, 2025)",
+        "revenue": "$7.36B",
+        "revenue_growth": null,
+        "gross_margin": null,
+        "net_income": "-$1.64B (loss)",
+        "net_income_growth": null,
+        "total_assets": "$12.99B",
+        "total_debt": null,
+        "note": "Newly independent public company as of Feb 2025 (pro rata spinoff of 80.1% of shares); first full fiscal year is still shaking out post-separation.",
+        "source_url": "https://investor.sandisk.com/"
+      },
+      "ratios": {
+        "trailing_pe": 24.63,
+        "price_to_book": 16.74,
+        "price_to_sales": 13.36,
+        "week52_low": 112.0,
+        "week52_high": 2354.0
+      },
+      "market": {
+        "ticker": "SNDK",
+        "name": "SanDisk",
+        "price": 1712.89,
+        "mktCap": "$260.3B",
+        "metric_label": "1-day price change",
+        "metric": 0.98,
+        "conviction": 4,
+        "blurb": "2026's best-performing large-cap on AI-driven flash/HBM memory demand; volatile day-to-day but still near its highs \u2014 a reminder that momentum this extreme cuts both ways.",
+        "rating": "Momentum"
+      }
+    },
+    "AAOI": {
+      "ticker": "AAOI",
+      "name": "Applied Optoelectronics, Inc.",
+      "financials": {
+        "period": "FY2025 (ended Dec 31, 2025)",
+        "revenue": "$455.7M",
+        "revenue_growth": 98.0,
+        "gross_margin": null,
+        "net_income": "Unprofitable (net loss)",
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": null,
+        "note": "Revenue nearly doubled on AI-datacenter optics demand, but the company remains unprofitable.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1158114/000143774925005575/aaoi20241231_10k.htm"
+      },
+      "ratios": {
+        "trailing_pe": null,
+        "price_to_book": -2.87,
+        "price_to_sales": 3.32,
+        "week52_low": 9.71,
+        "week52_high": 128.96,
+        "note": "P/E is negative/n.m. -- the company is unprofitable."
+      },
+      "market": {
+        "ticker": "AAOI",
+        "name": "Applied Optoelectronics",
+        "price": 101.07,
+        "mktCap": "$8.58B",
+        "metric_label": "1-day price change",
+        "metric": 0.0,
+        "conviction": 2,
+        "blurb": "AI-datacenter optics demand story intact; holding its bounce after last week's -8% drop. Supply-chain strain and dilution risk from a recent $600M raise remain live.",
+        "rating": "Speculative"
+      }
+    },
+    "MCD": {
+      "ticker": "MCD",
+      "name": "McDonald's Corporation",
+      "financials": {
+        "period": "FY2025 (ended Dec 31, 2025)",
+        "revenue": "$26.9B",
+        "revenue_growth": 4.0,
+        "gross_margin": null,
+        "net_income": "$8.6B",
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": "$40.0B",
+        "note": "Revenue growth was +2% in constant currency; franchise model keeps reported revenue small relative to system-wide sales.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/63908/000006390826000035/mcd-20251231.htm"
+      },
+      "ratios": {
+        "trailing_pe": 19.13,
+        "price_to_book": 6.45,
+        "week52_low": 234.03,
+        "week52_high": 341.75
+      },
+      "market": {
+        "ticker": "MCD",
+        "name": "McDonald's",
+        "price": 233.98,
+        "mktCap": null,
+        "metric_label": "Beta (5yr)",
+        "metric": 0.44,
+        "divYield": 3.26,
+        "blurb": "Franchise-driven cash flows; long multi-decade dividend growth streak.",
+        "streak": "18+ yrs",
+        "score": 91.3
+      }
+    },
+    "PG": {
+      "ticker": "PG",
+      "name": "The Procter & Gamble Company",
+      "financials": {
+        "period": "FY2026 (ended ~Jun 2026)",
+        "revenue": "$87.0B",
+        "revenue_growth": 3.0,
+        "gross_margin": 50.0,
+        "net_income": "$16.1B",
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": "$37.0B",
+        "note": "Total debt of $37.0B against $12.3B cash, a net debt position of roughly $24.7B; operating cash flow was $19.6B.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/0000080424/000008042426000103/pg-20260630.htm"
+      },
+      "ratios": {
+        "trailing_pe": 22.2,
+        "price_to_book": 6.32,
+        "week52_low": 137.62,
+        "week52_high": 179.99
+      },
+      "market": {
+        "ticker": "PG",
+        "name": "Procter & Gamble",
+        "price": 148.34,
+        "mktCap": null,
+        "metric_label": "Beta (5yr)",
+        "metric": 0.37,
+        "divYield": 2.88,
+        "blurb": "70 consecutive years of dividend increases; 136 years of uninterrupted dividends.",
+        "streak": "70 yrs",
+        "score": 86.6
+      }
+    },
+    "IBM": {
+      "ticker": "IBM",
+      "name": "International Business Machines Corporation",
+      "financials": {
+        "period": "FY2025 (ended Dec 31, 2025)",
+        "revenue": "$67.5B",
+        "revenue_growth": null,
+        "gross_margin": 60.6,
+        "net_income": "$10.6B (continuing ops)",
+        "net_income_growth": null,
+        "total_assets": "$151.88B",
+        "total_debt": "$61.3B",
+        "note": "Total assets rose $14.7B YoY; free cash flow was $14.7B, up $2.0B YoY.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231_d2.htm"
+      },
+      "ratios": {
+        "trailing_pe": 21.71,
+        "price_to_book": 7.24,
+        "price_to_sales": 3.11,
+        "week52_low": 214.5,
+        "week52_high": 324.9
+      },
+      "market": {
+        "ticker": "IBM",
+        "name": "IBM",
+        "price": 219.76,
+        "mktCap": "$234.6B",
+        "metric_label": "Beta (5yr)",
+        "metric": 0.71,
+        "divYield": 3.05,
+        "blurb": "31 years of dividend growth; enterprise AI/hybrid-cloud pivot. Recently upgraded to Buy on dividend strength.",
+        "streak": "31 yrs",
+        "score": 84.5
+      }
+    },
+    "XOM": {
+      "ticker": "XOM",
+      "name": "Exxon Mobil Corporation",
+      "financials": {
+        "period": "FY2025 (ended Dec 31, 2025)",
+        "revenue": "$323.91B",
+        "revenue_growth": -4.5,
+        "gross_margin": null,
+        "net_income": "$28.8B",
+        "net_income_growth": null,
+        "total_assets": "$448.98B",
+        "total_debt": "$43.5B",
+        "note": "Revenue declined from $339.25B in 2024; long-term debt alone was $34.24B.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/34088/000003408826000045/xom-20251231.htm"
+      },
+      "ratios": {
+        "trailing_pe": 21.42,
+        "price_to_book": 2.53,
+        "week52_low": 105.3,
+        "week52_high": 174.09
+      },
+      "market": {
+        "ticker": "XOM",
+        "name": "ExxonMobil",
+        "price": 164.0,
+        "mktCap": "$681.3B",
+        "metric_label": "Beta (5yr)",
+        "metric": 0.17,
+        "divYield": 2.55,
+        "blurb": "Low-beta energy major; steady cash generation and buybacks.",
+        "streak": "\u2014",
+        "score": 84.4
+      }
+    },
+    "KO": {
+      "ticker": "KO",
+      "name": "The Coca-Cola Company",
+      "financials": {
+        "period": "FY2025 (ended Dec 31, 2025)",
+        "revenue": "$47.94B",
+        "revenue_growth": null,
+        "gross_margin": 61.6,
+        "net_income": "$13.11B",
+        "net_income_growth": null,
+        "total_assets": "$104.82B",
+        "total_debt": "$39.15B",
+        "note": "Gross profit of $29.54B on improved production-cost efficiency.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/21344/000162828026010047/ko-20251231.htm"
+      },
+      "ratios": {
+        "trailing_pe": 26.95,
+        "price_to_sales": 7.22,
+        "week52_low": 65.35,
+        "week52_high": 81.69
+      },
+      "market": {
+        "ticker": "KO",
+        "name": "Coca-Cola",
+        "price": 87.18,
+        "mktCap": "$381.7B",
+        "metric_label": "Beta (5yr)",
+        "metric": 0.34,
+        "divYield": 2.41,
+        "blurb": "Global beverage staple with highly predictable cash flows.",
+        "streak": "60+ yrs",
+        "score": 80.1
+      }
+    },
+    "JNJ": {
+      "ticker": "JNJ",
+      "name": "Johnson & Johnson",
+      "financials": {
+        "period": "FY2025 (ended Dec 28, 2025)",
+        "revenue": "$94.2B",
+        "revenue_growth": 6.0,
+        "gross_margin": null,
+        "net_income": null,
+        "net_income_growth": null,
+        "total_assets": "$199.21B",
+        "total_debt": null,
+        "note": "Sales growth was led by Innovative Medicine (Oncology: DARZALEX, ERLEADA) and MedTech (Abiomed, Shockwave); total assets up from $180.10B a year earlier.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/200406/000020040626000016/jnj-20251228.htm"
+      },
+      "ratios": {
+        "trailing_pe": 31.1,
+        "price_to_book": 7.4,
+        "price_to_sales": 6.2,
+        "week52_low": 179.8,
+        "week52_high": 281.07
+      },
+      "market": {
+        "ticker": "JNJ",
+        "name": "Johnson & Johnson",
+        "price": 267.48,
+        "mktCap": null,
+        "metric_label": "Beta (5yr)",
+        "metric": 0.23,
+        "divYield": 2.0,
+        "blurb": "64 consecutive years of dividend increases; healthcare defensiveness.",
+        "streak": "64 yrs",
+        "score": 75.5
+      }
+    },
+    "WMT": {
+      "ticker": "WMT",
+      "name": "Walmart Inc.",
+      "financials": {
+        "period": "FY2026 (ended Jan 31, 2026)",
+        "revenue": "$713.2B",
+        "revenue_growth": null,
+        "gross_margin": null,
+        "net_income": "$22.27B",
+        "net_income_growth": null,
+        "total_assets": "$260.82B (Q2 FY26)",
+        "total_debt": null,
+        "note": "Operating income was $29.8B (4.2% margin); total liabilities were $173.98B as of the same quarter.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/104169/000010416926000055/wmt-20260131.htm"
+      },
+      "ratios": {
+        "trailing_pe": 38.68,
+        "forward_pe": 35.58,
+        "price_to_book": 8.55,
+        "week52_low": 77.49,
+        "week52_high": 105.3,
+        "note": "52-week low/high look stale next to the current ~$108 price -- worth a live-quote check."
+      },
+      "market": {
+        "ticker": "WMT",
+        "name": "Walmart",
+        "price": 107.98,
+        "mktCap": "$850.0B",
+        "metric_label": "Beta (5yr)",
+        "metric": 0.6,
+        "divYield": 0.91,
+        "blurb": "Retail scale leader; low beta, resilient through downturns; dividend just hit its 53rd straight annual increase.",
+        "streak": "53 yrs",
+        "score": 54.3
+      }
+    },
+    "PEP": {
+      "ticker": "PEP",
+      "name": "PepsiCo, Inc.",
+      "financials": {
+        "period": "FY2025 (ended Dec 27, 2025)",
+        "revenue": "$93.93B",
+        "revenue_growth": 2.0,
+        "gross_margin": null,
+        "net_income": "$8.24B",
+        "net_income_growth": null,
+        "total_assets": "$107.40B",
+        "total_debt": null,
+        "note": "Total liabilities were $86.85B; the company issued $8.2B in long-term debt while repaying $4.1B during the year.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm"
+      },
+      "ratios": {
+        "trailing_pe": 17.0,
+        "price_to_book": 2.67,
+        "price_to_sales": 2.08,
+        "week52_low": 129.55,
+        "week52_high": 171.48
+      },
+      "market": {
+        "ticker": "PEP",
+        "name": "PepsiCo",
+        "price": 128.63,
+        "mktCap": "$212.2B",
+        "metric_label": "Dividend yield",
+        "metric": 4.61,
+        "divYield": 4.61,
+        "blurb": "Highest yield of the group, now near a two-year high; diversified snacks & beverages.",
+        "streak": "50+ yrs",
+        "score": 40.0
+      }
+    },
+    "RKLB": {
+      "ticker": "RKLB",
+      "name": "Rocket Lab Corporation",
+      "financials": {
+        "period": "FY2025 (ended Dec 31, 2025)",
+        "revenue": "$601.8M",
+        "revenue_growth": null,
+        "gross_margin": 34.4,
+        "net_income": "Net loss (continuing)",
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": null,
+        "note": "Still loss-making as it scales Neutron and integrates recent acquisitions (Mynaric, pending Iridium deal).",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1819994/000181999426000013/rklb-20251231.htm"
+      },
+      "ratios": {
+        "price_to_sales": 65.66,
+        "week52_low": 37.57,
+        "week52_high": 151.0,
+        "note": "PS ratio is 208% above its 10-year median (21.31) -- priced for a lot of future growth."
+      },
+      "market": {
+        "ticker": "RKLB",
+        "name": "Rocket Lab",
+        "price": 70.31,
+        "mktCap": null,
+        "metric_label": "Revenue growth (trailing 12mo)",
+        "metric": 59.2,
+        "conviction": 5,
+        "blurb": "Neutron rocket + space services; already closed its $155M Mynaric acquisition and has a pending ~$8B deal for Iridium; Raymond James sees Neutron expanding its addressable market in 2027; trailing revenue +59% YoY.",
+        "theme": "Space"
+      }
+    },
+    "IONQ": {
+      "ticker": "IONQ",
+      "name": "IonQ, Inc.",
+      "financials": {
+        "period": "FY2025 (ended Dec 31, 2025)",
+        "revenue": "$130.0M",
+        "revenue_growth": 201.9,
+        "gross_margin": null,
+        "net_income": "-$510.4M (loss)",
+        "net_income_growth": null,
+        "total_assets": "$6.57B",
+        "total_debt": null,
+        "note": "Total assets roughly equal total equity -- a very low-leverage, cash-rich balance sheet typical of a recently-funded growth name.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526071562/ionq-20251231.htm"
+      },
+      "ratios": {
+        "price_to_sales": 6.75,
+        "week52_low": 21.36,
+        "week52_high": 84.64
+      },
+      "market": {
+        "ticker": "IONQ",
+        "name": "IonQ",
+        "price": 43.91,
+        "mktCap": "$14.7B",
+        "metric_label": "Revenue growth (Q2 2026)",
+        "metric": 287,
+        "conviction": 5,
+        "blurb": "Trapped-ion quantum computing leader; record Q2 revenue +287% YoY to $80M, raised FY26 guidance to $280-290M with ~$3B cash on hand; BofA just initiated coverage Buy ($60 target). Strong Buy consensus with $67 average target (+46% upside).",
+        "theme": "Quantum computing"
+      }
+    },
+    "TEM": {
+      "ticker": "TEM",
+      "name": "Tempus AI, Inc.",
+      "financials": {
+        "period": "FY2025 (ended Dec 31, 2025)",
+        "revenue": "~$1.27B (Q4 rev. $367.2M, +83% YoY)",
+        "revenue_growth": 83.0,
+        "gross_margin": null,
+        "net_income": null,
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": null,
+        "note": "Q4 organic growth (ex-Ambry) was 33.5%; full balance-sheet detail wasn't available in this pass.",
+        "source_url": "https://last10k.com/sec-filings/tem/0001193125-26-066961.htm"
+      },
+      "ratios": {
+        "week52_low": 40.77,
+        "week52_high": 104.32
+      },
+      "market": {
+        "ticker": "TEM",
+        "name": "Tempus AI",
+        "price": 76.32,
+        "mktCap": "$10.7B",
+        "metric_label": "Revenue growth (2025)",
+        "metric": 89.6,
+        "conviction": 5,
+        "blurb": "AI-driven precision medicine/diagnostics; raised FY2026 revenue guidance to $1.59-1.6B (+25% YoY); H.C. Wainwright just raised its target from $90 to $98, Buy-rated.",
+        "theme": "AI healthcare"
+      }
+    },
+    "IREN": {
+      "ticker": "IREN",
+      "name": "IREN Limited",
+      "financials": {
+        "period": "FY2026 (ended Jun 30, 2026)",
+        "revenue": null,
+        "revenue_growth": null,
+        "gross_margin": null,
+        "net_income": null,
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": null,
+        "note": "Aggregate market value held by non-affiliates was ~$11.9B as of Dec 31, 2025; detailed income-statement figures weren't available in this pass.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/0001878848/000187884826000052/iren-20260630.htm"
+      },
+      "ratios": {
+        "trailing_pe": 39.69,
+        "week52_low": 5.13,
+        "week52_high": 76.87
+      },
+      "market": {
+        "ticker": "IREN",
+        "name": "IREN Limited",
+        "price": 46.03,
+        "mktCap": "$17.0B",
+        "metric_label": "Analyst upside",
+        "metric": 81.5,
+        "conviction": 4,
+        "blurb": "Ex-bitcoin miner pivoted to AI cloud; landed a new $9.7B Microsoft AI-cloud agreement, but down ~30% from its 52-week high after a recent EPS miss. Moderate Buy consensus, $68 average target.",
+        "theme": "AI infrastructure"
+      }
+    },
+    "QBTS": {
+      "ticker": "QBTS",
+      "name": "D-Wave Quantum Inc.",
+      "financials": {
+        "period": "FY2025 (ended Dec 31, 2025)",
+        "revenue": null,
+        "revenue_growth": 179.0,
+        "gross_margin": null,
+        "net_income": null,
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": null,
+        "note": "Revenue +179% YoY and gross profit +265% YoY; ended 2025 with over $884M in liquidity, the strongest cash position in company history.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1907982/000190798225000060/qbts-20241231.htm"
+      },
+      "ratios": {
+        "week52_low": 12.75,
+        "week52_high": 46.75
+      },
+      "market": {
+        "ticker": "QBTS",
+        "name": "D-Wave Quantum",
+        "price": 17.42,
+        "mktCap": "$6.61B",
+        "metric_label": "Analyst upside",
+        "metric": 102,
+        "conviction": 3,
+        "blurb": "Secured a Dept. of Commerce agreement for up to $100M; Strong Buy consensus with a $35 average target (+~100% upside); annealing quantum computing, pre-profit.",
+        "theme": "Quantum computing"
+      }
+    },
+    "RGTI": {
+      "ticker": "RGTI",
+      "name": "Rigetti Computing, Inc.",
+      "financials": {
+        "period": "FY2025 (ended Dec 31, 2025)",
+        "revenue": "$7.1M",
+        "revenue_growth": -34.3,
+        "gross_margin": null,
+        "net_income": "-$216.2M (loss)",
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": null,
+        "note": "Trailing-twelve-month revenue through Jun 2026 was $13.4M, up 68.5% -- growth reaccelerated after a down FY2025.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm"
+      },
+      "ratios": {
+        "week52_low": 6.86,
+        "week52_high": 58.15
+      },
+      "market": {
+        "ticker": "RGTI",
+        "name": "Rigetti Computing",
+        "price": 16.04,
+        "mktCap": "$5.33B",
+        "metric_label": "1-day price change",
+        "metric": 0.0,
+        "conviction": 3,
+        "blurb": "Part of ~$200M combined US government quantum funding; steadied after last week's pullback.",
+        "theme": "Quantum computing"
+      }
+    },
+    "CRSP": {
+      "ticker": "CRSP",
+      "name": "CRISPR Therapeutics AG",
+      "financials": {
+        "period": "FY2025 (ended Dec 31, 2025)",
+        "revenue": "$3.51M (collab/grant revenue)",
+        "revenue_growth": null,
+        "gross_margin": null,
+        "net_income": "-$581.6M (loss)",
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": null,
+        "note": "CASGEVY product revenue ($116M for the year, $54M in Q4) is reported separately from collaboration revenue; cash & marketable securities were $1.98B.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1674416/000119312526048957/crsp-20251231.htm"
+      },
+      "ratios": {},
+      "market": {
+        "ticker": "CRSP",
+        "name": "CRISPR Therapeutics",
+        "price": 55.64,
+        "mktCap": "$5.39B",
+        "metric_label": "Analyst upside",
+        "metric": 65.3,
+        "conviction": 3,
+        "blurb": "Gene-editing therapeutics (Casgevix); lumpy revenue but Street sees upside, Buy-rated.",
+        "theme": "Biotech / gene editing"
+      }
+    },
+    "RXRX": {
+      "ticker": "RXRX",
+      "name": "Recursion Pharmaceuticals, Inc.",
+      "financials": {
+        "period": "FY2025 (ended Dec 31, 2025)",
+        "revenue": "$74.68M",
+        "revenue_growth": null,
+        "gross_margin": null,
+        "net_income": "-$644.76M (loss)",
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": null,
+        "note": "Cash and cash equivalents were roughly $785M as of Oct 9, 2025, funding continued AI drug-discovery R&D.",
+        "source_url": "https://ir.recursion.com/"
+      },
+      "ratios": {
+        "week52_low": 2.77,
+        "week52_high": 7.18
+      },
+      "market": {
+        "ticker": "RXRX",
+        "name": "Recursion Pharmaceuticals",
+        "price": 3.89,
+        "mktCap": "$1.98B",
+        "metric_label": "1-day price change",
+        "metric": -0.81,
+        "conviction": 2,
+        "blurb": "AI-driven drug discovery platform partnered with large pharma; still pre-profit micro-cap.",
+        "theme": "AI drug discovery"
+      }
+    },
+    "OSIS": {
+      "ticker": "OSIS",
+      "name": "OSI Systems, Inc.",
+      "financials": {
+        "period": "FY2025 (ended ~Jun 2025)",
+        "revenue": "$1,713.2M",
+        "revenue_growth": 11.3,
+        "gross_margin": 34.3,
+        "net_income": "$149.6M",
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": null,
+        "note": "Net profit margin 8.7%; debt-to-equity ratio of 0.49 is comparatively low leverage for the group.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1039065/000110465925104478/osis-20250930x10q.htm"
+      },
+      "ratios": {
+        "trailing_pe": 30.4,
+        "week52_low": 164.08,
+        "week52_high": 306.12
+      },
+      "market": {
+        "ticker": "OSIS",
+        "name": "OSI Systems",
+        "price": 210.25,
+        "metric_label": "Short % of float",
+        "metric": 93.83,
+        "blurb": "Highest short interest in the market; security & healthcare imaging; -1.0% today.",
+        "flag": "Extreme short interest",
+        "score": 100.0
+      }
+    },
+    "INDI": {
+      "ticker": "INDI",
+      "name": "indie Semiconductor, Inc.",
+      "financials": {
+        "period": "FY2025 (ended Dec 31, 2025)",
+        "revenue": null,
+        "revenue_growth": null,
+        "gross_margin": null,
+        "net_income": "-$150.7M (loss)",
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": null,
+        "note": "FY2024 revenue was $216.7M, down 3% from $223.2M in FY2023; still unprofitable.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1841925/000119312526082535/indi-20251231.htm"
+      },
+      "ratios": {},
+      "market": {
+        "ticker": "INDI",
+        "name": "indie Semiconductor",
+        "price": null,
+        "metric_label": "Short % of float",
+        "metric": 86.24,
+        "blurb": "Automotive chip demand and cash-burn concerns.",
+        "flag": "Extreme short interest",
+        "score": 91.2
+      }
+    },
+    "UA": {
+      "ticker": "UA",
+      "name": "Under Armour, Inc.",
+      "financials": {
+        "period": "Trailing 12 months",
+        "revenue": "$4.97B",
+        "revenue_growth": null,
+        "gross_margin": 45.5,
+        "net_income": "-$495.6M (loss)",
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": "$1.94B",
+        "note": "Net cash position is roughly -$1.63B ($ -3.82/share); turnaround remains a work in progress.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1336917/"
+      },
+      "ratios": {},
+      "market": {
+        "ticker": "UA",
+        "name": "Under Armour",
+        "price": null,
+        "metric_label": "Short % of float",
+        "metric": 85.21,
+        "blurb": "Turnaround skepticism; ongoing apparel demand softness.",
+        "flag": "Extreme short interest",
+        "score": 90.0
+      }
+    },
+    "KSS": {
+      "ticker": "KSS",
+      "name": "Kohl's Corporation",
+      "financials": {
+        "period": "FY2025 (ended Jan 31, 2026)",
+        "revenue": null,
+        "revenue_growth": -4.0,
+        "gross_margin": 33.1,
+        "net_income": "$125M",
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": "$1.44B",
+        "note": "Full-year net sales fell 4.0% and comparable sales fell 3.1%; total debt rose 22.3% YoY.",
+        "source_url": "https://investors.kohls.com/"
+      },
+      "ratios": {
+        "trailing_pe": 6.49,
+        "forward_pe": 10.06
+      },
+      "market": {
+        "ticker": "KSS",
+        "name": "Kohl's",
+        "price": 19.44,
+        "metric_label": "Short % of float",
+        "metric": 27.07,
+        "blurb": "Structural department-store decline; ~27% of shares still sold short.",
+        "flag": "High short interest",
+        "score": 22.4
+      }
+    },
+    "SMCI": {
+      "ticker": "SMCI",
+      "name": "Super Micro Computer, Inc.",
+      "financials": {
+        "period": "FY2025 (ended Jun 30, 2025)",
+        "revenue": "$21.97B",
+        "revenue_growth": null,
+        "gross_margin": 11.1,
+        "net_income": "$1.05B",
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": "$4.8B",
+        "note": "Cash and cash equivalents were $5.2B against $4.8B in bank debt and convertible notes.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536525000027/smci-20250630.htm"
+      },
+      "ratios": {
+        "trailing_pe": 10.99,
+        "week52_low": 19.48,
+        "week52_high": 58.78
+      },
+      "market": {
+        "ticker": "SMCI",
+        "name": "Super Micro Computer",
+        "price": 35.64,
+        "metric_label": "Short % of float",
+        "metric": 25.65,
+        "blurb": "Prior accounting controversy; days-to-cover has fallen to ~3.0 \u2014 a fast squeeze is now easier if sentiment flips.",
+        "flag": "Rising short interest + weak print",
+        "score": 20.7
+      }
+    },
+    "TMDX": {
+      "ticker": "TMDX",
+      "name": "TransMedics Group, Inc.",
+      "financials": {
+        "period": "FY2024 (ended Dec 31, 2024)",
+        "revenue": "$441.5M",
+        "revenue_growth": null,
+        "gross_margin": 59.0,
+        "net_income": "$35.5M",
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": null,
+        "note": "Gross profit of $262.1M on a 59% margin.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1756262/"
+      },
+      "ratios": {
+        "trailing_pe": 21.68,
+        "price_to_book": 5.51,
+        "week52_low": 60.11,
+        "week52_high": 156.0
+      },
+      "market": {
+        "ticker": "TMDX",
+        "name": "TransMedics Group",
+        "price": 87.0,
+        "metric_label": "Short % of float",
+        "metric": 23.3,
+        "blurb": "Organ-transport technology; growth deceleration and valuation concerns; short interest still climbing, +5.9% today.",
+        "flag": "High short interest",
+        "score": 18.0
+      }
+    },
+    "LULU": {
+      "ticker": "LULU",
+      "name": "lululemon athletica inc.",
+      "financials": {
+        "period": "FY2024 (ended Feb 2, 2025)",
+        "revenue": "$10.6B",
+        "revenue_growth": 10.0,
+        "gross_margin": 59.2,
+        "net_income": null,
+        "net_income_growth": null,
+        "total_assets": null,
+        "total_debt": null,
+        "note": "Gross profit +12% to $6.3B; operating income +17% to $2.5B. Guidance has since been cut twice for the current fiscal year.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1397187/000139718725000013/lulu-20250202.htm"
+      },
+      "ratios": {
+        "trailing_pe": 9.72,
+        "price_to_book": 2.71,
+        "week52_low": 104.44,
+        "week52_high": 225.98
+      },
+      "market": {
+        "ticker": "LULU",
+        "name": "lululemon athletica",
+        "price": 98.37,
+        "metric_label": "Short % of float",
+        "metric": 11.86,
+        "blurb": "Cut its full-year guidance again after a Q2 miss (revenue now seen down 5-7%); short interest has climbed as the stock keeps sliding under $100.",
+        "flag": "Guidance cut (twice) + leadership change",
+        "score": 4.7
+      }
+    },
+    "CPB": {
+      "ticker": "CPB",
+      "name": "The Campbell's Company",
+      "financials": {
+        "period": "FY2025 (ended Aug 3, 2025)",
+        "revenue": "$10.25B",
+        "revenue_growth": 6.0,
+        "gross_margin": null,
+        "net_income": "$602M",
+        "net_income_growth": null,
+        "total_assets": "$14.90B",
+        "total_debt": "$6.86B",
+        "note": "Growth included an 8-point benefit from the Sovos Brands acquisition and a 2-point benefit from a 53rd week.",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/16732/000001673225000112/cpb-20250803.htm"
+      },
+      "ratios": {
+        "trailing_pe": 10.77,
+        "week52_low": 29.39,
+        "week52_high": 49.11
+      },
+      "market": {
+        "ticker": "CPB",
+        "name": "The Campbell's Company",
+        "price": 23.78,
+        "metric_label": "Short % of float",
+        "metric": 7.81,
+        "blurb": "36% dividend cut, sales -8% YoY, and a weak FY27 guide.",
+        "flag": "Guidance cut",
+        "score": 0.0
+      }
+    }
+  }
+}

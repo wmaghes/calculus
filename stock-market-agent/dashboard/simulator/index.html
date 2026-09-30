@@ -1,0 +1,779 @@
+<title>Stock Market Simulator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F3F4F7; --surface: #FFFFFF; --surface-2: #EAEBF0;
+    --ink: #14161C; --ink-muted: #5B5F6B; --ink-faint: #8A8E9B; --border: #DBDDE4;
+    --accent: #A5711F; --accent-soft: #F1E3C8;
+    --pos: #1E8E5A; --neg: #B23F2C;
+    --shadow: 0 1px 2px rgba(20,22,28,0.04), 0 8px 24px -12px rgba(20,22,28,0.12);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0B0E14; --surface: #12151D; --surface-2: #1A1E29;
+      --ink: #ECEEF4; --ink-muted: #9CA3B2; --ink-faint: #6B7280; --border: #262B38;
+      --accent: #E0A83E; --accent-soft: #3A2E12;
+      --pos: #4CBB85; --neg: #E48168;
+      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0B0E14; --surface: #12151D; --surface-2: #1A1E29;
+    --ink: #ECEEF4; --ink-muted: #9CA3B2; --ink-faint: #6B7280; --border: #262B38;
+    --accent: #E0A83E; --accent-soft: #3A2E12;
+    --pos: #4CBB85; --neg: #E48168;
+    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans", system-ui, sans-serif; padding-inline: 16px; padding-block: 28px 64px; }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  h1, h2, h3 { font-family: "Fraunces", Georgia, serif; text-wrap: balance; margin: 0; }
+  .mono { font-family: "IBM Plex Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+  a { color: var(--accent); }
+
+  nav.crumbs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; font-family: "IBM Plex Mono", monospace; font-size: 12px; }
+  nav.crumbs a { text-decoration: none; border: 1px solid var(--border); border-radius: 999px; padding: 6px 12px; color: var(--ink); background: var(--surface); }
+
+  header.hero { display: flex; flex-direction: column; gap: 10px; padding-bottom: 22px; margin-bottom: 24px; border-bottom: 1px solid var(--border); }
+  .eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; letter-spacing: 0.09em; text-transform: uppercase; color: var(--ink-faint); }
+  h1.title { font-size: clamp(28px, 4.5vw, 40px); font-weight: 600; line-height: 1.05; }
+  .sub { font-size: 14px; color: var(--ink-muted); max-width: 68ch; }
+
+  .disclaimer { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; font-size: 12.5px; line-height: 1.55; color: var(--ink-muted); margin-bottom: 28px; }
+  .disclaimer strong { color: var(--ink); }
+
+  nav.modes { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+  nav.modes button {
+    font-family: "IBM Plex Mono", monospace; font-size: 12.5px; cursor: pointer;
+    color: var(--ink); border: 1px solid var(--border); border-radius: 999px;
+    padding: 8px 14px; background: var(--surface);
+  }
+  nav.modes button.active { background: var(--accent-soft); color: var(--accent); border-color: transparent; font-weight: 600; }
+
+  section.mode { display: none; }
+  section.mode.active { display: block; }
+  .mode-intro { font-size: 13.5px; color: var(--ink-muted); max-width: 70ch; margin: 0 0 20px; }
+
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 20px; box-shadow: var(--shadow); }
+  .card h3 { font-size: 16px; font-weight: 600; margin-bottom: 12px; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; }
+  .stat .label { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.05em; }
+  .stat .value { font-family: "IBM Plex Mono", monospace; font-size: 20px; font-weight: 600; margin-top: 4px; }
+  .stat .value.pos { color: var(--pos); } .stat .value.neg { color: var(--neg); }
+
+  .field-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; margin-bottom: 8px; }
+  .field { display: flex; flex-direction: column; gap: 4px; }
+  .field label { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.04em; }
+  .field select, .field input {
+    font-family: "IBM Plex Sans", sans-serif; font-size: 14px; padding: 8px 10px;
+    border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--ink);
+    min-width: 90px;
+  }
+  .field select { min-width: 220px; }
+  button.action {
+    font-family: "IBM Plex Mono", monospace; font-size: 13px; font-weight: 600; cursor: pointer;
+    border: 1px solid transparent; border-radius: 8px; padding: 9px 16px; color: #fff;
+  }
+  button.action.buy, button.action.primary { background: var(--pos); }
+  button.action.sell { background: var(--neg); }
+  button.action.ghost { background: transparent; color: var(--ink); border-color: var(--border); }
+  button.action:disabled { opacity: 0.45; cursor: not-allowed; }
+  .live-price { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--ink-muted); }
+
+  table.data { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.data th { text-align: left; font-family: "IBM Plex Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); padding: 6px 8px; border-bottom: 1px solid var(--border); }
+  table.data td { padding: 8px; border-bottom: 1px solid var(--border); font-family: "IBM Plex Mono", monospace; }
+  table.data td.name-cell { font-family: "IBM Plex Sans", sans-serif; }
+  table.data tr:last-child td { border-bottom: none; }
+  .pos { color: var(--pos); } .neg { color: var(--neg); }
+  .empty-note { font-size: 13px; color: var(--ink-faint); padding: 10px 2px; }
+
+  .history-list { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-muted); max-height: 220px; overflow-y: auto; }
+  .history-list div { padding: 5px 2px; border-bottom: 1px solid var(--border); }
+  .history-list div:last-child { border-bottom: none; }
+
+  .note { background: var(--surface-2); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; font-size: 13px; line-height: 1.55; color: var(--ink-muted); margin: 14px 0; }
+  .note strong { color: var(--ink); }
+
+  select#pb-client-select, select#adv-plan-select { min-width: 220px; }
+
+  footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--ink-faint); font-family: "IBM Plex Mono", monospace; line-height: 1.7; }
+
+  @media (max-width: 620px) {
+    .field select, .field input { min-width: 0; width: 100%; }
+    .field { width: 100%; }
+  }
+</style>
+
+<div class="wrap">
+  <nav class="crumbs">
+    <a href="../index.html">&larr; Market Scanner</a>
+    <a href="../research/index.html">Company Research</a>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">Paper-trading &middot; education only</div>
+    <h1 class="title">Stock Market Simulator</h1>
+    <div class="sub">Practice how investing decisions look from four different seats &mdash; a retail investor, a private banker managing several client books, a financial advisor building goal-based plans, and an investment banker sizing up a merger.</div>
+  </header>
+
+  <div class="disclaimer">
+    <strong>This is a paper-trading sandbox, not a real brokerage.</strong> Prices come from the Market Scanner's own snapshot (<span class="mono">data.json</span>) and are <strong>not live</strong> &mdash; they only change when that data is refreshed. All cash, positions and plans below are stored locally in your browser (nothing is sent anywhere) and reset if you clear site data. <strong>Nothing here is investment advice</strong>; it's a teaching tool for how each role thinks about risk and return.
+  </div>
+
+  <nav class="modes" id="modeNav"></nav>
+
+  <section class="mode" id="mode-individual" data-mode="individual"></section>
+  <section class="mode" id="mode-banker" data-mode="banker"></section>
+  <section class="mode" id="mode-advisor" data-mode="advisor"></section>
+  <section class="mode" id="mode-ib" data-mode="ib"></section>
+
+  <footer>
+    <div>All figures are illustrative. Prices are a static snapshot, not real-time market data. Not investment advice.</div>
+    <div>Part of the Stock Market Scanner / Research Analyst project &mdash; see the companion repo's README for methodology.</div>
+  </footer>
+</div>
+
+<script>
+/* ---------- shared utilities ---------- */
+
+const STORE_KEY = "simState.v1";
+const STARTING_CASH_INDIVIDUAL = 100000;
+const STARTING_CASH_CLIENT = 250000;
+
+function loadState() {
+  let s = null;
+  try { s = JSON.parse(localStorage.getItem(STORE_KEY) || "null"); } catch (e) { s = null; }
+  if (!s) s = {};
+  if (!s.individual) s.individual = { cash: STARTING_CASH_INDIVIDUAL, startCash: STARTING_CASH_INDIVIDUAL, holdings: {}, history: [] };
+  if (!s.banker) s.banker = { clients: {}, nextId: 1 };
+  if (!s.advisor) s.advisor = { plans: {}, nextId: 1 };
+  return s;
+}
+function saveState(s) {
+  try { localStorage.setItem(STORE_KEY, JSON.stringify(s)); } catch (e) { /* storage unavailable; state stays in-memory only */ }
+}
+let STATE = loadState();
+let UNIVERSE = {};      // ticker -> {ticker, name, price, category}
+let RESEARCH = {};      // ticker -> research_data.json company record
+
+function fmtMoney(n, opts) {
+  opts = opts || {};
+  if (n === null || n === undefined || Number.isNaN(n)) return "\u2014";
+  const neg = n < 0;
+  const abs = Math.abs(n);
+  let out;
+  if (opts.compact && abs >= 1e9) out = "$" + (abs / 1e9).toFixed(2) + "B";
+  else if (opts.compact && abs >= 1e6) out = "$" + (abs / 1e6).toFixed(2) + "M";
+  else out = "$" + abs.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  return (neg ? "-" : "") + out;
+}
+function fmtPct(n, digits) {
+  if (n === null || n === undefined || Number.isNaN(n)) return "\u2014";
+  digits = digits === undefined ? 1 : digits;
+  return (n >= 0 ? "+" : "") + n.toFixed(digits) + "%";
+}
+function pnlClass(n) { return n > 0 ? "pos" : (n < 0 ? "neg" : ""); }
+
+function parseMoneyStr(s) {
+  if (typeof s !== "string") return null;
+  let str = s.trim();
+  const neg = str.startsWith("-") || (str.startsWith("(") && str.endsWith(")"));
+  str = str.replace(/^-/, "").replace(/^\(|\)$/g, "").replace(/\$/g, "").replace(/,/g, "").trim();
+  const m = str.match(/^([0-9]*\.?[0-9]+)\s*([TBMK]?)/i);
+  if (!m) return null;
+  const num = parseFloat(m[1]);
+  if (Number.isNaN(num)) return null;
+  const mult = { T: 1e12, B: 1e9, M: 1e6, K: 1e3, "": 1 }[m[2].toUpperCase()] ?? 1;
+  const val = num * mult;
+  return neg ? -val : val;
+}
+
+/* ---------- data loading ---------- */
+
+async function loadUniverse() {
+  const res = await fetch("../data.json");
+  const data = await res.json();
+  const u = {};
+  for (const [cat, arr] of Object.entries(data.categories || {})) {
+    for (const item of arr) {
+      if (!u[item.ticker]) u[item.ticker] = { ticker: item.ticker, name: item.name, price: item.price, category: cat };
+    }
+  }
+  return u;
+}
+async function loadResearch() {
+  try {
+    const res = await fetch("../research/data.json");
+    const data = await res.json();
+    return data.companies || {};
+  } catch (e) {
+    return {};
+  }
+}
+
+function universeOptions(selectedTicker) {
+  const groups = {};
+  for (const t of Object.values(UNIVERSE)) {
+    (groups[t.category] = groups[t.category] || []).push(t);
+  }
+  const catLabel = { growth: "Growth", stability: "Stability", nextgen: "Next-Gen", shorts: "Shorts / High-risk" };
+  let html = "";
+  for (const [cat, items] of Object.entries(groups)) {
+    html += `<optgroup label="${catLabel[cat] || cat}">`;
+    for (const t of items.sort((a, b) => a.ticker.localeCompare(b.ticker))) {
+      html += `<option value="${t.ticker}" ${t.ticker === selectedTicker ? "selected" : ""}>${t.ticker} \u2014 ${t.name}</option>`;
+    }
+    html += `</optgroup>`;
+  }
+  return html;
+}
+
+/* ---------- trading engine (shared by individual / banker clients / advisor plans) ---------- */
+
+function portfolioHoldingsValue(portfolio) {
+  let v = 0;
+  for (const [ticker, pos] of Object.entries(portfolio.holdings)) {
+    const price = UNIVERSE[ticker] ? UNIVERSE[ticker].price : null;
+    if (price != null) v += price * pos.shares;
+  }
+  return v;
+}
+function portfolioTotalValue(portfolio) { return portfolio.cash + portfolioHoldingsValue(portfolio); }
+
+function tradeBuy(portfolio, ticker, qty) {
+  const t = UNIVERSE[ticker];
+  if (!t || t.price == null) return { ok: false, msg: "No price available for " + ticker + "." };
+  qty = Math.floor(Number(qty));
+  if (!qty || qty <= 0) return { ok: false, msg: "Enter a quantity of at least 1 share." };
+  const cost = t.price * qty;
+  if (cost > portfolio.cash + 1e-6) return { ok: false, msg: `Not enough cash \u2014 need ${fmtMoney(cost)}, have ${fmtMoney(portfolio.cash)}.` };
+  const pos = portfolio.holdings[ticker] || { shares: 0, avgCost: 0 };
+  const newShares = pos.shares + qty;
+  pos.avgCost = (pos.avgCost * pos.shares + cost) / newShares;
+  pos.shares = newShares;
+  portfolio.holdings[ticker] = pos;
+  portfolio.cash -= cost;
+  portfolio.history.unshift({ ts: Date.now(), ticker, side: "BUY", qty, price: t.price });
+  return { ok: true };
+}
+function tradeSell(portfolio, ticker, qty) {
+  const t = UNIVERSE[ticker];
+  if (!t || t.price == null) return { ok: false, msg: "No price available for " + ticker + "." };
+  qty = Math.floor(Number(qty));
+  const pos = portfolio.holdings[ticker];
+  if (!qty || qty <= 0) return { ok: false, msg: "Enter a quantity of at least 1 share." };
+  if (!pos || qty > pos.shares) return { ok: false, msg: `You only hold ${pos ? pos.shares : 0} shares of ${ticker}.` };
+  const proceeds = t.price * qty;
+  pos.shares -= qty;
+  portfolio.cash += proceeds;
+  if (pos.shares === 0) delete portfolio.holdings[ticker];
+  portfolio.history.unshift({ ts: Date.now(), ticker, side: "SELL", qty, price: t.price });
+  return { ok: true };
+}
+
+function renderHoldingsTable(portfolio) {
+  const rows = Object.entries(portfolio.holdings);
+  if (rows.length === 0) return `<p class="empty-note">No open positions yet.</p>`;
+  let html = `<table class="data"><thead><tr>
+    <th>Ticker</th><th>Shares</th><th>Avg Cost</th><th>Price</th><th>Mkt Value</th><th>P/L $</th><th>P/L %</th>
+  </tr></thead><tbody>`;
+  for (const [ticker, pos] of rows.sort((a, b) => a[0].localeCompare(b[0]))) {
+    const t = UNIVERSE[ticker];
+    const price = t ? t.price : null;
+    const mktVal = price != null ? price * pos.shares : null;
+    const costBasis = pos.avgCost * pos.shares;
+    const pl = mktVal != null ? mktVal - costBasis : null;
+    const plPct = costBasis > 0 && pl != null ? (pl / costBasis) * 100 : null;
+    html += `<tr>
+      <td>${ticker}</td>
+      <td>${pos.shares}</td>
+      <td>${fmtMoney(pos.avgCost)}</td>
+      <td>${price != null ? fmtMoney(price) : "\u2014"}</td>
+      <td>${mktVal != null ? fmtMoney(mktVal) : "\u2014"}</td>
+      <td class="${pnlClass(pl)}">${pl != null ? fmtMoney(pl) : "\u2014"}</td>
+      <td class="${pnlClass(plPct)}">${plPct != null ? fmtPct(plPct) : "\u2014"}</td>
+    </tr>`;
+  }
+  html += `</tbody></table>`;
+  return html;
+}
+function renderHistory(portfolio) {
+  if (portfolio.history.length === 0) return `<p class="empty-note">No trades yet.</p>`;
+  return `<div class="history-list">` + portfolio.history.slice(0, 40).map(h => {
+    const d = new Date(h.ts);
+    return `<div><span class="${h.side === "BUY" ? "pos" : "neg"}">${h.side}</span> ${h.qty}\u00d7 ${h.ticker} @ ${fmtMoney(h.price)} &mdash; ${d.toLocaleString()}</div>`;
+  }).join("") + `</div>`;
+}
+
+/* ---------- mode: Individual Investor ---------- */
+
+function renderIndividual() {
+  const el = document.getElementById("mode-individual");
+  const p = STATE.individual;
+  const total = portfolioTotalValue(p);
+  const holdVal = portfolioHoldingsValue(p);
+  const pl = total - p.startCash;
+  const plPct = (pl / p.startCash) * 100;
+
+  el.innerHTML = `
+    <p class="mode-intro">You're a retail investor with a single account. Buy and sell shares from the Market Scanner watchlist and watch your own P&amp;L.</p>
+    <div class="stat-grid">
+      <div class="stat"><div class="label">Cash</div><div class="value">${fmtMoney(p.cash)}</div></div>
+      <div class="stat"><div class="label">Holdings Value</div><div class="value">${fmtMoney(holdVal)}</div></div>
+      <div class="stat"><div class="label">Total Value</div><div class="value">${fmtMoney(total)}</div></div>
+      <div class="stat"><div class="label">Total P/L</div><div class="value ${pnlClass(pl)}">${fmtMoney(pl)} (${fmtPct(plPct)})</div></div>
+    </div>
+    <div class="card">
+      <h3>Trade</h3>
+      <div class="field-row">
+        <div class="field"><label>Ticker</label><select id="ind-ticker">${universeOptions()}</select></div>
+        <div class="field"><label>Shares</label><input type="number" id="ind-qty" min="1" value="1"></div>
+        <div class="field"><label>&nbsp;</label><span class="live-price" id="ind-price"></span></div>
+        <button class="action buy" id="ind-buy">Buy</button>
+        <button class="action sell" id="ind-sell">Sell</button>
+      </div>
+      <div id="ind-msg" class="empty-note"></div>
+    </div>
+    <div class="card"><h3>Holdings</h3>${renderHoldingsTable(p)}</div>
+    <div class="card">
+      <h3>Trade History</h3>${renderHistory(p)}
+      <div style="margin-top:12px"><button class="action ghost" id="ind-reset">Reset to ${fmtMoney(STARTING_CASH_INDIVIDUAL)}</button></div>
+    </div>`;
+
+  const tickerSel = document.getElementById("ind-ticker");
+  const updatePrice = () => {
+    const t = UNIVERSE[tickerSel.value];
+    document.getElementById("ind-price").textContent = t && t.price != null ? "Last: " + fmtMoney(t.price) : "No price data";
+  };
+  tickerSel.addEventListener("change", updatePrice);
+  updatePrice();
+
+  document.getElementById("ind-buy").addEventListener("click", () => {
+    const r = tradeBuy(p, tickerSel.value, document.getElementById("ind-qty").value);
+    document.getElementById("ind-msg").textContent = r.ok ? "" : r.msg;
+    if (r.ok) { saveState(STATE); renderIndividual(); }
+  });
+  document.getElementById("ind-sell").addEventListener("click", () => {
+    const r = tradeSell(p, tickerSel.value, document.getElementById("ind-qty").value);
+    document.getElementById("ind-msg").textContent = r.ok ? "" : r.msg;
+    if (r.ok) { saveState(STATE); renderIndividual(); }
+  });
+  document.getElementById("ind-reset").addEventListener("click", () => {
+    if (!confirm("Reset your individual portfolio back to " + fmtMoney(STARTING_CASH_INDIVIDUAL) + " cash? This clears all holdings and history.")) return;
+    STATE.individual = { cash: STARTING_CASH_INDIVIDUAL, startCash: STARTING_CASH_INDIVIDUAL, holdings: {}, history: [] };
+    saveState(STATE); renderIndividual();
+  });
+}
+
+/* ---------- mode: Private Banker ---------- */
+
+function bankerClientList() { return Object.entries(STATE.banker.clients); }
+
+function renderBanker() {
+  const el = document.getElementById("mode-banker");
+  const clients = bankerClientList();
+  const selectedId = el.dataset.selected || (clients[0] ? clients[0][0] : null);
+  el.dataset.selected = selectedId || "";
+
+  let summaryRows = "";
+  for (const [id, c] of clients) {
+    const total = portfolioTotalValue(c);
+    const pl = total - c.startCash;
+    const plPct = (pl / c.startCash) * 100;
+    summaryRows += `<tr>
+      <td class="name-cell">${c.name}</td><td>${c.risk}</td><td>${fmtMoney(c.cash)}</td>
+      <td>${fmtMoney(total)}</td><td class="${pnlClass(pl)}">${fmtMoney(pl)}</td><td class="${pnlClass(plPct)}">${fmtPct(plPct)}</td>
+    </tr>`;
+  }
+
+  const clientOpts = clients.map(([id, c]) => `<option value="${id}" ${id === selectedId ? "selected" : ""}>${c.name}</option>`).join("");
+  const selected = clients.find(([id]) => id === selectedId);
+
+  el.innerHTML = `
+    <p class="mode-intro">You manage several client books at once. Add clients with their own risk profile and starting AUM, then trade inside each one separately.</p>
+    <div class="card">
+      <h3>Book of Business</h3>
+      ${clients.length ? `<table class="data"><thead><tr><th>Client</th><th>Risk Profile</th><th>Cash</th><th>Total AUM</th><th>P/L $</th><th>P/L %</th></tr></thead><tbody>${summaryRows}</tbody></table>` : `<p class="empty-note">No clients yet \u2014 add one below.</p>`}
+    </div>
+    <div class="card">
+      <h3>Add Client</h3>
+      <div class="field-row">
+        <div class="field"><label>Client name</label><input type="text" id="pb-name" placeholder="e.g. Jane Doe"></div>
+        <div class="field"><label>Risk profile</label><select id="pb-risk">
+          <option>Conservative</option><option selected>Balanced</option><option>Growth</option><option>Aggressive</option>
+        </select></div>
+        <div class="field"><label>Starting AUM</label><input type="number" id="pb-aum" min="1000" step="1000" value="${STARTING_CASH_CLIENT}"></div>
+        <button class="action primary" id="pb-add">Add Client</button>
+      </div>
+    </div>
+    ${selected ? `
+    <div class="card">
+      <h3>Trade &mdash; <span id="pb-client-select-wrap"><select id="pb-client-select">${clientOpts}</select></span></h3>
+      <div class="field-row">
+        <div class="field"><label>Ticker</label><select id="pb-ticker">${universeOptions()}</select></div>
+        <div class="field"><label>Shares</label><input type="number" id="pb-qty" min="1" value="1"></div>
+        <div class="field"><label>&nbsp;</label><span class="live-price" id="pb-price"></span></div>
+        <button class="action buy" id="pb-buy">Buy</button>
+        <button class="action sell" id="pb-sell">Sell</button>
+        <button class="action ghost" id="pb-remove">Remove Client</button>
+      </div>
+      <div id="pb-msg" class="empty-note"></div>
+    </div>
+    <div class="card"><h3>Holdings &mdash; ${selected[1].name}</h3>${renderHoldingsTable(selected[1])}</div>
+    <div class="card"><h3>Trade History &mdash; ${selected[1].name}</h3>${renderHistory(selected[1])}</div>
+    ` : ""}`;
+
+  document.getElementById("pb-add").addEventListener("click", () => {
+    const name = document.getElementById("pb-name").value.trim();
+    const risk = document.getElementById("pb-risk").value;
+    const aum = Math.max(1000, Number(document.getElementById("pb-aum").value) || STARTING_CASH_CLIENT);
+    if (!name) return;
+    const id = "c" + (STATE.banker.nextId++);
+    STATE.banker.clients[id] = { name, risk, cash: aum, startCash: aum, holdings: {}, history: [] };
+    el.dataset.selected = id;
+    saveState(STATE); renderBanker();
+  });
+
+  if (selected) {
+    const [selId, selPortfolio] = selected;
+    const clientSelect = document.getElementById("pb-client-select");
+    clientSelect.addEventListener("change", () => { el.dataset.selected = clientSelect.value; renderBanker(); });
+
+    const tickerSel = document.getElementById("pb-ticker");
+    const updatePrice = () => {
+      const t = UNIVERSE[tickerSel.value];
+      document.getElementById("pb-price").textContent = t && t.price != null ? "Last: " + fmtMoney(t.price) : "No price data";
+    };
+    tickerSel.addEventListener("change", updatePrice);
+    updatePrice();
+
+    document.getElementById("pb-buy").addEventListener("click", () => {
+      const r = tradeBuy(selPortfolio, tickerSel.value, document.getElementById("pb-qty").value);
+      document.getElementById("pb-msg").textContent = r.ok ? "" : r.msg;
+      if (r.ok) { saveState(STATE); renderBanker(); }
+    });
+    document.getElementById("pb-sell").addEventListener("click", () => {
+      const r = tradeSell(selPortfolio, tickerSel.value, document.getElementById("pb-qty").value);
+      document.getElementById("pb-msg").textContent = r.ok ? "" : r.msg;
+      if (r.ok) { saveState(STATE); renderBanker(); }
+    });
+    document.getElementById("pb-remove").addEventListener("click", () => {
+      if (!confirm(`Remove client "${selPortfolio.name}"? This deletes their holdings and history.`)) return;
+      delete STATE.banker.clients[selId];
+      el.dataset.selected = "";
+      saveState(STATE); renderBanker();
+    });
+  }
+}
+
+/* ---------- mode: Financial Advisor ---------- */
+
+const RISK_TIERS = {
+  Conservative: { assumedReturn: 0.05, allocation: { stability: 60, growth: 10, nextgen: 0, cash: 30 } },
+  Balanced:     { assumedReturn: 0.07, allocation: { stability: 40, growth: 30, nextgen: 10, cash: 20 } },
+  Growth:       { assumedReturn: 0.09, allocation: { stability: 20, growth: 45, nextgen: 25, cash: 10 } },
+  Aggressive:   { assumedReturn: 0.11, allocation: { stability: 5,  growth: 45, nextgen: 45, cash: 5 } },
+};
+
+function projectedFutureValue(lumpSum, monthly, years, annualReturn) {
+  const r = annualReturn / 12;
+  const n = years * 12;
+  const fvLump = lumpSum * Math.pow(1 + r, n);
+  const fvAnnuity = r === 0 ? monthly * n : monthly * ((Math.pow(1 + r, n) - 1) / r);
+  return fvLump + fvAnnuity;
+}
+
+function fundPlan(plan) {
+  // one-time deployment of the lump sum, split across tickers in each allocation bucket, whole shares only
+  const byCat = { growth: [], stability: [], nextgen: [] };
+  for (const t of Object.values(UNIVERSE)) if (byCat[t.category]) byCat[t.category].push(t);
+  for (const [cat, pct] of Object.entries(plan.allocation)) {
+    if (cat === "cash" || pct <= 0) continue;
+    const names = byCat[cat] || [];
+    if (names.length === 0) continue;
+    const budget = plan.lumpSum * (pct / 100);
+    const perName = budget / names.length;
+    for (const t of names) {
+      if (t.price == null || t.price <= 0) continue;
+      const qty = Math.floor(perName / t.price);
+      if (qty > 0) tradeBuy(plan, t.ticker, qty);
+    }
+  }
+  plan.funded = true;
+}
+function investContribution(plan) {
+  const amount = plan.monthly;
+  if (amount <= 0) return;
+  plan.cash += amount;
+  const byCat = { growth: [], stability: [], nextgen: [] };
+  for (const t of Object.values(UNIVERSE)) if (byCat[t.category]) byCat[t.category].push(t);
+  for (const [cat, pct] of Object.entries(plan.allocation)) {
+    if (cat === "cash" || pct <= 0) continue;
+    const names = byCat[cat] || [];
+    if (names.length === 0) continue;
+    const budget = amount * (pct / 100);
+    const perName = budget / names.length;
+    for (const t of names) {
+      if (t.price == null || t.price <= 0 || perName > plan.cash) continue;
+      const qty = Math.floor(perName / t.price);
+      if (qty > 0) tradeBuy(plan, t.ticker, qty);
+    }
+  }
+  plan.monthsContributed = (plan.monthsContributed || 0) + 1;
+}
+
+function renderAdvisor() {
+  const el = document.getElementById("mode-advisor");
+  const plans = Object.entries(STATE.advisor.plans);
+  const selectedId = el.dataset.selected || (plans[0] ? plans[0][0] : null);
+  el.dataset.selected = selectedId || "";
+
+  let rows = "";
+  for (const [id, plan] of plans) {
+    const fv = projectedFutureValue(plan.lumpSum, plan.monthly, plan.years, RISK_TIERS[plan.risk].assumedReturn);
+    const actual = plan.funded ? portfolioTotalValue(plan) : null;
+    rows += `<tr>
+      <td class="name-cell">${plan.name}</td><td>${plan.risk}</td><td>${fmtMoney(plan.target)}</td><td>${plan.years}y</td>
+      <td>${fmtMoney(fv, { compact: true })}</td><td>${actual != null ? fmtMoney(actual, { compact: true }) : "not funded"}</td>
+    </tr>`;
+  }
+
+  const planOpts = plans.map(([id, p]) => `<option value="${id}" ${id === selectedId ? "selected" : ""}>${p.name}</option>`).join("");
+  const selected = plans.find(([id]) => id === selectedId);
+
+  el.innerHTML = `
+    <p class="mode-intro">You build goal-based plans for clients: a target dollar amount, a time horizon and a risk tolerance map to a suggested asset mix. Fund a plan to actually simulate it against the watchlist and compare to the projection.</p>
+    <div class="card">
+      <h3>Plans</h3>
+      ${plans.length ? `<table class="data"><thead><tr><th>Client / Goal</th><th>Risk</th><th>Target</th><th>Horizon</th><th>Projected FV</th><th>Actual Sim Value</th></tr></thead><tbody>${rows}</tbody></table>` : `<p class="empty-note">No plans yet \u2014 create one below.</p>`}
+    </div>
+    <div class="card">
+      <h3>New Plan</h3>
+      <div class="field-row">
+        <div class="field"><label>Client / goal name</label><input type="text" id="adv-name" placeholder="e.g. Retirement \u2014 the Smiths"></div>
+        <div class="field"><label>Target ($)</label><input type="number" id="adv-target" min="1000" step="1000" value="250000"></div>
+        <div class="field"><label>Horizon (years)</label><input type="number" id="adv-years" min="1" max="50" value="15"></div>
+        <div class="field"><label>Risk tolerance</label><select id="adv-risk">
+          <option>Conservative</option><option selected>Balanced</option><option>Growth</option><option>Aggressive</option>
+        </select></div>
+        <div class="field"><label>Starting lump sum ($)</label><input type="number" id="adv-lump" min="0" step="500" value="10000"></div>
+        <div class="field"><label>Monthly contribution ($)</label><input type="number" id="adv-monthly" min="0" step="50" value="500"></div>
+        <button class="action primary" id="adv-add">Create Plan</button>
+      </div>
+    </div>
+    ${selected ? renderAdvisorPlanDetail(selected[0], selected[1], planOpts) : ""}`;
+
+  document.getElementById("adv-add").addEventListener("click", () => {
+    const name = document.getElementById("adv-name").value.trim();
+    if (!name) return;
+    const risk = document.getElementById("adv-risk").value;
+    const id = "p" + (STATE.advisor.nextId++);
+    const plan = {
+      name, risk,
+      target: Math.max(1000, Number(document.getElementById("adv-target").value) || 0),
+      years: Math.max(1, Number(document.getElementById("adv-years").value) || 1),
+      lumpSum: Math.max(0, Number(document.getElementById("adv-lump").value) || 0),
+      monthly: Math.max(0, Number(document.getElementById("adv-monthly").value) || 0),
+      allocation: { ...RISK_TIERS[risk].allocation },
+      cash: Math.max(0, Number(document.getElementById("adv-lump").value) || 0),
+      startCash: Math.max(0, Number(document.getElementById("adv-lump").value) || 0),
+      holdings: {}, history: [], funded: false, monthsContributed: 0,
+    };
+    STATE.advisor.plans[id] = plan;
+    el.dataset.selected = id;
+    saveState(STATE); renderAdvisor();
+  });
+
+  wireAdvisorPlanDetail();
+}
+
+function renderAdvisorPlanDetail(id, plan, planOpts) {
+  const tier = RISK_TIERS[plan.risk];
+  const fv = projectedFutureValue(plan.lumpSum, plan.monthly, plan.years, tier.assumedReturn);
+  const allocBits = Object.entries(plan.allocation).filter(([k, v]) => v > 0)
+    .map(([k, v]) => `${k[0].toUpperCase() + k.slice(1)} ${v}%`).join(" &middot; ");
+  return `
+    <div class="card">
+      <h3>Plan &mdash; <select id="adv-plan-select">${planOpts}</select></h3>
+      <div class="stat-grid">
+        <div class="stat"><div class="label">Target</div><div class="value">${fmtMoney(plan.target)}</div></div>
+        <div class="stat"><div class="label">Assumed annual return</div><div class="value">${(tier.assumedReturn * 100).toFixed(0)}%</div></div>
+        <div class="stat"><div class="label">Projected value @ ${plan.years}y</div><div class="value">${fmtMoney(fv, { compact: true })}</div></div>
+        <div class="stat"><div class="label">Actual sim value</div><div class="value">${plan.funded ? fmtMoney(portfolioTotalValue(plan), { compact: true }) : "\u2014"}</div></div>
+      </div>
+      <div class="note"><strong>Suggested allocation for ${plan.risk}:</strong> ${allocBits}. Projection is a simple compounding estimate (not guaranteed) used only to illustrate how time horizon and risk tolerance change the math.</div>
+      <div class="field-row">
+        ${!plan.funded ? `<button class="action primary" id="adv-fund">Fund Plan (invest lump sum now)</button>` :
+          `<button class="action buy" id="adv-contribute">Add a Month's Contribution (${fmtMoney(plan.monthly)})</button>`}
+        <button class="action ghost" id="adv-remove">Remove Plan</button>
+      </div>
+      <div id="adv-msg" class="empty-note"></div>
+      ${plan.funded ? `<div style="margin-top:12px"><h3 style="font-size:14px">Holdings</h3>${renderHoldingsTable(plan)}</div>
+      <div style="margin-top:12px"><h3 style="font-size:14px">Trade History</h3>${renderHistory(plan)}</div>` : ""}
+    </div>`;
+}
+function wireAdvisorPlanDetail() {
+  const planSelect = document.getElementById("adv-plan-select");
+  if (!planSelect) return;
+  const el = document.getElementById("mode-advisor");
+  planSelect.addEventListener("change", () => { el.dataset.selected = planSelect.value; renderAdvisor(); });
+
+  const id = el.dataset.selected;
+  const plan = STATE.advisor.plans[id];
+  const fundBtn = document.getElementById("adv-fund");
+  if (fundBtn) fundBtn.addEventListener("click", () => {
+    fundPlan(plan); saveState(STATE); renderAdvisor();
+  });
+  const contribBtn = document.getElementById("adv-contribute");
+  if (contribBtn) contribBtn.addEventListener("click", () => {
+    investContribution(plan); saveState(STATE); renderAdvisor();
+  });
+  document.getElementById("adv-remove").addEventListener("click", () => {
+    if (!confirm(`Remove plan "${plan.name}"?`)) return;
+    delete STATE.advisor.plans[id];
+    el.dataset.selected = "";
+    saveState(STATE); renderAdvisor();
+  });
+}
+
+/* ---------- mode: Investment Banker (M&A accretion / dilution) ---------- */
+
+function ibUsableTickers() {
+  const out = [];
+  for (const [ticker, c] of Object.entries(RESEARCH)) {
+    const ni = c.financials ? parseMoneyStr(c.financials.net_income) : null;
+    const mc = c.market ? parseMoneyStr(c.market.mktCap) : null;
+    const price = c.market ? c.market.price : null;
+    if (ni !== null && mc !== null && price) out.push({ ticker, name: c.name || (c.market && c.market.name) || ticker, ni, mktCap: mc, price });
+  }
+  return out.sort((a, b) => a.ticker.localeCompare(b.ticker));
+}
+
+function computeDeal(acq, tgt, premiumPct, stockPct, synergies, financeRatePct, taxRatePct) {
+  const acqShares = acq.mktCap / acq.price;
+  const tgtShares = tgt.mktCap / tgt.price;
+  const offerPrice = tgt.price * (1 + premiumPct / 100);
+  const equityPurchasePrice = offerPrice * tgtShares;
+  const stockPortion = equityPurchasePrice * (stockPct / 100);
+  const cashPortion = equityPurchasePrice - stockPortion;
+  const newShares = stockPortion / acq.price;
+  const afterTaxFinanceCost = cashPortion * (financeRatePct / 100) * (1 - taxRatePct / 100);
+  const afterTaxSynergies = synergies * (1 - taxRatePct / 100);
+  const proFormaNI = acq.ni + tgt.ni + afterTaxSynergies - afterTaxFinanceCost;
+  const proFormaShares = acqShares + newShares;
+  const standaloneEPS = acq.ni / acqShares;
+  const proFormaEPS = proFormaNI / proFormaShares;
+  const accretionPct = ((proFormaEPS - standaloneEPS) / Math.abs(standaloneEPS)) * 100;
+  return { acqShares, tgtShares, offerPrice, equityPurchasePrice, stockPortion, cashPortion, newShares, proFormaNI, proFormaShares, standaloneEPS, proFormaEPS, accretionPct };
+}
+
+function renderIB() {
+  const el = document.getElementById("mode-ib");
+  const usable = ibUsableTickers();
+  if (usable.length < 2) {
+    el.innerHTML = `<p class="mode-intro">Not enough companies with complete net income, market cap and price data loaded to run a deal model.</p>`;
+    return;
+  }
+  const opts = usable.map(c => `<option value="${c.ticker}">${c.ticker} \u2014 ${c.name}</option>`).join("");
+  el.innerHTML = `
+    <p class="mode-intro">You're evaluating a merger. Pick an acquirer and a target from companies with usable net income, market cap and price data, set deal terms, and see the simplified pro-forma EPS accretion/(dilution) &mdash; the first-pass math a banker runs before anything gets to a fairness opinion.</p>
+    <div class="card">
+      <h3>Deal Terms</h3>
+      <div class="field-row">
+        <div class="field"><label>Acquirer</label><select id="ib-acq">${opts}</select></div>
+        <div class="field"><label>Target</label><select id="ib-tgt">${opts}</select></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Premium over target price (%)</label><input type="number" id="ib-premium" value="25" step="1"></div>
+        <div class="field"><label>Stock consideration (%)</label><input type="number" id="ib-stock" value="50" min="0" max="100" step="5"></div>
+        <div class="field"><label>Annual pre-tax synergies ($)</label><input type="number" id="ib-synergies" value="0" step="1000000"></div>
+        <div class="field"><label>Financing rate on cash (%)</label><input type="number" id="ib-rate" value="5" step="0.5"></div>
+        <div class="field"><label>Tax rate (%)</label><input type="number" id="ib-tax" value="21" step="1"></div>
+        <button class="action primary" id="ib-compute">Run Deal Model</button>
+      </div>
+      <div id="ib-msg" class="empty-note"></div>
+    </div>
+    <div id="ib-results"></div>
+    <div class="note"><strong>Simplifications:</strong> this ignores purchase-accounting adjustments (goodwill, intangible amortization), real deal fees, actual diluted share counts and control premium negotiation dynamics. Shares outstanding are estimated as market cap &divide; price. It's meant to teach the shape of an accretion/dilution model, not to replace one built on real filings.</div>`;
+
+  document.getElementById("ib-compute").addEventListener("click", () => {
+    const acqTicker = document.getElementById("ib-acq").value;
+    const tgtTicker = document.getElementById("ib-tgt").value;
+    const msgEl = document.getElementById("ib-msg");
+    if (acqTicker === tgtTicker) { msgEl.textContent = "Acquirer and target must be different companies."; document.getElementById("ib-results").innerHTML = ""; return; }
+    const acq = usable.find(c => c.ticker === acqTicker);
+    const tgt = usable.find(c => c.ticker === tgtTicker);
+    const premium = Number(document.getElementById("ib-premium").value) || 0;
+    const stockPct = Math.min(100, Math.max(0, Number(document.getElementById("ib-stock").value) || 0));
+    const synergies = Number(document.getElementById("ib-synergies").value) || 0;
+    const rate = Number(document.getElementById("ib-rate").value) || 0;
+    const tax = Number(document.getElementById("ib-tax").value) || 0;
+    const d = computeDeal(acq, tgt, premium, stockPct, synergies, rate, tax);
+    msgEl.textContent = "";
+    document.getElementById("ib-results").innerHTML = `
+      <div class="card">
+        <h3>${acq.ticker} acquires ${tgt.ticker}</h3>
+        <div class="stat-grid">
+          <div class="stat"><div class="label">Offer price / share</div><div class="value">${fmtMoney(d.offerPrice)}</div></div>
+          <div class="stat"><div class="label">Equity purchase price</div><div class="value">${fmtMoney(d.equityPurchasePrice, { compact: true })}</div></div>
+          <div class="stat"><div class="label">Cash paid</div><div class="value">${fmtMoney(d.cashPortion, { compact: true })}</div></div>
+          <div class="stat"><div class="label">New shares issued</div><div class="value">${(d.newShares / 1e6).toFixed(1)}M</div></div>
+          <div class="stat"><div class="label">Standalone ${acq.ticker} EPS</div><div class="value">${fmtMoney(d.standaloneEPS)}</div></div>
+          <div class="stat"><div class="label">Pro forma EPS</div><div class="value">${fmtMoney(d.proFormaEPS)}</div></div>
+          <div class="stat"><div class="label">Accretion / (Dilution)</div><div class="value ${pnlClass(d.accretionPct)}">${fmtPct(d.accretionPct, 1)}</div></div>
+        </div>
+        <p style="font-size:13.5px;color:var(--ink-muted);margin-top:10px">In plain terms: the deal is <strong class="${pnlClass(d.accretionPct)}">${d.accretionPct >= 0 ? "accretive" : "dilutive"}</strong> to ${acq.ticker}'s EPS by ${Math.abs(d.accretionPct).toFixed(1)}% in year one under these assumptions &mdash; ${d.accretionPct >= 0 ? "the combined company earns more per share than the acquirer would have alone" : "the combined company earns less per share than the acquirer would have alone, even after synergies"}.</p>
+      </div>`;
+  });
+}
+
+/* ---------- mode nav + boot ---------- */
+
+const MODES = [
+  { key: "individual", label: "Individual Investor", render: renderIndividual },
+  { key: "banker", label: "Private Banker", render: renderBanker },
+  { key: "advisor", label: "Financial Advisor", render: renderAdvisor },
+  { key: "ib", label: "Investment Banker", render: renderIB },
+];
+
+function setMode(key) {
+  for (const m of MODES) {
+    document.getElementById("mode-" + m.key).classList.toggle("active", m.key === key);
+  }
+  for (const btn of document.querySelectorAll("nav.modes button")) {
+    btn.classList.toggle("active", btn.dataset.mode === key);
+  }
+  try { localStorage.setItem("simMode.v1", key); } catch (e) {}
+  const m = MODES.find(m => m.key === key);
+  if (m) m.render();
+}
+
+async function boot() {
+  try {
+    UNIVERSE = await loadUniverse();
+  } catch (e) {
+    document.querySelector(".wrap").insertAdjacentHTML("beforeend", `<p style="color:var(--neg)">Could not load ../data.json \u2014 ${e.message}</p>`);
+    return;
+  }
+  RESEARCH = await loadResearch();
+
+  document.getElementById("modeNav").innerHTML = MODES.map(m =>
+    `<button data-mode="${m.key}">${m.label}</button>`).join("");
+  for (const btn of document.querySelectorAll("nav.modes button")) {
+    btn.addEventListener("click", () => setMode(btn.dataset.mode));
+  }
+
+  let startMode = "individual";
+  try { startMode = localStorage.getItem("simMode.v1") || "individual"; } catch (e) {}
+  if (!MODES.some(m => m.key === startMode)) startMode = "individual";
+  setMode(startMode);
+}
+
+boot();
+</script>
