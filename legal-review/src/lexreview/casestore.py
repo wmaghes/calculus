@@ -119,6 +119,15 @@ CREATE TABLE IF NOT EXISTS unresolved_dates (
     seg_end INTEGER NOT NULL,
     kind TEXT NOT NULL
 );
+-- Phase 4: questions and model answers (work product), encrypted with the case.
+CREATE TABLE IF NOT EXISTS answers (
+    answer_id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    created_at REAL NOT NULL,
+    kind TEXT NOT NULL CHECK (kind IN ('ask', 'rank')),
+    question TEXT NOT NULL,
+    result_json TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS marks (
     mark_id INTEGER PRIMARY KEY,
     doc_id TEXT NOT NULL REFERENCES documents(doc_id),
@@ -373,3 +382,8 @@ class CaseStore:
             "SELECT mark_id, page_no, user_id, label, query_id, created_at FROM marks WHERE doc_id=? ORDER BY mark_id",
             (doc_id,)).fetchall()
         return [dict(zip(("mark_id", "page_no", "user_id", "label", "query_id", "created_at"), r)) for r in rows]
+
+    def save_answer(self, ctx: CaseAccessContext, answer_id: str, kind: str, question: str, result_json: str) -> None:
+        self._ctx(ctx, Perm.SEARCH)
+        self.conn.execute("INSERT INTO answers (answer_id, user_id, created_at, kind, question, result_json) VALUES (?,?,?,?,?,?)",
+                          (answer_id, ctx.user_id, time.time(), kind, question, result_json))

@@ -77,6 +77,9 @@ class App:
         self.auth = Authenticator(self.control, settings.require_mfa)
         self._stores: dict[str, CaseStore] = {}
         self._indexes: dict[str, object] = {}  # case_id -> VectorIndex (decrypted, in memory)
+        from .llm import backend_from_env
+
+        self.llm = backend_from_env(settings.loopback_allow)
         self._lock = threading.RLock()  # store() is called while holding it (e.g. from _index)
 
     # ------------------------------------------------------------ bootstrap
@@ -312,6 +315,54 @@ class App:
                           date_to=date_to.isoformat() if date_to else None, entity_id=entity_id,
                           tag=tag if tag and re.match(r"^[a-z/]{1,20}$", tag) else None,
                           n_events=len(res["events"]), integrity_failures=res["integrity_failures"])
+        return res
+
+    def ask(self, ctx: CaseAccessContext, question: str) -> dict:
+        """Cited Q&A. Only verified claims are returned; otherwise
+        'Not found in the reviewed documents.' Always carries coverage."""
+        import json as _json
+
+        from .coverage import coverage_report, coverage_summary_line
+        from .qa import answer
+
+        try:
+            ctx.require(Perm.SEARCH)
+        except AccessDenied:
+            self.audit.record(ctx.user_id, "ask", "denied", case_id=ctx.case_id)
+            raise
+        store = self.store(ctx)
+        res = answer(store, ctx, self._index(ctx), self.llm, question)
+        rep = coverage_report(store, ctx)
+        res["coverage"], res["coverage_summary"] = rep, coverage_summary_line(rep)
+        store.save_answer(ctx, res["answer_id"], "ask", res["question"], _json.dumps(res))
+        self.audit.record(ctx.user_id, "ask", "ok", case_id=ctx.case_id, answer_id=res["answer_id"],
+                          query_digest=self.audit.digest("q:" + res["question"]), claims=len(res["claims"]),
+                          dropped_claims=res["dropped_claims"], model_output_invalid=res["model_output_invalid"],
+                          not_found=res["not_found"])
+        return res
+
+    def rank(self, ctx: CaseAccessContext, instruction: str) -> dict:
+        """'Find everything relevant to X': recall-first document ranking."""
+        import json as _json
+        import uuid as _uuid
+
+        from .coverage import coverage_report, coverage_summary_line
+        from .rank import rank_documents
+
+        try:
+            ctx.require(Perm.SEARCH)
+        except AccessDenied:
+            self.audit.record(ctx.user_id, "rank", "denied", case_id=ctx.case_id)
+            raise
+        store = self.store(ctx)
+        res = rank_documents(store, ctx, self._index(ctx), instruction, self.llm)
+        rep = coverage_report(store, ctx)
+        res["coverage"], res["coverage_summary"] = rep, coverage_summary_line(rep)
+        res["answer_id"] = "r_" + _uuid.uuid4().hex[:16]
+        store.save_answer(ctx, res["answer_id"], "rank", res["instruction"], _json.dumps(res, default=str))
+        self.audit.record(ctx.user_id, "rank", "ok", case_id=ctx.case_id, answer_id=res["answer_id"],
+                          query_digest=self.audit.digest("q:" + res["instruction"]), ranked=len(res["ranked"]),
+                          undated=len(res["undated"]), outside_range=len(res["outside_range"]))
         return res
 
     def entities(self, ctx: CaseAccessContext) -> list[dict]:

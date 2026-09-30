@@ -51,7 +51,9 @@ class ExtractiveBackend:
         q = set(tokenize(question))
         scored = []
         for src in sources:
-            for sent in re.split(r"(?<=[.!?])\s+|\n", src["text"]):
+            # Join wrapped lines, then split into sentences; quotes still
+            # verify because citation matching normalizes whitespace.
+            for sent in re.split(r"(?<=[.!?])\s+|\n\s*\n", re.sub(r"(?<!\n)\n(?!\n)", " ", src["text"])):
                 sent = sent.strip()
                 if len(sent) < 20:
                     continue

@@ -22,7 +22,6 @@ it can never remove or demote a document.
 from __future__ import annotations
 
 import calendar
-import json
 import re
 from datetime import date
 
@@ -31,12 +30,13 @@ from .casestore import CaseStore
 from .citations import normalize, normalize_with_map
 from .extract.dates import find_dates
 from .extract.timeline import entities as list_entities
+from .qa import looks_like_injection
 from .search.hybrid import hybrid_search, viewer_link
 
 _MONTHS = {m.lower(): i for i, m in enumerate(calendar.month_name) if m}
 _MONTHS.update({m.lower(): i for i, m in enumerate(calendar.month_abbr) if m})
 _MREF = re.compile(r"(?<![A-Za-z])(" + "|".join(sorted((m for m in _MONTHS), key=len, reverse=True)) +
-                   r")\.?(?:\s{1,3}(\d{1,2})(?:st|nd|rd|th)?)?(?:,?\s{1,3}((?:19|20)\d{2}))?(?![A-Za-z])", re.I)
+                   r")\.?(?:\s{1,3}(\d{1,2})(?!\d)(?:st|nd|rd|th)?)?(?:,?\s{1,3}((?:19|20)\d{2}))?(?![A-Za-z])", re.I)
 _FILLER = re.compile(r"\b(find|show|list|give|get|everything|anything|all|documents?|docs|files?|relevant|related|"
                      r"regarding|concerning|about|involving|between|from|to|and|in|during|after|since|before|until|"
                      r"by|on|of|the|a|an|me|build|chronology|timeline|events?)\b", re.I)
@@ -152,7 +152,13 @@ def rank_documents(store: CaseStore, ctx: CaseAccessContext, index, instruction:
             reasons.append(f"{d['passages']} matching passage(s)")
         if d["entity_hits"]:
             reasons.append("mentions " + ", ".join(d["entity_hits"]))
-        entry = {"doc_id": top, "source_name": names.get(top, ""), "score": round(score, 4), "band": best["band"],
+        flagged = looks_like_injection(best["snippet"]) or any(
+            looks_like_injection(t) for (t,) in store.conn.execute(
+                "SELECT p.text FROM pages p JOIN documents d ON d.doc_id=p.doc_id "
+                "WHERE COALESCE(d.parent_id, d.doc_id)=? LIMIT 50", (top,)))
+        if flagged:
+            reasons.append("WARNING: contains text that looks like instructions to an AI system")
+        entry = {"doc_id": top, "source_name": names.get(top, ""), "injection_flag": flagged, "score": round(score, 4), "band": best["band"],
                  "reasons": reasons, "dates_in_range": sorted(set(in_range))[:10],
                  "all_dates": sorted({ds for ds, _ in dates.get(top, [])})[:10],
                  "best_passage": {k: best[k] for k in ("doc_id", "page_no", "locator", "char_start", "char_end",
@@ -163,7 +169,7 @@ def rank_documents(store: CaseStore, ctx: CaseAccessContext, index, instruction:
         elif (rf or rt) and not in_range:
             outside.append(entry)
         else:
-            if in_range:
+            if in_range and (rf or rt):
                 entry["reasons"].append("dated in range: " + ", ".join(entry["dates_in_range"][:3]))
             ranked.append(entry)
     for lst in (ranked, undated, outside):
@@ -181,7 +187,7 @@ def rank_documents(store: CaseStore, ctx: CaseAccessContext, index, instruction:
 def _model_note(store, ctx, backend, topic: str, entry: dict) -> dict | None:
     """Ask the local model whether the best passage is relevant; keep the
     answer only if its quote verifies inside that passage."""
-    from .qa import build_prompt, looks_like_injection, neutralize, parse_output
+    from .qa import build_prompt, neutralize, parse_output
 
     bp = entry["best_passage"]
     src = [{"id": "S1", "text": bp["snippet"]}]
@@ -209,5 +215,3 @@ def recall(result: dict, relevant_names: set[str]) -> dict:
             "found_anywhere": len(relevant_names & every),
             "missed": sorted(relevant_names - every)}
 
-
-_ = json
