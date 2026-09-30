@@ -9,7 +9,11 @@ import shutil
 
 import config
 
-HEAD = """<title>{title}</title>
+HEAD = """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{title}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,7 +67,11 @@ HEAD = """<title>{title}</title>
   footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--ink-faint); font-family: "IBM Plex Mono", monospace; line-height: 1.7; }
   @media (max-width: 480px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
 </style>
+</head>
+<body>
 """
+
+FOOT = "</body>\n</html>\n"
 
 
 def head(title):
@@ -93,6 +101,7 @@ def crumbs(ticker, current):
         + link(f"{ticker} Financials", "financials.html", "financials")
         + link(f"{ticker} Market Data", "market.html", "market")
         + '<a href="../../index.html">Market Scanner &#8599;</a>'
+        + '<a href="../../simulator/index.html">Simulator &#8599;</a>'
         + "</nav>"
     )
 
@@ -139,7 +148,7 @@ def render_financials(company):
     Not investment advice.
   </footer>
 </div>
-"""
+{FOOT}"""
 
 
 def render_market(company):
@@ -200,7 +209,7 @@ def render_market(company):
     Not investment advice.
   </footer>
 </div>
-"""
+{FOOT}"""
 
 
 def render_index(companies):
@@ -224,7 +233,7 @@ def render_index(companies):
   .row .links a {{ text-decoration: none; border: 1px solid var(--border); border-radius: 999px; padding: 5px 11px; background: var(--surface); }}
 </style>
 <div class="wrap">
-  <nav class="crumbs"><a href="../index.html">&larr; Market Scanner</a></nav>
+  <nav class="crumbs"><a href="../index.html">&larr; Market Scanner</a><a href="../simulator/index.html">Stock Market Simulator</a></nav>
   <header class="hero">
     <div class="eyebrow">Research Analyst Agent</div>
     <h1 class="title">Company Research</h1>
@@ -236,7 +245,7 @@ def render_index(companies):
     Not investment advice.
   </footer>
 </div>
-"""
+{FOOT}"""
 
 
 def main():
