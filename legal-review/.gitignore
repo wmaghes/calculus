@@ -1,0 +1,8 @@
+# Generated synthetic corpus and runtime data are never committed.
+testdata/synthetic/*
+!testdata/synthetic/README.md
+.lexreview-data/
+__pycache__/
+*.egg-info/
+.pytest_cache/
+sbom.cdx.json
