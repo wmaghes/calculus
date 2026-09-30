@@ -212,6 +212,29 @@ class Ingest:
                                 [(oid, i, s, e, text[s:e], vecs[i], self.embedder.name) for i, (s, e) in enumerate(spans)])
         return "done"
 
+    def reindex(self) -> dict:
+        """Re-chunk and re-embed every stored opinion from its stored text
+        (no network). Use after a chunking change or when switching embedder
+        (e.g. dev-hash -> bge-small). One transaction per opinion."""
+        ids = [r[0] for r in self.conn.execute("SELECT opinion_id FROM opinion_texts ORDER BY opinion_id")]
+        n_chunks = 0
+        for i, oid in enumerate(ids, 1):
+            with self.conn.transaction():
+                text = self.conn.execute("SELECT text FROM opinion_texts WHERE opinion_id=%s", (oid,)).fetchone()[0]
+                spans = chunk(text)
+                vecs = self.embedder.embed_documents([text[s:e] for s, e in spans])
+                self.conn.execute("DELETE FROM chunks WHERE opinion_id=%s", (oid,))
+                with self.conn.cursor() as cur:
+                    cur.executemany("INSERT INTO chunks (opinion_id, position, char_start, char_end, text, embedding, embed_model) "
+                                    "VALUES (%s,%s,%s,%s,%s,%s,%s)",
+                                    [(oid, j, s, e, text[s:e], vecs[j], self.embedder.name) for j, (s, e) in enumerate(spans)])
+            n_chunks += len(spans)
+            if i % 100 == 0:
+                self.log(f"  reindexed {i}/{len(ids)}")
+        res = {"opinions": len(ids), "chunks": n_chunks, "embedder": self.embedder.name}
+        audit(self.conn, "ingest", "reindex", **res)
+        return res
+
     def run(self, size: int) -> None:
         self._stage("courts", self.courts)
         self._stage("dockets", self.dockets)

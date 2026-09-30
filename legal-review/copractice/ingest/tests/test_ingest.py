@@ -33,6 +33,23 @@ def test_chunk_giant_paragraph_and_tiny_text():
     assert chunk("") == [] and chunk("Short opinion text.") == [(0, 19)]
 
 
+def test_chunk_hard_cap_randomized():
+    # Found on the live ingest: overlap added to a near-MAX paragraph, and the
+    # tail merge, produced 2,390-char chunks. Every chunk must be <= HARD_MAX.
+    import random
+
+    HARD_MAX = 2200  # app.chunking.HARD_MAX
+    rng = random.Random(7)
+    for _ in range(300):
+        paras = [("x" * rng.choice([rng.randint(1, 300), rng.randint(1500, 2600)])).replace("x" * 7, "word.. ")
+                 for _ in range(rng.randint(1, 30))]
+        text = rng.choice(["\n\n", "\n \n\n"]).join(paras)
+        spans = chunk(text)
+        assert all(0 < e - s <= HARD_MAX for s, e in spans)
+        assert spans[0][0] == 0 and spans[-1][1] == len(text)
+        assert all(s2 <= e1 or not text[e1:s2].strip() for (_, e1), (s2, _) in zip(spans, spans[1:]))
+
+
 # ------------------------------------------------------------------ bulk streaming
 def test_multistream_bz2_and_bad_rows():
     b = Bulk()
@@ -112,6 +129,19 @@ def test_ingested_rows_are_complete_and_exact(conn):
         assert text[s:e] == t and len(emb.to_numpy()) == DIM and model.startswith("dev-hash")
     court = conn.execute("SELECT name, jurisdiction FROM courts WHERE id='ohioctapp'").fetchone()
     assert court == ("Ohio Court of Appeals", "ohio")
+
+
+def test_reindex_rebuilds_chunks_offline(conn):
+    bulk = Bulk()
+    conn.execute("UPDATE chunks SET text='tampered', char_end=char_start+8")
+    n_req = len(bulk.requests)
+    res = _ingest(conn, bulk, []).reindex()
+    assert bulk.requests[n_req:] == []                   # no network at all
+    assert res["opinions"] == conn.execute("SELECT count(*) FROM opinion_texts").fetchone()[0] == 3
+    for oid, text in conn.execute("SELECT opinion_id, text FROM opinion_texts").fetchall():
+        spans = [(s, e, t) for s, e, t in conn.execute("SELECT char_start, char_end, text FROM chunks WHERE opinion_id=%s ORDER BY position", (oid,))]
+        assert [(s, e) for s, e, _ in spans] == chunk(text) and all(text[s:e] == t for s, e, t in spans)
+    assert conn.execute("SELECT detail->>'chunks' FROM audit_log WHERE action='reindex'").fetchone()[0] == str(res["chunks"])
 
 
 def test_every_download_is_audited_without_payload_text(conn):

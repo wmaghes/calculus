@@ -11,9 +11,10 @@ from __future__ import annotations
 import re
 
 TARGET = 1500
-MAX = 2000   # + OVERLAP => at most ~2,200 chars (~500 tokens)
+MAX = 2000
 MIN = 400
 OVERLAP = 200
+HARD_MAX = MAX + OVERLAP  # no chunk is ever longer (~500 tokens)
 
 _PARA = re.compile(r"\n\s*\n")
 
@@ -54,10 +55,10 @@ def chunk(text: str) -> list[tuple[int, int]]:
         nxt = paras[j][0]
         back = max(e - OVERLAP, s + 1)
         k = text.find(" ", back, e)
-        if 0 <= k < nxt and e - s > MIN:
+        if 0 <= k < nxt and e - s > MIN and paras[j][1] - (k + 1) <= HARD_MAX:
             paras[j] = (k + 1, paras[j][1])
         i = j
     # Merge a tiny final chunk into its predecessor.
-    if len(chunks) > 1 and chunks[-1][1] - chunks[-1][0] < MIN and chunks[-1][1] - chunks[-2][0] <= MAX + MIN:
+    if len(chunks) > 1 and chunks[-1][1] - chunks[-1][0] < MIN and chunks[-1][1] - chunks[-2][0] <= HARD_MAX:
         chunks[-2:] = [(chunks[-2][0], chunks[-1][1])]
     return chunks
