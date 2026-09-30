@@ -80,6 +80,9 @@ class App:
         from .llm import backend_from_env
 
         self.llm = backend_from_env(settings.loopback_allow)
+        from .legal.gateway import LegalGateway
+
+        self.legal_gateway = LegalGateway()
         self._lock = threading.RLock()  # store() is called while holding it (e.g. from _index)
 
     # ------------------------------------------------------------ bootstrap
@@ -364,6 +367,65 @@ class App:
                           query_digest=self.audit.digest("q:" + res["instruction"]), ranked=len(res["ranked"]),
                           undated=len(res["undated"]), outside_range=len(res["outside_range"]))
         return res
+
+    # ------------------------------------------------------------ legal leads (Phase 5)
+    def legal_suggestions(self, ctx: CaseAccessContext) -> list[str]:
+        from .legal.leads import suggestions
+
+        return suggestions(self.store(ctx), ctx)
+
+    def legal_propose(self, ctx: CaseAccessContext, text: str, sources: list[str], jurisdictions: list[str]) -> dict:
+        from .legal.leads import propose
+
+        try:
+            res = propose(self.store(ctx), ctx, text, sources, jurisdictions)
+        except AccessDenied:
+            self.audit.record(ctx.user_id, "legal_propose", "denied", case_id=ctx.case_id)
+            raise
+        self.audit.record(ctx.user_id, "legal_propose", res["status"], case_id=ctx.case_id,
+                          target=res.get("query_id"), query_digest=self.audit.digest("lq:" + " ".join(text.split())),
+                          warnings=len(res["warnings"]), sources=sorted(set(sources)), jurisdictions=sorted(set(jurisdictions)))
+        return res
+
+    def legal_decide(self, ctx: CaseAccessContext, query_id: str, approve: bool, acknowledge_warnings: bool = False) -> dict:
+        from .legal.leads import decide
+
+        try:
+            q = decide(self.store(ctx), ctx, query_id, approve, acknowledge_warnings)
+        except (AccessDenied, ConfigError) as exc:
+            self.audit.record(ctx.user_id, "legal_decide", "refused", case_id=ctx.case_id, target=query_id, reason=exc.code)
+            raise
+        self.audit.record(ctx.user_id, "legal_decide", q["status"], case_id=ctx.case_id, target=query_id,
+                          approved_sha256=q["approved_sha256"], warnings_acknowledged=bool(acknowledge_warnings))
+        return q
+
+    def legal_run(self, ctx: CaseAccessContext, query_id: str) -> dict:
+        from .legal.leads import get_query, run
+
+        store = self.store(ctx)
+        try:
+            res = run(store, ctx, query_id, self.legal_gateway)
+        except (AccessDenied, ConfigError) as exc:
+            self.audit.record(ctx.user_id, "legal_send", "refused", case_id=ctx.case_id, target=query_id, reason=exc.code)
+            raise
+        q = get_query(store, ctx, query_id)
+        self.audit.record(ctx.user_id, "legal_send", "ok", case_id=ctx.case_id, target=query_id,
+                          sent_sha256=q["approved_sha256"], sources=q["sources"], leads=len(res["leads"]),
+                          unavailable=[k for k, v in res["source_status"].items() if v["unavailable"]])
+        return res
+
+    def legal_queries(self, ctx: CaseAccessContext) -> list[dict]:
+        from .legal.leads import list_queries
+
+        return list_queries(self.store(ctx), ctx)
+
+    def legal_leads(self, ctx: CaseAccessContext, query_id: str) -> dict:
+        from .legal.leads import get_query, leads
+
+        store = self.store(ctx)
+        q = get_query(store, ctx, query_id)
+        self.audit.record(ctx.user_id, "legal_view_leads", "ok", case_id=ctx.case_id, target=query_id)
+        return {"query": q, "leads": leads(store, ctx, query_id)}
 
     def entities(self, ctx: CaseAccessContext) -> list[dict]:
         from .extract.timeline import entities

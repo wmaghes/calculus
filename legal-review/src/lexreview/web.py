@@ -191,7 +191,8 @@ def create_ui(app: App) -> APIRouter:
                        f'<td>{E(d["status"])}</td><td>{d["page_count"]}</td></tr>' for d in docs)
         body = (f'<h2>Case {E(case_id)}</h2>'
                 + f'<p><a href="/ui/cases/{E(case_id)}/timeline">Timeline</a> &middot; '
-                  f'<a href="/ui/cases/{E(case_id)}/entities">People &amp; organizations</a></p>'
+                  f'<a href="/ui/cases/{E(case_id)}/entities">People &amp; organizations</a> &middot; '
+                  f'<a href="/ui/cases/{E(case_id)}/legal">Legal research leads</a></p>'
                 + coverage_block(rep, case_id) + search_form(case_id) + ask_forms(case_id)
                 + f'<details class="card"><summary>All documents ({len(docs)})</summary><table><tr><th>Document</th><th>Status</th><th>Pages</th></tr>{rows}</table></details>')
         return render(request, "Case", body, username(p))
@@ -318,6 +319,128 @@ def create_ui(app: App) -> APIRouter:
         if not (res["ranked"] or res["undated"] or res["outside_range"]):
             parts.append('<div class="card"><b>Not found in the reviewed documents.</b></div>')
         return render(request, "Find documents", "".join(parts), username(p))
+
+    # ---------------------------------------------------------------- legal leads
+    SOURCE_LABELS = {"courtlistener": "CourtListener (case law)", "ohio_code": "Ohio Revised Code",
+                     "mi_code": "Michigan Compiled Laws", "ecfr": "eCFR (federal regulations)",
+                     "govinfo": "govinfo (U.S. Code)"}
+    JUR_LABELS = {"ohio": "Ohio", "michigan": "Michigan", "federal": "Federal (6th Cir. / U.S.)"}
+
+    def _ext_link(url: str, text: str) -> str:
+        from urllib.parse import urlparse as _up
+
+        from .legal.gateway import LEGAL_HOSTS
+        u = _up(url)
+        host = "www.govinfo.gov" if u.hostname == "www.govinfo.gov" else u.hostname
+        if u.scheme == "https" and (host in LEGAL_HOSTS or host == "www.govinfo.gov"):
+            return f'<a href="{E(url)}" rel="noreferrer noopener" target="_blank">{E(text)}</a>'
+        return E(text)
+
+    def _legal_page(request: Request, case_id: str, notice: str = "") -> HTMLResponse:
+        p = principal(request)
+        ctx = app.authorize(p, case_id, Perm.SEARCH)
+        can_propose, can_approve = Perm.LEGAL_PROPOSE in ctx.perms, Perm.LEGAL_APPROVE in ctx.perms
+        parts = ['<h2>Legal research leads</h2><div class="banner"><b>Every outside search is sent only after a person '
+                 'approves its exact text.</b> Searches go to public legal databases outside the firm, so write them as '
+                 'general legal issues. Do not include client, party or case details. Results are leads for attorney '
+                 'verification, not advice; citator / good-law status is NOT checked.</div>']
+        if notice:
+            parts.append(f'<div class="card warn">{notice}</div>')
+        if can_propose:
+            sugg = "".join(f"<li>{E(x)}</li>" for x in app.legal_suggestions(ctx))
+            src = " ".join(f'<label><input type="checkbox" name="src_{k}" value="1"{" checked" if k in ("courtlistener",) else ""}> {E(v)}</label>'
+                           for k, v in SOURCE_LABELS.items())
+            jur = " ".join(f'<label><input type="checkbox" name="jur_{k}" value="1"{" checked" if k in ("ohio", "michigan") else ""}> {E(v)}</label>'
+                           for k, v in JUR_LABELS.items())
+            parts.append(f'<form method="post" action="/ui/cases/{E(case_id)}/legal/propose" class="card">{PH}'
+                         '<label>Proposed search text (sent exactly as written, after approval)'
+                         '<input type="text" name="text" maxlength="200"></label>'
+                         f'<p>Sources: {src}</p><p>Jurisdictions: {jur}</p><button>Propose search</button>'
+                         + (f'<details><summary>Suggested general issues (from this case\'s topics, no document text)</summary><ul>{sugg}</ul></details>' if sugg else "")
+                         + '</form>')
+        for q in app.legal_queries(ctx):
+            warn = "".join(f'<br><span class="warn">Warning: {E(w)}</span>' for w in q["warnings"])
+            dest = ", ".join(E(SOURCE_LABELS.get(x, x)) for x in q["sources"]) + " &middot; " + ", ".join(E(JUR_LABELS.get(x, x)) for x in q["jurisdictions"])
+            act = ""
+            if q["status"] == "proposed" and can_approve:
+                ack = ('<label><input type="checkbox" name="ack" value="1"> I have read the warnings and approve sending this anyway</label><br>'
+                       if q["warnings"] else "")
+                act = (f'<form method="post" action="/ui/cases/{E(case_id)}/legal/{E(q["query_id"])}/decide">{PH}{ack}'
+                       '<button name="decision" value="approve">Approve exact text</button> '
+                       '<button class="secondary" name="decision" value="reject">Reject</button></form>')
+            elif q["status"] == "approved" and can_propose:
+                act = (f'<form method="post" action="/ui/cases/{E(case_id)}/legal/{E(q["query_id"])}/run">{PH}'
+                       '<button>Send approved search now</button></form>')
+            elif q["status"] == "sent":
+                act = f'<a href="/ui/cases/{E(case_id)}/legal/{E(q["query_id"])}">View leads</a>'
+            parts.append(f'<div class="card"><b>Outbound text:</b> <span class="loc">{E(q["text"])}</span>'
+                         f'<br><span class="muted">To: {dest} &middot; status <b>{E(q["status"])}</b> &middot; proposed by {E(q["proposed_by"])}'
+                         + (f' &middot; decided by {E(q["decided_by"])}' if q["decided_by"] else "") + f'</span>{warn}<p>{act}</p></div>')
+        return render(request, "Legal research leads", "".join(parts), username(p))
+
+    @ui.get("/cases/{case_id}/legal")
+    @guarded
+    async def legal_home(request: Request, case_id: str):
+        return _legal_page(request, case_id)
+
+    @ui.post("/cases/{case_id}/legal/propose")
+    @guarded
+    async def legal_propose(request: Request, case_id: str):
+        f = await form(request)
+        ctx = app.authorize(principal(request), case_id, Perm.LEGAL_PROPOSE)
+        res = app.legal_propose(ctx, f.get("text", ""), [k[4:] for k in f if k.startswith("src_")],
+                                [k[4:] for k in f if k.startswith("jur_")])
+        if res["status"] == "blocked":
+            return _legal_page(request, case_id, "Not saved: " + E("; ".join(res["reasons"])) +
+                               ". Rewrite it as a general legal issue without text from the documents.")
+        return _legal_page(request, case_id, "Proposed. It will not be sent until an attorney approves the exact text.")
+
+    @ui.post("/cases/{case_id}/legal/{query_id}/decide")
+    @guarded
+    async def legal_decide(request: Request, case_id: str, query_id: str):
+        f = await form(request)
+        ctx = app.authorize(principal(request), case_id, Perm.LEGAL_APPROVE)
+        app.legal_decide(ctx, query_id, f.get("decision") == "approve", bool(f.get("ack")))
+        return RedirectResponse(f"/ui/cases/{quote(case_id)}/legal", status_code=303)
+
+    @ui.post("/cases/{case_id}/legal/{query_id}/run")
+    @guarded
+    async def legal_run(request: Request, case_id: str, query_id: str):
+        await form(request)
+        ctx = app.authorize(principal(request), case_id, Perm.LEGAL_PROPOSE)
+        app.legal_run(ctx, query_id)
+        return RedirectResponse(f"/ui/cases/{quote(case_id)}/legal/{quote(query_id)}", status_code=303)
+
+    @ui.get("/cases/{case_id}/legal/{query_id}")
+    @guarded
+    async def legal_leads(request: Request, case_id: str, query_id: str):
+        p = principal(request)
+        ctx = app.authorize(p, case_id, Perm.SEARCH)
+        res = app.legal_leads(ctx, query_id)
+        q = res["query"]
+        st = q["source_status"] or {}
+        status_rows = "".join(
+            f'<li>{E(SOURCE_LABELS.get(k, k))}: ' + (f'<span class="warn"><b>could not be retrieved</b> ({E(v["unavailable"])}). '
+                                                      'No results from this source; nothing was filled in.</span>' if v["unavailable"]
+                                                      else f'{v["verified"]} verified') +
+            (f'; {v["discarded_unverifiable"]} result(s) discarded because they could not be verified at the source' if v["discarded_unverifiable"] else "")
+            + '</li>' for k, v in st.items())
+        parts = [f'<h2>Leads for: <span class="loc">{E(q["text"])}</span></h2>',
+                 '<div class="banner"><b>Lead for attorney verification.</b> Each item below was returned by the named '
+                 'public source and re-checked at that source by its ID. Citator / good-law status has NOT been checked. '
+                 'Read the authority itself before relying on it.</div>', f'<ul>{status_rows}</ul>']
+        if not res["leads"]:
+            parts.append('<div class="card"><b>No verified authority was returned for this search.</b></div>')
+        for ld in res["leads"]:
+            parts.append(
+                f'<div class="card"><span class="band">{E(ld["label"])}</span> <span class="band">{E(ld["jurisdiction"])}</span> '
+                f'<span class="band">{E(ld["kind"])}</span><h3>{_ext_link(ld["url"], ld["title"])}</h3>'
+                + (f'<p>{E(ld["citation"])}</p>' if ld["citation"] else "")
+                + f'<p class="muted">{E(ld["body"] or "")} &middot; date: {E(ld["date"] or "not stated by source")} &middot; '
+                f'source: {E(SOURCE_LABELS.get(ld["source"], ld["source"]))} (id {E(ld["source_id"])}) &middot; retrieved {E(ld["retrieved_at"])}</p>'
+                + (f'<pre>{E(ld["snippet"])}</pre>' if ld["snippet"] else "")
+                + f'<p class="warn">{E(ld["citator_notice"])}</p></div>')
+        return render(request, "Legal leads", "".join(parts), username(p))
 
     # ---------------------------------------------------------------- timeline
     FLAG_TEXT = {

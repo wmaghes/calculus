@@ -77,6 +77,10 @@ def main(argv: list[str] | None = None) -> int:
     mk = sub.add_parser("mark"); mk.add_argument("case"); mk.add_argument("doc_id"); mk.add_argument("label", choices=["relevant", "not_relevant"]); mk.add_argument("--page", type=int); mk.add_argument("--query-id")
     tl = sub.add_parser("timeline"); tl.add_argument("case"); tl.add_argument("--from", dest="date_from"); tl.add_argument("--to", dest="date_to"); tl.add_argument("--entity-id", type=int); tl.add_argument("--tag"); tl.add_argument("--rows", action="store_true", help="include dated spreadsheet rows")
     en = sub.add_parser("entities"); en.add_argument("case")
+    lp = sub.add_parser("legal-propose"); lp.add_argument("case"); lp.add_argument("text"); lp.add_argument("--sources", default="courtlistener"); lp.add_argument("--jurisdictions", default="ohio,michigan")
+    la = sub.add_parser("legal-decide"); la.add_argument("case"); la.add_argument("query_id"); la.add_argument("decision", choices=["approve", "reject"]); la.add_argument("--acknowledge-warnings", action="store_true")
+    lr = sub.add_parser("legal-run"); lr.add_argument("case"); lr.add_argument("query_id")
+    ll = sub.add_parser("legal-list"); ll.add_argument("case"); ll.add_argument("--query-id")
     ak = sub.add_parser("ask"); ak.add_argument("case"); ak.add_argument("question")
     rk = sub.add_parser("rank", help="find everything relevant to an instruction"); rk.add_argument("case"); rk.add_argument("instruction")
     sv = sub.add_parser("serve", help="run the reviewer web app (TLS 1.3 only)"); sv.add_argument("--host", default="127.0.0.1"); sv.add_argument("--port", type=int, default=8443); sv.add_argument("--cert", required=True); sv.add_argument("--key", required=True)
@@ -225,6 +229,29 @@ def _dispatch(app: App, args) -> int:
             print(f"\n{len(res['unplaced'])} date references could not be placed on the timeline:")
             for u in res["unplaced"]:
                 print(safe_terminal(f"  \"{u['date_text']}\" ({u['reason']}) - {u['source_name']} {u['locator']}  open: {u['link']}"))
+    elif args.cmd == "legal-propose":
+        ctx = app.authorize(p, args.case, Perm.LEGAL_PROPOSE)
+        res = app.legal_propose(ctx, args.text, args.sources.split(","), args.jurisdictions.split(","))
+        print(json.dumps(res, indent=1))
+    elif args.cmd == "legal-decide":
+        ctx = app.authorize(p, args.case, Perm.LEGAL_APPROVE)
+        q = app.legal_decide(ctx, args.query_id, args.decision == "approve", args.acknowledge_warnings)
+        print(safe_terminal(f"{q['query_id']}: {q['status']}  text=\"{q['text']}\"  to={q['sources']} {q['jurisdictions']}"))
+    elif args.cmd == "legal-run":
+        ctx = app.authorize(p, args.case, Perm.LEGAL_PROPOSE)
+        res = app.legal_run(ctx, args.query_id)
+        for k, v in res["source_status"].items():
+            print(f"{k}: " + (f"UNAVAILABLE ({v['unavailable']}) - no results, nothing filled in" if v["unavailable"]
+                              else f"{v['verified']} verified") + f"; {v['discarded_unverifiable']} discarded (unverifiable)")
+        _print_leads(res["leads"])
+    elif args.cmd == "legal-list":
+        ctx = app.authorize(p, args.case, Perm.SEARCH)
+        if args.query_id:
+            _print_leads(app.legal_leads(ctx, args.query_id)["leads"])
+        else:
+            for q in app.legal_queries(ctx):
+                print(safe_terminal(f"{q['query_id']}  {q['status']:9} \"{q['text']}\"  {q['sources']} {q['jurisdictions']}"
+                                    + (f"  WARNINGS: {'; '.join(q['warnings'])}" if q["warnings"] else "")))
     elif args.cmd == "ask":
         ctx = app.authorize(p, args.case, Perm.SEARCH)
         res = app.ask(ctx, args.question)
@@ -263,6 +290,16 @@ def _dispatch(app: App, args) -> int:
         app.destroy_case(p, args.case, args.confirm)
         print("case destroyed (KEK deleted; data unrecoverable)")
     return 0
+
+
+def _print_leads(leads: list[dict]) -> None:
+    if not leads:
+        print("No verified authority was returned.")
+    for ld in leads:
+        print(safe_terminal(f"\n[{ld['label']}] [{ld['jurisdiction']}] {ld['title']}"
+                            + (f"\n  {ld['citation']}" if ld["citation"] else "")
+                            + f"\n  {ld['body'] or ''} | date: {ld['date'] or 'not stated by source'} | {ld['source']} id {ld['source_id']}"
+                            + f" | retrieved {ld['retrieved_at']}\n  {ld['url']}\n  {ld['citator_notice']}"))
 
 
 if __name__ == "__main__":

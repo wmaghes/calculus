@@ -67,6 +67,17 @@ class TimelineBody(BaseModel):
     include_rows: bool = False
 
 
+class LegalProposeBody(BaseModel):
+    text: str
+    sources: list[str]
+    jurisdictions: list[str]
+
+
+class LegalDecideBody(BaseModel):
+    approve: bool
+    acknowledge_warnings: bool = False
+
+
 class QuoteBody(BaseModel):
     doc_id: str
     page: int
@@ -189,6 +200,26 @@ def create_api(app: App) -> FastAPI:
     def rank(case_id: str, body: SearchBody, request: Request):
         ctx = app.authorize(principal(request, state_changing=True), case_id, Perm.SEARCH)
         return app.rank(ctx, body.query)
+
+    @api.post("/cases/{case_id}/legal/queries")
+    def legal_propose(case_id: str, body: LegalProposeBody, request: Request):
+        ctx = app.authorize(principal(request, state_changing=True), case_id, Perm.LEGAL_PROPOSE)
+        return app.legal_propose(ctx, body.text, body.sources, body.jurisdictions)
+
+    @api.post("/cases/{case_id}/legal/queries/{query_id}/decision")
+    def legal_decide(case_id: str, query_id: str, body: LegalDecideBody, request: Request):
+        ctx = app.authorize(principal(request, state_changing=True), case_id, Perm.LEGAL_APPROVE)
+        return app.legal_decide(ctx, query_id, body.approve, body.acknowledge_warnings)
+
+    @api.post("/cases/{case_id}/legal/queries/{query_id}/run")
+    def legal_run(case_id: str, query_id: str, request: Request):
+        ctx = app.authorize(principal(request, state_changing=True), case_id, Perm.LEGAL_PROPOSE)
+        return app.legal_run(ctx, query_id)
+
+    @api.get("/cases/{case_id}/legal/queries/{query_id}")
+    def legal_leads(case_id: str, query_id: str, request: Request):
+        ctx = app.authorize(principal(request), case_id, Perm.SEARCH)
+        return app.legal_leads(ctx, query_id)
 
     from .web import create_ui
 
