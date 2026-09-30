@@ -49,7 +49,8 @@ mark{background:var(--hl);color:inherit;padding:0 1px}
 table{border-collapse:collapse;width:100%}td,th{border-bottom:1px solid var(--line);padding:6px;text-align:left;vertical-align:top}
 .band{font-size:12px;padding:1px 6px;border-radius:3px;border:1px solid var(--line)}
 .strong{border-color:#2e7d32}.moderate{border-color:#b08900}.weak{border-color:var(--line)}
-input[type=text],input[type=password],textarea{width:100%;padding:8px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--fg);font:inherit}
+input[type=text],input[type=password],input[type=date],select,textarea{width:100%;padding:8px;border:1px solid var(--line);border-radius:4px;background:var(--bg);color:var(--fg);font:inherit}
+label{margin-right:10px}input[type=date],select{width:auto}
 button{padding:7px 14px;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:4px;font:inherit;cursor:pointer}
 button.secondary{background:transparent;color:var(--accent)}
 .loc{font:13px ui-monospace,Menlo,Consolas,monospace;user-select:all;background:var(--bg);border:1px dashed var(--line);padding:6px;border-radius:4px;overflow-wrap:anywhere}
@@ -188,7 +189,10 @@ def create_ui(app: App) -> APIRouter:
         app.audit.record(ctx.user_id, "list_documents", "ok", case_id=case_id, count=len(docs))
         rows = "".join(f'<tr><td><a href="/ui/cases/{E(case_id)}/docs/{E(d["doc_id"])}">{E(d["source_name"])}</a></td>'
                        f'<td>{E(d["status"])}</td><td>{d["page_count"]}</td></tr>' for d in docs)
-        body = (f'<h2>Case {E(case_id)}</h2>' + coverage_block(rep, case_id) + search_form(case_id)
+        body = (f'<h2>Case {E(case_id)}</h2>'
+                + f'<p><a href="/ui/cases/{E(case_id)}/timeline">Timeline</a> &middot; '
+                  f'<a href="/ui/cases/{E(case_id)}/entities">People &amp; organizations</a></p>'
+                + coverage_block(rep, case_id) + search_form(case_id)
                 + f'<details class="card"><summary>All documents ({len(docs)})</summary><table><tr><th>Document</th><th>Status</th><th>Pages</th></tr>{rows}</table></details>')
         return render(request, "Case", body, username(p))
 
@@ -238,6 +242,105 @@ def create_ui(app: App) -> APIRouter:
         app.mark(ctx, f.get("doc_id", ""), page, f.get("label", ""), f.get("query_id") or None)
         target = f"/ui/cases/{quote(case_id)}/docs/{quote(f.get('doc_id', ''))}" + (f"/pages/{page}" if page else "")
         return RedirectResponse(target + "?marked=1", status_code=303)
+
+    # ---------------------------------------------------------------- timeline
+    FLAG_TEXT = {
+        "year_inferred_from_doc_date": "year taken from the email date",
+        "year_inferred_from_context": "year taken from another date in the document",
+        "ambiguous_day_month": "ambiguous day/month (read as US month/day)",
+        "two_digit_year": "two-digit year",
+    }
+
+    def timeline_form(case_id: str, ents: list[dict], f: dict) -> str:
+        opts = '<option value="">Anyone</option>' + "".join(
+            f'<option value="{e["entity_id"]}"{" selected" if str(e["entity_id"]) == f.get("entity_id") else ""}>'
+            f'{E(e["name"])} ({E(e["kind"])})</option>' for e in ents)
+        from .extract.pipeline import TAGS
+        tags = '<option value="">Any topic</option>' + "".join(
+            f'<option value="{E(t)}"{" selected" if t == f.get("tag") else ""}>{E(t)}</option>' for t in TAGS)
+        return (f'<form method="post" action="/ui/cases/{E(case_id)}/timeline" class="card">{PH}'
+                f'<label>From <input type="date" name="from" value="{E(f.get("from", ""))}"></label> '
+                f'<label>To <input type="date" name="to" value="{E(f.get("to", ""))}"></label> '
+                f'<label>Involving <select name="entity_id">{opts}</select></label> '
+                f'<label>Topic <select name="tag">{tags}</select></label> '
+                f'<label><input type="checkbox" name="rows" value="1"{" checked" if f.get("rows") else ""}> include spreadsheet rows</label> '
+                '<button>Apply</button></form>')
+
+    def _render_timeline(request: Request, case_id: str, f: dict):
+        from datetime import date as _date
+        p = principal(request)
+        ctx = app.authorize(p, case_id, Perm.SEARCH)
+
+        def d(v):
+            try:
+                return _date.fromisoformat(v) if v else None
+            except ValueError:
+                return None
+        ent = int(f["entity_id"]) if f.get("entity_id", "").isdigit() else None
+        res = app.timeline(ctx, d(f.get("from")), d(f.get("to")), ent, f.get("tag") or None, bool(f.get("rows")))
+        ents = app.entities(ctx)
+        rows = []
+        for e in res["events"]:
+            rel_s, rel_e = e["passage"].find(e["date_text"]), 0
+            passage = E(e["passage"])
+            if rel_s >= 0:
+                rel_e = rel_s + len(e["date_text"])
+                passage = f'{E(e["passage"][:rel_s])}<mark>{E(e["date_text"])}</mark>{E(e["passage"][rel_e:])}'
+            flags = "".join(f'<br><span class="warn">{E(FLAG_TEXT.get(x, x))}</span>' for x in e["flags"])
+            if e["ocr"]:
+                flags += f'<br><span class="warn">OCR text, confidence {e["ocr_conf"]}</span>'
+            prec = "" if e["precision"] == "day" else f' <span class="muted">({E(e["precision"])} only)</span>'
+            who = ", ".join(E(x["name"]) for x in e["entities"]) or '<span class="muted">none identified</span>'
+            tags = " ".join(f'<span class="band">{E(t)}</span>' for t in e["tags"])
+            rows.append(f'<tr><td><b>{E(e["date"])}</b>{prec}{flags}</td><td><pre>{passage}</pre>{tags}</td>'
+                        f'<td>{who}</td><td><a href="{E(e["link"])}">{E(e["source_name"])}</a><br>'
+                        f'<span class="muted">{E(e["locator"])} &middot; chars {e["char_start"]}&ndash;{e["char_end"]}</span></td></tr>')
+        parts = [f'<h2>Timeline</h2><p class="muted">Every entry quotes its source sentence and links to it. '
+                 f'Dates are extracted by rules, not interpreted: check each entry against the source.</p>',
+                 timeline_form(case_id, ents, f), coverage_block(res["coverage"], case_id)]
+        if res["hidden_table_rows"]:
+            parts.append(f'<p class="muted">{res["hidden_table_rows"]} dated spreadsheet/table rows are hidden. '
+                         'Tick "include spreadsheet rows" to show them.</p>')
+        if rows:
+            parts.append('<table><tr><th>Date</th><th>Source passage</th><th>People / organizations</th><th>Location</th></tr>'
+                         + "".join(rows) + "</table>")
+        else:
+            parts.append('<div class="card"><b>Not found in the reviewed documents.</b></div>')
+        if res["unplaced"]:
+            items = "".join(f'<tr><td>{E(u["date_text"])}</td><td>{E(u["reason"])}</td>'
+                            f'<td><a href="{E(u["link"])}">{E(u["source_name"])}</a> <span class="muted">{E(u["locator"])}</span></td></tr>'
+                            for u in res["unplaced"])
+            parts.append(f'<details class="card" open><summary><b>{len(res["unplaced"])} date references could not be placed '
+                         f'on the timeline</b> (review manually)</summary><table>{items}</table></details>')
+        return render(request, "Timeline", "".join(parts), username(p))
+
+    @ui.get("/cases/{case_id}/timeline")
+    @guarded
+    async def timeline_page(request: Request, case_id: str):
+        return _render_timeline(request, case_id, {})
+
+    @ui.post("/cases/{case_id}/timeline")
+    @guarded
+    async def timeline_filtered(request: Request, case_id: str):
+        return _render_timeline(request, case_id, await form(request))
+
+    @ui.get("/cases/{case_id}/entities")
+    @guarded
+    async def entities_page(request: Request, case_id: str):
+        p = principal(request)
+        ctx = app.authorize(p, case_id, Perm.SEARCH)
+        ents = app.entities(ctx)
+        rows = "".join(
+            f'<tr><td>{E(e["name"])}</td><td>{E(e["kind"])}</td><td>{e["mentions"]}</td><td>{e["documents"]}</td>'
+            f'<td><form method="post" action="/ui/cases/{E(case_id)}/timeline">{PH}'
+            f'<input type="hidden" name="entity_id" value="{e["entity_id"]}"><button class="secondary">Timeline</button></form></td></tr>'
+            for e in ents)
+        body = ('<h2>People &amp; organizations</h2><p class="muted">Found by rules from email headers, signatures, titles '
+                'and corporate names. People mentioned only by first name, or never named in one of those places, are '
+                'not listed. Counts include only documents you can see.</p>'
+                + (f'<table><tr><th>Name</th><th>Type</th><th>Mentions</th><th>Documents</th><th></th></tr>{rows}</table>'
+                   if ents else '<p>None found.</p>'))
+        return render(request, "People & organizations", body, username(p))
 
     # ---------------------------------------------------------------- viewer
     @ui.get("/cases/{case_id}/docs/{doc_id}")

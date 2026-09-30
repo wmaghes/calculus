@@ -59,6 +59,14 @@ class MarkBody(BaseModel):
     query_id: str | None = None
 
 
+class TimelineBody(BaseModel):
+    date_from: str | None = None
+    date_to: str | None = None
+    entity_id: int | None = None
+    tag: str | None = None
+    include_rows: bool = False
+
+
 class QuoteBody(BaseModel):
     doc_id: str
     page: int
@@ -154,6 +162,23 @@ def create_api(app: App) -> FastAPI:
     def mark(case_id: str, body: MarkBody, request: Request):
         ctx = app.authorize(principal(request, state_changing=True), case_id, Perm.MARK)
         return {"mark_id": app.mark(ctx, body.doc_id, body.page, body.label, body.query_id)}
+
+    @api.post("/cases/{case_id}/timeline")
+    def timeline(case_id: str, body: TimelineBody, request: Request):
+        from datetime import date
+
+        ctx = app.authorize(principal(request, state_changing=True), case_id, Perm.SEARCH)
+        try:
+            df = date.fromisoformat(body.date_from) if body.date_from else None
+            dt = date.fromisoformat(body.date_to) if body.date_to else None
+        except ValueError:
+            return JSONResponse({"error": "date_invalid"}, status_code=400)
+        return app.timeline(ctx, df, dt, body.entity_id, body.tag, body.include_rows)
+
+    @api.get("/cases/{case_id}/entities")
+    def entities(case_id: str, request: Request):
+        ctx = app.authorize(principal(request), case_id, Perm.SEARCH)
+        return {"entities": app.entities(ctx)}
 
     from .web import create_ui
 

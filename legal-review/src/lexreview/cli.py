@@ -71,10 +71,12 @@ def main(argv: list[str] | None = None) -> int:
     dl = sub.add_parser("docs"); dl.add_argument("case")
     pg = sub.add_parser("page"); pg.add_argument("case"); pg.add_argument("doc_id"); pg.add_argument("page", type=int)
     vq = sub.add_parser("verify-quote"); vq.add_argument("case"); vq.add_argument("doc_id"); vq.add_argument("page", type=int); vq.add_argument("quote")
-    ex = sub.add_parser("export"); ex.add_argument("case"); ex.add_argument("what", choices=["coverage", "documents"]); ex.add_argument("fmt", choices=["csv", "pdf"]); ex.add_argument("--out", required=True)
+    ex = sub.add_parser("export"); ex.add_argument("case"); ex.add_argument("what", choices=["coverage", "documents", "timeline"]); ex.add_argument("fmt", choices=["csv", "pdf"]); ex.add_argument("--out", required=True)
     au = sub.add_parser("audit"); au.add_argument("action", choices=["verify", "anchor"]); au.add_argument("--anchor", help="seq:mac from a previous `audit anchor`")
     se = sub.add_parser("search"); se.add_argument("case"); se.add_argument("query"); se.add_argument("--top", type=int, default=20)
     mk = sub.add_parser("mark"); mk.add_argument("case"); mk.add_argument("doc_id"); mk.add_argument("label", choices=["relevant", "not_relevant"]); mk.add_argument("--page", type=int); mk.add_argument("--query-id")
+    tl = sub.add_parser("timeline"); tl.add_argument("case"); tl.add_argument("--from", dest="date_from"); tl.add_argument("--to", dest="date_to"); tl.add_argument("--entity-id", type=int); tl.add_argument("--tag"); tl.add_argument("--rows", action="store_true", help="include dated spreadsheet rows")
+    en = sub.add_parser("entities"); en.add_argument("case")
     sv = sub.add_parser("serve", help="run the reviewer web app (TLS 1.3 only)"); sv.add_argument("--host", default="127.0.0.1"); sv.add_argument("--port", type=int, default=8443); sv.add_argument("--cert", required=True); sv.add_argument("--key", required=True)
     ds = sub.add_parser("case-destroy"); ds.add_argument("case"); ds.add_argument("--confirm", required=True)
     args = ap.parse_args(argv)
@@ -201,6 +203,30 @@ def _dispatch(app: App, args) -> int:
             ocr = f" [OCR conf {h['ocr_conf']}]" if h["ocr"] else ""
             print(safe_terminal(f"\n#{h['rank']} [{h['band']}] {h['source_name']} | {h['doc_id']} | {h['locator']} | "
                                 f"chars {h['char_start']}-{h['char_end']}{ocr}\n    open: {h['link']}\n    \"{snippet}\""))
+    elif args.cmd == "timeline":
+        from datetime import date
+
+        ctx = app.authorize(p, args.case, Perm.SEARCH)
+        res = app.timeline(ctx, date.fromisoformat(args.date_from) if args.date_from else None,
+                           date.fromisoformat(args.date_to) if args.date_to else None, args.entity_id, args.tag, args.rows)
+        print(safe_terminal(res["coverage_summary"]))
+        if res["hidden_table_rows"]:
+            print(f"{res['hidden_table_rows']} dated spreadsheet rows hidden (use --rows).")
+        if not res["events"]:
+            print("Not found in the reviewed documents.")
+        for e in res["events"]:
+            flags = f" [{', '.join(e['flags'])}]" if e["flags"] else ""
+            who = ", ".join(x["name"] for x in e["entities"])
+            print(safe_terminal(f"\n{e['date']} ({e['precision']}){flags}  {who}\n    \"{' '.join(e['passage'].split())[:240]}\"\n"
+                                f"    {e['source_name']} | {e['doc_id']} | {e['locator']} | chars {e['char_start']}-{e['char_end']}\n    open: {e['link']}"))
+        if res["unplaced"]:
+            print(f"\n{len(res['unplaced'])} date references could not be placed on the timeline:")
+            for u in res["unplaced"]:
+                print(safe_terminal(f"  \"{u['date_text']}\" ({u['reason']}) - {u['source_name']} {u['locator']}  open: {u['link']}"))
+    elif args.cmd == "entities":
+        ctx = app.authorize(p, args.case, Perm.SEARCH)
+        for e in app.entities(ctx):
+            print(safe_terminal(f"{e['entity_id']:>4}  {e['kind']:6} {e['name']:40} mentions={e['mentions']} docs={e['documents']}"))
     elif args.cmd == "mark":
         ctx = app.authorize(p, args.case, Perm.MARK)
         print(app.mark(ctx, args.doc_id, args.page, args.label, args.query_id))

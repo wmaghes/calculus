@@ -46,6 +46,19 @@ def _rows(app, ctx: CaseAccessContext, what: str) -> tuple[list[str], list[list]
     if what == "documents":
         header = ["doc_id", "parent_id", "source_name", "kind", "status", "reason", "page_count", "ocr_pages", "low_conf_pages"]
         return header, [[d[k] for k in header] for d in store.list_documents(ctx)], coverage_summary_line(rep)
+    if what == "timeline":
+        tl = app.timeline(ctx)
+        header = ["date", "precision", "flags", "people_orgs", "passage", "source_name", "doc_id", "locator",
+                  "char_start", "char_end"]
+        rows = [[e["date"], e["precision"], "; ".join(e["flags"]), "; ".join(x["name"] for x in e["entities"]),
+                 " ".join(e["passage"].split()), e["source_name"], e["doc_id"], e["locator"], e["char_start"],
+                 e["char_end"]] for e in tl["events"]]
+        rows += [["UNPLACED", "", u["reason"], "", u["date_text"], u["source_name"], u["doc_id"], u["locator"], "", ""]
+                 for u in tl["unplaced"]]
+        note = coverage_summary_line(rep)
+        if tl["hidden_table_rows"]:
+            note += f" {tl['hidden_table_rows']} dated spreadsheet rows not included."
+        return header, rows, note
     raise ConfigError("export_kind_unknown")
 
 
