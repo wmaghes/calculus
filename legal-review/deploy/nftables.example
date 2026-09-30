@@ -13,8 +13,11 @@ table inet lexreview {
     ip daddr @vault tcp dport 8200 accept
     ip daddr @resolvers udp dport 53 accept
     ip daddr @idp tcp dport 443 accept
-    # Phase 5 legal-authority gateway ONLY, ideally from a separate host:
-    # ip daddr <courtlistener/govinfo/ecfr egress proxy> tcp dport 443 accept
+    # Phase 5 legal-authority gateway ONLY (LEXREVIEW_LEGAL_SOURCES=1), ideally via
+    # a separate egress proxy that itself allows only these HTTPS hosts:
+    #   www.courtlistener.com  api.govinfo.gov  www.ecfr.gov
+    #   codes.ohio.gov  www.legislature.mi.gov
+    # ip daddr <legal egress proxy> tcp dport 3128 accept
     log prefix "lexreview-egress-drop " counter drop
   }
   chain input {

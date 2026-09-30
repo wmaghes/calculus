@@ -10,3 +10,5 @@
 | 2026-09-30 | **Every search sent to an outside legal database requires a person to approve the exact outbound query text first.** No automatic sending, including model-suggested terms. | Project owner |
 | 2026-09-30 | **Citations work like an app link:** every result opens the source page with the passage highlighted and its full location (document, doc ID, page or locator, character range) shown and copyable. DOCX keeps paragraph/Word-layout locators (no LibreOffice conversion). | Project owner |
 | 2026-09-30 | Semantic search uses an offline per-case LSA model until neural embedding weights can be provisioned offline and pinned by hash (Hugging Face is unreachable from the development sandbox). | Implementation, flagged for owner |
+| 2026-09-30 | Legal-search approvers: attorneys and case admins (LEGAL_APPROVE); paralegals and attorneys may propose (LEGAL_PROPOSE); reviewers neither. A single attorney may propose and approve (two-person approval is an open option, SECURITY.md R34). | Implementation default, flagged for owner |
+| 2026-09-30 | An approved legal search is sent once; re-running requires a new proposal and approval. | Implementation default |

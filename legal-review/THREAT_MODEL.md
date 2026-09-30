@@ -82,6 +82,15 @@ formula injection neutralized in exports.
 | Wrong dates presented as fact | Precision + flags on every entry; unplaced list; "extracted by rules, check the source" notice | Built |
 | Restricted content via timeline/entity lists | Same visibility SQL as search; counts over visible docs only | Built, tested |
 
+### 3d. Legal-authority gateway threats (Phase 5)
+| Threat | Control | Status |
+|---|---|---|
+| Case facts leak to third-party legal sites | Human approval of exact text (hash-bound, single use); copied-phrase block; name/number warnings | Built, tested |
+| Fabricated or hallucinated authority | No model involved; results only from source responses; re-fetch by ID; unverifiable dropped | Built, tested (fixtures) |
+| Malicious/compromised source response (XSS, javascript: URLs, huge bodies, redirects) | Text cleaned and escaped; URLs rebuilt from IDs on allowlisted hosts; size cap while streaming; redirects refused | Built, tested |
+| Gateway used as a general egress path | HTTPS + five-host allowlist; disabled by default; egress guard + firewall | Built, tested |
+| Unavailable source hides a gap | Per-source status shown ("could not be retrieved; nothing filled in") | Built, tested |
+
 ### 4. Cross-case leakage
 One DB, one blob dir, one DEK/KEK per case. No global index or cache.
 Stores refuse contexts for other cases. Tested: cross-case authorize, doc-ID

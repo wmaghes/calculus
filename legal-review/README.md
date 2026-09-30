@@ -1,8 +1,9 @@
 # lexreview — citation-backed discovery review assistant
 
-**Status: development build, Phases 1-4 of 5 done (ingestion + security
+**Status: development build, all 5 phases built (ingestion + security
 foundation; hybrid search + reviewer web app; extraction + cited timeline;
-cited Q&A + instruction-driven ranking). Synthetic data only. Not
+cited Q&A + instruction-driven ranking; legal-authority leads for Ohio and
+Michigan). Synthetic data only. Not
 approved for real client data.** Decisions are logged in [DECISIONS.md](DECISIONS.md).
 
 lexreview helps attorneys, paralegals and reviewers organize large discovery
@@ -14,7 +15,7 @@ Before any real data is used, read [SECURITY.md](SECURITY.md) (residual risks
 and open items) and [PENTEST_AND_COUNSEL_REVIEW.md](PENTEST_AND_COUNSEL_REVIEW.md).
 Nothing in this repository claims the system is "secure" or "leak-proof".
 
-## What Phases 1-4 do
+## What the system does
 
 | Capability | Where |
 |---|---|
@@ -46,8 +47,22 @@ Nothing in this repository claims the system is "secure" or "leak-proof".
 | Swappable model backend with no tools: extractive (default, no model) or a local Ollama / llama.cpp server on an allowlisted loopback port | `llm.py` |
 | "Find everything relevant to X": instruction parsed into topic, date range, people/orgs; recall-first document ranking split into ranked / no date found / dated outside range; injection-looking documents flagged | `rank.py` |
 
-Not yet built: legal-authority leads for Ohio and Michigan with
-human-approved outbound queries (Phase 5).
+| **Phase 5:** legal-authority leads (Ohio, Michigan, federal): propose, then an attorney approves the exact text (bound by SHA-256), then it is sent once; copied document text blocked, case names/numbers warned | `legal/leads.py` |
+| Sources: CourtListener, eCFR, govinfo, Ohio Revised Code, Michigan Compiled Laws; every result re-fetched by ID and cross-checked; unavailable sources reported; labels "Lead for attorney verification", jurisdiction (from the deciding court), date, and "citator / good-law status NOT checked" | `legal/sources.py`, `legal/gateway.py` |
+
+### Enabling legal sources (outside the firm)
+
+```bash
+export LEXREVIEW_LEGAL_SOURCES=1                               # off by default
+export LEXREVIEW_COURTLISTENER_TOKEN_REF=file:/etc/lexreview/cl_token   # optional
+export LEXREVIEW_GOVINFO_KEY_REF=file:/etc/lexreview/govinfo_key        # required for govinfo
+export LEXREVIEW_LEGAL_PROXY=https://egress-proxy.firm.internal:3128    # optional explicit proxy
+```
+
+The network firewall must also allow the five hosts (see
+`deploy/nftables.example`). The Ohio and Michigan adapters parse HTML whose
+structure has **not** been validated against the live sites; validate all
+five adapters live before use (SECURITY.md R30).
 
 ### Using a local model
 
@@ -100,6 +115,10 @@ lexreview timeline <case> --from 2023-03-01 --to 2023-06-30 [--entity-id N] [--r
 lexreview export <case> timeline csv --out ./exports
 lexreview ask <case> "When was Harbor Point notified about the 4471 excursion?"
 lexreview rank <case> "find everything about temperature excursions between March and June 2023"
+lexreview legal-propose <case> "carrier liability for temperature-controlled cargo damage" --sources courtlistener,ohio_code --jurisdictions ohio,michigan
+lexreview legal-decide <case> <query_id> approve        # attorney / case admin
+lexreview legal-run <case> <query_id>
+lexreview legal-list <case> [--query-id <query_id>]
 lexreview export <case> coverage pdf --out ./exports
 
 # Reviewer web app (TLS 1.3 only). Use certificates from the firm PKI.
@@ -136,6 +155,10 @@ cross-case search, not-found, FTS syntax injection, recall),
 quotes from unshown passages, link/image/e-mail exfiltration, malformed
 output, crashes, restricted/cross-case text never in prompts, loopback-only
 model server, ranking recall),
+`test_legal.py` (no send without approval, approval bound to exact text and
+destinations, copied text blocked, verification by ID, unavailable sources,
+hostile responses, redirects, oversize, jurisdiction labels; all responses
+are synthetic FIXTURE data in `tests/legal_fixtures.py`),
 `test_timeline.py` (date formats and flags, verifiable spans, unplaced
 dates, restricted/cross-case filtering, injection containment, ReDoS),
 `test_datasafety.py`, `test_audit.py`, `test_auth.py`, `test_export.py`.

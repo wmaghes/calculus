@@ -141,6 +141,35 @@ except the signed synthetic test corpus.
     for the shared test app; the model-server test now reinstalls it and
     asserts the blocked call fails safe.
 
+## Controls added in Phase 5
+
+- Outbound legal searches are off by default and go only through the
+  gateway: HTTPS, five allowlisted hosts, no redirects, environment proxies
+  ignored, streamed size cap, timeouts, untrusted-response cleaning.
+- Every outbound query is proposed, then approved by an attorney or case
+  admin; approval is bound to SHA-256 of the exact text plus destinations and
+  is single-use. A query containing any 5-word phrase from a case document
+  is blocked; case names and case numbers produce warnings that must be
+  acknowledged.
+- Results are shown only after a second request by ID to the same source
+  confirms them (name/section/date cross-check). Unverifiable results are
+  discarded (count shown); unreachable sources are reported, never filled in.
+- Jurisdiction comes from the deciding court; results from courts outside
+  the requested filter are dropped. URLs from responses are never trusted:
+  they are rebuilt from verified IDs on allowlisted hosts.
+- Every lead is labelled "Lead for attorney verification", with jurisdiction,
+  date and retrieval time, and states that citator / good-law status has NOT
+  been checked. No model is involved in legal leads.
+- Proposals, approvals and sends are audited with text digests and hashes.
+
+## Issues found and fixed during Phase 5
+
+16. Party-name warning missed organization names written without the
+    corporate suffix ("Meridian Freightways"). Fixed.
+17. Case leads were labelled with the jurisdiction of the search filter, not
+    the deciding court (an Ohio appellate case showed as "Federal"). Fixed;
+    out-of-filter results are dropped.
+
 ## Residual risks (known, not solved)
 
 | # | Risk | Notes / mitigation direction |
@@ -173,9 +202,16 @@ except the signed synthetic test corpus.
 | R27 | **Selective omission.** A steered model can leave out relevant passages. Q&A shows only what it cites; use ranking for completeness. | Ranking is retrieval-based (no model needed); recall evaluated. |
 | R28 | **No real model was run in development** (downloads blocked). The local backend is tested against a fake Ollama server only; answer quality with a real model is unmeasured. The default extractive backend returns sentences, not synthesized answers. | Evaluate with the firm's chosen local model before use. |
 | R29 | **Date-range ranking relies on extracted dates.** A document whose dates were missed can appear under "no date found" or "outside range"; both lists are always shown. | Reviewers check all three lists. |
+| R30 | **Legal adapters are not validated live.** CourtListener, eCFR and govinfo adapters follow the documented APIs; the Ohio and Michigan adapters assume HTML structure and search URLs. All tests use synthetic fixtures. Court ids and endpoints must be checked against the live services. | Live validation in the firm environment; adapters fail closed (no verified result, nothing shown). |
+| R31 | **Approved queries still disclose research interest** to CourtListener, govinfo, eCFR, and the state sites (and their logs), even without case details. | Counsel decision; firm egress proxy; generic phrasing. |
+| R32 | **The document-text check is phrase-based** (5 consecutive words). Paraphrased facts, or short distinctive phrases, pass; the approver is the control. | Human approval; training for approvers. |
+| R33 | **Verification proves existence and matching metadata, not relevance or validity.** Leads may be irrelevant, overruled, or superseded. | Labels; citator check by an attorney. |
+| R34 | One person with the attorney role can both propose and approve. | Enable two-person approval if counsel requires it. |
 | R20 | The page viewer renders original pages in the sandbox on every view (no cache); on huge scans this is slow. | Pre-render into encrypted blobs if needed. |
 
 ## Open items before any real data
+
+(See also R30-R34 for Phase 5.)
 
 0. Neural embedding model provisioned offline and pinned by hash (R16).
 1. OIDC/SAML adapter to the firm IdP with enforced MFA (local TOTP is dev-grade).
