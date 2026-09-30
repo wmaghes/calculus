@@ -129,7 +129,7 @@ def scanned_pdf(path: Path, pages: list[list[str]], rng: random.Random, blank: b
                     y += 56
         # Scanner noise.
         px = img.load()
-        for _ in range(60000 if not blank else 20000):
+        for _ in range(60000 if not blank else 3000):
             x, yy = rng.randrange(2550), rng.randrange(3300)
             px[x, yy] = rng.choice((0, 90, 160))
         img = img.rotate(0.6 if not blank else 0, expand=False, fillcolor=255).filter(ImageFilter.GaussianBlur(0.6))

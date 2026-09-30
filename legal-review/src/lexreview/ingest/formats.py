@@ -399,3 +399,37 @@ def parse(data: bytes, limits: dict) -> ParseResult:
     if res.status == "indexed" and not any(p.text.strip() for p in res.pages) and not res.children:
         res.status, res.reason = "indexed_low_confidence", "no_text_content"
     return res
+
+
+# ---------------------------------------------------------------- viewer
+def render_page(data: bytes, page_no: int, limits: dict, max_px: int = 1700) -> bytes | None:
+    """Render one page of a PDF or image to PNG for the page viewer. Runs in
+    the sandbox like parsing does. Returns None for formats without pages."""
+    from PIL import Image, ImageSequence
+
+    kind = detect(data)
+    img = None
+    if kind == "pdf":
+        import pypdfium2 as pdfium
+
+        pdf = pdfium.PdfDocument(data)
+        if not 1 <= page_no <= len(pdf):
+            return None
+        page = pdf[page_no - 1]
+        w, h = page.get_size()
+        img = page.render(scale=min(3.0, max_px / max(w, h))).to_pil()
+    elif kind == "image":
+        Image.MAX_IMAGE_PIXELS = limits["max_image_pixels"]
+        src = Image.open(io.BytesIO(data))
+        if src.size[0] * src.size[1] > limits["max_image_pixels"]:
+            return None
+        for i, frame in enumerate(ImageSequence.Iterator(src), start=1):
+            if i == page_no:
+                img = frame.convert("RGB")
+                break
+    if img is None:
+        return None
+    img.thumbnail((max_px, max_px))
+    out = io.BytesIO()
+    img.save(out, "PNG")
+    return out.getvalue()

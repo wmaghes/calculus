@@ -35,6 +35,24 @@ except the signed synthetic test corpus.
 - **Supply chain:** hash-pinned locks, pip-audit (no known vulnerabilities
   at time of writing), bandit (clean after triage), SBOM, Trojan Source scan.
 
+## Controls added in Phase 2
+
+- Search results are permission-filtered inside the SQL (FTS) and the
+  vector mask before ranking; restricted documents never appear in results,
+  document counts or "documents searched".
+- Every result's snippet is re-checked against the stored page text at its
+  offsets before display (integrity failures are counted and dropped).
+- User text never reaches FTS5 as syntax (quoted terms only).
+- Vector index and LSA model are per case, serialized without pickle, and
+  sealed with the case's vector key (AES-256-GCM).
+- Query text is stored only in the encrypted case DB; the audit log has an
+  HMAC digest and the query ID. Searches are POSTs, so queries never land in
+  URLs, history or proxy logs.
+- Web UI: no JavaScript; CSP without script-src; all document text escaped;
+  no links or images generated from document content; CSRF on every form;
+  page images rendered from the original inside the parser sandbox, never
+  cached (Cache-Control: no-store).
+
 ## Issues found and fixed during Phase 1
 
 1. **Access-context seal bypass.** The first design sealed contexts with a
@@ -52,6 +70,20 @@ except the signed synthetic test corpus.
    now scanned in `security_checks.sh`.
 5. **Decompression bomb accepted.** Pillow only raises above 2× its pixel
    limit. The limit is now enforced before decoding.
+
+## Issues found and fixed during Phase 2
+
+6. **Deadlock** between the index cache and the store cache (non-reentrant
+   lock); the first search after ingestion hung. Fixed with a re-entrant lock.
+7. **CPU-limit kills reported as generic parse errors.** A parser killed by
+   the CPU-seconds rlimit now appears in coverage as `timeout`.
+8. **CSRF placeholder could be injected by document text.** A fixed
+   `{csrf}` marker was replaced after rendering, so a document containing it
+   would have shown the user's token in page text. Now a random per-process
+   placeholder.
+9. **Over-confident bands.** Bands based on rank position labelled an
+   unrelated query's hits "strong". Now based on absolute evidence, with a
+   semantic similarity floor and an out-of-vocabulary discount.
 
 ## Residual risks (known, not solved)
 
@@ -72,9 +104,15 @@ except the signed synthetic test corpus.
 | R13 | **Performance.** OCR is single-threaded per file; a noisy 1-page scan took ~84 s on 4 CPU cores. Thousands of scanned pages will take hours. Ingestion is sequential. | Parallel worker pool with the same sandboxing. |
 | R14 | **Duplicate detection is exact (SHA-256)**; near-duplicates are indexed separately. | Near-dup detection in Phase 2/3 if wanted. |
 | R15 | Formula cells in XLSX show cached values; never-calculated workbooks show blanks. | Noted in document metadata. |
+| R16 | **Semantic model is LSA, not neural.** It handles co-occurrence but misses many paraphrases, so recall on real productions will be lower than keyword+neural hybrids. | Provision a neural embedding model offline, pinned by SHA-256 (open item). |
+| R17 | **Restricted documents shape the case's LSA model.** The model is trained on all of a case's chunks; a user without a grant cannot see restricted text or hits, but the term associations learned from it slightly influence their semantic ranking of visible documents. | Train separate models per restriction level if counsel considers this material. |
+| R18 | **Index rebuild cost.** The semantic index is rebuilt over the whole case after each ingestion run; very large cases will make this slow. Exact (brute-force) search uses ~4 bytes x 200 dims per chunk of RAM while a case is open. | Incremental indexing / per-batch models. |
+| R19 | **Query history is retained indefinitely** in the encrypted case DB (work product). | Retention policy (counsel item). |
+| R20 | The page viewer renders original pages in the sandbox on every view (no cache); on huge scans this is slow. | Pre-render into encrypted blobs if needed. |
 
 ## Open items before any real data
 
+0. Neural embedding model provisioned offline and pinned by hash (R16).
 1. OIDC/SAML adapter to the firm IdP with enforced MFA (local TOTP is dev-grade).
 2. Vault Transit (or HSM) integration test against a real instance; key policies; KMS backup/destroy procedure.
 3. Production parser sandbox (see R2) and tmpfs scratch (R3).

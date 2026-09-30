@@ -23,6 +23,7 @@ import json
 import os
 import resource
 import shutil
+import signal
 import subprocess  # nosec B404
 import sys
 import tempfile
@@ -74,8 +75,8 @@ def _limits(settings: Settings) -> dict:
     }
 
 
-def run_parser(data: bytes, settings: Settings, work_root: Path, timeout: int | None = None) -> SandboxResult:
-    timeout = timeout or settings.parse_timeout_s
+def _run_worker(data: bytes, settings: Settings, work_root: Path, timeout: int, extra: list[str]):
+    """Returns (completed_process | None on timeout, isolated)."""
     isolated = _can_unshare()
     if not isolated and settings.production:
         raise ConfigError("parser_network_isolation_unavailable")
@@ -91,20 +92,42 @@ def run_parser(data: bytes, settings: Settings, work_root: Path, timeout: int | 
         resource.setrlimit(resource.RLIMIT_NOFILE, (256, 256))
         os.setsid()
 
-    argv = [sys.executable, "-I", "-m", "lexreview.ingest.worker", json.dumps(_limits(settings))]
+    argv = [sys.executable, "-I", "-m", "lexreview.ingest.worker", json.dumps(_limits(settings)), *extra]
     if isolated:
         argv = [shutil.which("unshare"), "-n", *argv]
     env = {"PATH": "/usr/bin:/bin", "TMPDIR": jobdir, "OMP_THREAD_LIMIT": "1", "LANG": "C.UTF-8", "HOME": jobdir}
     try:
-        proc = subprocess.run(  # nosec B603
+        return subprocess.run(  # nosec B603
             argv, input=data, capture_output=True, timeout=timeout, env=env,
             preexec_fn=_preexec, cwd=jobdir,
-        )
+        ), isolated
     except subprocess.TimeoutExpired:
-        return SandboxResult("unknown", "timeout", "parse_timeout", [], {}, [], "isolated" if isolated else "degraded")
+        return None, isolated
     finally:
         shutil.rmtree(jobdir, ignore_errors=True)
+
+
+def run_render(data: bytes, page_no: int, settings: Settings, work_root: Path) -> bytes | None:
+    """Render one page to PNG inside the sandbox. None if not renderable."""
+    proc, _ = _run_worker(data, settings, work_root, 60, [f"render:{int(page_no)}"])
+    if proc is None or proc.returncode != 0:
+        return None
+    try:
+        png = json.loads(proc.stdout)["png"]
+    except (ValueError, KeyError):
+        return None
+    return base64.b64decode(png) if png else None
+
+
+def run_parser(data: bytes, settings: Settings, work_root: Path, timeout: int | None = None) -> SandboxResult:
+    timeout = timeout or settings.parse_timeout_s
+    proc, isolated = _run_worker(data, settings, work_root, timeout, [])
+    if proc is None:
+        return SandboxResult("unknown", "timeout", "parse_timeout", [], {}, [], "isolated" if isolated else "degraded")
     # proc.stderr is intentionally dropped: it may contain document text.
+    if proc.returncode == -signal.SIGXCPU:
+        # CPU-seconds rlimit hit before the wall-clock timeout: same meaning.
+        return SandboxResult("unknown", "timeout", "cpu_time_limit", [], {}, [], "isolated" if isolated else "degraded")
     if proc.returncode != 0:
         reason = "worker_killed" if proc.returncode < 0 else "worker_failed"
         return SandboxResult("unknown", "parse_error", reason, [], {}, [], "isolated" if isolated else "degraded")

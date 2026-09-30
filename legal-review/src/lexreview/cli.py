@@ -73,6 +73,9 @@ def main(argv: list[str] | None = None) -> int:
     vq = sub.add_parser("verify-quote"); vq.add_argument("case"); vq.add_argument("doc_id"); vq.add_argument("page", type=int); vq.add_argument("quote")
     ex = sub.add_parser("export"); ex.add_argument("case"); ex.add_argument("what", choices=["coverage", "documents"]); ex.add_argument("fmt", choices=["csv", "pdf"]); ex.add_argument("--out", required=True)
     au = sub.add_parser("audit"); au.add_argument("action", choices=["verify", "anchor"]); au.add_argument("--anchor", help="seq:mac from a previous `audit anchor`")
+    se = sub.add_parser("search"); se.add_argument("case"); se.add_argument("query"); se.add_argument("--top", type=int, default=20)
+    mk = sub.add_parser("mark"); mk.add_argument("case"); mk.add_argument("doc_id"); mk.add_argument("label", choices=["relevant", "not_relevant"]); mk.add_argument("--page", type=int); mk.add_argument("--query-id")
+    sv = sub.add_parser("serve", help="run the reviewer web app (TLS 1.3 only)"); sv.add_argument("--host", default="127.0.0.1"); sv.add_argument("--port", type=int, default=8443); sv.add_argument("--cert", required=True); sv.add_argument("--key", required=True)
     ds = sub.add_parser("case-destroy"); ds.add_argument("case"); ds.add_argument("--confirm", required=True)
     args = ap.parse_args(argv)
 
@@ -110,6 +113,13 @@ def _dispatch(app: App, args) -> int:
         app.logout(_token())
         _session_file().unlink(missing_ok=True)
         print("logged out")
+        return 0
+
+    if args.cmd == "serve":
+        from .api import build_server
+
+        print(f"serving https://{args.host}:{args.port}/ui/  (TLS 1.3 only)")
+        build_server(app, args.host, args.port, args.cert, args.key).run()
         return 0
 
     p = app.principal(_token())
@@ -178,6 +188,22 @@ def _dispatch(app: App, args) -> int:
                 anchor = Anchor(int(seq), mac)
             n = app.audit.verify(anchor)
             print(f"audit log OK: {n} records verified")
+    elif args.cmd == "search":
+        ctx = app.authorize(p, args.case, Perm.SEARCH)
+        res = app.search(ctx, args.query, args.top)
+        print(safe_terminal(res["coverage_summary"]))
+        print(f"{res['documents_searched']} searchable documents searched; {res['total_passages']} passages in "
+              f"{len(res['documents'])} documents matched. query_id={res['query_id']}")
+        if res["not_found"]:
+            print("Not found in the reviewed documents.")
+        for h in res["results"]:
+            snippet = " ".join(h["snippet"].split())[:220]
+            ocr = f" [OCR conf {h['ocr_conf']}]" if h["ocr"] else ""
+            print(safe_terminal(f"\n#{h['rank']} [{h['band']}] {h['source_name']} | {h['doc_id']} | {h['locator']} | "
+                                f"chars {h['char_start']}-{h['char_end']}{ocr}\n    open: {h['link']}\n    \"{snippet}\""))
+    elif args.cmd == "mark":
+        ctx = app.authorize(p, args.case, Perm.MARK)
+        print(app.mark(ctx, args.doc_id, args.page, args.label, args.query_id))
     elif args.cmd == "case-destroy":
         app.destroy_case(p, args.case, args.confirm)
         print("case destroyed (KEK deleted; data unrecoverable)")

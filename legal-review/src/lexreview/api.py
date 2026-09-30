@@ -25,7 +25,9 @@ from .errors import AccessDenied, AuthError, LexReviewError, NotFound
 from .safelog import log_event
 
 SECURITY_HEADERS = {
-    "Content-Security-Policy": "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
+    # No script-src at all: the UI has no JavaScript. Styles and page images
+    # are same-origin only.
+    "Content-Security-Policy": "default-src 'none'; style-src 'self'; img-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'",
     "X-Content-Type-Options": "nosniff",
     "X-Frame-Options": "DENY",
     "Referrer-Policy": "no-referrer",
@@ -43,6 +45,18 @@ class LoginBody(BaseModel):
     username: str
     password: str
     totp: str | None = None
+
+
+class SearchBody(BaseModel):
+    query: str
+    top_k: int = 50
+
+
+class MarkBody(BaseModel):
+    doc_id: str
+    page: int | None = None
+    label: str
+    query_id: str | None = None
 
 
 class QuoteBody(BaseModel):
@@ -131,6 +145,19 @@ def create_api(app: App) -> FastAPI:
         return {"verified": True, "doc_id": res.doc_id, "page": res.page_no, "locator": res.locator,
                 "char_start": res.char_start, "char_end": res.char_end, "text": res.exact_text}
 
+    @api.post("/cases/{case_id}/search")
+    def search(case_id: str, body: SearchBody, request: Request):
+        ctx = app.authorize(principal(request, state_changing=True), case_id, Perm.SEARCH)
+        return app.search(ctx, body.query, body.top_k)
+
+    @api.post("/cases/{case_id}/marks")
+    def mark(case_id: str, body: MarkBody, request: Request):
+        ctx = app.authorize(principal(request, state_changing=True), case_id, Perm.MARK)
+        return {"mark_id": app.mark(ctx, body.doc_id, body.page, body.label, body.query_id)}
+
+    from .web import create_ui
+
+    api.include_router(create_ui(app))
     return api
 
 

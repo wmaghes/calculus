@@ -40,7 +40,7 @@ weights; the model provider (only if a hosted backend is ever enabled).
 | Stolen disk, backup or snapshot | SQLCipher (AES-256) per case; AES-256-GCM blobs; DEK wrapped by KMS; owner-only file modes | Built, tested (`test_no_plaintext_at_rest`, `test_data_files_owner_only`) |
 | Sniffing | TLS 1.3 only on the API | Built, tested (TLS 1.2 handshake refused) |
 | Malicious file exploits a parser | Separate process, rlimits, timeout, `unshare -n`, no core dumps, stderr discarded, zip/image bomb limits | Built, tested. **Not** a full sandbox (no seccomp, shared filesystem view) |
-| XSS / CSRF / clickjacking | JSON-only API; CSP `default-src 'none'`; frame-ancestors none; SameSite=Strict cookies + CSRF token | Built for the Phase 1 API. UI arrives in Phase 2 |
+| XSS / CSRF / clickjacking | No JavaScript in the UI; CSP without script-src; all document text HTML-escaped; no links/images from document content; frame-ancestors none; SameSite=Strict cookies + CSRF token on every form | Built, tested with the injection documents (`test_web.py`) |
 | IDOR on doc IDs | Random IDs; every lookup filtered by case store + visibility SQL; "not found" identical for "exists but hidden" | Built, tested |
 | SSRF / document-triggered fetches | No component fetches URLs from documents; egress guard | Built (guard), tested |
 
@@ -64,6 +64,15 @@ rendered as escaped text with links defanged and images removed. Phase 1
 already ensures injected text is stored as inert data, HTML/script stripped
 from emails, terminal control characters stripped from CLI output, and CSV
 formula injection neutralized in exports.
+
+### 3b. Search-specific threats (Phase 2)
+| Threat | Control | Status |
+|---|---|---|
+| Restricted docs leak through search results or counts | Visibility applied in FTS SQL and vector mask before ranking; counts computed with the same filter | Built, tested |
+| FTS query syntax injection | User text reduced to quoted terms | Built, tested |
+| Queries (strategy) exposed | Stored only in encrypted case DB; POST only; audit digest | Built, tested |
+| Index tampering / corrupted results | Snippets re-verified against stored page text; vectors sealed with AES-GCM | Built, tested |
+| Rendering hostile PDFs in the web tier | Page images rendered in the parser sandbox | Built, tested |
 
 ### 4. Cross-case leakage
 One DB, one blob dir, one DEK/KEK per case. No global index or cache.

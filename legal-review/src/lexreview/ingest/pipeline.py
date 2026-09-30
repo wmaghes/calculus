@@ -104,6 +104,8 @@ def ingest_path(app, ctx: CaseAccessContext, path: Path, restriction: str | None
         rel, data, sha = guard.read(f, app.settings.max_file_bytes)
         ingest_bytes(rel, data, sha, f.stat().st_size, None, 0)
 
+    # Rebuild the case's semantic index so new documents are searchable.
+    app.rebuild_index(ctx)
     app.audit.record(ctx.user_id, "ingest", "ok", case_id=ctx.case_id,
                      documents=len(doc_ids), files=len(files), duration_ms=int((time.time() - t0) * 1000),
                      **{f"n_{k}": v for k, v in sorted(summary.items())})

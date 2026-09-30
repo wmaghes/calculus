@@ -62,6 +62,24 @@ CREATE INDEX IF NOT EXISTS chunks_doc ON chunks(doc_id, page_no);
 CREATE VIRTUAL TABLE IF NOT EXISTS chunks_fts USING fts5(
     text, content='chunks', content_rowid='chunk_id', tokenize='porter unicode61'
 );
+-- Query text is work product: it lives only here, inside the encrypted case
+-- DB. The audit log records a keyed digest and the query_id.
+CREATE TABLE IF NOT EXISTS queries (
+    query_id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    created_at REAL NOT NULL,
+    query_text TEXT NOT NULL,
+    n_results INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS marks (
+    mark_id INTEGER PRIMARY KEY,
+    doc_id TEXT NOT NULL REFERENCES documents(doc_id),
+    page_no INTEGER,
+    user_id TEXT NOT NULL,
+    label TEXT NOT NULL CHECK (label IN ('relevant', 'not_relevant')),
+    query_id TEXT,
+    created_at REAL NOT NULL
+);
 """
 
 # Statuses recorded in the coverage ledger. Only "indexed" and
@@ -90,6 +108,7 @@ class CaseStore:
         self.dir = Path(case_dir)
         (self.dir / "blobs").mkdir(parents=True, exist_ok=True, mode=0o700)
         self._blob_key = crypto.derive(dek, "blob")
+        self._vector_key = crypto.derive(dek, "vector")
         self.conn = db.connect(self.dir / "case.db", crypto.derive(dek, "sqlcipher"))
         self.conn.executescript(SCHEMA)
 
@@ -211,3 +230,98 @@ class CaseStore:
         self._ctx(ctx, Perm.VIEW)
         vis, params = self.visibility_sql(ctx)
         return self.conn.execute(f"SELECT count(*) FROM documents d WHERE NOT {vis}", params).fetchone()[0]  # nosec B608 - constant clause, bound params
+
+    # ---- search support (Phase 2) -------------------------------------------
+    def searchable_chunks(self, ctx: CaseAccessContext):
+        """All chunks of searchable documents, for building the case's
+        semantic index. Restriction labels are NOT applied here: the index is
+        built once per case and filtered per user at query time."""
+        self._ctx(ctx, Perm.INGEST)
+        marks = ",".join("?" * len(SEARCHABLE))
+        return self.conn.execute(
+            f"SELECT c.chunk_id, c.text FROM chunks c JOIN documents d ON d.doc_id = c.doc_id "  # nosec B608 - constant clause, bound params
+            f"WHERE d.status IN ({marks}) ORDER BY c.chunk_id", SEARCHABLE).fetchall()
+
+    def put_vectors(self, ctx: CaseAccessContext, data: bytes) -> None:
+        self._ctx(ctx, Perm.INGEST)
+        sealed = crypto.seal(self._vector_key, data, aad=f"{self.case_id}:vectors".encode())
+        tmp = self.dir / "vectors.bin.new"
+        fd = os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+        with os.fdopen(fd, "wb") as fh:
+            fh.write(sealed)
+            fh.flush()
+            os.fsync(fh.fileno())
+        os.replace(tmp, self.dir / "vectors.bin")
+
+    def get_vectors(self, ctx: CaseAccessContext) -> bytes | None:
+        self._ctx(ctx, Perm.SEARCH)
+        path = self.dir / "vectors.bin"
+        if not path.exists():
+            return None
+        return crypto.open_sealed(self._vector_key, path.read_bytes(), aad=f"{self.case_id}:vectors".encode())
+
+    def visible_chunk_ids(self, ctx: CaseAccessContext) -> set[int]:
+        self._ctx(ctx, Perm.SEARCH)
+        vis, params = self.visibility_sql(ctx)
+        marks = ",".join("?" * len(SEARCHABLE))
+        rows = self.conn.execute(
+            f"SELECT c.chunk_id FROM chunks c JOIN documents d ON d.doc_id = c.doc_id "  # nosec B608 - constant clause, bound params
+            f"WHERE d.status IN ({marks}) AND {vis}", [*SEARCHABLE, *params]).fetchall()
+        return {r[0] for r in rows}
+
+    def fts_search(self, ctx: CaseAccessContext, fts_query: str, limit: int) -> list[tuple[int, float]]:
+        """BM25 over visible, searchable chunks. `fts_query` must come from
+        search.hybrid.to_fts_query (quoted terms only)."""
+        self._ctx(ctx, Perm.SEARCH)
+        vis, params = self.visibility_sql(ctx)
+        marks = ",".join("?" * len(SEARCHABLE))
+        rows = self.conn.execute(
+            f"SELECT f.rowid, bm25(chunks_fts) AS score FROM chunks_fts f "  # nosec B608 - constant clause, bound params
+            f"JOIN chunks c ON c.chunk_id = f.rowid JOIN documents d ON d.doc_id = c.doc_id "
+            f"WHERE chunks_fts MATCH ? AND d.status IN ({marks}) AND {vis} ORDER BY score LIMIT ?",
+            [fts_query, *SEARCHABLE, *params, limit]).fetchall()
+        return [(r[0], r[1]) for r in rows]
+
+    def chunk_details(self, ctx: CaseAccessContext, chunk_ids: list[int]) -> dict[int, dict]:
+        self._ctx(ctx, Perm.SEARCH)
+        if not chunk_ids:
+            return {}
+        vis, params = self.visibility_sql(ctx)
+        marks = ",".join("?" * len(chunk_ids))
+        rows = self.conn.execute(
+            f"SELECT c.chunk_id, c.doc_id, c.page_no, c.char_start, c.char_end, c.text, p.locator, p.ocr, p.ocr_conf, "  # nosec B608 - constant clause, bound params
+            f"d.source_name, d.parent_id, d.kind, d.meta_json FROM chunks c "
+            f"JOIN documents d ON d.doc_id = c.doc_id JOIN pages p ON p.doc_id = c.doc_id AND p.page_no = c.page_no "
+            f"WHERE c.chunk_id IN ({marks}) AND {vis}", [*chunk_ids, *params]).fetchall()
+        keys = ("chunk_id", "doc_id", "page_no", "char_start", "char_end", "text", "locator", "ocr", "ocr_conf",
+                "source_name", "parent_id", "kind", "meta_json")
+        return {r[0]: dict(zip(keys, r)) for r in rows}
+
+    def searchable_visible_count(self, ctx: CaseAccessContext) -> int:
+        self._ctx(ctx, Perm.SEARCH)
+        vis, params = self.visibility_sql(ctx)
+        marks = ",".join("?" * len(SEARCHABLE))
+        return self.conn.execute(
+            f"SELECT count(*) FROM documents d WHERE d.status IN ({marks}) AND {vis}",  # nosec B608 - constant clause, bound params
+            [*SEARCHABLE, *params]).fetchone()[0]
+
+    def record_query(self, ctx: CaseAccessContext, query_id: str, text: str, n: int) -> None:
+        self._ctx(ctx, Perm.SEARCH)
+        self.conn.execute("INSERT INTO queries (query_id, user_id, created_at, query_text, n_results) VALUES (?,?,?,?,?)",
+                          (query_id, ctx.user_id, time.time(), text, n))
+
+    def add_mark(self, ctx: CaseAccessContext, doc_id: str, page_no: int | None, label: str, query_id: str | None) -> int:
+        self._ctx(ctx, Perm.MARK)
+        self.get_document(ctx, doc_id)  # visibility check
+        cur = self.conn.execute(
+            "INSERT INTO marks (doc_id, page_no, user_id, label, query_id, created_at) VALUES (?,?,?,?,?,?)",
+            (doc_id, page_no, ctx.user_id, label, query_id, time.time()))
+        return cur.lastrowid
+
+    def marks_for(self, ctx: CaseAccessContext, doc_id: str) -> list[dict]:
+        self._ctx(ctx, Perm.VIEW)
+        self.get_document(ctx, doc_id)
+        rows = self.conn.execute(
+            "SELECT mark_id, page_no, user_id, label, query_id, created_at FROM marks WHERE doc_id=? ORDER BY mark_id",
+            (doc_id,)).fetchall()
+        return [dict(zip(("mark_id", "page_no", "user_id", "label", "query_id", "created_at"), r)) for r in rows]

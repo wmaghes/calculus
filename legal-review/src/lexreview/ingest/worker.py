@@ -28,6 +28,13 @@ def main() -> int:
     _deny_network()
     limits = json.loads(sys.argv[1])
     data = sys.stdin.buffer.read()
+    if len(sys.argv) > 2 and sys.argv[2].startswith("render:"):
+        from .formats import render_page
+
+        png = render_page(data, int(sys.argv[2].split(":", 1)[1]), limits)
+        sys.stdout.write(json.dumps({"png": base64.b64encode(png).decode() if png else None}))
+        sys.stdout.flush()
+        return 0
     from .formats import parse
 
     res = parse(data, limits)
