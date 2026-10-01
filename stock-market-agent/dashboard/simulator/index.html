@@ -32,7 +32,9 @@
     font-family: "IBM Plex Mono", monospace; font-size: 12.5px; cursor: pointer;
     color: var(--ink); border: 1px solid var(--border); border-radius: 999px;
     padding: 8px 14px; background: var(--surface);
+    display: inline-flex; align-items: center; gap: 7px;
   }
+  nav.modes button svg { flex: none; opacity: 0.85; }
   nav.modes button.active { background: var(--accent-soft); color: var(--accent); border-color: transparent; font-weight: 600; }
 
   section.mode { display: none; }
@@ -1062,6 +1064,12 @@ document.addEventListener("keydown", (ev) => { if (ev.key === "Escape") closeCom
 
 /* ---------- mode nav, tick loop + boot ---------- */
 
+const MODE_ICONS = {
+  individual: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg>',
+  banker: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 L12 4 L21 10"/><path d="M5 10 V20 M19 10 V20 M3 20 H21 M9 13 V20 M15 13 V20"/></svg>',
+  advisor: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15 9l-2 6-6 2 2-6z"/></svg>',
+  ib: '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>',
+};
 const MODES = [
   { key: "individual", label: "Individual Investor", render: renderIndividual },
   { key: "banker", label: "Private Banker", render: renderBanker },
@@ -1115,7 +1123,7 @@ async function boot() {
   ENGINE_SUPER = (saved && saved.super) || MarketEngine.createSuperWorld(SUPER_UNIVERSE_SIZE);
 
   document.getElementById("modeNav").innerHTML = MODES.map((m) =>
-    `<button data-mode="${m.key}">${m.label}</button>`).join("");
+    `<button data-mode="${m.key}">${MODE_ICONS[m.key] || ""}${m.label}</button>`).join("");
   for (const btn of document.querySelectorAll("nav.modes button")) {
     btn.addEventListener("click", () => setMode(btn.dataset.mode));
   }

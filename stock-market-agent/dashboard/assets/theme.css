@@ -1,85 +1,120 @@
 /*
- * Shared "dark trading terminal" design system for the whole site.
- * Loaded LAST on every page (after that page's own <style> block) so it
- * can act as a skin: it owns color tokens, the persistent top nav, and a
- * layer of visual polish (glow borders, gradient buttons) applied to the
- * class names pages already use, without any page needing to redeclare
- * its own :root tokens.
+ * VANTAGE design system: a "polished stone" dark-terminal aesthetic shared
+ * by every page. Loaded LAST (after that page's own <style> block) so it
+ * acts as a skin -- it owns color tokens, the persistent top nav, and a
+ * layer of visual polish (glass surfaces, veined ambient gradients, grain,
+ * glow) applied to the class names pages already use, without any page
+ * needing to redeclare its own tokens.
+ *
+ * Both themes follow the same "marble" idea: a smooth, glossy base with
+ * faint veining and depth, lit by one cool accent -- obsidian/nero marquina
+ * for dark, cool-white carrara for light.
  */
 
 :root {
   color-scheme: dark;
-  --bg: #0A0B0F;
+  --bg: #07080B;
   --surface: #12141B;
   --surface-2: #181B24;
   --surface-3: #1F2330;
   --border: #262A36;
-  --border-strong: #363D4D;
-  --ink: #E7EAF3;
-  --ink-muted: #99A1B5;
-  --ink-faint: #5F6578;
+  --border-strong: #3A4154;
+  --ink: #ECEFF7;
+  --ink-muted: #9CA4B8;
+  --ink-faint: #636B80;
   --accent: #3DD9FF;
-  --accent-2: #7B6CFF;
-  --accent-soft: rgba(61, 217, 255, 0.12);
-  --accent-glow: rgba(61, 217, 255, 0.32);
-  --pos: #19E3A6;
-  --pos-soft: rgba(25, 227, 166, 0.12);
+  --accent-2: #8B7CFF;
+  --accent-ink: #04141A;
+  --accent-soft: rgba(61, 217, 255, 0.14);
+  --accent-glow: rgba(61, 217, 255, 0.38);
+  --pos: #22E8AC;
+  --pos-soft: rgba(34, 232, 172, 0.14);
   --neg: #FF5C72;
-  --neg-soft: rgba(255, 92, 114, 0.12);
+  --neg-soft: rgba(255, 92, 114, 0.14);
   --growth: #E0A83E; --growth-soft: rgba(224, 168, 62, 0.16);
   --stability: #79ABE0; --stability-soft: rgba(121, 171, 224, 0.16);
   --nextgen: #B39CF2; --nextgen-soft: rgba(179, 156, 242, 0.16);
   --short: #E48168; --short-soft: rgba(228, 129, 104, 0.16);
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px -16px rgba(0, 0, 0, 0.65);
+  --surface-glass: rgba(21, 24, 32, 0.66);
+  --glass-highlight: rgba(255, 255, 255, 0.07);
+  --glass-edge: rgba(255, 255, 255, 0.09);
+  --shadow: 0 1px 1px rgba(0, 0, 0, 0.5), 0 24px 56px -24px rgba(0, 0, 0, 0.78);
+  --grain-opacity: 0.05;
 }
 :root[data-theme="light"] {
   color-scheme: light;
-  --bg: #F3F4F7;
+  --bg: #F3F3F1;
   --surface: #FFFFFF;
-  --surface-2: #EAEBF0;
-  --surface-3: #E1E3EB;
-  --border: #DBDDE4;
-  --border-strong: #C3C7D3;
-  --ink: #14161C;
-  --ink-muted: #5B5F6B;
-  --ink-faint: #8A8E9B;
-  --accent: #1C7A9E;
+  --surface-2: #F2F2F0;
+  --surface-3: #E8E9E6;
+  --border: #DEDFDC;
+  --border-strong: #C7C9C5;
+  --ink: #15161A;
+  --ink-muted: #585A61;
+  --ink-faint: #8C8E94;
+  --accent: #0E7AA8;
   --accent-2: #5B48C4;
-  --accent-soft: rgba(28, 122, 158, 0.10);
-  --accent-glow: rgba(28, 122, 158, 0.24);
-  --pos: #1E8E5A; --pos-soft: rgba(30, 142, 90, 0.10);
-  --neg: #B23F2C; --neg-soft: rgba(178, 63, 44, 0.10);
-  --growth: #A5711F; --growth-soft: #F1E3C8;
+  --accent-ink: #FFFFFF;
+  --accent-soft: rgba(14, 122, 168, 0.09);
+  --accent-glow: rgba(14, 122, 168, 0.26);
+  --pos: #0E8F5C; --pos-soft: rgba(14, 143, 92, 0.10);
+  --neg: #C23B2B; --neg-soft: rgba(194, 59, 43, 0.10);
+  --growth: #9C6418; --growth-soft: #F1E3C8;
   --stability: #2B5F94; --stability-soft: #DCE7F3;
   --nextgen: #6A45C9; --nextgen-soft: #E7DFF9;
   --short: #B23F2C; --short-soft: #F5DFDA;
-  --shadow: 0 1px 2px rgba(20, 22, 28, 0.06), 0 8px 24px -12px rgba(20, 22, 28, 0.14);
+  --surface-glass: rgba(255, 255, 255, 0.62);
+  --glass-highlight: rgba(255, 255, 255, 0.9);
+  --glass-edge: rgba(255, 255, 255, 0.8);
+  --shadow: 0 1px 1px rgba(30, 32, 38, 0.04), 0 20px 48px -22px rgba(30, 32, 38, 0.18);
+  --grain-opacity: 0.025;
 }
 
 html { scroll-behavior: smooth; }
 body {
+  position: relative;
   background-color: var(--bg);
   color: var(--ink);
-  padding-top: 72px;
+  padding-top: 76px;
+  background-attachment: fixed, fixed, fixed;
+  background-repeat: no-repeat, no-repeat, no-repeat;
   background-image:
-    radial-gradient(ellipse 900px 420px at 12% -8%, var(--accent-soft), transparent 60%),
-    radial-gradient(ellipse 700px 420px at 100% -4%, rgba(123, 108, 255, 0.10), transparent 60%);
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+    radial-gradient(ellipse 1000px 560px at 8% -12%, var(--accent-soft), transparent 60%),
+    radial-gradient(ellipse 820px 540px at 104% -6%, rgba(139, 124, 255, 0.14), transparent 62%),
+    radial-gradient(ellipse 900px 480px at 50% 115%, rgba(34, 232, 172, 0.06), transparent 65%);
 }
+body::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  opacity: var(--grain-opacity); mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.wrap, .site-nav { position: relative; z-index: 1; }
+
 h1, h2, h3 { font-family: "Space Grotesk", system-ui, sans-serif; letter-spacing: -0.01em; }
+h1.title {
+  background: linear-gradient(135deg, var(--ink) 20%, var(--accent) 115%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
 ::selection { background: var(--accent-glow); color: var(--ink); }
+
+/* custom scrollbar */
+* { scrollbar-color: var(--border-strong) transparent; scrollbar-width: thin; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; border: 2px solid var(--bg); }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
 /* ---------- persistent top nav ---------- */
 .site-nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
   display: flex; align-items: center; gap: 18px;
-  height: 60px; padding-inline: 20px;
-  background: rgba(10, 11, 15, 0.75);
-  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  height: 64px; padding-inline: 22px;
+  background: rgba(7, 8, 11, 0.70);
+  backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4);
   border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 0 var(--glass-edge) inset, 0 12px 32px -20px rgba(0, 0, 0, 0.6);
 }
-:root[data-theme="light"] .site-nav { background: rgba(255, 255, 255, 0.82); }
+:root[data-theme="light"] .site-nav { background: rgba(255, 255, 255, 0.70); }
 .site-nav .brand {
   display: flex; align-items: center; gap: 9px; text-decoration: none; color: var(--ink);
   font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 15.5px;
@@ -88,69 +123,95 @@ h1, h2, h3 { font-family: "Space Grotesk", system-ui, sans-serif; letter-spacing
 .site-nav .links { display: flex; gap: 4px; overflow-x: auto; flex: 1; scrollbar-width: none; }
 .site-nav .links::-webkit-scrollbar { display: none; }
 .site-nav .links a {
+  display: inline-flex; align-items: center; gap: 7px;
   font-family: "IBM Plex Mono", monospace; font-size: 12.5px; text-decoration: none; white-space: nowrap;
-  color: var(--ink-muted); padding: 8px 13px; border-radius: 8px; border: 1px solid transparent;
+  color: var(--ink-muted); padding: 8px 13px; border-radius: 9px; border: 1px solid transparent;
   transition: color .15s ease, background .15s ease, border-color .15s ease;
 }
+.site-nav .links a svg { opacity: 0.8; flex: none; }
 .site-nav .links a:hover { color: var(--ink); background: var(--surface-2); }
 .site-nav .links a.active { color: var(--accent); background: var(--accent-soft); border-color: var(--accent-glow); }
+.site-nav .links a.active svg { opacity: 1; }
 .site-nav .theme-toggle {
-  flex: none; width: 34px; height: 34px; border-radius: 999px; border: 1px solid var(--border);
-  background: var(--surface); color: var(--ink-muted); cursor: pointer;
-  display: flex; align-items: center; justify-content: center; transition: color .15s ease, border-color .15s ease;
+  flex: none; width: 36px; height: 36px; border-radius: 999px; border: 1px solid var(--border);
+  background: var(--surface-glass); color: var(--ink-muted); cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: color .15s ease, border-color .15s ease, transform .15s ease;
 }
-.site-nav .theme-toggle:hover { color: var(--accent); border-color: var(--accent-glow); }
+.site-nav .theme-toggle:hover { color: var(--accent); border-color: var(--accent-glow); transform: rotate(14deg); }
 @media (max-width: 640px) {
   .site-nav { gap: 10px; padding-inline: 12px; }
   .site-nav .brand .wordmark { display: none; }
 }
 
-/* ---------- shared component polish ---------- */
+/* ---------- shared component polish: glass surfaces ---------- */
 .card, .role-card, .chart-card, .modal-card, .spark-card, .stat, .chip,
 section.category, .note, .disclaimer {
-  border-radius: 12px;
+  border-radius: 14px;
 }
 .card, .role-card, .modal-card {
-  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+  background: var(--surface-glass);
+  backdrop-filter: blur(22px) saturate(1.3);
+  -webkit-backdrop-filter: blur(22px) saturate(1.3);
   border-color: var(--border);
-  box-shadow: var(--shadow);
-  transition: border-color .2s ease, box-shadow .2s ease;
+  box-shadow: inset 0 1px 0 var(--glass-highlight), var(--shadow);
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
 }
 .card:hover, .role-card:hover {
   border-color: var(--accent-glow);
-  box-shadow: 0 0 0 1px var(--accent-glow), var(--shadow);
+  box-shadow: inset 0 1px 0 var(--glass-highlight), 0 0 0 1px var(--accent-glow), var(--shadow);
+  transform: translateY(-1px);
 }
 .spark-card, .chart-card, .stat {
-  background: var(--surface);
-  transition: border-color .2s ease;
+  background: var(--surface-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: inset 0 1px 0 var(--glass-highlight);
+  transition: border-color .2s ease, transform .15s ease;
 }
-.spark-card:hover { border-color: var(--accent-glow); }
+.spark-card:hover { border-color: var(--accent-glow); transform: translateY(-1px); }
+
+/* safe entrance motion -- only on classes NOT used by the Simulator's
+   per-tick re-render (which would otherwise replay the animation every
+   second); .card/.stat/.chart-card/.spark-card are deliberately excluded */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+.role-card, section.category { animation: fadeUp .5s cubic-bezier(.2,.7,.3,1) both; }
+@media (prefers-reduced-motion: reduce) {
+  .role-card, section.category { animation: none; }
+}
 
 button.action.primary, button.action.buy, .calc-btn {
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  box-shadow: 0 4px 20px -6px var(--accent-glow);
+  box-shadow: 0 6px 24px -8px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   border: none;
+  color: var(--accent-ink);
 }
 button.action.sell {
   background: linear-gradient(135deg, var(--neg), #ff8a6b);
+  box-shadow: 0 6px 24px -8px var(--neg-soft), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   border: none;
 }
 button.action.ghost {
-  background: var(--surface-2);
+  background: var(--surface-glass);
+  backdrop-filter: blur(10px);
   border: 1px solid var(--border);
 }
 button.action, .calc-btn { transition: transform .12s ease, box-shadow .2s ease; }
 button.action:hover, .calc-btn:hover { transform: translateY(-1px); }
+button.action:active, .calc-btn:active { transform: translateY(0); }
 
 .chip, .role-tag { background: var(--surface-3); border-color: var(--border); }
 
+nav.modes button, .mode-toggle button {
+  background: var(--surface-glass);
+  backdrop-filter: blur(10px);
+}
 nav.modes button.active, .mode-toggle button.active {
   background: var(--accent-soft);
   border-color: var(--accent-glow);
   color: var(--accent);
-  box-shadow: 0 0 16px -4px var(--accent-glow);
+  box-shadow: 0 0 20px -4px var(--accent-glow), inset 0 1px 0 var(--glass-highlight);
 }
 
 table.data th, table.quarters th { color: var(--accent); opacity: 0.85; }
 
-.eyebrow { color: var(--accent); opacity: 0.9; }
+.eyebrow { color: var(--accent); opacity: 0.95; }

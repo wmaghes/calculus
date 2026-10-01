@@ -34,7 +34,8 @@
   section.role { margin-bottom: 30px; scroll-margin-top: 16px; }
   .role-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; box-shadow: var(--shadow); }
   .role-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 6px; }
-  .role-head h2 { font-size: 21px; font-weight: 600; }
+  .role-head h2 { font-size: 21px; font-weight: 600; display: inline-flex; align-items: center; gap: 10px; }
+  .role-icon { display: inline-flex; flex: none; width: 34px; height: 34px; border-radius: 10px; align-items: center; justify-content: center; background: var(--accent-soft); color: var(--accent); }
   .role-tag { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: 0.03em; padding: 3px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); white-space: nowrap; }
   .role-oneliner { font-size: 14px; color: var(--ink-muted); margin: 4px 0 14px; max-width: 70ch; }
   .role-card h3 { font-size: 12.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); font-family: "IBM Plex Mono", monospace; margin: 16px 0 8px; }
@@ -103,7 +104,7 @@
 
   <section class="role" id="individual">
     <div class="role-card">
-      <div class="role-head"><h2>Individual Investor</h2><span class="role-tag">Retail</span></div>
+      <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-7 8-7s8 3 8 7"/></svg></span>Individual Investor</h2><span class="role-tag">Retail</span></div>
       <p class="role-oneliner">Manages their own money for their own goals &mdash; retirement, a house, general wealth-building.</p>
       <h3>How they use the market</h3>
       <p>They open a brokerage account and buy stocks, funds, or bonds directly with their own cash, holding a single portfolio they're fully accountable for. Decisions are usually driven by a personal time horizon and risk tolerance rather than a mandate from a client or employer, and success is just "did my net worth grow the way I needed it to."</p>
@@ -130,7 +131,7 @@
 
   <section class="role" id="advisor">
     <div class="role-card">
-      <div class="role-head"><h2>Financial Advisor</h2><span class="role-tag">Retail / mass affluent</span></div>
+      <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M15 9l-2 6-6 2 2-6z"/></svg></span>Financial Advisor</h2><span class="role-tag">Retail / mass affluent</span></div>
       <p class="role-oneliner">Builds and manages investment plans for other people's money, tied to their clients' real-life goals.</p>
       <h3>How they use the market</h3>
       <p>Instead of picking stocks for themselves, they translate a client's goal &mdash; retire at 60, fund college in 15 years &mdash; into a target return, a risk tolerance, and an asset allocation across stocks, bonds, and cash. They rebalance over time, manage the emotional side of investing (talking clients out of panic-selling), and are usually paid a fee on assets under management rather than a commission per trade.</p>
@@ -146,7 +147,7 @@
 
   <section class="role" id="private-banker">
     <div class="role-card">
-      <div class="role-head"><h2>Private Banker / Wealth Manager</h2><span class="role-tag">High-net-worth</span></div>
+      <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 L12 4 L21 10"/><path d="M5 10 V20 M19 10 V20 M3 20 H21 M9 13 V20 M15 13 V20"/></svg></span>Private Banker / Wealth Manager</h2><span class="role-tag">High-net-worth</span></div>
       <p class="role-oneliner">Runs several client relationships at once for wealthy individuals and families, blending investing with banking.</p>
       <h3>How they use the market</h3>
       <p>They manage a book of clients rather than one portfolio, each with a different risk profile, tax situation, and set of goals &mdash; and often a concentrated position in one stock (like a founder's or executive's own company shares) that needs careful, low-key unwinding. On top of investment management, they typically also arrange lending against a portfolio, trust and estate structures, and access to private/alternative investments not open to retail clients.</p>
@@ -162,7 +163,7 @@
 
   <section class="role" id="investment-banker">
     <div class="role-card">
-      <div class="role-head"><h2>Investment Banker</h2><span class="role-tag">Corporate finance</span></div>
+      <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span>Investment Banker</h2><span class="role-tag">Corporate finance</span></div>
       <p class="role-oneliner">Advises companies &mdash; not individual investors &mdash; on raising capital and doing deals.</p>
       <h3>How they use the market</h3>
       <p>They don't manage a personal portfolio of stocks; they use the stock market as a tool for their corporate clients. That means taking companies public (IPOs), helping already-public companies issue more shares or debt, and advising on mergers and acquisitions &mdash; where a huge part of the job is figuring out whether buying another company will make the acquirer's own stock more or less valuable per share (accretion/dilution).</p>
@@ -178,7 +179,7 @@
 
   <section class="role" id="trader">
     <div class="role-card">
-      <div class="role-head"><h2>Trader (Sales &amp; Trading / Prop / Day Trader)</h2><span class="role-tag">Markets &amp; execution</span></div>
+      <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="10" width="3" height="10"/><rect x="10.5" y="4" width="3" height="16"/><rect x="17" y="7" width="3" height="13"/></svg></span>Trader (Sales &amp; Trading / Prop / Day Trader)</h2><span class="role-tag">Markets &amp; execution</span></div>
       <p class="role-oneliner">Buys and sells constantly, either to fill client orders, to profit from a firm's own capital, or independently from their own account.</p>
       <h3>How they use the market</h3>
       <p>A sell-side trader sits between clients and the market, executing orders and often making markets. A proprietary or independent day trader instead risks capital on short-term views &mdash; on price direction, volatility, or the relationship between related instruments &mdash; over minutes or hours rather than years. This is exactly why the Simulator's speed control matters: a day trader needs to see a year's worth of price action in minutes to get enough practice reps, where a long-term investor genuinely wants real-time pacing.</p>
@@ -205,7 +206,7 @@
 
   <section class="role" id="quant">
     <div class="role-card">
-      <div class="role-head"><h2>Quantitative Analyst / Quant Trader</h2><span class="role-tag">Systematic</span></div>
+      <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4H18L13 12L18 20H6"/></svg></span>Quantitative Analyst / Quant Trader</h2><span class="role-tag">Systematic</span></div>
       <p class="role-oneliner">Uses math, statistics and code &mdash; not a gut feeling about a company &mdash; to find and automate a trading edge.</p>
       <h3>How they use the market</h3>
       <p>Instead of reading a company's story, a quant builds a statistical model of price relationships &mdash; two stocks that usually move together, a pattern in order flow, a seasonal effect &mdash; and lets an algorithm trade it automatically, sometimes thousands of times a day. The model is validated on historical data (a backtest) before ever risking real money, and speed of execution can matter as much as the idea itself. A strategy that works is called "alpha," and it tends to decay the more other funds discover and crowd into the same edge.</p>
@@ -221,7 +222,7 @@
 
   <section class="role" id="private-equity">
     <div class="role-card">
-      <div class="role-head"><h2>Private Equity Professional</h2><span class="role-tag">Ownership &amp; control</span></div>
+      <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="15" r="3"/><path d="M9.5 12.5L20 2M16 6l2 2M13 9l2 2"/></svg></span>Private Equity Professional</h2><span class="role-tag">Ownership &amp; control</span></div>
       <p class="role-oneliner">Buys whole companies outright &mdash; often taking them private &mdash; rather than trading shares of them.</p>
       <h3>How they use the market</h3>
       <p>Instead of buying a small slice of a company on an exchange, a PE firm buys (or takes private) an entire company using a mix of investor capital and borrowed money (a leveraged buyout), then spends several years actively improving how it's run before selling it &mdash; often back onto the public market via an IPO, which is where it reconnects with the stock market this whole site is about. Returns are measured over years, not days, using metrics like IRR and multiple of invested capital rather than daily share-price moves.</p>
@@ -246,7 +247,7 @@
 
   <section class="role" id="venture-capital">
     <div class="role-card">
-      <div class="role-head"><h2>Venture Capitalist</h2><span class="role-tag">Private / early-stage</span></div>
+      <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 16V8M8 12l4-4 4 4"/></svg></span>Venture Capitalist</h2><span class="role-tag">Private / early-stage</span></div>
       <p class="role-oneliner">Funds young private companies long before they'd ever qualify to trade on a public stock exchange.</p>
       <h3>How they use the market</h3>
       <p>A VC's money goes in years before a stock ticker exists &mdash; they buy equity directly from a startup, betting that a small number of huge winners will more than pay for the many that fail. The public stock market still matters enormously to them: an IPO (or an acquisition by a public company) is usually the "exit" that turns their paper stake into real, sellable money, so they're effectively underwriting a company's whole journey toward eventually becoming one of the tickers on a watchlist like this project's own.</p>
@@ -271,7 +272,7 @@
 
   <section class="role" id="hedge-fund">
     <div class="role-card">
-      <div class="role-head"><h2>Hedge Fund Manager / Portfolio Manager</h2><span class="role-tag">Absolute return</span></div>
+      <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3V21"/><path d="M4 7H20"/><circle cx="4" cy="11" r="3"/><circle cx="20" cy="11" r="3"/></svg></span>Hedge Fund Manager / Portfolio Manager</h2><span class="role-tag">Absolute return</span></div>
       <p class="role-oneliner">Manages pooled money from institutions and wealthy investors, aiming to make money in both up and down markets.</p>
       <h3>How they use the market</h3>
       <p>Unlike a traditional fund that just tries to beat an index, a hedge fund manager is usually judged on absolute return &mdash; making money regardless of what the overall market does. That means being willing to bet a stock will fall (short selling) as well as rise, using derivatives to hedge or amplify bets, and often running very concentrated or leveraged positions guided by a specific strategy (long/short equity, macro, quantitative, event-driven). What matters isn't just the return, but how much risk was taken to get it.</p>
@@ -296,7 +297,7 @@
 
   <section class="role" id="cfo">
     <div class="role-card">
-      <div class="role-head"><h2>Chief Financial Officer</h2><span class="role-tag">Issuer side</span></div>
+      <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10 L12 4 L21 10"/><path d="M5 10 V20 M19 10 V20 M3 20 H21 M9 13 V20 M15 13 V20"/></svg></span>Chief Financial Officer</h2><span class="role-tag">Issuer side</span></div>
       <p class="role-oneliner">Sits on the other side of the stock market from everyone else in this guide &mdash; their own company is the one being bought and sold.</p>
       <h3>How they use the market</h3>
       <p>A CFO decides how their company shows up to the market it trades on: whether to buy back stock (reducing the share count, which lifts earnings per share even if profit doesn't grow), whether to issue new shares to raise cash, how big a dividend to pay, and what guidance to give analysts about future earnings. Every one of those choices moves the same price everyone else in this guide is reacting to &mdash; which is why a public company's own finance team is, in its own way, also a stock market participant.</p>
@@ -322,7 +323,7 @@
 
   <section class="role" id="market-maker">
     <div class="role-card">
-      <div class="role-head"><h2>Market Maker / Broker-Dealer</h2><span class="role-tag">Liquidity</span></div>
+      <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h13M16 7l-3-3M16 7l-3 3"/><path d="M21 17H8M8 17l3-3M8 17l3 3"/></svg></span>Market Maker / Broker-Dealer</h2><span class="role-tag">Liquidity</span></div>
       <p class="role-oneliner">Stands ready to buy or sell a stock at any moment, and gets paid for providing that service, not for guessing direction.</p>
       <h3>How they use the market</h3>
       <p>A market maker continuously quotes both a price they'll buy at (the bid) and a slightly higher price they'll sell at (the ask), profiting from that small gap (the spread) across high volume rather than betting on whether a stock goes up or down. This is what makes a stock "liquid" &mdash; there's almost always someone on the other side of a trade &mdash; and the real job is risk management: managing the inventory that quoting both sides leaves you holding.</p>
@@ -348,7 +349,7 @@
 
   <section class="role" id="research-analyst">
     <div class="role-card">
-      <div class="role-head"><h2>Equity Research Analyst</h2><span class="role-tag">Analysis &amp; ratings</span></div>
+      <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg></span>Equity Research Analyst</h2><span class="role-tag">Analysis &amp; ratings</span></div>
       <p class="role-oneliner">Studies public companies in depth and publishes an opinion on whether their stock is worth buying.</p>
       <h3>How they use the market</h3>
       <p>They build detailed financial models of a company (or a whole industry), estimate what its stock is really worth, and publish a rating &mdash; Buy, Hold, or Sell &mdash; and a price target, along with the reasoning behind it. Sell-side analysts do this for outside investors and to support their bank's other business; buy-side analysts do the same work internally to inform a fund's own trades. The <span class="mono">Strong Buy</span>-style rating pills and conviction tiers on this project's own <a href="../index.html">Market Scanner</a> are exactly this job's output, simplified.</p>
@@ -375,7 +376,7 @@
 
   <section class="role" id="risk-manager">
     <div class="role-card">
-      <div class="role-head"><h2>Risk Manager / Compliance Officer</h2><span class="role-tag">Oversight</span></div>
+      <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L19 5 V11 C19 16 15.5 19.5 12 21 C8.5 19.5 5 16 5 11 V5 Z"/><path d="M9 11l2 2 4-4"/></svg></span>Risk Manager / Compliance Officer</h2><span class="role-tag">Oversight</span></div>
       <p class="role-oneliner">Doesn't pick stocks at all &mdash; makes sure everyone else at the firm doesn't blow it up.</p>
       <h3>How they use the market</h3>
       <p>A risk manager sets and enforces limits on how much any trader or portfolio can lose before someone has to answer for it, using tools like Value-at-Risk to estimate a "worst plausible day" in dollar terms, and stress tests to see what a historical shock would do to the book today. A compliance officer's job overlaps heavily: making sure trades follow securities law, client suitability rules, and insider-trading restrictions. Neither role generates profit directly, but a firm without one is one bad trade away from not existing.</p>

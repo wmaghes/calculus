@@ -40,6 +40,20 @@ assets files. A tiny inline script at the top of every page's `<head>`
 applies a saved theme choice before first paint to avoid a flash of the
 wrong theme.
 
+Both themes follow a "polished stone" idea — a glossy, veined base rather
+than a flat fill: glass-morphic cards (`backdrop-filter` blur + an inset
+highlight line) sit over a fixed ambient background of soft multi-point
+gradients plus a faint SVG-noise grain layer (`body::before`, blended with
+`mix-blend-mode: overlay`), so content has real depth without a texture
+image. Hero titles (`h1.title`) use a gradient text fill
+(`background-clip: text`) from ink to the accent color. Entrance motion
+(`fadeUp`) is deliberately scoped to `.role-card` and `section.category`
+only — classes the Simulator's per-tick re-render never touches — so
+nothing replays the animation every second. A small inline-SVG icon set
+(reused between the Guide's 13 role cards and the Simulator's 4 matching
+mode buttons, plus the Scanner's 4 category headers) replaces plain color
+dots with real iconography.
+
 ## How it works
 
 | Script | Purpose |

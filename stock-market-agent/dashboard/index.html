@@ -74,7 +74,7 @@
     margin-bottom: 4px;
   }
   .cat-head .name { display: flex; align-items: center; gap: 10px; }
-  .cat-head .swatch { width: 11px; height: 11px; border-radius: 3px; flex: none; }
+  .cat-head .swatch { display: inline-flex; flex: none; }
   .cat-head h2 { font-size: 21px; font-weight: 600; }
   .cat-head .count { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-faint); }
   .cat-sub { font-size: 13px; color: var(--ink-muted); margin: 0 0 16px; max-width: 62ch; }
@@ -155,10 +155,10 @@
   </div>
 
   <nav class="toc">
-    <a href="#growth"><span class="dot" style="background:var(--growth)"></span>Biggest Growth</a>
-    <a href="#stability"><span class="dot" style="background:var(--stability)"></span>Stability</a>
-    <a href="#nextgen"><span class="dot" style="background:var(--nextgen)"></span>Next-Gen Growth</a>
-    <a href="#shorts"><span class="dot" style="background:var(--short)"></span>Short Candidates</a>
+    <a href="#growth"><span style="color:var(--growth);display:inline-flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,17 9,11 13,15 21,7"/><polyline points="14,7 21,7 21,14"/></svg></span>Biggest Growth</a>
+    <a href="#stability"><span style="color:var(--stability);display:inline-flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L19 5 V11 C19 16 15.5 19.5 12 21 C8.5 19.5 5 16 5 11 V5 Z"/></svg></span>Stability</a>
+    <a href="#nextgen"><span style="color:var(--nextgen);display:inline-flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L13.5 9.5 L21 11 L13.5 12.5 L12 20 L10.5 12.5 L3 11 L10.5 9.5 Z"/></svg></span>Next-Gen Growth</a>
+    <a href="#shorts"><span style="color:var(--short);display:inline-flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,7 9,13 13,9 21,17"/><polyline points="14,17 21,17 21,10"/></svg></span>Short Candidates</a>
   </nav>
 
   <main id="categories"></main>
@@ -170,14 +170,21 @@
 </div>
 
 <script>
+const ICONS = {
+  trendUp: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,17 9,11 13,15 21,7"/><polyline points="14,7 21,7 21,14"/></svg>',
+  trendDown: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,7 9,13 13,9 21,17"/><polyline points="14,17 21,17 21,10"/></svg>',
+  shield: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L19 5 V11 C19 16 15.5 19.5 12 21 C8.5 19.5 5 16 5 11 V5 Z"/></svg>',
+  sparkle: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L13.5 9.5 L21 11 L13.5 12.5 L12 20 L10.5 12.5 L3 11 L10.5 9.5 Z"/></svg>',
+};
+
 const CATEGORY_META = {
-  growth:    { title: "Biggest Growth", color: "var(--growth)", soft: "var(--growth-soft)",
+  growth:    { title: "Biggest Growth", color: "var(--growth)", soft: "var(--growth-soft)", icon: ICONS.trendUp,
                sub: "Large/mid-cap names posting the fastest revenue growth or price momentum right now. Ranked by conviction tier, not a blended score \u2014 see disclaimer above." },
-  stability: { title: "Stability", color: "var(--stability)", soft: "var(--stability-soft)",
+  stability: { title: "Stability", color: "var(--stability)", soft: "var(--stability-soft)", icon: ICONS.shield,
                sub: "Low-beta, dividend-consistent names built to hold up when growth stocks wobble. Score blends low beta (60%) and dividend yield (40%)." },
-  nextgen:   { title: "Next-Gen Growth", color: "var(--nextgen)", soft: "var(--nextgen-soft)",
+  nextgen:   { title: "Next-Gen Growth", color: "var(--nextgen)", soft: "var(--nextgen-soft)", icon: ICONS.sparkle,
                sub: "Smaller, thematic bets \u2014 quantum computing, AI infrastructure, gene editing, space \u2014 with outsized upside and outsized risk. Ranked by conviction tier." },
-  shorts:    { title: "Short Candidates", color: "var(--short)", soft: "var(--short-soft)",
+  shorts:    { title: "Short Candidates", color: "var(--short)", soft: "var(--short-soft)", icon: ICONS.trendDown,
                sub: "Highest short interest and clearest negative catalysts (guidance cuts, structural decline). Score is a normalized blend of short-%-of-float plus momentum/valuation flags." },
 };
 
@@ -248,7 +255,7 @@ function renderCategory(catKey, items) {
     <section class="category" id="${catKey}">
       <div class="cat-head">
         <div class="name">
-          <span class="swatch" style="background:${meta.color}"></span>
+          <span class="swatch" style="color:${meta.color}">${meta.icon}</span>
           <h2>${meta.title}</h2>
         </div>
         <span class="count">${items.length} names</span>
