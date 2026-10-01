@@ -14,6 +14,32 @@ Output is a static dashboard at `dashboard/index.html` + `dashboard/data.json`.
 Open `dashboard/index.html` directly in a browser (it fetches `./data.json`),
 or host the `dashboard/` folder anywhere static (GitHub Pages, S3, etc.).
 
+## Design system: VANTAGE
+
+The four pages (Scanner, Research, Simulator, Guide) share one visual
+identity, branded **VANTAGE**, built as two shared files:
+
+- `dashboard/assets/theme.css` — a dark-first "trading terminal" design
+  system (deep near-black surfaces, an electric cyan/violet accent, Space
+  Grotesk headings over IBM Plex Sans/Mono body and data text) loaded last
+  on every page, so it skins the component classes each page already uses
+  (`.card`, `button.action`, `table.data`, etc.) without any page needing
+  its own copy of the color tokens. A `[data-theme="light"]` override
+  provides an optional light mode.
+- `dashboard/assets/nav.js` — injects the persistent top nav bar (logo,
+  Scanner/Research/Simulator/Guide links with active-page highlighting, and
+  a theme toggle persisted to `localStorage`) into a `<div id="siteNav">`
+  placeholder, reading `window.SITE_NAV = { base, active }` set by each
+  page so relative links work at any folder depth (the main pages, and the
+  per-ticker research pages two levels deep).
+
+Each page keeps its own `<style>` block for page-specific layout (grids,
+widgets like the Simulator's calculator forms or the Guide's role cards);
+only the shared tokens, nav, and cross-page links moved into the two
+assets files. A tiny inline script at the top of every page's `<head>`
+applies a saved theme choice before first paint to avoid a flash of the
+wrong theme.
+
 ## How it works
 
 | Script | Purpose |

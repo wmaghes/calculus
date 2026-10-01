@@ -1,0 +1,156 @@
+/*
+ * Shared "dark trading terminal" design system for the whole site.
+ * Loaded LAST on every page (after that page's own <style> block) so it
+ * can act as a skin: it owns color tokens, the persistent top nav, and a
+ * layer of visual polish (glow borders, gradient buttons) applied to the
+ * class names pages already use, without any page needing to redeclare
+ * its own :root tokens.
+ */
+
+:root {
+  color-scheme: dark;
+  --bg: #0A0B0F;
+  --surface: #12141B;
+  --surface-2: #181B24;
+  --surface-3: #1F2330;
+  --border: #262A36;
+  --border-strong: #363D4D;
+  --ink: #E7EAF3;
+  --ink-muted: #99A1B5;
+  --ink-faint: #5F6578;
+  --accent: #3DD9FF;
+  --accent-2: #7B6CFF;
+  --accent-soft: rgba(61, 217, 255, 0.12);
+  --accent-glow: rgba(61, 217, 255, 0.32);
+  --pos: #19E3A6;
+  --pos-soft: rgba(25, 227, 166, 0.12);
+  --neg: #FF5C72;
+  --neg-soft: rgba(255, 92, 114, 0.12);
+  --growth: #E0A83E; --growth-soft: rgba(224, 168, 62, 0.16);
+  --stability: #79ABE0; --stability-soft: rgba(121, 171, 224, 0.16);
+  --nextgen: #B39CF2; --nextgen-soft: rgba(179, 156, 242, 0.16);
+  --short: #E48168; --short-soft: rgba(228, 129, 104, 0.16);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 16px 40px -16px rgba(0, 0, 0, 0.65);
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #F3F4F7;
+  --surface: #FFFFFF;
+  --surface-2: #EAEBF0;
+  --surface-3: #E1E3EB;
+  --border: #DBDDE4;
+  --border-strong: #C3C7D3;
+  --ink: #14161C;
+  --ink-muted: #5B5F6B;
+  --ink-faint: #8A8E9B;
+  --accent: #1C7A9E;
+  --accent-2: #5B48C4;
+  --accent-soft: rgba(28, 122, 158, 0.10);
+  --accent-glow: rgba(28, 122, 158, 0.24);
+  --pos: #1E8E5A; --pos-soft: rgba(30, 142, 90, 0.10);
+  --neg: #B23F2C; --neg-soft: rgba(178, 63, 44, 0.10);
+  --growth: #A5711F; --growth-soft: #F1E3C8;
+  --stability: #2B5F94; --stability-soft: #DCE7F3;
+  --nextgen: #6A45C9; --nextgen-soft: #E7DFF9;
+  --short: #B23F2C; --short-soft: #F5DFDA;
+  --shadow: 0 1px 2px rgba(20, 22, 28, 0.06), 0 8px 24px -12px rgba(20, 22, 28, 0.14);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  padding-top: 72px;
+  background-image:
+    radial-gradient(ellipse 900px 420px at 12% -8%, var(--accent-soft), transparent 60%),
+    radial-gradient(ellipse 700px 420px at 100% -4%, rgba(123, 108, 255, 0.10), transparent 60%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+h1, h2, h3 { font-family: "Space Grotesk", system-ui, sans-serif; letter-spacing: -0.01em; }
+::selection { background: var(--accent-glow); color: var(--ink); }
+
+/* ---------- persistent top nav ---------- */
+.site-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; gap: 18px;
+  height: 60px; padding-inline: 20px;
+  background: rgba(10, 11, 15, 0.75);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+:root[data-theme="light"] .site-nav { background: rgba(255, 255, 255, 0.82); }
+.site-nav .brand {
+  display: flex; align-items: center; gap: 9px; text-decoration: none; color: var(--ink);
+  font-family: "Space Grotesk", sans-serif; font-weight: 700; font-size: 15.5px;
+  letter-spacing: 0.03em; white-space: nowrap; flex: none;
+}
+.site-nav .links { display: flex; gap: 4px; overflow-x: auto; flex: 1; scrollbar-width: none; }
+.site-nav .links::-webkit-scrollbar { display: none; }
+.site-nav .links a {
+  font-family: "IBM Plex Mono", monospace; font-size: 12.5px; text-decoration: none; white-space: nowrap;
+  color: var(--ink-muted); padding: 8px 13px; border-radius: 8px; border: 1px solid transparent;
+  transition: color .15s ease, background .15s ease, border-color .15s ease;
+}
+.site-nav .links a:hover { color: var(--ink); background: var(--surface-2); }
+.site-nav .links a.active { color: var(--accent); background: var(--accent-soft); border-color: var(--accent-glow); }
+.site-nav .theme-toggle {
+  flex: none; width: 34px; height: 34px; border-radius: 999px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--ink-muted); cursor: pointer;
+  display: flex; align-items: center; justify-content: center; transition: color .15s ease, border-color .15s ease;
+}
+.site-nav .theme-toggle:hover { color: var(--accent); border-color: var(--accent-glow); }
+@media (max-width: 640px) {
+  .site-nav { gap: 10px; padding-inline: 12px; }
+  .site-nav .brand .wordmark { display: none; }
+}
+
+/* ---------- shared component polish ---------- */
+.card, .role-card, .chart-card, .modal-card, .spark-card, .stat, .chip,
+section.category, .note, .disclaimer {
+  border-radius: 12px;
+}
+.card, .role-card, .modal-card {
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-2) 100%);
+  border-color: var(--border);
+  box-shadow: var(--shadow);
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.card:hover, .role-card:hover {
+  border-color: var(--accent-glow);
+  box-shadow: 0 0 0 1px var(--accent-glow), var(--shadow);
+}
+.spark-card, .chart-card, .stat {
+  background: var(--surface);
+  transition: border-color .2s ease;
+}
+.spark-card:hover { border-color: var(--accent-glow); }
+
+button.action.primary, button.action.buy, .calc-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  box-shadow: 0 4px 20px -6px var(--accent-glow);
+  border: none;
+}
+button.action.sell {
+  background: linear-gradient(135deg, var(--neg), #ff8a6b);
+  border: none;
+}
+button.action.ghost {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+button.action, .calc-btn { transition: transform .12s ease, box-shadow .2s ease; }
+button.action:hover, .calc-btn:hover { transform: translateY(-1px); }
+
+.chip, .role-tag { background: var(--surface-3); border-color: var(--border); }
+
+nav.modes button.active, .mode-toggle button.active {
+  background: var(--accent-soft);
+  border-color: var(--accent-glow);
+  color: var(--accent);
+  box-shadow: 0 0 16px -4px var(--accent-glow);
+}
+
+table.data th, table.quarters th { color: var(--accent); opacity: 0.85; }
+
+.eyebrow { color: var(--accent); opacity: 0.9; }

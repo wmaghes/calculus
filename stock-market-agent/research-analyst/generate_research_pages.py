@@ -12,33 +12,14 @@ import config
 HEAD = """<!doctype html>
 <html lang="en">
 <head>
+<script>try{if(localStorage.getItem('siteTheme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
 <meta charset="utf-8">
 <title>{title}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #F3F4F7; --surface: #FFFFFF; --surface-2: #EAEBF0;
-    --ink: #14161C; --ink-muted: #5B5F6B; --ink-faint: #8A8E9B; --border: #DBDDE4;
-    --accent: #4A5FC1; --accent-soft: #E2E5F7;
-    --pos: #1E8E5A; --neg: #B23F2C;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #0B0E14; --surface: #12151D; --surface-2: #1A1E29;
-      --ink: #ECEEF4; --ink-muted: #9CA3B2; --ink-faint: #6B7280; --border: #262B38;
-      --accent: #8C9AEB; --accent-soft: #232748;
-      --pos: #4CBB85; --neg: #E48168;
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #0B0E14; --surface: #12151D; --surface-2: #1A1E29;
-    --ink: #ECEEF4; --ink-muted: #9CA3B2; --ink-faint: #6B7280; --border: #262B38;
-    --accent: #8C9AEB; --accent-soft: #232748;
-    --pos: #4CBB85; --neg: #E48168;
-  }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--ink); font-family: "IBM Plex Sans", system-ui, sans-serif; padding-inline: 16px; padding-block: 28px 64px; }
   .wrap { max-width: 860px; margin: 0 auto; }
@@ -67,6 +48,7 @@ HEAD = """<!doctype html>
   footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--ink-faint); font-family: "IBM Plex Mono", monospace; line-height: 1.7; }
   @media (max-width: 480px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
 </style>
+<link rel="stylesheet" href="{theme_href}">
 </head>
 <body>
 """
@@ -74,8 +56,16 @@ HEAD = """<!doctype html>
 FOOT = "</body>\n</html>\n"
 
 
-def head(title):
-    return HEAD.replace("{title}", title)
+def head(title, theme_href):
+    return HEAD.replace("{title}", title).replace("{theme_href}", theme_href)
+
+
+def site_nav(base, active):
+    return (
+        f'<div id="siteNav"></div>'
+        f'<script>window.SITE_NAV = {{ base: "{base}", active: "{active}" }};</script>'
+        f'<script src="{base}assets/nav.js"></script>'
+    )
 
 
 def fmt(value, suffix=""):
@@ -100,9 +90,6 @@ def crumbs(ticker, current):
         + link("&larr; All companies", "../index.html", "index")
         + link(f"{ticker} Financials", "financials.html", "financials")
         + link(f"{ticker} Market Data", "market.html", "market")
-        + '<a href="../../index.html">Market Scanner &#8599;</a>'
-        + '<a href="../../simulator/index.html">Simulator &#8599;</a>'
-        + '<a href="../../guide/index.html">Career Guide &#8599;</a>'
         + "</nav>"
     )
 
@@ -134,7 +121,8 @@ def render_financials(company):
       <div class="stat-grid">{''.join(stats)}</div>
       <div class="note"><strong>Filing notes.</strong> {note}<br><br><strong>Source:</strong> {source_html}</div>
         """
-    return f"""{head(f"{ticker} Financials")}
+    return f"""{head(f"{ticker} Financials", "../../assets/theme.css")}
+{site_nav("../../", "research")}
 <div class="wrap">
   {crumbs(ticker, "financials")}
   <header class="hero">
@@ -195,7 +183,8 @@ def render_market(company):
     else:
         body = f'<div class="stat-grid">{"".join(stats)}</div>{range_html}{note_html}'
 
-    return f"""{head(f"{ticker} Market Data")}
+    return f"""{head(f"{ticker} Market Data", "../../assets/theme.css")}
+{site_nav("../../", "research")}
 <div class="wrap">
   {crumbs(ticker, "market")}
   <header class="hero">
@@ -224,7 +213,7 @@ def render_index(companies):
             <a href="{ticker}/market.html">Market Data</a>
           </div>
         </div>""")
-    return f"""{head("Research Analyst")}
+    return f"""{head("Research Analyst", "../assets/theme.css")}
 <style>
   .rows {{ display: flex; flex-direction: column; border-top: 1px solid var(--border); }}
   .row {{ display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 4px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }}
@@ -233,8 +222,8 @@ def render_index(companies):
   .row .links {{ display: flex; gap: 8px; font-family: "IBM Plex Mono", monospace; font-size: 12.5px; }}
   .row .links a {{ text-decoration: none; border: 1px solid var(--border); border-radius: 999px; padding: 5px 11px; background: var(--surface); }}
 </style>
+{site_nav("../", "research")}
 <div class="wrap">
-  <nav class="crumbs"><a href="../index.html">&larr; Market Scanner</a><a href="../simulator/index.html">Stock Market Simulator</a><a href="../guide/index.html">Career Guide</a></nav>
   <header class="hero">
     <div class="eyebrow">Research Analyst Agent</div>
     <h1 class="title">Company Research</h1>

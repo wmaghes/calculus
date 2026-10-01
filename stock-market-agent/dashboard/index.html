@@ -1,82 +1,14 @@
 <!doctype html>
 <html lang="en">
 <head>
+<script>try{if(localStorage.getItem('siteTheme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
 <meta charset="utf-8">
 <title>Market Scanner</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #F3F4F7;
-    --surface: #FFFFFF;
-    --surface-2: #EAEBF0;
-    --ink: #14161C;
-    --ink-muted: #5B5F6B;
-    --ink-faint: #8A8E9B;
-    --border: #DBDDE4;
-    --accent: #A5711F;
-    --accent-soft: #F1E3C8;
-    --growth: #A5711F;
-    --growth-soft: #F1E3C8;
-    --stability: #2B5F94;
-    --stability-soft: #DCE7F3;
-    --nextgen: #6A45C9;
-    --nextgen-soft: #E7DFF9;
-    --short: #B23F2C;
-    --short-soft: #F5DFDA;
-    --pos: #1E8E5A;
-    --neg: #B23F2C;
-    --shadow: 0 1px 2px rgba(20,22,28,0.04), 0 8px 24px -12px rgba(20,22,28,0.12);
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #0B0E14;
-      --surface: #12151D;
-      --surface-2: #1A1E29;
-      --ink: #ECEEF4;
-      --ink-muted: #9CA3B2;
-      --ink-faint: #6B7280;
-      --border: #262B38;
-      --accent: #E0A83E;
-      --accent-soft: #3A2E12;
-      --growth: #E0A83E;
-      --growth-soft: #3A2E12;
-      --stability: #79ABE0;
-      --stability-soft: #1B2A3D;
-      --nextgen: #B39CF2;
-      --nextgen-soft: #26203E;
-      --short: #E48168;
-      --short-soft: #3A2019;
-      --pos: #4CBB85;
-      --neg: #E48168;
-      --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #0B0E14;
-    --surface: #12151D;
-    --surface-2: #1A1E29;
-    --ink: #ECEEF4;
-    --ink-muted: #9CA3B2;
-    --ink-faint: #6B7280;
-    --border: #262B38;
-    --accent: #E0A83E;
-    --accent-soft: #3A2E12;
-    --growth: #E0A83E;
-    --growth-soft: #3A2E12;
-    --stability: #79ABE0;
-    --stability-soft: #1B2A3D;
-    --nextgen: #B39CF2;
-    --nextgen-soft: #26203E;
-    --short: #E48168;
-    --short-soft: #3A2019;
-    --pos: #4CBB85;
-    --neg: #E48168;
-    --shadow: 0 1px 2px rgba(0,0,0,0.3), 0 8px 24px -12px rgba(0,0,0,0.5);
-  }
-
   * { box-sizing: border-box; }
   body {
     margin: 0;
@@ -200,8 +132,13 @@
     .id { flex-direction: row; align-items: baseline; gap: 8px; }
   }
 </style>
+<link rel="stylesheet" href="assets/theme.css">
 </head>
 <body>
+
+<div id="siteNav"></div>
+<script>window.SITE_NAV = { base: "", active: "scanner" };</script>
+<script src="assets/nav.js"></script>
 
 <div class="wrap">
   <header class="hero">
@@ -222,9 +159,6 @@
     <a href="#stability"><span class="dot" style="background:var(--stability)"></span>Stability</a>
     <a href="#nextgen"><span class="dot" style="background:var(--nextgen)"></span>Next-Gen Growth</a>
     <a href="#shorts"><span class="dot" style="background:var(--short)"></span>Short Candidates</a>
-    <a href="research/index.html" style="margin-left:auto">Company Research (10-K &amp; ratios) &#8599;</a>
-    <a href="simulator/index.html">Stock Market Simulator &#8599;</a>
-    <a href="guide/index.html">Career Guide &#8599;</a>
   </nav>
 
   <main id="categories"></main>
