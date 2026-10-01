@@ -124,6 +124,23 @@ COMPANIES = {
     "VZ": "Verizon",
     "W": "Wayfair",
     "WBD": "Warner Bros. Discovery",
+    # Funds & company-size comparison set (ETFs, mutual funds, small/mid-cap stocks)
+    "SPY": "SPDR S&P 500 ETF Trust",
+    "QQQ": "Invesco QQQ Trust",
+    "IWM": "iShares Russell 2000 ETF",
+    "VIG": "Vanguard Dividend Appreciation ETF",
+    "AGG": "iShares Core U.S. Aggregate Bond ETF",
+    "VFIAX": "Vanguard 500 Index Fund Admiral Shares",
+    "FCNTX": "Fidelity Contrafund",
+    "VWINX": "Vanguard Wellesley Income Fund",
+    "CALM": "Cal-Maine Foods",
+    "HAFC": "Hanmi Financial",
+    "CHE": "Chemed Corp",
+    "SAIA": "Saia Inc",
+    "WING": "Wingstop",
+    "UMH": "UMH Properties",
+    "CEVA": "CEVA Inc",
+    "REI": "Ring Energy",
 }
 
 # SEC requires a descriptive User-Agent identifying the requester.

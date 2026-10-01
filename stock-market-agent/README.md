@@ -112,27 +112,59 @@ Each company gets **two separate pages**: a Financials page (sourced from its
 `dashboard/data.json` where possible so the two tools stay consistent). The
 main dashboard links to the research hub, and each research page links back.
 
-### Company universe: 100 names across 10 sectors
+### Company universe: 116 names across 10 sectors, plus funds
 
-The watchlist spans 100 tickers across 10 of the 11 GICS sectors, 29 current
+The watchlist spans 116 tickers across 10 of the 11 GICS sectors, 29 current
 Fortune 100 companies (by revenue), and 13 next-gen growth niches (quantum
 computing, space, gene editing, AI, cybersecurity, EV & battery tech,
 fintech, clean energy, robotics, AI infrastructure, AI healthcare, AI drug
 discovery). The Market Scanner has a search/filter bar (free-text search,
-sector dropdown, a Fortune 100 toggle, and theme chips) so the full universe
-stays navigable instead of just a long scroll.
+sector dropdown, a company-size dropdown, a Fortune 100 toggle, and theme
+chips) so the full universe stays navigable instead of just a long scroll.
 
-Of the 100, the original **32** have full SEC-10-K-sourced financials and
-valuation ratios (the Financials tab shows real revenue/margin/balance-sheet
-figures). The other **68** — added later purely for sector/industry
-diversity and Fortune 100 coverage — currently have live market-snapshot
-data only (price, market cap, sector/industry, a key metric, Fortune 100
-rank); their Financials page says so honestly ("No 10-K figures were
-confidently sourced for this company in this pass") rather than fabricating
-numbers. Running `fetch_10k.py` and `fetch_market_ratios.py` for those 68
-(from an environment with real internet access) would fill them in using the
-exact same pipeline as the original 32 — `config.COMPANIES` already lists
-all 100 tickers.
+Of the 116, 100 are individual stocks split across four scored/ranked desks
+(Growth, Stability, Next-Gen Growth, Short Candidates — 25 each). The
+original **32** of those have full SEC-10-K-sourced financials and valuation
+ratios (the Financials tab shows real revenue/margin/balance-sheet figures).
+The other **68** — added later purely for sector/industry diversity and
+Fortune 100 coverage — currently have live market-snapshot data only (price,
+market cap, sector/industry, a key metric, Fortune 100 rank); their
+Financials page says so honestly ("No 10-K figures were confidently sourced
+for this company in this pass") rather than fabricating numbers. Running
+`fetch_10k.py` and `fetch_market_ratios.py` for those 68 (from an environment
+with real internet access) would fill them in using the exact same pipeline
+as the original 32 — `config.COMPANIES` already lists all 116 tickers.
+
+### Funds & Company Size desk: seeing the risk difference
+
+A 5th desk, **Funds & Company Size**, holds a deliberately small set of 16
+names — 5 ETFs, 3 mutual funds, 4 mid-cap stocks, and 4 small-cap stocks —
+sorted from lowest to highest risk instead of by conviction or score, so the
+effect of diversification and company size on volatility is visible at a
+glance: a bond ETF (AGG) sits at "Very Low Risk," a balanced fund and a
+dividend-quality ETF at "Low," broad-market index funds at "Moderate," a
+tech-heavy/small-cap index ETF alongside individual mid-cap stocks at
+"High," and individual small-cap stocks at "Very High." The "Risk" dots
+reuse the same 1–5 UI as the conviction-tier dots elsewhere, just relabeled.
+
+This works identically in both Simulator modes:
+- **Real Companies mode** needs no special-casing at all — each fund's real
+  beta (e.g. AGG's ~0.23 vs. QQQ's ~1.26) flows straight into the existing
+  `deriveRealParams()` beta heuristic in `engine.js`, which already produces
+  a lower-volatility GBM process for a lower-beta instrument.
+- **Super Simulator mode** procedurally generates its own fixed set of 8
+  fake funds (one per real-world "flavor": broad index, growth-tilted,
+  small-cap index, dividend/quality, bond, plus the mutual-fund equivalents
+  of an index fund, an active growth fund, and a balanced fund) with
+  volatility ranges modeled after their real analogues, plus 8 explicit
+  small-cap and mid-cap fake companies sized (via `price * shares`) to
+  actually land in their intended market-cap band with correspondingly
+  higher volatility — see `createExtraDiversifiedTickers()` in `engine.js`.
+
+Every stock-type item (across all 116) also carries a `capTier` field
+(`mega` ≥ $200B, `large` $10B–$200B, `mid` $2B–$10B, `small` $300M–$2B,
+derived from market cap), so the Scanner's company-size filter works across
+the whole universe, not just the dedicated 16.
 
 Run it (from an environment with normal internet access) with:
 
@@ -196,7 +228,7 @@ is a simulation, not real trading, before anyone touches the market panel.
 A settings panel at the top of the page controls the market itself, before
 you ever pick a profession mode:
 
-- **Real Companies** — the 100-ticker Scanner watchlist, seeded at each
+- **Real Companies** — the 116-ticker Scanner watchlist, seeded at each
   company's real snapshot price. From there it moves forward using a
   geometric Brownian motion (random-walk) model, with drift/volatility
   *derived* from that same snapshot's own beta, growth and momentum metrics.
@@ -271,20 +303,32 @@ horizon.
 
 ## Career Guide
 
-`dashboard/guide/index.html` is a fourth tab: a plain-language reference on
-how thirteen finance careers actually relate to the stock market — Individual
-Investor, Financial Advisor, Private Banker/Wealth Manager, Investment
-Banker, Trader (sales & trading / prop / day trader), Quantitative Analyst,
-Private Equity, Venture Capitalist, Hedge Fund/Portfolio Manager, Chief
-Financial Officer (the issuer side), Market Maker/Broker-Dealer, Equity
-Research Analyst, and Risk Manager/Compliance Officer. Each entry covers what
-the role does day to day, the concepts/tools it relies on, a small
-interactive calculator so the math isn't just words (compound growth,
-position sizing, IRR/MOIC, ownership dilution, Sharpe ratio, buyback EPS
-impact, bid-ask spread economics, comps valuation, Value-at-Risk), and —
-where one exists — a deep link straight into the matching Simulator mode (the
-Simulator reads a `?mode=` query param on load, e.g.
-`simulator/index.html?mode=ib`).
+`dashboard/guide/index.html` is a fourth tab, in two parts. Every entry in
+both parts is a collapsed-by-default `<details>` accordion (click to open;
+an "Expand all" / "Collapse all" toggle and a table-of-contents sit above
+each part, and the two parts' accordions are independent of each other).
+
+The first part is a plain-language reference on how thirteen finance careers
+actually relate to the stock market — Individual Investor, Financial
+Advisor, Private Banker/Wealth Manager, Investment Banker, Trader (sales &
+trading / prop / day trader), Quantitative Analyst, Private Equity, Venture
+Capitalist, Hedge Fund/Portfolio Manager, Chief Financial Officer (the
+issuer side), Market Maker/Broker-Dealer, Equity Research Analyst, and Risk
+Manager/Compliance Officer. Each entry covers what the role does day to day,
+how the role varies in practice (e.g. fee-only vs. commission advisor,
+sell-side vs. buy-side trader), how people in it are actually paid, the
+concepts/tools it relies on, a small interactive calculator so the math
+isn't just words (compound growth, position sizing, IRR/MOIC, ownership
+dilution, Sharpe ratio, buyback EPS impact, bid-ask spread economics, comps
+valuation, Value-at-Risk), and — where one exists — a deep link straight
+into the matching Simulator mode (the Simulator reads a `?mode=` query param
+on load, e.g. `simulator/index.html?mode=ib`).
+
+The second part, **Types of Securities**, explains every instrument type
+traded anywhere on the site in plain language: Common Stock (including the
+mega/large/mid/small-cap risk gradient), ETFs, Mutual Funds, Bonds, Options,
+Futures, and Short Selling — each cross-linked to where it shows up live
+(the Funds & Company Size Scanner desk, or the matching Simulator mode).
 
 ## Security & scope
 

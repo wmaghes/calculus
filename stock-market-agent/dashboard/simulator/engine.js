@@ -186,6 +186,106 @@ const MarketEngine = (function () {
     return { t: simMs, headline, pctChange };
   }
 
+  // A fixed, small set of fake funds -- one per "flavor" -- so Super
+  // Simulator mode teaches the same diversification-lowers-volatility
+  // lesson as Real Companies mode, where it falls out naturally from each
+  // real fund's own beta. Volatility/drift ranges are deliberately modeled
+  // after real-world analogues (a broad index ETF, a tech-tilted one, a
+  // small-cap index, a dividend/quality screen, a bond fund, and the
+  // mutual-fund equivalents of an index fund, an active growth fund, and a
+  // bond-tilted balanced fund) rather than randomized like individual
+  // fake companies.
+  const FUND_NAME_WORDS = ["Horizon", "Summit", "Beacon", "Cornerstone", "Meridian", "Anchor", "Keystone", "Pinnacle", "Vantage", "Granite"];
+  const FUND_FLAVORS = [
+    { kind: "etf", label: "Broad Market Index ETF", vol: [0.18, 0.26], drift: [0.06, 0.09],
+      holdings: (s) => `Tracks a broad, diversified basket of ${s} companies across every sector in this simulation, weighted by size.` },
+    { kind: "etf", label: "Growth Index ETF", vol: [0.28, 0.38], drift: [0.07, 0.11],
+      holdings: (s) => `Concentrates on this simulation's fastest-growing ${s} companies, so it swings harder than a broad-market fund.` },
+    { kind: "etf", label: "Small-Cap Index ETF", vol: [0.30, 0.40], drift: [0.05, 0.09],
+      holdings: () => `Holds a wide basket of this simulation's smaller companies; diversified, but small companies as a group are still more volatile than large ones.` },
+    { kind: "etf", label: "Dividend Growth ETF", vol: [0.14, 0.20], drift: [0.05, 0.08],
+      holdings: (s) => `Screens for established, steadily-profitable ${s} companies in this simulation with a history of raising their dividend.` },
+    { kind: "etf", label: "Core Bond ETF", vol: [0.06, 0.11], drift: [0.02, 0.045],
+      holdings: () => `Holds simulated investment-grade bonds instead of stocks, so it mostly reacts to interest-rate assumptions rather than this simulation's stock-market swings.` },
+    { kind: "mutual_fund", label: "Index Mutual Fund", vol: [0.18, 0.26], drift: [0.06, 0.09],
+      holdings: (s) => `The mutual-fund twin of a broad index ETF: owns a wide basket of ${s} companies and moves almost exactly in line with this simulation's overall market.` },
+    { kind: "mutual_fund", label: "Actively Managed Growth Fund", vol: [0.24, 0.32], drift: [0.07, 0.10],
+      holdings: (s) => `A fictional manager actively picks a changing set of ${s} growth companies rather than tracking an index.` },
+    { kind: "mutual_fund", label: "Balanced Income Fund", vol: [0.12, 0.18], drift: [0.04, 0.065],
+      holdings: () => `Splits assets between simulated bonds and steady dividend payers, trading upside for a much gentler ride than a pure stock fund.` },
+  ];
+  function randomFundTicker(used, kind) {
+    let t;
+    do {
+      if (kind === "etf") {
+        t = ""; for (let i = 0; i < 3; i++) t += LETTERS[Math.floor(Math.random() * LETTERS.length)];
+      } else {
+        t = ""; for (let i = 0; i < 4; i++) t += LETTERS[Math.floor(Math.random() * LETTERS.length)];
+        t += "X";
+      }
+    } while (used.has(t));
+    used.add(t);
+    return t;
+  }
+
+  // A fixed, small set of explicit small-cap and mid-cap individual
+  // companies, sized (via price * shares) to actually land in their
+  // intended market-cap band, with volatility skewed to match real-world
+  // cap-size risk: smaller companies carry more idiosyncratic risk than
+  // the mega/large-cap names that dominate the main random universe.
+  const CAP_SPECS = [
+    { tier: "small", n: 4, mktCap: [0.3e9, 2e9], vol: [0.45, 0.80] },
+    { tier: "mid", n: 4, mktCap: [2e9, 10e9], vol: [0.28, 0.50] },
+  ];
+
+  function createExtraDiversifiedTickers(used) {
+    const extra = {};
+
+    for (const flavor of FUND_FLAVORS) {
+      const ticker = randomFundTicker(used, flavor.kind);
+      const flavorSector = randomChoice(SECTORS);
+      const name = `${randomChoice(FUND_NAME_WORDS)} ${flavor.label}`;
+      const vol = randomRange(flavor.vol[0], flavor.vol[1]);
+      const drift = randomRange(flavor.drift[0], flavor.drift[1]);
+      const price = flavor.kind === "etf" ? Math.round(randomRange(40, 450) * 100) / 100 : Math.round(randomRange(10, 120) * 100) / 100;
+      extra[ticker] = {
+        ticker, name, category: "funds", sector: "Diversified", assetType: flavor.kind,
+        price, seedPrice: price, drift, vol,
+        shares: null, netIncome: null, revenue: null, netMarginPct: null,
+        profile: { description: flavor.holdings(flavorSector) },
+        history: [{ t: 0, p: price }],
+      };
+    }
+
+    for (const spec of CAP_SPECS) {
+      for (let i = 0; i < spec.n; i++) {
+        const ticker = randomTicker(used);
+        const name = `${randomChoice(NAME_A)} ${randomChoice(NAME_B)}`;
+        const sector = randomChoice(SECTORS);
+        const mktCap = randomRange(spec.mktCap[0], spec.mktCap[1]);
+        const price = Math.round(randomRange(5, 120) * 100) / 100;
+        const shares = Math.round(mktCap / price);
+        const drift = randomRange(-0.15, 0.35);
+        const vol = randomRange(spec.vol[0], spec.vol[1]);
+        const netMarginPct = randomRange(-15, 25);
+        const revenue = mktCap / randomRange(2, 10);
+        const netIncome = revenue * (netMarginPct / 100);
+        const profile = generateProfile(ticker, name, sector, revenue);
+        const quarterlyHistory = generateQuarterlyHistory(revenue, netMarginPct);
+        extra[ticker] = {
+          ticker, name, category: "funds", sector, assetType: "stock", capTier: spec.tier,
+          price, seedPrice: price, drift, vol,
+          shares, netIncome, revenue, netMarginPct,
+          profile, quarterlyHistory,
+          news: [{ t: 0, headline: `${name} (${ticker}) begins trading today.`, pctChange: 0 }],
+          lastNewsSimMs: 0, lastNewsPrice: price,
+          history: [{ t: 0, p: price }],
+        };
+      }
+    }
+    return extra;
+  }
+
   function createSuperWorld(count) {
     count = count || 24;
     const tickers = {};
@@ -204,10 +304,12 @@ const MarketEngine = (function () {
       let category = "growth";
       if (vol < 0.30) category = "stability";
       else if (vol > 0.65 || drift > 0.30) category = "nextgen";
+      const mktCap = price * shares;
+      const capTier = mktCap >= 200e9 ? "mega" : mktCap >= 10e9 ? "large" : mktCap >= 2e9 ? "mid" : "small";
       const profile = generateProfile(ticker, name, sector, revenue);
       const quarterlyHistory = generateQuarterlyHistory(revenue, netMarginPct);
       tickers[ticker] = {
-        ticker, name, category, sector,
+        ticker, name, category, sector, assetType: "stock", capTier,
         price, seedPrice: price, drift, vol,
         shares, netIncome, revenue, netMarginPct,
         profile, quarterlyHistory,
@@ -216,6 +318,7 @@ const MarketEngine = (function () {
         history: [{ t: 0, p: price }],
       };
     }
+    Object.assign(tickers, createExtraDiversifiedTickers(used));
     return { mode: "super", tickers, simMs: 0, lastRealMs: Date.now(), createdAt: Date.now() };
   }
 

@@ -102,7 +102,11 @@ def stat(label, value, sub=None, cls=""):
 def render_financials(company):
     ticker = company["ticker"]
     fin = company["financials"]
-    if not fin:
+    asset_type = (company.get("market") or {}).get("assetType", "stock")
+    if not fin and asset_type in ("etf", "mutual_fund"):
+        kind = "An ETF" if asset_type == "etf" else "A mutual fund"
+        body = f'<p>{kind} doesn’t file a 10-K or have its own revenue/earnings — it holds a basket of other securities instead. See its Market Data tab for price, volatility, and (where available) an expense ratio.</p>'
+    elif not fin:
         body = '<p>No 10-K figures were confidently sourced for this company in this pass.</p>'
     else:
         growth_cls = "pos" if (fin.get("revenue_growth") or 0) >= 0 else "neg"
@@ -162,6 +166,14 @@ def render_market(company):
         stats.append(stat("Dividend yield", f"{market['divYield']:.2f}%"))
     if market.get("beta") is not None:
         stats.append(stat("Beta (5yr)", f"{market['beta']:.2f}"))
+    if market.get("metric_label", "").lower().startswith("beta") and market.get("metric") is not None:
+        stats.append(stat(market["metric_label"], f"{market['metric']:.2f}"))
+    if market.get("expenseRatio") is not None:
+        stats.append(stat("Expense ratio", f"{market['expenseRatio']:.2f}%/yr"))
+    if market.get("assetType") in ("etf", "mutual_fund"):
+        stats.append(stat("Fund type", "ETF" if market["assetType"] == "etf" else "Mutual Fund"))
+    if market.get("capTier"):
+        stats.append(stat("Company size", f"{market['capTier'].capitalize()}-cap"))
 
     range_html = ""
     lo, hi = ratios.get("week52_low"), ratios.get("week52_high")

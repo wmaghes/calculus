@@ -626,6 +626,191 @@
     </details>
   </section>
 
+  <header class="hero" style="margin-top:12px">
+    <div class="eyebrow">Reference</div>
+    <h1 class="title" style="font-size:clamp(24px,3.6vw,34px)">Types of Securities</h1>
+    <div class="sub">Every instrument traded anywhere on this site &mdash; the Market Scanner's stocks, the Funds &amp; Company Size desk's ETFs and mutual funds, and the Simulator's options, futures and short positions &mdash; explained in plain language. Collapsed by default; click any entry to open it.</div>
+  </header>
+
+  <nav class="toc" id="secToc">
+    <a href="#sec-stocks">Common Stock</a>
+    <a href="#sec-etf">ETFs</a>
+    <a href="#sec-mutualfund">Mutual Funds</a>
+    <a href="#sec-bonds">Bonds</a>
+    <a href="#sec-options">Options</a>
+    <a href="#sec-futures">Futures</a>
+    <a href="#sec-short">Short Selling</a>
+  </nav>
+  <div class="toc-actions"><button id="toggleSecuritiesBtn" type="button">Expand all</button></div>
+
+  <section class="role" id="sec-stocks">
+    <details class="role-card security-card">
+      <summary>
+        <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="10" width="3" height="10"/><rect x="10.5" y="4" width="3" height="16"/><rect x="17" y="7" width="3" height="13"/></svg></span>Common Stock (Equity)</h2><span class="role-tag">Ownership</span></div>
+        <p class="role-oneliner">A share of ownership in a single company &mdash; its value rises and falls with that one business, for better and worse.</p>
+        <span class="chevron"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </summary>
+      <div class="role-body">
+      <h3>How it works</h3>
+      <p>Buying a share makes you a part-owner of that company: you're entitled to a slice of its profits (sometimes paid out as dividends) and your stake's value tracks whatever the market thinks the company is worth. Unlike a fund, every dollar of gain or loss here comes from one business's fortunes &mdash; there's no basket softening the ride.</p>
+      <h3>Company size changes the risk</h3>
+      <p>This site groups companies into four market-cap tiers, and size is one of the biggest single predictors of a stock's volatility:</p>
+      <div class="variant-list">
+        <div class="variant"><b>Mega-cap ($200B+)</b> &mdash; the largest, most liquid companies (think NVDA, AAPL, WMT). Still moves, but a single bad headline rarely swings the price more than a few percent in a day.</div>
+        <div class="variant"><b>Large-cap ($10B&ndash;$200B)</b> &mdash; well-established, still broadly liquid, somewhat more room to swing than mega-caps.</div>
+        <div class="variant"><b>Mid-cap ($2B&ndash;$10B)</b> &mdash; past the riskiest early stage but still far more sensitive to a single bad quarter than a mega-cap; this site's Funds &amp; Company Size desk tags these names "High Risk."</div>
+        <div class="variant"><b>Small-cap ($300M&ndash;$2B)</b> &mdash; thinner trading, less analyst coverage, and far less room for error; a single earnings miss or contract loss can move the stock double digits in a session. Tagged "Very High Risk" on the Funds desk.</div>
+      </div>
+      <h3>Key tools &amp; concepts</h3>
+      <div class="chip-row">
+        <span class="chip">Market capitalization</span><span class="chip">Dividends</span>
+        <span class="chip">P/E ratio</span><span class="chip">Liquidity</span>
+        <span class="chip">Volatility</span><span class="chip">Shareholder voting rights</span>
+      </div>
+      <div class="try-it">See the size/risk gradient for yourself: the <a href="../index.html#funds">Funds &amp; Company Size desk &#8599;</a> sorts small-cap stocks (highest risk) down to a bond ETF (lowest risk) in one list.</div>
+      </div>
+    </details>
+  </section>
+
+  <section class="role" id="sec-etf">
+    <details class="role-card security-card">
+      <summary>
+        <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg></span>ETFs (Exchange-Traded Funds)</h2><span class="role-tag">Diversified</span></div>
+        <p class="role-oneliner">A single security that holds a basket of many other securities, trading on an exchange all day, just like a stock.</p>
+        <span class="chevron"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </summary>
+      <div class="role-body">
+      <h3>How it works</h3>
+      <p>An ETF pools money from many investors into one fund that holds dozens, hundreds, or thousands of underlying stocks or bonds, then issues shares of itself that trade continuously on an exchange at a live price &mdash; you can buy or sell any minute the market is open, same as a stock. Because your money is spread across every holding at once, one company having a terrible day barely dents the ETF's price.</p>
+      <h3>Variations on this instrument</h3>
+      <div class="variant-list">
+        <div class="variant"><b>Broad-market index ETF</b> &mdash; tracks an entire index (e.g. the S&amp;P 500), so it roughly mirrors "the market."</div>
+        <div class="variant"><b>Sector or style ETF</b> &mdash; narrows to one industry, theme, or characteristic (small-cap, dividend growers, technology), trading some diversification for a sharper bet.</div>
+        <div class="variant"><b>Bond ETF</b> &mdash; holds bonds instead of stocks, so it mainly reacts to interest-rate moves rather than stock-market swings.</div>
+      </div>
+      <h3>Risk</h3>
+      <p>Lower company-specific risk than owning one stock, since one holding's bad quarter is diluted across all the others &mdash; but the systematic risk of whatever it tracks doesn't go away: a broad-market ETF still falls in a broad market downturn. Expense ratios (an annual fee, often well under 0.5%/year) are the main ongoing cost.</p>
+      <div class="try-it">Try it live: the <a href="../index.html#funds">Funds &amp; Company Size desk &#8599;</a> has five real ETFs spanning bond, broad-market, growth, dividend, and small-cap flavors &mdash; and both Simulator modes generate their own fictional ETFs with the same risk pattern.</div>
+      </div>
+    </details>
+  </section>
+
+  <section class="role" id="sec-mutualfund">
+    <details class="role-card security-card">
+      <summary>
+        <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg></span>Mutual Funds</h2><span class="role-tag">Diversified</span></div>
+        <p class="role-oneliner">A pooled investment vehicle much like an ETF, but priced once a day instead of trading live all day.</p>
+        <span class="chevron"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </summary>
+      <div class="role-body">
+      <h3>How it works</h3>
+      <p>Like an ETF, a mutual fund pools many investors' money into a diversified basket of holdings. The key difference: you buy and sell at the fund's Net Asset Value (NAV), calculated just once after the market closes each day &mdash; not a live, continuously-updating price. That makes it less convenient for active trading but no less diversified.</p>
+      <h3>Variations on this instrument</h3>
+      <div class="variant-list">
+        <div class="variant"><b>Index mutual fund</b> &mdash; the mutual-fund equivalent of a broad index ETF: passively tracks a benchmark, very low fees.</div>
+        <div class="variant"><b>Actively managed fund</b> &mdash; a professional manager picks and changes holdings trying to beat the market, usually for a noticeably higher fee; most fail to beat their index after fees over long periods.</div>
+        <div class="variant"><b>Balanced / income fund</b> &mdash; mixes bonds and dividend stocks in one fund for a steadier, lower-volatility ride than an all-stock fund.</div>
+      </div>
+      <h3>Risk</h3>
+      <p>Same diversification benefit as an ETF; an actively managed fund adds the manager's own strategy and judgment as an extra variable, for better or worse, on top of the market's own moves.</p>
+      <div class="note"><strong>A simulator simplification:</strong> for playability, both this project's Real Companies mode and Super Simulator price "mutual funds" continuously like everything else, rather than once a day at NAV the way a real one works.</div>
+      <div class="try-it">Try it live: the <a href="../index.html#funds">Funds &amp; Company Size desk &#8599;</a> includes an index fund, an actively managed growth fund, and a bond-tilted balanced fund.</div>
+      </div>
+    </details>
+  </section>
+
+  <section class="role" id="sec-bonds">
+    <details class="role-card security-card">
+      <summary>
+        <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 9h8M8 13h8M8 17h4"/></svg></span>Bonds</h2><span class="role-tag">Fixed income</span></div>
+        <p class="role-oneliner">A loan you make to a government or company, paying you interest until it repays what it borrowed.</p>
+        <span class="chevron"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </summary>
+      <div class="role-body">
+      <h3>How it works</h3>
+      <p>Buying a bond means lending the issuer money for a set term in exchange for regular interest payments (the "coupon") and your principal back at maturity. Unlike a stock, you're not an owner with upside tied to the business's growth &mdash; you're a creditor, with a fixed, contractual return, as long as the issuer doesn't default.</p>
+      <h3>Variations on this instrument</h3>
+      <div class="variant-list">
+        <div class="variant"><b>Treasury bonds</b> &mdash; issued by the U.S. government, considered the safest (lowest default risk) bonds available.</div>
+        <div class="variant"><b>Corporate bonds</b> &mdash; issued by companies; higher yield than Treasuries to compensate for real default risk, which varies by the issuer's credit rating.</div>
+        <div class="variant"><b>Municipal bonds</b> &mdash; issued by states/cities, often with tax-advantaged interest for residents.</div>
+      </div>
+      <h3>Risk</h3>
+      <p>Generally far lower volatility than stocks &mdash; this is the whole reason a bond-heavy fund (like AGG or the balanced fund on this site's Funds desk) sits at the bottom of the risk ladder. But "lower risk" isn't "no risk": bond prices move opposite to interest rates (rates up, existing bond prices down), and a shakier issuer can still default.</p>
+      <div class="try-it">See it in the data: the <a href="../index.html#funds">Funds &amp; Company Size desk &#8599;</a>'s bond ETF carries this site's lowest "Very Low Risk" tag of any instrument tracked.</div>
+      </div>
+    </details>
+  </section>
+
+  <section class="role" id="sec-options">
+    <details class="role-card security-card">
+      <summary>
+        <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v6M12 10 L6 20M12 10 L18 20"/></svg></span>Options (Calls &amp; Puts)</h2><span class="role-tag">Derivative</span></div>
+        <p class="role-oneliner">A contract giving you the right, but not the obligation, to buy or sell a stock at a fixed price before a set date.</p>
+        <span class="chevron"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </summary>
+      <div class="role-body">
+      <h3>How it works</h3>
+      <p>A <b>call</b> gives you the right to buy a stock at a set "strike" price before expiry &mdash; worth buying if you think the stock will rise above that strike. A <b>put</b> gives you the right to sell at the strike &mdash; worth buying if you think the stock will fall below it. You pay a premium upfront, priced (using a model like Black-Scholes) off the stock's price, the strike, time left, and the stock's own volatility; the more volatile the stock, the pricier the option.</p>
+      <h3>Why it's leveraged</h3>
+      <p>A small move in the underlying stock can mean a much larger percentage move in the option's value, because you're only paying for the right to the move, not the full share price. That cuts both ways: if the stock never reaches your strike, the option can expire completely worthless, and you lose the whole premium &mdash; a 100% loss is a normal, not a rare, outcome here.</p>
+      <h3>Key tools &amp; concepts</h3>
+      <div class="chip-row">
+        <span class="chip">Strike price</span><span class="chip">Expiry / time decay</span>
+        <span class="chip">Premium</span><span class="chip">Implied volatility</span>
+        <span class="chip">Black-Scholes pricing</span><span class="chip">Leverage</span>
+      </div>
+      <div class="try-it">Try it live: <a href="../simulator/index.html?mode=derivatives">Options &amp; Futures Trader mode in the Simulator &#8599;</a> &mdash; buy real Black-Scholes-priced calls/puts off each ticker's own simulated volatility.</div>
+      </div>
+    </details>
+  </section>
+
+  <section class="role" id="sec-futures">
+    <details class="role-card security-card">
+      <summary>
+        <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M3 9h18M8 2v4M16 2v4"/></svg></span>Futures</h2><span class="role-tag">Derivative</span></div>
+        <p class="role-oneliner">A contract obligating you to buy or sell an asset at a set price on a future date &mdash; unlike an option, there's no choice involved.</p>
+        <span class="chevron"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </summary>
+      <div class="role-body">
+      <h3>How it works</h3>
+      <p>Both sides of a futures contract are locked in: the buyer must take the position at the agreed price, the seller must deliver it, on the agreed date. You don't pay the full value of what you're controlling upfront &mdash; you post "margin," a fraction of the contract's notional value, which creates built-in leverage: a given dollar of margin controls a much larger position than that same dollar could buy outright.</p>
+      <h3>Why leverage makes this risky</h3>
+      <p>Because a futures position is marked to market continuously, losses come directly out of your posted margin in real time. If losses erode your margin enough, you face a margin call: post more cash or have the position force-closed. A price move that would be a modest loss on a stock you own outright can wipe out your entire margin &mdash; or more &mdash; on a leveraged futures position.</p>
+      <h3>Key tools &amp; concepts</h3>
+      <div class="chip-row">
+        <span class="chip">Initial margin</span><span class="chip">Mark-to-market</span>
+        <span class="chip">Margin call</span><span class="chip">Leverage</span>
+        <span class="chip">Long vs. short</span><span class="chip">Hedging vs. speculation</span>
+      </div>
+      <div class="try-it">Try it live: <a href="../simulator/index.html?mode=derivatives">Options &amp; Futures Trader mode in the Simulator &#8599;</a> &mdash; open leveraged long/short futures positions and see a simplified margin call in action.</div>
+      </div>
+    </details>
+  </section>
+
+  <section class="role" id="sec-short">
+    <details class="role-card security-card">
+      <summary>
+        <div class="role-head"><h2><span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 7v10H7"/></svg></span>Short Selling</h2><span class="role-tag">Bearish strategy</span></div>
+        <p class="role-oneliner">Borrowing shares to sell now, betting the price falls so you can buy them back cheaper later.</p>
+        <span class="chevron"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span>
+      </summary>
+      <div class="role-body">
+      <h3>How it works</h3>
+      <p>You borrow shares you don't own (typically from your broker) and sell them at today's price, pocketing the proceeds. Later, you "cover" the position by buying the same number of shares back and returning them. If the price fell in between, you profit the difference; if it rose, you lose the difference. Opening a short requires margin (collateral) and costs an ongoing borrow fee for as long as the position stays open.</p>
+      <h3>Why the risk is asymmetric</h3>
+      <p>Buying a stock outright, the most you can ever lose is 100% of what you paid &mdash; a stock can't fall below zero. Shorting flips that: a stock can rise without any upper limit, so a short position's potential loss is theoretically unlimited. This is exactly why short sellers watch margin requirements so closely, and why a short squeeze (a sharp rally forcing short sellers to buy back at any price) can be so damaging.</p>
+      <h3>Key tools &amp; concepts</h3>
+      <div class="chip-row">
+        <span class="chip">Borrow fee</span><span class="chip">Initial margin</span>
+        <span class="chip">Short squeeze</span><span class="chip">Unlimited loss potential</span>
+        <span class="chip">Short interest / days-to-cover</span><span class="chip">Long/short books</span>
+      </div>
+      <div class="try-it">Try it live: <a href="../simulator/index.html?mode=shortseller">Short Selling / Buy-Side Investor mode in the Simulator &#8599;</a> &mdash; run a real long/short book with margin and an accruing borrow fee.</div>
+      </div>
+    </details>
+  </section>
+
   <footer>
     Simplified for teaching purposes &mdash; real roles blend across these lines constantly (a hedge fund analyst does equity research; a private banker's client might need investment-banking advice). All calculators are illustrative teaching formulas, not professional-grade models. Not investment or career advice.
   </footer>
@@ -758,23 +943,29 @@ document.getElementById("eq-calc").addEventListener("click", () => {
   out.innerHTML = `Implied enterprise value: <b>${fmtUSD(ev * 1e6)}</b><br>Implied equity value: <b>${fmtUSD(equityValue * 1e6)}</b><br>Implied price/share: <b>${fmtUSD(price, 2)}</b>`;
 });
 
-/* Accordion controls: expand/collapse all, and auto-open a role linked to directly */
-const toggleAllBtn = document.getElementById("toggleAllBtn");
-const roleDetails = () => document.querySelectorAll("details.role-card");
-toggleAllBtn.addEventListener("click", () => {
-  const anyClosed = Array.from(roleDetails()).some((d) => !d.open);
-  roleDetails().forEach((d) => { d.open = anyClosed; });
-  toggleAllBtn.textContent = anyClosed ? "Collapse all" : "Expand all";
-});
-function openRoleFromHash() {
+/* Accordion controls: expand/collapse all (per section), and auto-open
+   whichever entry (role or security type) a link points directly at. */
+function wireAccordionGroup(toggleBtnId, selector) {
+  const btn = document.getElementById(toggleBtnId);
+  const groupDetails = () => document.querySelectorAll(selector);
+  btn.addEventListener("click", () => {
+    const anyClosed = Array.from(groupDetails()).some((d) => !d.open);
+    groupDetails().forEach((d) => { d.open = anyClosed; });
+    btn.textContent = anyClosed ? "Collapse all" : "Expand all";
+  });
+}
+wireAccordionGroup("toggleAllBtn", "details.role-card:not(.security-card)");
+wireAccordionGroup("toggleSecuritiesBtn", "details.security-card");
+
+function openEntryFromHash() {
   const id = location.hash.slice(1);
   if (!id) return;
   const section = document.getElementById(id);
   const details = section ? section.querySelector("details.role-card") : null;
   if (details) { details.open = true; details.scrollIntoView({ block: "start", behavior: "smooth" }); }
 }
-window.addEventListener("hashchange", openRoleFromHash);
-openRoleFromHash();
+window.addEventListener("hashchange", openEntryFromHash);
+openEntryFromHash();
 
 /* Risk Manager: 1-day VaR */
 document.getElementById("risk-calc").addEventListener("click", () => {

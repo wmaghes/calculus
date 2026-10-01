@@ -195,13 +195,20 @@
   </header>
 
   <div class="disclaimer">
-    <strong>How this is built.</strong> Prices, growth, dividend, beta and short-interest figures are pulled from free public sources (search-grounded snapshots today; the checked-in <code>run.py</code> agent uses yfinance + RSS feeds when run with normal internet access). Growth and Next-Gen Growth are ranked by an explicit <strong>conviction tier</strong> (1&ndash;5), not a blended score, because their underlying metrics use incompatible units (revenue growth vs. price momentum vs. analyst upside). Stability and Short Interest use a single consistent metric, so those two get a real normalized 0&ndash;100 score. Coverage spans <strong>10 GICS sectors</strong>, <strong id="f100TotalLabel">&mdash;</strong> current <strong>Fortune 100</strong> companies, and <strong>13 next-gen growth niches</strong> (quantum computing, space, gene editing, AI, cybersecurity, EV &amp; battery tech, fintech, clean energy, and more). <strong>This is not financial advice</strong> &mdash; it's a research starting point; verify anything before acting on it.
+    <strong>How this is built.</strong> Prices, growth, dividend, beta and short-interest figures are pulled from free public sources (search-grounded snapshots today; the checked-in <code>run.py</code> agent uses yfinance + RSS feeds when run with normal internet access). Growth and Next-Gen Growth are ranked by an explicit <strong>conviction tier</strong> (1&ndash;5), not a blended score, because their underlying metrics use incompatible units (revenue growth vs. price momentum vs. analyst upside). Stability and Short Interest use a single consistent metric, so those two get a real normalized 0&ndash;100 score. Coverage spans <strong>10 GICS sectors</strong>, <strong id="f100TotalLabel">&mdash;</strong> current <strong>Fortune 100</strong> companies, and <strong>13 next-gen growth niches</strong> (quantum computing, space, gene editing, AI, cybersecurity, EV &amp; battery tech, fintech, clean energy, and more). A separate <strong>Funds &amp; Company Size</strong> desk sorts 16 ETFs, mutual funds, and small/mid-cap stocks from lowest to highest risk, so you can see diversification's effect on volatility side by side &mdash; in both Real Companies and Super Simulator mode in the Simulator. <strong>This is not financial advice</strong> &mdash; it's a research starting point; verify anything before acting on it.
   </div>
 
   <div class="search-panel">
     <div class="search-row">
       <input type="text" id="searchInput" placeholder="Search by ticker, company, sector, or industry&hellip;">
       <select id="sectorSelect"><option value="">All sectors</option></select>
+      <select id="capTierSelect">
+        <option value="">All company sizes</option>
+        <option value="mega">Mega-cap ($200B+)</option>
+        <option value="large">Large-cap ($10B&ndash;$200B)</option>
+        <option value="mid">Mid-cap ($2B&ndash;$10B)</option>
+        <option value="small">Small-cap ($300M&ndash;$2B)</option>
+      </select>
       <button class="f100-toggle" id="f100Toggle" type="button">&#9733; Fortune 100 only</button>
       <button class="clear-filters-btn" id="clearFiltersBtn" type="button">Clear filters</button>
     </div>
@@ -214,6 +221,7 @@
     <a href="#stability"><span style="color:var(--stability);display:inline-flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L19 5 V11 C19 16 15.5 19.5 12 21 C8.5 19.5 5 16 5 11 V5 Z"/></svg></span>Stability</a>
     <a href="#nextgen"><span style="color:var(--nextgen);display:inline-flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L13.5 9.5 L21 11 L13.5 12.5 L12 20 L10.5 12.5 L3 11 L10.5 9.5 Z"/></svg></span>Next-Gen Growth</a>
     <a href="#shorts"><span style="color:var(--short);display:inline-flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,7 9,13 13,9 21,17"/><polyline points="14,17 21,17 21,10"/></svg></span>Short Candidates</a>
+    <a href="#funds"><span style="color:var(--funds);display:inline-flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg></span>Funds &amp; Company Size</a>
   </nav>
 
   <main id="categories"></main>
@@ -230,6 +238,7 @@ const ICONS = {
   trendDown: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,7 9,13 13,9 21,17"/><polyline points="14,17 21,17 21,10"/></svg>',
   shield: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L19 5 V11 C19 16 15.5 19.5 12 21 C8.5 19.5 5 16 5 11 V5 Z"/></svg>',
   sparkle: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L13.5 9.5 L21 11 L13.5 12.5 L12 20 L10.5 12.5 L3 11 L10.5 9.5 Z"/></svg>',
+  basket: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>',
 };
 
 const CATEGORY_META = {
@@ -241,6 +250,8 @@ const CATEGORY_META = {
                sub: "Smaller, thematic bets \u2014 quantum computing, AI infrastructure, gene editing, space \u2014 with outsized upside and outsized risk. Ranked by conviction tier." },
   shorts:    { title: "Short Candidates", color: "var(--short)", soft: "var(--short-soft)", icon: ICONS.trendDown,
                sub: "Highest short interest and clearest negative catalysts (guidance cuts, structural decline). Score is a normalized blend of short-%-of-float plus momentum/valuation flags." },
+  funds:     { title: "Funds & Company Size", color: "var(--funds)", soft: "var(--funds-soft)", icon: ICONS.basket,
+               sub: "A deliberately small, mixed set \u2014 broad-market and bond ETFs, mutual funds, and individual small/mid-cap stocks \u2014 sorted from lowest to highest risk so the diversification effect is visible at a glance. The \u201cRisk\u201d dots below use the same 1\u20135 scale as conviction elsewhere, just relabeled: more dots means more volatility, not more upside." },
 };
 
 function fmtPrice(p) {
@@ -262,13 +273,18 @@ function renderRow(item, catKey) {
   if (priceStr) metaBits.push(priceStr);
   if (item.mktCap) metaBits.push(item.mktCap);
   if (item.metric_label) {
-    const val = typeof item.metric === "number" ? (Number.isInteger(item.metric) ? item.metric : item.metric.toFixed(1)) : item.metric;
-    metaBits.push(`${item.metric_label}: <span class="metric-val">${val}${typeof item.metric === "number" ? "%" : ""}</span>`);
+    const isRatio = /beta/i.test(item.metric_label);
+    const val = typeof item.metric === "number" ? (Number.isInteger(item.metric) ? item.metric : item.metric.toFixed(isRatio ? 2 : 1)) : item.metric;
+    metaBits.push(`${item.metric_label}: <span class="metric-val">${val}${typeof item.metric === "number" && !isRatio ? "%" : ""}</span>`);
   }
   if (item.divYield) metaBits.push(`Yield: <span class="metric-val">${item.divYield}%</span>`);
   if (item.streak) metaBits.push(`Streak: <span class="metric-val">${item.streak}</span>`);
   if (item.theme) metaBits.push(item.theme);
   if (item.flag) metaBits.push(`<span class="metric-val">${item.flag}</span>`);
+  if (item.expenseRatio != null) metaBits.push(`Expense ratio: <span class="metric-val">${item.expenseRatio}%</span>`);
+  if (item.assetType === "etf") metaBits.push(`<span class="metric-val">ETF</span>`);
+  if (item.assetType === "mutual_fund") metaBits.push(`<span class="metric-val">Mutual Fund</span>`);
+  if (item.capTier) metaBits.push(`<span class="metric-val">${item.capTier[0].toUpperCase()}${item.capTier.slice(1)}-Cap</span>`);
   if (item.sector) metaBits.push(item.sector + (item.industry ? ` / ${item.industry}` : ""));
   if (item.fortune100) metaBits.push(`<span class="f100-badge">FORTUNE 100${item.fortune100Rank ? " #" + item.fortune100Rank : ""}</span>`);
 
@@ -325,13 +341,14 @@ function renderCategory(catKey, items, totalInCat) {
     </section>`;
 }
 
-const CAT_ORDER = ["growth", "stability", "nextgen", "shorts"];
+const CAT_ORDER = ["growth", "stability", "nextgen", "shorts", "funds"];
 let DATA = null;
-const FILTER = { text: "", sector: "", f100Only: false, themes: new Set() };
+const FILTER = { text: "", sector: "", capTier: "", f100Only: false, themes: new Set() };
 
 function itemMatchesFilter(item) {
   if (FILTER.f100Only && !item.fortune100) return false;
   if (FILTER.sector && item.sector !== FILTER.sector) return false;
+  if (FILTER.capTier && item.capTier !== FILTER.capTier) return false;
   if (FILTER.themes.size > 0 && !FILTER.themes.has(item.theme)) return false;
   if (FILTER.text) {
     const haystack = [item.ticker, item.name, item.sector, item.industry, item.theme]
@@ -352,7 +369,7 @@ function renderAll() {
   document.getElementById("categories").innerHTML = html;
 
   const total = CAT_ORDER.reduce((n, k) => n + (DATA.categories[k] || []).length, 0);
-  const anyFilterActive = FILTER.text || FILTER.sector || FILTER.f100Only || FILTER.themes.size > 0;
+  const anyFilterActive = FILTER.text || FILTER.sector || FILTER.capTier || FILTER.f100Only || FILTER.themes.size > 0;
   document.getElementById("filterSummary").textContent = anyFilterActive
     ? `Showing ${shown} of ${total} companies`
     : "";
@@ -361,6 +378,7 @@ function renderAll() {
 function wireFilterBar() {
   const searchInput = document.getElementById("searchInput");
   const sectorSelect = document.getElementById("sectorSelect");
+  const capTierSelect = document.getElementById("capTierSelect");
   const f100Toggle = document.getElementById("f100Toggle");
   const clearBtn = document.getElementById("clearFiltersBtn");
   const themeChipsEl = document.getElementById("themeChips");
@@ -382,6 +400,10 @@ function wireFilterBar() {
     FILTER.sector = sectorSelect.value;
     renderAll();
   });
+  capTierSelect.addEventListener("change", () => {
+    FILTER.capTier = capTierSelect.value;
+    renderAll();
+  });
   f100Toggle.addEventListener("click", () => {
     FILTER.f100Only = !FILTER.f100Only;
     f100Toggle.classList.toggle("active", FILTER.f100Only);
@@ -396,8 +418,8 @@ function wireFilterBar() {
     renderAll();
   });
   clearBtn.addEventListener("click", () => {
-    FILTER.text = ""; FILTER.sector = ""; FILTER.f100Only = false; FILTER.themes.clear();
-    searchInput.value = ""; sectorSelect.value = "";
+    FILTER.text = ""; FILTER.sector = ""; FILTER.capTier = ""; FILTER.f100Only = false; FILTER.themes.clear();
+    searchInput.value = ""; sectorSelect.value = ""; capTierSelect.value = "";
     f100Toggle.classList.remove("active");
     themeChipsEl.querySelectorAll(".theme-chip").forEach(b => b.classList.remove("active"));
     renderAll();

@@ -1552,6 +1552,28 @@ function openCompanyModal(ticker) {
   }
 
   const p = t.profile;
+
+  if (t.assetType === "etf" || t.assetType === "mutual_fund") {
+    const kindLabel = t.assetType === "etf" ? "Exchange-Traded Fund" : "Mutual Fund";
+    const riskPct = Math.round(t.vol * 100);
+    modal.innerHTML = `
+      <div class="modal-card">
+        <button class="modal-close" id="modalCloseBtn">&times;</button>
+        <div class="modal-tag">${kindLabel} &middot; Super Simulator (fictional)</div>
+        <h3>${t.name} <span class="mono" style="color:var(--ink-faint)">${t.ticker}</span></h3>
+        <p class="desc">${p.description}</p>
+        <div class="modal-section-title">Snapshot</div>
+        <div class="profile-grid">
+          <div class="profile-item"><div class="label">Price</div><div class="value">${fmtMoney(t.price)}</div></div>
+          <div class="profile-item"><div class="label">Simulated volatility</div><div class="value">~${riskPct}%/yr</div></div>
+        </div>
+        <div class="note"><strong>Why this isn't a "company":</strong> a fund holds many underlying positions instead of running one business, so it has no revenue, earnings, or headquarters of its own to show here &mdash; its price simply reflects the combined, diversified movement of what it holds. That's also why its simulated volatility is set lower than an individual fake company's.</div>
+      </div>`;
+    modal.style.display = "flex";
+    document.getElementById("modalCloseBtn").addEventListener("click", closeCompanyModal);
+    return;
+  }
+
   const quartersRows = (t.quarterlyHistory || []).map((q, i, arr) => `
     <tr>
       <td>${fmtQuarterLabel(i, arr.length)}</td>
@@ -1563,11 +1585,12 @@ function openCompanyModal(ticker) {
       <div class="news-date">+${(n.t / MarketEngine.MS_PER_YEAR).toFixed(2)}y into the sim</div>
       ${n.headline}
     </div>`).join("");
+  const capTierLabel = t.capTier ? `${t.capTier[0].toUpperCase()}${t.capTier.slice(1)}-cap &middot; ` : "";
 
   modal.innerHTML = `
     <div class="modal-card">
       <button class="modal-close" id="modalCloseBtn">&times;</button>
-      <div class="modal-tag">${t.sector} &middot; Super Simulator (fictional)</div>
+      <div class="modal-tag">${capTierLabel}${t.sector} &middot; Super Simulator (fictional)</div>
       <h3>${t.name} <span class="mono" style="color:var(--ink-faint)">${t.ticker}</span></h3>
       <p class="desc">${p.description}</p>
       <div class="modal-section-title">Snapshot</div>

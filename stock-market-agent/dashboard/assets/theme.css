@@ -35,6 +35,7 @@
   --stability: #79ABE0; --stability-soft: rgba(121, 171, 224, 0.16);
   --nextgen: #B39CF2; --nextgen-soft: rgba(179, 156, 242, 0.16);
   --short: #E48168; --short-soft: rgba(228, 129, 104, 0.16);
+  --funds: #4ECDC4; --funds-soft: rgba(78, 205, 196, 0.16);
   --surface-glass: rgba(21, 24, 32, 0.66);
   --glass-highlight: rgba(255, 255, 255, 0.07);
   --glass-edge: rgba(255, 255, 255, 0.09);
@@ -64,6 +65,7 @@
   --stability: #2B5F94; --stability-soft: #DCE7F3;
   --nextgen: #6A45C9; --nextgen-soft: #E7DFF9;
   --short: #B23F2C; --short-soft: #F5DFDA;
+  --funds: #1F7A6C; --funds-soft: #D7F0EC;
   --surface-glass: rgba(255, 255, 255, 0.62);
   --glass-highlight: rgba(255, 255, 255, 0.9);
   --glass-edge: rgba(255, 255, 255, 0.8);
