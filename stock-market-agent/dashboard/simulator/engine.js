@@ -88,8 +88,23 @@ const MarketEngine = (function () {
   const NAME_B = ["Dynamics", "Holdings", "Systems", "Labs", "Industries", "Networks", "Materials", "Robotics", "Biosciences", "Energy", "Capital", "Ventures", "Works", "Technologies"];
   const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+  const SECTOR_SPECIALTY = {
+    Technology: ["cloud infrastructure monitoring", "enterprise cybersecurity", "AI-powered customer support software", "edge computing hardware", "developer productivity tools"],
+    Biotech: ["gene-editing therapeutics", "oncology drug development", "at-home diagnostic testing", "mRNA vaccine platforms", "rare disease treatments"],
+    Energy: ["grid-scale battery storage", "offshore wind turbine components", "carbon capture systems", "next-generation solar panels", "hydrogen fuel infrastructure"],
+    "Consumer Retail": ["direct-to-consumer athletic wear", "subscription meal kits", "budget home furnishings", "specialty pet products", "off-price fashion retail"],
+    Industrials: ["industrial robotics arms", "precision-machined aerospace parts", "warehouse automation systems", "modular construction components", "advanced materials manufacturing"],
+    Financials: ["small-business lending", "embedded payments infrastructure", "digital wealth management", "trade finance technology", "specialty insurance underwriting"],
+    "Real Estate": ["logistics warehouse REITs", "data center real estate", "affordable housing development", "self-storage facilities", "senior living communities"],
+    Telecom: ["rural broadband infrastructure", "satellite internet connectivity", "5G network equipment", "fiber-optic backbone networks", "IoT connectivity platforms"],
+  };
+  const HQ_CITIES = ["Austin, TX", "Denver, CO", "Raleigh, NC", "Seattle, WA", "Boston, MA", "San Diego, CA", "Atlanta, GA", "Minneapolis, MN", "Phoenix, AZ", "Columbus, OH", "Nashville, TN", "Salt Lake City, UT"];
+  const FIRST_NAMES = ["Maria", "James", "Wei", "Priya", "Daniel", "Sofia", "Marcus", "Elena", "Omar", "Grace", "Nathan", "Amara"];
+  const LAST_NAMES = ["Chen", "Patel", "Rodriguez", "Kowalski", "Nakamura", "Okafor", "Petrov", "Larsen", "Silva", "Kim", "Fischer", "Diallo"];
+
   function randomChoice(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
   function randomRange(lo, hi) { return lo + Math.random() * (hi - lo); }
+  function randomInt(lo, hi) { return Math.floor(randomRange(lo, hi + 1)); }
 
   function randomTicker(used) {
     let t;
@@ -100,6 +115,75 @@ const MarketEngine = (function () {
     } while (used.has(t));
     used.add(t);
     return t;
+  }
+
+  // A fictional business profile so a fake ticker reads like a company, not
+  // just a random number generator with a name attached.
+  function generateProfile(ticker, name, sector, revenue) {
+    const specialty = randomChoice(SECTOR_SPECIALTY[sector] || SECTOR_SPECIALTY.Technology);
+    const hq = randomChoice(HQ_CITIES);
+    const founded = randomInt(1998, 2021);
+    const ceo = `${randomChoice(FIRST_NAMES)} ${randomChoice(LAST_NAMES)}`;
+    const employees = Math.max(40, Math.round((revenue / 1e6) * randomRange(1.5, 4)));
+    return {
+      specialty, hq, founded, ceo, employees,
+      tagline: `Specializing in ${specialty}.`,
+      description: `${name} (${ticker}) is a ${sector}-sector company specializing in ${specialty}, headquartered in ${hq} and founded in ${founded}. Led by CEO ${ceo}, the company employs approximately ${employees.toLocaleString()} people.`,
+    };
+  }
+
+  // A short trailing four-quarter financial backstory, generated once at
+  // creation so a fake company has "history" instead of appearing from
+  // nowhere. Purely a static narrative -- it does not evolve with sim time.
+  function generateQuarterlyHistory(revenue, netMarginPct) {
+    const quarters = [];
+    let val = (revenue / 4) * randomRange(0.80, 0.92);
+    for (let i = 0; i < 4; i++) {
+      val = val * (1 + randomRange(-0.03, 0.09));
+      quarters.push({ revenue: val, netIncome: val * (netMarginPct / 100) });
+    }
+    return quarters; // oldest to newest
+  }
+
+  const NEWS_TEMPLATES = {
+    strong: [
+      "{ticker} shares surge after a blowout quarter beats analyst expectations.",
+      "{name} posts its strongest bookings quarter to date, sending {ticker} sharply higher.",
+      "Investors cheer as {ticker} raises full-year guidance on accelerating demand.",
+    ],
+    beat: [
+      "{ticker} climbs on better-than-expected quarterly results.",
+      "{name} tops estimates; {ticker} moves higher in reaction.",
+      "Solid execution lifts {ticker} as {name} beats consensus.",
+    ],
+    steady: [
+      "{name} reports a quarter largely in line with expectations; {ticker} little changed.",
+      "{ticker} holds steady as {name}'s results match analyst forecasts.",
+      "No major surprises from {name} this quarter; {ticker} trades flat.",
+    ],
+    miss: [
+      "{ticker} slides after {name} misses quarterly expectations.",
+      "{name} cuts guidance, sending {ticker} lower.",
+      "Soft demand weighs on {name}; {ticker} falls on the news.",
+    ],
+    steep: [
+      "{ticker} tumbles as {name} warns of a sharper-than-expected slowdown.",
+      "Shares of {name} ({ticker}) plunge amid mounting investor concerns.",
+      "{ticker} sinks after {name} discloses a major setback in its {sector} business.",
+    ],
+  };
+  function newsBucket(pctChange) {
+    if (pctChange > 15) return "strong";
+    if (pctChange > 5) return "beat";
+    if (pctChange >= -5) return "steady";
+    if (pctChange >= -15) return "miss";
+    return "steep";
+  }
+  function makeNewsItem(t, pctChange, simMs) {
+    const bucket = newsBucket(pctChange);
+    const template = randomChoice(NEWS_TEMPLATES[bucket]);
+    const headline = template.replace(/\{ticker\}/g, t.ticker).replace(/\{name\}/g, t.name).replace(/\{sector\}/g, t.sector);
+    return { t: simMs, headline, pctChange };
   }
 
   function createSuperWorld(count) {
@@ -120,10 +204,15 @@ const MarketEngine = (function () {
       let category = "growth";
       if (vol < 0.30) category = "stability";
       else if (vol > 0.65 || drift > 0.30) category = "nextgen";
+      const profile = generateProfile(ticker, name, sector, revenue);
+      const quarterlyHistory = generateQuarterlyHistory(revenue, netMarginPct);
       tickers[ticker] = {
         ticker, name, category, sector,
         price, seedPrice: price, drift, vol,
-        shares, netIncome, revenue,
+        shares, netIncome, revenue, netMarginPct,
+        profile, quarterlyHistory,
+        news: [{ t: 0, headline: `${name} (${ticker}) begins trading today.`, pctChange: 0 }],
+        lastNewsSimMs: 0, lastNewsPrice: price,
         history: [{ t: 0, p: price }],
       };
     }
@@ -132,6 +221,8 @@ const MarketEngine = (function () {
 
   const MAX_HISTORY = 300;
   const MAX_CATCHUP_YEARS = 5; // cap a single jump (e.g. after the tab was closed for days at a fast speed) so GBM doesn't extrapolate into nonsense
+  const QUARTER_MS = MS_PER_YEAR / 4;
+  const MAX_NEWS = 12;
 
   function tick(world, speedRealMsPerYear, nowMs) {
     nowMs = nowMs || Date.now();
@@ -143,6 +234,14 @@ const MarketEngine = (function () {
       t.price = stepPrice(t.price, t.drift, t.vol, dtYears);
       t.history.push({ t: world.simMs, p: t.price });
       if (t.history.length > MAX_HISTORY) t.history.splice(0, t.history.length - MAX_HISTORY);
+
+      if (world.mode === "super" && t.news && world.simMs - t.lastNewsSimMs >= QUARTER_MS) {
+        const pctChange = ((t.price - t.lastNewsPrice) / t.lastNewsPrice) * 100;
+        t.news.unshift(makeNewsItem(t, pctChange, world.simMs));
+        if (t.news.length > MAX_NEWS) t.news.length = MAX_NEWS;
+        t.lastNewsSimMs = world.simMs;
+        t.lastNewsPrice = t.price;
+      }
     }
     world.lastRealMs = nowMs;
     return world;

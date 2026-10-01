@@ -129,6 +129,34 @@
   .spark-ticker { font-weight: 600; }
   .spark-chg { font-size: 10.5px; }
   .spark-price { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink-muted); margin-top: 2px; }
+  .spark-card { cursor: pointer; }
+  .spark-card:hover { border-color: var(--accent); }
+
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(10,12,16,0.55); z-index: 50;
+    display: flex; align-items: flex-start; justify-content: center; padding: 40px 16px; overflow-y: auto;
+  }
+  .modal-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+    max-width: 640px; width: 100%; padding: 24px 26px; box-shadow: var(--shadow); position: relative;
+  }
+  .modal-close {
+    position: absolute; top: 16px; right: 16px; background: transparent; border: 1px solid var(--border);
+    border-radius: 999px; width: 30px; height: 30px; cursor: pointer; color: var(--ink); font-size: 15px;
+  }
+  .modal-card h3 { font-size: 20px; margin-bottom: 2px; }
+  .modal-tag { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink-faint); }
+  .modal-section-title { font-family: "IBM Plex Mono", monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); margin: 18px 0 8px; }
+  .modal-card p.desc { font-size: 13.5px; line-height: 1.6; color: var(--ink-muted); margin: 8px 0 0; }
+  .profile-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+  .profile-item .label { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; color: var(--ink-faint); text-transform: uppercase; }
+  .profile-item .value { font-family: "IBM Plex Mono", monospace; font-size: 14px; font-weight: 600; margin-top: 2px; }
+  table.quarters { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  table.quarters th { text-align: left; font-family: "IBM Plex Mono", monospace; font-size: 10.5px; text-transform: uppercase; color: var(--ink-faint); padding: 5px 6px; border-bottom: 1px solid var(--border); }
+  table.quarters td { padding: 6px; font-family: "IBM Plex Mono", monospace; border-bottom: 1px solid var(--border); }
+  .news-item { padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .news-item:last-child { border-bottom: none; }
+  .news-item .news-date { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; color: var(--ink-faint); }
 
   footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--ink-faint); font-family: "IBM Plex Mono", monospace; line-height: 1.7; }
 
@@ -171,6 +199,8 @@
     <div>Part of the Stock Market Scanner / Research Analyst project &mdash; see the companion repo's README for methodology.</div>
   </footer>
 </div>
+
+<div class="modal-backdrop" id="companyModal" style="display:none"></div>
 
 <script src="engine.js"></script>
 <script>
@@ -912,7 +942,7 @@ function buildSparklineGrid(world) {
       sparkSvg = `<svg viewBox="0 0 ${W} ${H}" width="100%" height="${H}" preserveAspectRatio="none"><polyline points="${pts}" fill="none" stroke="${color}" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" /></svg>`;
     }
     html += `
-      <div class="spark-card" title="${t.ticker}: ${fmtMoney(t.price)} (${fmtPct(chgPct)})">
+      <div class="spark-card" data-ticker="${t.ticker}" title="${t.ticker}: ${fmtMoney(t.price)} (${fmtPct(chgPct)}) \u2014 click for profile">
         <div class="spark-top"><span class="spark-ticker">${t.ticker}</span><span class="spark-chg ${pnlClass(chgPct)}">${fmtPct(chgPct)}</span></div>
         ${sparkSvg}
         <div class="spark-price">${fmtMoney(t.price)}</div>
@@ -982,7 +1012,76 @@ function renderMarketPanel() {
   });
 
   wireIndexChartHover(world);
+  for (const card of document.querySelectorAll(".spark-card")) {
+    card.addEventListener("click", () => openCompanyModal(card.dataset.ticker));
+  }
 }
+
+/* ---------- company profile modal ---------- */
+
+function fmtQuarterLabel(i, total) {
+  const fromNow = total - i;
+  return fromNow === 1 ? "Most recent quarter" : `${fromNow} quarters ago`;
+}
+
+function openCompanyModal(ticker) {
+  const world = activeWorld();
+  const t = world.tickers[ticker];
+  if (!t) return;
+  const modal = document.getElementById("companyModal");
+
+  if (world.mode === "real") {
+    window.open(`../research/${ticker}/financials.html`, "_blank");
+    return;
+  }
+
+  const p = t.profile;
+  const quartersRows = (t.quarterlyHistory || []).map((q, i, arr) => `
+    <tr>
+      <td>${fmtQuarterLabel(i, arr.length)}</td>
+      <td>${fmtMoney(q.revenue, { compact: true })}</td>
+      <td class="${pnlClass(q.netIncome)}">${fmtMoney(q.netIncome, { compact: true })}</td>
+    </tr>`).join("");
+  const newsRows = (t.news || []).map((n) => `
+    <div class="news-item">
+      <div class="news-date">+${(n.t / MarketEngine.MS_PER_YEAR).toFixed(2)}y into the sim</div>
+      ${n.headline}
+    </div>`).join("");
+
+  modal.innerHTML = `
+    <div class="modal-card">
+      <button class="modal-close" id="modalCloseBtn">&times;</button>
+      <div class="modal-tag">${t.sector} &middot; Super Simulator (fictional)</div>
+      <h3>${t.name} <span class="mono" style="color:var(--ink-faint)">${t.ticker}</span></h3>
+      <p class="desc">${p.description}</p>
+      <div class="modal-section-title">Snapshot</div>
+      <div class="profile-grid">
+        <div class="profile-item"><div class="label">Price</div><div class="value">${fmtMoney(t.price)}</div></div>
+        <div class="profile-item"><div class="label">Market cap</div><div class="value">${fmtMoney(t.price * t.shares, { compact: true })}</div></div>
+        <div class="profile-item"><div class="label">Annual revenue</div><div class="value">${fmtMoney(t.revenue, { compact: true })}</div></div>
+        <div class="profile-item"><div class="label">Net margin</div><div class="value">${t.netMarginPct.toFixed(1)}%</div></div>
+        <div class="profile-item"><div class="label">Founded</div><div class="value">${p.founded}</div></div>
+        <div class="profile-item"><div class="label">Employees</div><div class="value">${p.employees.toLocaleString()}</div></div>
+        <div class="profile-item"><div class="label">Headquarters</div><div class="value">${p.hq}</div></div>
+        <div class="profile-item"><div class="label">CEO</div><div class="value">${p.ceo}</div></div>
+      </div>
+      <div class="modal-section-title">Trailing quarters (backstory)</div>
+      <table class="quarters"><thead><tr><th>Quarter</th><th>Revenue</th><th>Net income</th></tr></thead><tbody>${quartersRows}</tbody></table>
+      <div class="modal-section-title">News</div>
+      ${newsRows || '<p class="empty-note">No news yet &mdash; check back after a sim-quarter or two passes.</p>'}
+    </div>`;
+  modal.style.display = "flex";
+  document.getElementById("modalCloseBtn").addEventListener("click", closeCompanyModal);
+}
+document.getElementById("companyModal").addEventListener("click", (ev) => {
+  if (ev.target.id === "companyModal") closeCompanyModal();
+});
+function closeCompanyModal() {
+  const modal = document.getElementById("companyModal");
+  modal.style.display = "none";
+  modal.innerHTML = "";
+}
+document.addEventListener("keydown", (ev) => { if (ev.key === "Escape") closeCompanyModal(); });
 
 /* ---------- mode nav, tick loop + boot ---------- */
 

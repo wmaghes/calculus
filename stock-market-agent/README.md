@@ -132,7 +132,14 @@ you ever pick a profession mode:
   generated fake tickers, company names, sectors, prices, and financials
   (net income, shares outstanding), regenerable on demand with a "New Fake
   Universe" button. Zero connection to any real company, so you can
-  experiment freely.
+  experiment freely. Each fake company also gets a generated **profile**
+  (business description, HQ, founding year, CEO, employee count), a
+  trailing four-quarter financial backstory, and a **live news feed** —
+  every simulated quarter, a headline is generated reflecting that
+  quarter's actual price move (a blowout quarter, a miss, a steep decline),
+  so the market has a story attached to it instead of just numbers. Click
+  any sparkline card to open its profile; the same click on a Real
+  Companies card opens that ticker's real Company Research page instead.
 - **Speed control** — five presets spanning the full requested range, from a
   day trader's pace up to real-time: Day Trader (1 simulated year per 10 real
   minutes), Swing Trader (1 year/hour), Position Trader (1 year/day),
