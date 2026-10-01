@@ -58,6 +58,7 @@ results as a small static site at `dashboard/research/`.
 |---|---|
 | `research-analyst/fetch_10k.py` | Pulls the latest 10-K's key XBRL facts (revenue, margins, assets, debt) per company from SEC EDGAR's free `data.sec.gov` company-facts API — no API key, but requires a real internet connection and a descriptive `User-Agent` per SEC's fair-access policy. |
 | `research-analyst/fetch_market_ratios.py` | Pulls price, P/E, P/B, P/S, PEG, dividend yield, beta, and 52-week range per ticker via yfinance. |
+| `research-analyst/fetch_yahoo_finance.py` | A deeper Yahoo Finance scraper: annual/quarterly income statement, balance sheet and cash flow history, analyst recommendations and price targets, institutional holders, and recent news headlines per ticker (via `yfinance`, no API key). Writes `data/yahoo/<TICKER>.json` plus a combined `data/yahoo_finance.json`. |
 | `research-analyst/generate_research_pages.py` | Renders `dashboard/research/<TICKER>/financials.html` and `.../market.html` for every company, plus a `dashboard/research/index.html` hub. |
 
 Each company gets **two separate pages**: a Financials page (sourced from its
@@ -71,15 +72,17 @@ Run it (from an environment with normal internet access) with:
 cd research-analyst
 python3 fetch_10k.py
 python3 fetch_market_ratios.py
+python3 fetch_yahoo_finance.py
 python3 generate_research_pages.py
 ```
 
-This sandbox can't reach SEC EDGAR or yfinance either (same network
-restriction as the scanner — see below), so the checked-in
-`dashboard/research/` pages were built from a one-time `assemble_data.py`
-pass using web-search-grounded 10-K and ratio lookups instead. Ask about a
-company's financials or ratios in chat and I'll refresh its two pages the
-same way.
+This sandbox can't reach SEC EDGAR, yfinance, or finance.yahoo.com either
+(same egress restriction as the scanner — see below; verified directly, the
+proxy returns `connect_rejected` for `finance.yahoo.com` and
+`query1.finance.yahoo.com`), so the checked-in `dashboard/research/` pages
+were built from a one-time `assemble_data.py` pass using web-search-grounded
+10-K and ratio lookups instead. Ask about a company's financials or ratios
+in chat and I'll refresh its two pages the same way.
 
 ## Scoring methodology
 
