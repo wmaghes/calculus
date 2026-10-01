@@ -53,7 +53,7 @@
 
   nav.toc {
     display: flex; gap: 8px; flex-wrap: wrap;
-    margin-bottom: 36px;
+    margin-bottom: 24px;
   }
   nav.toc a {
     font-family: "IBM Plex Mono", monospace;
@@ -66,6 +66,45 @@
     background: var(--surface);
   }
   nav.toc a .dot { width: 7px; height: 7px; border-radius: 50%; }
+
+  .search-panel {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px 18px; margin-bottom: 20px;
+  }
+  .search-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .search-row input[type="text"], .search-row select {
+    font-family: "IBM Plex Sans", sans-serif; font-size: 13.5px; padding: 9px 12px;
+    border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--ink);
+  }
+  .search-row input[type="text"] { flex: 1 1 220px; min-width: 180px; }
+  .search-row select { min-width: 160px; }
+  .f100-toggle {
+    font-family: "IBM Plex Mono", monospace; font-size: 12.5px; cursor: pointer;
+    border: 1px solid var(--border); border-radius: 999px; padding: 8px 14px;
+    background: var(--surface-2); color: var(--ink); white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .f100-toggle.active { background: var(--accent); color: #fff; border-color: transparent; font-weight: 600; }
+  .clear-filters-btn {
+    font-family: "IBM Plex Mono", monospace; font-size: 12px; cursor: pointer;
+    border: none; background: transparent; color: var(--ink-faint); text-decoration: underline;
+  }
+  .theme-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .theme-chip {
+    font-family: "IBM Plex Mono", monospace; font-size: 11.5px; cursor: pointer;
+    border: 1px solid var(--border); border-radius: 999px; padding: 5px 11px;
+    background: var(--surface-2); color: var(--ink-muted);
+  }
+  .theme-chip.active { background: var(--nextgen-soft); color: var(--nextgen); border-color: transparent; font-weight: 600; }
+  .filter-summary {
+    font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--ink-faint);
+    margin-top: 10px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  }
+  .f100-badge {
+    font-family: "IBM Plex Mono", monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.02em;
+    color: var(--accent); background: var(--accent-soft); border-radius: 4px; padding: 1px 5px;
+  }
+  .empty-cat { font-size: 13px; color: var(--ink-faint); padding: 14px 4px; }
 
   section.category { margin-bottom: 44px; scroll-margin-top: 16px; }
   .cat-head {
@@ -90,7 +129,11 @@
   }
   .row:hover { background: var(--surface); }
   .id { display: flex; flex-direction: column; gap: 2px; }
-  .id .ticker { font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 15px; }
+  .id .ticker {
+    font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 15px;
+    color: var(--ink); text-decoration: none; width: fit-content;
+  }
+  .id .ticker:hover { color: var(--accent); text-decoration: underline; }
   .id .company { font-size: 11.5px; color: var(--ink-faint); }
   .mid { min-width: 0; }
   .mid .blurb { font-size: 13px; color: var(--ink-muted); line-height: 1.45; margin: 0 0 6px; }
@@ -147,11 +190,23 @@
     <div class="hero-meta">
       <span><b id="totalCount">&mdash;</b> names tracked</span>
       <span>4 desks: Growth &middot; Stability &middot; Next-Gen &middot; Short Interest</span>
+      <span>Search &amp; filter by sector, Fortune 100 status, or growth niche below</span>
     </div>
   </header>
 
   <div class="disclaimer">
-    <strong>How this is built.</strong> Prices, growth, dividend, beta and short-interest figures are pulled from free public sources (search-grounded snapshots today; the checked-in <code>run.py</code> agent uses yfinance + RSS feeds when run with normal internet access). Growth and Next-Gen Growth are ranked by an explicit <strong>conviction tier</strong> (1&ndash;5), not a blended score, because their underlying metrics use incompatible units (revenue growth vs. price momentum vs. analyst upside). Stability and Short Interest use a single consistent metric, so those two get a real normalized 0&ndash;100 score. <strong>This is not financial advice</strong> &mdash; it's a research starting point; verify anything before acting on it.
+    <strong>How this is built.</strong> Prices, growth, dividend, beta and short-interest figures are pulled from free public sources (search-grounded snapshots today; the checked-in <code>run.py</code> agent uses yfinance + RSS feeds when run with normal internet access). Growth and Next-Gen Growth are ranked by an explicit <strong>conviction tier</strong> (1&ndash;5), not a blended score, because their underlying metrics use incompatible units (revenue growth vs. price momentum vs. analyst upside). Stability and Short Interest use a single consistent metric, so those two get a real normalized 0&ndash;100 score. Coverage spans <strong>10 GICS sectors</strong>, <strong id="f100TotalLabel">&mdash;</strong> current <strong>Fortune 100</strong> companies, and <strong>13 next-gen growth niches</strong> (quantum computing, space, gene editing, AI, cybersecurity, EV &amp; battery tech, fintech, clean energy, and more). <strong>This is not financial advice</strong> &mdash; it's a research starting point; verify anything before acting on it.
+  </div>
+
+  <div class="search-panel">
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="Search by ticker, company, sector, or industry&hellip;">
+      <select id="sectorSelect"><option value="">All sectors</option></select>
+      <button class="f100-toggle" id="f100Toggle" type="button">&#9733; Fortune 100 only</button>
+      <button class="clear-filters-btn" id="clearFiltersBtn" type="button">Clear filters</button>
+    </div>
+    <div class="theme-chips" id="themeChips"></div>
+    <div class="filter-summary" id="filterSummary"></div>
   </div>
 
   <nav class="toc">
@@ -214,6 +269,8 @@ function renderRow(item, catKey) {
   if (item.streak) metaBits.push(`Streak: <span class="metric-val">${item.streak}</span>`);
   if (item.theme) metaBits.push(item.theme);
   if (item.flag) metaBits.push(`<span class="metric-val">${item.flag}</span>`);
+  if (item.sector) metaBits.push(item.sector + (item.industry ? ` / ${item.industry}` : ""));
+  if (item.fortune100) metaBits.push(`<span class="f100-badge">FORTUNE 100${item.fortune100Rank ? " #" + item.fortune100Rank : ""}</span>`);
 
   let gaugeHtml = "";
   if (typeof item.score === "number") {
@@ -237,7 +294,7 @@ function renderRow(item, catKey) {
   return `
     <div class="row">
       <div class="id">
-        <div class="ticker">${item.ticker}</div>
+        <a class="ticker" href="research/${item.ticker}/market.html">${item.ticker}</a>
         <div class="company">${item.name || ""}</div>
       </div>
       <div class="mid">
@@ -248,9 +305,12 @@ function renderRow(item, catKey) {
     </div>`;
 }
 
-function renderCategory(catKey, items) {
+function renderCategory(catKey, items, totalInCat) {
   const meta = CATEGORY_META[catKey];
-  const rows = items.map(item => renderRow(item, catKey)).join("");
+  const rows = items.length
+    ? items.map(item => renderRow(item, catKey)).join("")
+    : `<p class="empty-cat">No companies in this desk match the current filters.</p>`;
+  const countLabel = items.length === totalInCat ? `${totalInCat} names` : `${items.length} of ${totalInCat} names`;
   return `
     <section class="category" id="${catKey}">
       <div class="cat-head">
@@ -258,31 +318,108 @@ function renderCategory(catKey, items) {
           <span class="swatch" style="color:${meta.color}">${meta.icon}</span>
           <h2>${meta.title}</h2>
         </div>
-        <span class="count">${items.length} names</span>
+        <span class="count">${countLabel}</span>
       </div>
       <p class="cat-sub">${meta.sub}</p>
       <div class="rows">${rows}</div>
     </section>`;
 }
 
+const CAT_ORDER = ["growth", "stability", "nextgen", "shorts"];
+let DATA = null;
+const FILTER = { text: "", sector: "", f100Only: false, themes: new Set() };
+
+function itemMatchesFilter(item) {
+  if (FILTER.f100Only && !item.fortune100) return false;
+  if (FILTER.sector && item.sector !== FILTER.sector) return false;
+  if (FILTER.themes.size > 0 && !FILTER.themes.has(item.theme)) return false;
+  if (FILTER.text) {
+    const haystack = [item.ticker, item.name, item.sector, item.industry, item.theme]
+      .filter(Boolean).join(" ").toLowerCase();
+    if (!haystack.includes(FILTER.text)) return false;
+  }
+  return true;
+}
+
+function renderAll() {
+  let shown = 0;
+  const html = CAT_ORDER.map(k => {
+    const all = DATA.categories[k] || [];
+    const filtered = all.filter(itemMatchesFilter);
+    shown += filtered.length;
+    return renderCategory(k, filtered, all.length);
+  }).join("");
+  document.getElementById("categories").innerHTML = html;
+
+  const total = CAT_ORDER.reduce((n, k) => n + (DATA.categories[k] || []).length, 0);
+  const anyFilterActive = FILTER.text || FILTER.sector || FILTER.f100Only || FILTER.themes.size > 0;
+  document.getElementById("filterSummary").textContent = anyFilterActive
+    ? `Showing ${shown} of ${total} companies`
+    : "";
+}
+
+function wireFilterBar() {
+  const searchInput = document.getElementById("searchInput");
+  const sectorSelect = document.getElementById("sectorSelect");
+  const f100Toggle = document.getElementById("f100Toggle");
+  const clearBtn = document.getElementById("clearFiltersBtn");
+  const themeChipsEl = document.getElementById("themeChips");
+
+  const sectors = Array.from(new Set(CAT_ORDER.flatMap(k => (DATA.categories[k] || []).map(i => i.sector)).filter(Boolean))).sort();
+  sectorSelect.innerHTML = `<option value="">All sectors</option>` + sectors.map(s => `<option value="${s}">${s}</option>`).join("");
+
+  const themes = Array.from(new Set((DATA.categories.nextgen || []).map(i => i.theme).filter(Boolean))).sort();
+  themeChipsEl.innerHTML = themes.map(t => `<button type="button" class="theme-chip" data-theme="${t}">${t}</button>`).join("");
+
+  const f100Total = CAT_ORDER.reduce((n, k) => n + (DATA.categories[k] || []).filter(i => i.fortune100).length, 0);
+  document.getElementById("f100TotalLabel").textContent = f100Total;
+
+  searchInput.addEventListener("input", () => {
+    FILTER.text = searchInput.value.trim().toLowerCase();
+    renderAll();
+  });
+  sectorSelect.addEventListener("change", () => {
+    FILTER.sector = sectorSelect.value;
+    renderAll();
+  });
+  f100Toggle.addEventListener("click", () => {
+    FILTER.f100Only = !FILTER.f100Only;
+    f100Toggle.classList.toggle("active", FILTER.f100Only);
+    renderAll();
+  });
+  themeChipsEl.addEventListener("click", (ev) => {
+    const btn = ev.target.closest(".theme-chip");
+    if (!btn) return;
+    const t = btn.dataset.theme;
+    if (FILTER.themes.has(t)) FILTER.themes.delete(t); else FILTER.themes.add(t);
+    btn.classList.toggle("active", FILTER.themes.has(t));
+    renderAll();
+  });
+  clearBtn.addEventListener("click", () => {
+    FILTER.text = ""; FILTER.sector = ""; FILTER.f100Only = false; FILTER.themes.clear();
+    searchInput.value = ""; sectorSelect.value = "";
+    f100Toggle.classList.remove("active");
+    themeChipsEl.querySelectorAll(".theme-chip").forEach(b => b.classList.remove("active"));
+    renderAll();
+  });
+}
+
 async function boot() {
-  let data;
   try {
     const res = await fetch("./data.json");
-    data = await res.json();
+    DATA = await res.json();
   } catch (e) {
     document.getElementById("categories").innerHTML =
       `<p style="color:var(--neg)">Could not load data.json \u2014 ${e.message}</p>`;
     return;
   }
 
-  document.getElementById("genTime").textContent = data.generated || "\u2014";
-  const total = Object.values(data.categories).reduce((n, arr) => n + arr.length, 0);
+  document.getElementById("genTime").textContent = DATA.generated || "\u2014";
+  const total = CAT_ORDER.reduce((n, k) => n + (DATA.categories[k] || []).length, 0);
   document.getElementById("totalCount").textContent = total;
 
-  const order = ["growth", "stability", "nextgen", "shorts"];
-  document.getElementById("categories").innerHTML =
-    order.map(k => renderCategory(k, data.categories[k] || [])).join("");
+  wireFilterBar();
+  renderAll();
 }
 
 boot();

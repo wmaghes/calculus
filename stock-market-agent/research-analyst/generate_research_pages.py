@@ -128,7 +128,7 @@ def render_financials(company):
   <header class="hero">
     <div class="eyebrow">Research Analyst &middot; Financials (10-K)</div>
     <h1 class="title">{company['name']} <span class="mono" style="color:var(--ink-faint)">{ticker}</span></h1>
-    <div class="period">Period: {fin.get('period', 'n/a')}</div>
+    <div class="period">Period: {fin.get('period', 'n/a') if fin else 'n/a'}</div>
   </header>
   {body}
   <footer>

@@ -112,6 +112,28 @@ Each company gets **two separate pages**: a Financials page (sourced from its
 `dashboard/data.json` where possible so the two tools stay consistent). The
 main dashboard links to the research hub, and each research page links back.
 
+### Company universe: 100 names across 10 sectors
+
+The watchlist spans 100 tickers across 10 of the 11 GICS sectors, 29 current
+Fortune 100 companies (by revenue), and 13 next-gen growth niches (quantum
+computing, space, gene editing, AI, cybersecurity, EV & battery tech,
+fintech, clean energy, robotics, AI infrastructure, AI healthcare, AI drug
+discovery). The Market Scanner has a search/filter bar (free-text search,
+sector dropdown, a Fortune 100 toggle, and theme chips) so the full universe
+stays navigable instead of just a long scroll.
+
+Of the 100, the original **32** have full SEC-10-K-sourced financials and
+valuation ratios (the Financials tab shows real revenue/margin/balance-sheet
+figures). The other **68** — added later purely for sector/industry
+diversity and Fortune 100 coverage — currently have live market-snapshot
+data only (price, market cap, sector/industry, a key metric, Fortune 100
+rank); their Financials page says so honestly ("No 10-K figures were
+confidently sourced for this company in this pass") rather than fabricating
+numbers. Running `fetch_10k.py` and `fetch_market_ratios.py` for those 68
+(from an environment with real internet access) would fill them in using the
+exact same pipeline as the original 32 — `config.COMPANIES` already lists
+all 100 tickers.
+
 Run it (from an environment with normal internet access) with:
 
 ```bash
@@ -174,7 +196,7 @@ is a simulation, not real trading, before anyone touches the market panel.
 A settings panel at the top of the page controls the market itself, before
 you ever pick a profession mode:
 
-- **Real Companies** — the 32-ticker Scanner watchlist, seeded at each
+- **Real Companies** — the 100-ticker Scanner watchlist, seeded at each
   company's real snapshot price. From there it moves forward using a
   geometric Brownian motion (random-walk) model, with drift/volatility
   *derived* from that same snapshot's own beta, growth and momentum metrics.
