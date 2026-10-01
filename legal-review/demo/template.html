@@ -630,7 +630,7 @@ function viewLegal(){
           h("button",{class:"btn ghost",type:"button",onclick:()=>{ q.status="rejected"; audit("legal reject",""); render(); }},"Reject")))
       : h("p",{class:"note"},"Waiting for an attorney. Switch the role to Attorney to approve it.");
     else if (q.status==="approved") act = h("div",{class:"row"}, h("button",{class:"btn",type:"button",onclick:()=>{ q.status="sent"; audit("legal send","sent once; demo shows recorded fixture responses"); render(); }},"Send approved search"));
-    const leads = q.status==="sent" ? fixtureLeads() : null;
+    const leads = q.status==="sent" ? fixtureLeads(q) : null;
     const [sl, sc] = QSTATUS[q.status];
     return h("article",{class:"sheet"},
       h("div",{class:"sheet-head"}, h("span",{class:"label"},"Outbound search"), h("span",{class:"pill "+sc},sl)),
@@ -649,14 +649,16 @@ function viewLegal(){
       : h("div",{class:"notfound"}, h("b",null,"Reviewers can read leads but cannot propose or approve searches."), h("span",{class:"note"},"Switch the role to Attorney in the top bar to try the approval workflow.")),
     ...cards];
 }
-function fixtureLeads(){
-  const F = D.fixture_leads;
+function fixtureLeads(q){
+  const F = D.fixture_leads, chosen = new Set(q.sources);
+  const status = Object.entries(F.status).filter(([k])=>chosen.has(k)), leads = F.leads.filter(ld=>chosen.has(ld.source));
   return h("div",{style:"display:flex;flex-direction:column;gap:12px;border-top:1px solid var(--line);padding-top:16px"},
     h("div",{class:"callout caution"}, h("b",null,"Demo: no request left your browser."), "These are recorded synthetic fixture responses from the test suite. Every case and section below is fake and marked FIXTURE. In the real app, results come from the live sources and each is re-checked at the source by its ID."),
-    h("ul",{class:"srcstatus"}, Object.entries(F.status).map(([k,v])=>h("li",null, h("span",{class:"pill "+(v.unavailable?"bad":"ok")}, v.unavailable?"Unavailable":`${v.verified} verified`), h("b",null,SRC[k]),
+    status.length ? null : h("p",{class:"note"},"The recorded fixtures cover CourtListener, Ohio Revised Code, Michigan Compiled Laws and eCFR. Choose one of those to see sample leads."),
+    h("ul",{class:"srcstatus"}, status.map(([k,v])=>h("li",null, h("span",{class:"pill "+(v.unavailable?"bad":"ok")}, v.unavailable?"Unavailable":`${v.verified} verified`), h("b",null,SRC[k]),
       v.unavailable ? h("span",{class:"note"},`Could not be retrieved (${v.unavailable}). No results from this source; nothing was filled in.`) : null,
       v.discarded_unverifiable ? h("span",{class:"note"},`${v.discarded_unverifiable} discarded: could not be verified at the source`) : null))),
-    F.leads.map(ld=>h("div",{class:"leadcard"}, h("div",{class:"row",style:"gap:6px"}, h("span",{class:"pill lead"},ld.label), h("span",{class:"pill plain"},ld.jurisdiction), h("span",{class:"pill plain"},ld.kind)),
+    leads.map(ld=>h("div",{class:"leadcard"}, h("div",{class:"row",style:"gap:6px"}, h("span",{class:"pill lead"},ld.label), h("span",{class:"pill plain"},ld.jurisdiction), h("span",{class:"pill plain"},ld.kind)),
       h("h3",null, ld.title), ld.citation?h("div",{class:"cite",style:"color:var(--ink)"},ld.citation):null,
       h("div",{class:"note"}, `${ld.body||""} · ${ld.date||"date not stated by source"} · ${SRC[ld.source]} (id ${ld.source_id})`),
       ld.snippet?h("p",{class:"excerpt"},ld.snippet):null, h("div",{class:"warnline"},ld.citator_notice))));
