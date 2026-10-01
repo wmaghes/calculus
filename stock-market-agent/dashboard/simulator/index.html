@@ -257,6 +257,18 @@ function fmtPct(n, digits) {
 }
 function pnlClass(n) { return n > 0 ? "pos" : (n < 0 ? "neg" : ""); }
 
+// Client/plan names are free text the user types; they get rendered back
+// into innerHTML in several places, so escape before interpolating to
+// prevent a stored self-XSS (e.g. a client named `<img src=x onerror=...>`).
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 function parseMoneyStr(s) {
   if (typeof s !== "string") return null;
   let str = s.trim();
@@ -463,12 +475,12 @@ function renderBanker() {
     const pl = total - c.startCash;
     const plPct = (pl / c.startCash) * 100;
     summaryRows += `<tr>
-      <td class="name-cell">${c.name}</td><td>${c.risk}</td><td>${fmtMoney(c.cash)}</td>
+      <td class="name-cell">${escapeHtml(c.name)}</td><td>${escapeHtml(c.risk)}</td><td>${fmtMoney(c.cash)}</td>
       <td>${fmtMoney(total)}</td><td class="${pnlClass(pl)}">${fmtMoney(pl)}</td><td class="${pnlClass(plPct)}">${fmtPct(plPct)}</td>
     </tr>`;
   }
 
-  const clientOpts = clients.map(([id, c]) => `<option value="${id}" ${id === selectedId ? "selected" : ""}>${c.name}</option>`).join("");
+  const clientOpts = clients.map(([id, c]) => `<option value="${id}" ${id === selectedId ? "selected" : ""}>${escapeHtml(c.name)}</option>`).join("");
   const selected = clients.find(([id]) => id === selectedId);
 
   el.innerHTML = `
@@ -480,7 +492,7 @@ function renderBanker() {
     <div class="card">
       <h3>Add Client</h3>
       <div class="field-row">
-        <div class="field"><label>Client name</label><input type="text" id="pb-name" placeholder="e.g. Jane Doe"></div>
+        <div class="field"><label>Client name</label><input type="text" id="pb-name" placeholder="e.g. Jane Doe" maxlength="60"></div>
         <div class="field"><label>Risk profile</label><select id="pb-risk">
           <option>Conservative</option><option selected>Balanced</option><option>Growth</option><option>Aggressive</option>
         </select></div>
@@ -501,8 +513,8 @@ function renderBanker() {
       </div>
       <div id="pb-msg" class="empty-note"></div>
     </div>
-    <div class="card"><h3>Holdings &mdash; ${selected[1].name}</h3>${renderHoldingsTable(selected[1])}</div>
-    <div class="card"><h3>Trade History &mdash; ${selected[1].name}</h3>${renderHistory(selected[1])}</div>
+    <div class="card"><h3>Holdings &mdash; ${escapeHtml(selected[1].name)}</h3>${renderHoldingsTable(selected[1])}</div>
+    <div class="card"><h3>Trade History &mdash; ${escapeHtml(selected[1].name)}</h3>${renderHistory(selected[1])}</div>
     ` : ""}`;
 
   document.getElementById("pb-add").addEventListener("click", () => {
@@ -616,12 +628,12 @@ function renderAdvisor() {
     const fv = projectedFutureValue(plan.lumpSum, plan.monthly, plan.years, RISK_TIERS[plan.risk].assumedReturn);
     const actual = plan.funded ? portfolioTotalValue(plan) : null;
     rows += `<tr>
-      <td class="name-cell">${plan.name}</td><td>${plan.risk}</td><td>${fmtMoney(plan.target)}</td><td>${plan.years}y</td>
+      <td class="name-cell">${escapeHtml(plan.name)}</td><td>${escapeHtml(plan.risk)}</td><td>${fmtMoney(plan.target)}</td><td>${plan.years}y</td>
       <td>${fmtMoney(fv, { compact: true })}</td><td>${actual != null ? fmtMoney(actual, { compact: true }) : "not funded"}</td>
     </tr>`;
   }
 
-  const planOpts = plans.map(([id, p]) => `<option value="${id}" ${id === selectedId ? "selected" : ""}>${p.name}</option>`).join("");
+  const planOpts = plans.map(([id, p]) => `<option value="${id}" ${id === selectedId ? "selected" : ""}>${escapeHtml(p.name)}</option>`).join("");
   const selected = plans.find(([id]) => id === selectedId);
 
   el.innerHTML = `
@@ -633,7 +645,7 @@ function renderAdvisor() {
     <div class="card">
       <h3>New Plan</h3>
       <div class="field-row">
-        <div class="field"><label>Client / goal name</label><input type="text" id="adv-name" placeholder="e.g. Retirement \u2014 the Smiths"></div>
+        <div class="field"><label>Client / goal name</label><input type="text" id="adv-name" placeholder="e.g. Retirement \u2014 the Smiths" maxlength="60"></div>
         <div class="field"><label>Target ($)</label><input type="number" id="adv-target" min="1000" step="1000" value="250000"></div>
         <div class="field"><label>Horizon (years)</label><input type="number" id="adv-years" min="1" max="50" value="15"></div>
         <div class="field"><label>Risk tolerance</label><select id="adv-risk">

@@ -244,6 +244,48 @@ where one exists — a deep link straight into the matching Simulator mode (the
 Simulator reads a `?mode=` query param on load, e.g.
 `simulator/index.html?mode=ib`).
 
+## Security & scope
+
+This is a static site: no backend, no server-side code, no database, no
+accounts, and no payments. The only outbound network call the live pages
+make is to Google Fonts; everything else is a relative `fetch()` to a JSON
+file checked into this repo. All simulator/trading/plan state lives in the
+visitor's own browser `localStorage` and is never transmitted anywhere, so
+there is no shared state between visitors and nothing server-side to
+compromise.
+
+That said, it's worth being concrete about what was actually checked rather
+than asserting "it's safe":
+
+- **Secrets**: the repo was grep-audited for API keys, tokens, and
+  passwords — none exist. The only credential-adjacent string is
+  `SEC_USER_AGENT`, a descriptive contact string SEC's fair-access policy
+  asks for, not a secret.
+- **XSS**: the only free-text user inputs anywhere on the site are the
+  Simulator's Private Banker client name and Financial Advisor plan name
+  fields, both of which get rendered back into the page in several places
+  (tables, headings, `<option>` labels). These are escaped through a shared
+  `escapeHtml()` helper before interpolation — verified with an actual
+  `<img src=x onerror=...>` payload in a Playwright test confirming it
+  renders as inert text rather than executing. Every other piece of dynamic
+  content on the site (company names, tickers, financials) comes from this
+  repo's own generated JSON, not visitor input.
+- **No `eval`/`Function` constructor, no shell-outs**: grep-audited across
+  both the JS and the Python research scripts; none exist.
+- **Dependency surface**: zero npm packages, zero CDN JS libraries — every
+  script is hand-written vanilla JS checked into this repo. The only
+  external resource is the Google Fonts stylesheet link.
+- **Runaway-math guardrail**: the Simulator's market engine caps a single
+  "catch up" time jump at 5 simulated years (`MAX_CATCHUP_YEARS` in
+  `engine.js`), so a tab left open for a long real-world stretch at a fast
+  game speed can't extrapolate the random-walk model into nonsense
+  (near-zero or astronomical prices) — see that file's comments for why.
+
+If you ever extend this past a static site (add a real backend, accounts,
+or payments), that changes the threat model entirely and would need its own
+review — none of the above claims extend to code you add beyond what's in
+this repo today.
+
 ## Not financial advice
 
 This tool surfaces public data and a transparent scoring formula for research
