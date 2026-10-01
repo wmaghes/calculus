@@ -40,12 +40,18 @@ assets files. A tiny inline script at the top of every page's `<head>`
 applies a saved theme choice before first paint to avoid a flash of the
 wrong theme.
 
-Both themes follow a "polished stone" idea — a glossy, veined base rather
-than a flat fill: glass-morphic cards (`backdrop-filter` blur + an inset
-highlight line) sit over a fixed ambient background of soft multi-point
-gradients plus a faint SVG-noise grain layer (`body::before`, blended with
-`mix-blend-mode: overlay`), so content has real depth without a texture
-image. Hero titles (`h1.title`) use a gradient text fill
+Both themes follow a "polished stone" idea — a genuinely veined base, not a
+flat fill. The body background is an SVG `feTurbulence` field, desaturated
+and reshaped per-channel with `feComponentTransfer`'s `table` function so
+only a narrow band of the noise's range becomes visible: in light mode that
+band stays near-white and is applied with `background-blend-mode: multiply`
+(soft grey veins on a Carrara-white base); in dark mode the same turbulence
+source is mapped to a dim cyan band applied with `screen` (smoky pale-blue
+veins on obsidian). Both tile at 800px with soft multi-point ambient
+gradients layered underneath for color wash. Glass-morphic cards
+(`backdrop-filter` blur + an inset highlight line) float over that
+texture so the veining stays visible through them. Hero titles (`h1.title`)
+use a gradient text fill
 (`background-clip: text`) from ink to the accent color. Entrance motion
 (`fadeUp`) is deliberately scoped to `.role-card` and `section.category`
 only — classes the Simulator's per-tick re-render never touches — so
