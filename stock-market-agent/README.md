@@ -161,11 +161,15 @@ scan.
 ## Stock Market Simulator
 
 `dashboard/simulator/index.html` is a paper-trading sandbox that teaches how
-investing looks from four different professional seats, running against a
+investing looks from six different professional seats, running against a
 **live, speed-controlled market engine** (`dashboard/simulator/engine.js`)
 instead of a static price snapshot.
 
-### Market engine: two universes, any speed
+A one-time disclaimer gate (shown once per browser, acknowledged via a
+button, never dismissible by clicking outside it) makes explicit that this
+is a simulation, not real trading, before anyone touches the market panel.
+
+### Market engine: two universes, one of them real-time only
 
 A settings panel at the top of the page controls the market itself, before
 you ever pick a profession mode:
@@ -176,7 +180,10 @@ you ever pick a profession mode:
   *derived* from that same snapshot's own beta, growth and momentum metrics.
   **This is a disclosed model, not a replay of actual historical prices** —
   this sandbox has no historical time-series data to replay, and the UI says
-  so directly.
+  so directly. **Real Companies mode is locked to a single Real-Time speed**
+  (no fast-forward option, no speed selector shown at all) so it can never
+  look like a prediction tool or a backtest running against real securities;
+  the lock is enforced both when switching into the mode and on page load.
 - **Super Simulator** — an entirely fictional universe: procedurally
   generated fake tickers, company names, sectors, prices, and financials
   (net income, shares outstanding), regenerable on demand with a "New Fake
@@ -189,13 +196,13 @@ you ever pick a profession mode:
   so the market has a story attached to it instead of just numbers. Click
   any sparkline card to open its profile; the same click on a Real
   Companies card opens that ticker's real Company Research page instead.
-- **Speed control** — five presets spanning the full requested range, from a
-  day trader's pace up to real-time: Day Trader (1 simulated year per 10 real
-  minutes), Swing Trader (1 year/hour), Position Trader (1 year/day),
-  Long-Term Investor (1 year/week), and Real-Time (1 year/year). Pause/Resume
-  freezes the clock exactly (no catch-up jump on resume), and a single
-  catch-up step (capped at 5 simulated years) handles time that passed while
-  the tab was closed.
+- **Speed control (Super Simulator only)** — five presets spanning the full
+  requested range, from a day trader's pace up to real-time: Day Trader (1
+  simulated year per 10 real minutes), Swing Trader (1 year/hour), Position
+  Trader (1 year/day), Long-Term Investor (1 year/week), and Real-Time (1
+  year/year). Pause/Resume freezes the clock exactly (no catch-up jump on
+  resume), and a single catch-up step (capped at 5 simulated years) handles
+  time that passed while the tab was closed.
 - An **index chart** (equal-weighted across the active universe, hover for a
   crosshair + tooltip) and a **sparkline grid** per ticker visualize price
   action live as the engine ticks (see `references/` under the `dataviz`
@@ -204,28 +211,41 @@ you ever pick a profession mode:
 Each of the two universes ("real" and "super") carries its own fully separate
 trading state — switching modes never mixes a fake holding with a real one.
 
-### The four profession modes
+### The six profession modes
 
 - **Individual Investor** — a single account: buy/sell active-universe
   tickers, track cash, holdings and P/L.
-- **Private Banker** — manage several named clients at once, each with their
-  own risk profile, starting AUM, holdings and P/L, plus a book-of-business
-  summary table across all of them.
-- **Financial Advisor** — build goal-based plans (target $, time horizon,
-  risk tolerance) that map to a suggested asset mix, project a future value
-  with a simple compounding estimate, then "fund" the plan to actually invest
-  the lump sum and add simulated monthly contributions against live prices.
 - **Investment Banker** — a simplified M&A accretion/dilution calculator:
   pick an acquirer and target with usable net income, market cap and price
   data (from either universe), set premium/consideration/synergy/financing
   assumptions, and see pro-forma EPS accretion or dilution against the
   *live* ticking price.
+- **Private Banker** — manage several named clients at once, each with their
+  own risk profile, starting AUM, holdings and P/L, plus a book-of-business
+  summary table across all of them.
+- **Financial Planner** — build goal-based plans (target $, time horizon,
+  risk tolerance) that map to a suggested asset mix, project a future value
+  with a simple compounding estimate, then "fund" the plan to actually invest
+  the lump sum and add simulated monthly contributions against live prices.
+- **Options & Futures Trader** — buy calls/puts priced with a real
+  Black-Scholes model (using each ticker's own simulated annualized
+  volatility and a flat 4% risk-free rate; 1 contract = 100 shares, four
+  expiry choices from 1 month to 1 year, auto-settled at expiry), and open
+  leveraged futures positions (flat 10% initial margin, continuously
+  marked to market, auto-liquidated if losses erode the position to 50% of
+  posted margin — a simplified margin call).
+- **Short Selling / Buy-Side Investor** — run a long/short equity book:
+  regular buy/sell on the long side, plus borrow-and-sell-now short
+  positions (flat 50% initial margin, a flat 4%/year borrow fee accrued
+  continuously in sim time) on the short side, with the Market Scanner's
+  own "Shorts" category surfaced as candidate ideas.
 
-All state (cash, holdings, clients, plans, and the engine's own price
-history) is stored in the browser's `localStorage` — nothing is sent
-anywhere, and it resets if site data is cleared. None of this is real
-trading or real investment advice — it's a teaching tool for how each role
-thinks about risk, return and time horizon.
+All state (cash, holdings, shorts, options, futures, clients, plans, and the
+engine's own price history) is stored in the browser's `localStorage` —
+nothing is sent anywhere, and it resets if site data is cleared. None of
+this is real trading or real investment, legal or tax advice — it's a
+teaching tool for how each role thinks about risk, return, leverage and time
+horizon.
 
 ## Career Guide
 
