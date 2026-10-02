@@ -146,7 +146,7 @@
     <div class="eyebrow">Career guide</div>
     <h1 class="title">How Each Role Uses the Stock Market</h1>
     <div class="sub">The same ticker means something different depending on who's looking at it. This is a plain-language tour of thirteen finance careers and how each actually relates to public companies and their stock &mdash; what they do day to day, the different flavors the job comes in, how they're paid, the math they lean on, and which parts of that you can practice in the Simulator. Each entry below is collapsed by default &mdash; click any row to open it up.</div>
-    <div class="sub">Open a role and you'll be greeted by a personal mentor for it &mdash; a different name, home region and voice every time, assigned the moment you open that card. Hit <b>Read aloud</b> and your browser's own text-to-speech will narrate their walkthrough, in whichever of its installed voices best matches that mentor's accent (which voices are available depends entirely on your own browser/device &mdash; there's no server or AI model behind this, just your system's built-in speech engine). Not feeling the mentor you got? Hit <b>New mentor</b> for a different one.</div>
+    <div class="sub">Open a role and you'll be greeted by a personal mentor for it &mdash; a different name and home region every time, assigned the moment you open that card. Hit <b>Read aloud</b> and your browser's own text-to-speech narrates their walkthrough in a voice from that mentor's own country &mdash; never a different accent passed off as theirs. If this browser/device doesn't have a voice for that country installed, <b>Read aloud</b> is disabled for that mentor rather than faking it, and it'll tell you so; <b>New mentor</b> favors mentors who can actually speak on your setup when any are available. Voice coverage depends entirely on your own browser/OS (Chrome and Edge on Windows/macOS carry the widest range) &mdash; there's no server or AI voice model behind this, just your system's own built-in speech engine.</div>
   </header>
 
   <nav class="toc" id="tocNav">
@@ -1026,34 +1026,45 @@ document.getElementById("risk-calc").addEventListener("click", () => {
 
 /* ---------- mentor system ----------
  * Every career card gets a personal "mentor" persona, drawn from a pool of
- * names/regions/accents spanning several continents, with an abstract
- * HUD-style avatar (no human face/skin illustration, deliberately -- the
- * diversity here lives in the name, region and voice, not a cartoon face).
- * "Accent" is honest, not guaranteed: it's a best-effort match against
- * whatever voices the visitor's own browser happens to have installed,
- * using the Web Speech API entirely client-side (no server, no AI model).
+ * names/regions spanning several continents, with an abstract HUD-style
+ * avatar (no human face/skin illustration, deliberately -- the diversity
+ * here lives in the name, region and voice, not a cartoon face).
+ *
+ * ACCENT AUTHENTICITY IS HARD-ENFORCED, NOT BEST-EFFORT:
+ * each persona has exactly one real BCP-47 locale code for their own
+ * country (voiceLang), and pickVoiceFor() below ONLY ever returns a voice
+ * whose lang code matches that exact country -- never a neighboring
+ * country's accent, never a generic/default voice passed off as theirs.
+ * If this browser/device has no voice installed for a persona's own
+ * country, that mentor's "Read aloud" is disabled with an explicit note
+ * instead of speaking in the wrong accent under their name. "New mentor"
+ * also prefers personas whose accent is actually available on this
+ * device, so rerolling tends to land you on someone who can genuinely
+ * speak. This is entirely client-side (the Web Speech API, no server, no
+ * AI voice model) -- voice availability depends on the visitor's own
+ * browser/OS, which this site has no way to change or guarantee.
  */
 const MENTOR_PERSONAS = [
-  { name: "Amara Chukwu", gender: "woman", flag: "🇳🇬", region: "Lagos, Nigeria", accent: "Nigerian English", voiceLangs: ["en-NG", "en-GB", "en"] },
-  { name: "Olusegun Adebayo", gender: "man", flag: "🇳🇬", region: "Abuja, Nigeria", accent: "Nigerian English", voiceLangs: ["en-NG", "en-GB", "en"] },
-  { name: "Priya Raman", gender: "woman", flag: "🇮🇳", region: "Bengaluru, India", accent: "Indian English", voiceLangs: ["en-IN", "en"] },
-  { name: "Arjun Mehta", gender: "man", flag: "🇮🇳", region: "Mumbai, India", accent: "Indian English", voiceLangs: ["en-IN", "en"] },
-  { name: "James Whitfield", gender: "man", flag: "🇬🇧", region: "London, UK", accent: "British English", voiceLangs: ["en-GB", "en"] },
-  { name: "Tom Ashworth", gender: "man", flag: "🇬🇧", region: "Leeds, UK", accent: "British English", voiceLangs: ["en-GB", "en"] },
-  { name: "Freya Lindqvist", gender: "woman", flag: "🇬🇧", region: "Edinburgh, UK", accent: "Scottish English", voiceLangs: ["en-GB", "en"] },
-  { name: "Liam O'Connor", gender: "man", flag: "🇮🇪", region: "Dublin, Ireland", accent: "Irish English", voiceLangs: ["en-IE", "en-GB", "en"] },
-  { name: "Sipho Dlamini", gender: "man", flag: "🇿🇦", region: "Johannesburg, South Africa", accent: "South African English", voiceLangs: ["en-ZA", "en-GB", "en"] },
-  { name: "Zanele Nkosi", gender: "woman", flag: "🇿🇦", region: "Cape Town, South Africa", accent: "South African English", voiceLangs: ["en-ZA", "en-GB", "en"] },
-  { name: "Wanjiru Kamau", gender: "woman", flag: "🇰🇪", region: "Nairobi, Kenya", accent: "Kenyan English", voiceLangs: ["en-KE", "en-GB", "en"] },
-  { name: "Grace Osei", gender: "woman", flag: "🇬🇭", region: "Accra, Ghana", accent: "Ghanaian English", voiceLangs: ["en-GH", "en-NG", "en-GB", "en"] },
-  { name: "Isla Thompson", gender: "woman", flag: "🇦🇺", region: "Sydney, Australia", accent: "Australian English", voiceLangs: ["en-AU", "en"] },
-  { name: "Mitchell Carter", gender: "man", flag: "🇳🇿", region: "Auckland, New Zealand", accent: "New Zealand English", voiceLangs: ["en-NZ", "en-AU", "en"] },
-  { name: "Carlos Mendoza", gender: "man", flag: "🇵🇭", region: "Manila, Philippines", accent: "Filipino English", voiceLangs: ["en-PH", "en"] },
-  { name: "Luna Santos", gender: "woman", flag: "🇸🇬", region: "Singapore", accent: "Singaporean English", voiceLangs: ["en-SG", "en"] },
-  { name: "Chloe Nguyen", gender: "woman", flag: "🇭🇰", region: "Hong Kong", accent: "Hong Kong English", voiceLangs: ["en-HK", "en-GB", "en"] },
-  { name: "Ethan Brooks", gender: "man", flag: "🇺🇸", region: "Chicago, USA", accent: "American English (Midwest)", voiceLangs: ["en-US", "en"] },
-  { name: "Maya Rodriguez", gender: "woman", flag: "🇺🇸", region: "Phoenix, USA", accent: "American English (Southwest)", voiceLangs: ["en-US", "en"] },
-  { name: "Noah Bergstrom", gender: "man", flag: "🇨🇦", region: "Toronto, Canada", accent: "Canadian English", voiceLangs: ["en-CA", "en-US", "en"] },
+  { name: "Amara Chukwu", gender: "woman", flag: "🇳🇬", region: "Lagos, Nigeria", accent: "Nigerian English", voiceLang: "en-NG" },
+  { name: "Olusegun Adebayo", gender: "man", flag: "🇳🇬", region: "Abuja, Nigeria", accent: "Nigerian English", voiceLang: "en-NG" },
+  { name: "Priya Raman", gender: "woman", flag: "🇮🇳", region: "Bengaluru, India", accent: "Indian English", voiceLang: "en-IN" },
+  { name: "Arjun Mehta", gender: "man", flag: "🇮🇳", region: "Mumbai, India", accent: "Indian English", voiceLang: "en-IN" },
+  { name: "James Whitfield", gender: "man", flag: "🇬🇧", region: "London, UK", accent: "British English", voiceLang: "en-GB" },
+  { name: "Tom Ashworth", gender: "man", flag: "🇬🇧", region: "Leeds, UK", accent: "British English", voiceLang: "en-GB" },
+  { name: "Freya Lindqvist", gender: "woman", flag: "🇬🇧", region: "Edinburgh, UK", accent: "British English", voiceLang: "en-GB" },
+  { name: "Liam O'Connor", gender: "man", flag: "🇮🇪", region: "Dublin, Ireland", accent: "Irish English", voiceLang: "en-IE" },
+  { name: "Sipho Dlamini", gender: "man", flag: "🇿🇦", region: "Johannesburg, South Africa", accent: "South African English", voiceLang: "en-ZA" },
+  { name: "Zanele Nkosi", gender: "woman", flag: "🇿🇦", region: "Cape Town, South Africa", accent: "South African English", voiceLang: "en-ZA" },
+  { name: "Wanjiru Kamau", gender: "woman", flag: "🇰🇪", region: "Nairobi, Kenya", accent: "Kenyan English", voiceLang: "en-KE" },
+  { name: "Grace Osei", gender: "woman", flag: "🇬🇭", region: "Accra, Ghana", accent: "Ghanaian English", voiceLang: "en-GH" },
+  { name: "Isla Thompson", gender: "woman", flag: "🇦🇺", region: "Sydney, Australia", accent: "Australian English", voiceLang: "en-AU" },
+  { name: "Mitchell Carter", gender: "man", flag: "🇳🇿", region: "Auckland, New Zealand", accent: "New Zealand English", voiceLang: "en-NZ" },
+  { name: "Carlos Mendoza", gender: "man", flag: "🇵🇭", region: "Manila, Philippines", accent: "Filipino English", voiceLang: "en-PH" },
+  { name: "Luna Santos", gender: "woman", flag: "🇸🇬", region: "Singapore", accent: "Singaporean English", voiceLang: "en-SG" },
+  { name: "Chloe Nguyen", gender: "woman", flag: "🇭🇰", region: "Hong Kong", accent: "Hong Kong English", voiceLang: "en-HK" },
+  { name: "Ethan Brooks", gender: "man", flag: "🇺🇸", region: "Chicago, USA", accent: "American English", voiceLang: "en-US" },
+  { name: "Maya Rodriguez", gender: "woman", flag: "🇺🇸", region: "Phoenix, USA", accent: "American English", voiceLang: "en-US" },
+  { name: "Noah Bergstrom", gender: "man", flag: "🇨🇦", region: "Toronto, Canada", accent: "Canadian English", voiceLang: "en-CA" },
 ];
 const MENTOR_INTRO_TEMPLATES = [
   "Hi, I'm {name}. I've spent my career as a {role}, and I'm here to walk you through what that actually looks like.",
@@ -1097,22 +1108,45 @@ function mentorAvatarSVG(color) {
   </svg>`;
 }
 
-let MENTOR_SPEAKING_BTN = null;
-function stopMentorSpeech() {
-  try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
-  if (MENTOR_SPEAKING_BTN) { MENTOR_SPEAKING_BTN.classList.remove("speaking"); MENTOR_SPEAKING_BTN.innerHTML = "&#128264; Read aloud"; }
-  MENTOR_SPEAKING_BTN = null;
-}
+const MENTOR_PANEL_REGISTRY = new Map(); // roleId -> { persona, speakBtn, noteEl }
+let MENTOR_SPEAKING_ENTRY = null;
 
+// Exact-country match only: voice.lang must start with this persona's own
+// locale code. No generic "en" catch-all, no borrowing a neighboring
+// country's voice -- if nothing matches, the caller gets null and the UI
+// disables narration for that mentor instead of faking it.
 function pickVoiceFor(persona) {
   if (!("speechSynthesis" in window)) return null;
   const voices = window.speechSynthesis.getVoices() || [];
-  if (voices.length === 0) return null;
-  for (const lang of persona.voiceLangs) {
-    const match = voices.find((v) => v.lang && v.lang.toLowerCase().startsWith(lang.toLowerCase()));
-    if (match) return match;
+  const target = persona.voiceLang.toLowerCase();
+  return voices.find((v) => v.lang && v.lang.toLowerCase().startsWith(target)) || null;
+}
+
+function refreshSpeakButtonState(entry) {
+  const { persona, speakBtn, noteEl } = entry;
+  if (MENTOR_SPEAKING_ENTRY === entry) return; // don't fight an in-progress utterance's own UI
+  if (!("speechSynthesis" in window)) {
+    speakBtn.disabled = true;
+    speakBtn.innerHTML = "&#128264; Read aloud";
+    speakBtn.title = "Spoken narration isn't supported in this browser.";
+    noteEl.textContent = "This browser doesn't support spoken narration (the Web Speech API) -- the text below still works fine.";
+    return;
   }
-  return voices.find((v) => v.lang && v.lang.toLowerCase().startsWith("en")) || voices[0];
+  const voice = pickVoiceFor(persona);
+  if (voice) {
+    speakBtn.disabled = false;
+    speakBtn.innerHTML = "&#128264; Read aloud";
+    speakBtn.title = "";
+    noteEl.textContent = "";
+  } else {
+    speakBtn.disabled = true;
+    speakBtn.innerHTML = "&#128263; No " + persona.accent + " voice here";
+    speakBtn.title = "This browser/device has no " + persona.accent + " voice installed.";
+    noteEl.textContent = "This browser/device doesn't have a " + persona.accent + " voice installed, so spoken narration is turned off for " + persona.name + " rather than playing a different accent under their name. Chrome or Edge on Windows/macOS tend to carry the widest range of accents -- or just read the text below.";
+  }
+}
+function refreshAllMentorButtons() {
+  MENTOR_PANEL_REGISTRY.forEach(refreshSpeakButtonState);
 }
 
 function buildMentorScript(detailsEl, persona, roleTitle) {
@@ -1130,30 +1164,45 @@ function buildMentorScript(detailsEl, persona, roleTitle) {
   return parts.join(" ");
 }
 
-function speakAsMentor(detailsEl, persona, roleTitle, btn, noteEl) {
+function stopMentorSpeech() {
+  try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
+  const entry = MENTOR_SPEAKING_ENTRY;
+  MENTOR_SPEAKING_ENTRY = null;
+  if (entry) { entry.speakBtn.classList.remove("speaking"); refreshSpeakButtonState(entry); }
+}
+
+function speakAsMentor(detailsEl, roleTitle, entry) {
   if (!("speechSynthesis" in window)) return;
-  if (MENTOR_SPEAKING_BTN === btn) { stopMentorSpeech(); return; }
+  if (MENTOR_SPEAKING_ENTRY === entry) { stopMentorSpeech(); return; }
   stopMentorSpeech();
-  const text = buildMentorScript(detailsEl, persona, roleTitle);
+  const voice = pickVoiceFor(entry.persona);
+  if (!voice) { refreshSpeakButtonState(entry); return; } // voice vanished between render and click; stay honest, don't speak
+  const text = buildMentorScript(detailsEl, entry.persona, roleTitle);
   const utter = new SpeechSynthesisUtterance(text);
-  const voice = pickVoiceFor(persona);
-  if (voice) {
-    utter.voice = voice;
-    noteEl.textContent = "Voice: " + voice.name + " (" + voice.lang + ")";
-  } else {
-    noteEl.textContent = "No " + persona.accent + " voice found on this device -- using your browser's default voice instead.";
-  }
+  utter.voice = voice;
+  entry.noteEl.textContent = "Voice: " + voice.name + " (" + voice.lang + ") \u2014 genuinely " + entry.persona.accent + ".";
   utter.onend = () => stopMentorSpeech();
   utter.onerror = () => stopMentorSpeech();
-  MENTOR_SPEAKING_BTN = btn;
-  btn.classList.add("speaking");
-  btn.innerHTML = "&#9632; Stop";
+  MENTOR_SPEAKING_ENTRY = entry;
+  entry.speakBtn.classList.add("speaking");
+  entry.speakBtn.innerHTML = "&#9632; Stop";
   window.speechSynthesis.speak(utter);
+}
+
+// Prefers a persona whose accent voice actually exists on this
+// browser/device, so "New mentor" tends to land on someone who can
+// genuinely speak rather than someone who'll just show "no voice here".
+function pickRerollPersonaIdx(currentIdx) {
+  const others = MENTOR_PERSONAS.map((p, i) => i).filter((i) => i !== currentIdx);
+  const voiced = others.filter((i) => pickVoiceFor(MENTOR_PERSONAS[i]));
+  const pool = voiced.length > 0 ? voiced : others;
+  return pool.length > 0 ? pool[Math.floor(Math.random() * pool.length)] : currentIdx;
 }
 
 function renderMentorPanel(detailsEl, roleId, colorIdx) {
   const existing = detailsEl.querySelector(".mentor-panel");
   if (existing) existing.remove();
+  MENTOR_PANEL_REGISTRY.delete(roleId);
 
   const roleTitle = detailsEl.querySelector(".role-head h2").textContent.trim();
   const assignment = loadMentorAssignment(roleId);
@@ -1182,20 +1231,14 @@ function renderMentorPanel(detailsEl, roleId, colorIdx) {
   const body = detailsEl.querySelector(".role-body");
   body.insertBefore(panel, body.firstChild);
 
-  const speakBtn = panel.querySelector(".speak-btn");
-  const noteEl = panel.querySelector(".mentor-voice-note");
-  if (!("speechSynthesis" in window)) {
-    speakBtn.disabled = true;
-    speakBtn.title = "Spoken narration isn't supported in this browser.";
-  } else {
-    speakBtn.addEventListener("click", () => speakAsMentor(detailsEl, persona, roleTitle, speakBtn, noteEl));
-  }
+  const entry = { persona, speakBtn: panel.querySelector(".speak-btn"), noteEl: panel.querySelector(".mentor-voice-note") };
+  MENTOR_PANEL_REGISTRY.set(roleId, entry);
+  entry.speakBtn.addEventListener("click", () => speakAsMentor(detailsEl, roleTitle, entry));
+  refreshSpeakButtonState(entry);
 
   panel.querySelector(".reroll-btn").addEventListener("click", () => {
     stopMentorSpeech();
-    let nextPersonaIdx;
-    do { nextPersonaIdx = Math.floor(Math.random() * MENTOR_PERSONAS.length); }
-    while (nextPersonaIdx === assignment.personaIdx && MENTOR_PERSONAS.length > 1);
+    const nextPersonaIdx = pickRerollPersonaIdx(assignment.personaIdx);
     const nextTemplateIdx = Math.floor(Math.random() * MENTOR_INTRO_TEMPLATES.length);
     saveMentorAssignment(roleId, { personaIdx: nextPersonaIdx, templateIdx: nextTemplateIdx });
     renderMentorPanel(detailsEl, roleId, colorIdx);
@@ -1213,7 +1256,10 @@ function initMentors() {
   });
   if ("speechSynthesis" in window) {
     window.speechSynthesis.getVoices();
-    window.speechSynthesis.onvoiceschanged = () => {};
+    window.speechSynthesis.onvoiceschanged = refreshAllMentorButtons;
+    // Some browsers populate the voice list a tick after first paint
+    // without reliably firing voiceschanged; this catches that case too.
+    setTimeout(refreshAllMentorButtons, 350);
   }
 }
 window.addEventListener("beforeunload", stopMentorSpeech);
