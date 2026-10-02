@@ -119,16 +119,26 @@
     border-radius: 12px; padding: 14px 16px; margin: 14px 0 20px;
   }
   .mentor-avatar { flex: none; width: 64px; height: 64px; }
-  .mentor-avatar svg { display: block; overflow: visible; }
-  .char-bob { transform-origin: 32px 32px; animation: char-float 3s ease-in-out infinite; }
-  @keyframes char-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
-  .char-eye { transform-box: fill-box; transform-origin: center; animation: char-blink 4.5s ease-in-out infinite; }
-  @keyframes char-blink { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(0.12); } }
-  .char-mouth { transform-box: fill-box; transform-origin: center; }
-  .char-mouth.speaking { animation: char-talk 0.32s ease-in-out infinite alternate; }
-  @keyframes char-talk { from { transform: scaleX(1); } to { transform: scaleX(0.45); } }
+  .mentor-avatar svg {
+    display: block; overflow: visible;
+    filter: drop-shadow(0 0 5px var(--mc));
+    filter: drop-shadow(0 0 5px color-mix(in srgb, var(--mc) 65%, transparent));
+  }
+  .holo-ring-outer { transform-box: fill-box; transform-origin: center; animation: holo-spin 11s linear infinite; }
+  .holo-ring-mid { transform-box: fill-box; transform-origin: center; animation: holo-spin-rev 8s linear infinite; }
+  @keyframes holo-spin { to { transform: rotate(360deg); } }
+  @keyframes holo-spin-rev { to { transform: rotate(-360deg); } }
+  .holo-core { transform-box: fill-box; transform-origin: center; animation: holo-pulse 2.8s ease-in-out infinite; }
+  @keyframes holo-pulse { 0%, 100% { opacity: 0.16; transform: scale(1); } 50% { opacity: 0.32; transform: scale(1.1); } }
+  .holo-bar { transform-box: fill-box; transform-origin: center; }
+  .holo-bars.speaking .holo-bar-1 { animation: holo-wave-a 0.42s ease-in-out infinite alternate; }
+  .holo-bars.speaking .holo-bar-2 { animation: holo-wave-b 0.34s ease-in-out infinite alternate; }
+  .holo-bars.speaking .holo-bar-3 { animation: holo-wave-c 0.5s ease-in-out infinite alternate; }
+  @keyframes holo-wave-a { from { transform: scaleY(0.5); } to { transform: scaleY(1.5); } }
+  @keyframes holo-wave-b { from { transform: scaleY(0.8); } to { transform: scaleY(1.9); } }
+  @keyframes holo-wave-c { from { transform: scaleY(0.55); } to { transform: scaleY(1.35); } }
   @media (prefers-reduced-motion: reduce) {
-    .char-bob, .char-eye, .char-mouth.speaking { animation: none; }
+    .holo-ring-outer, .holo-ring-mid, .holo-core, .holo-bars.speaking .holo-bar { animation: none; }
   }
   .mentor-info { flex: 1; min-width: 0; }
   .mentor-tag { font-family: "IBM Plex Mono", monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mc); margin-bottom: 3px; }
@@ -186,7 +196,7 @@
     <div class="eyebrow">Career guide</div>
     <h1 class="title">How Each Role Uses the Stock Market</h1>
     <div class="sub">The same ticker means something different depending on who's looking at it. This is a plain-language tour of thirteen finance careers and how each actually relates to public companies and their stock &mdash; what they do day to day, the different flavors the job comes in, how they're paid, the math they lean on, and which parts of that you can practice in the Simulator. Each entry below is collapsed by default &mdash; click any row to open it up.</div>
-    <div class="sub">Open a role and you'll meet <b>Max</b> or <b>Nova</b> &mdash; two animated AI-tutor characters who walk you through it, each with a "Switch tutor" button to swap between them. Pick a narration language below (ten of the world's most common) and both the spoken narration and the written subtitle switch with it; <b>Read aloud</b> only ever uses a voice confirmed to match the tutor's gender <em>and</em> your chosen language, disabling itself honestly (never faking it) when this browser/device doesn't have one installed. Each tutor's "Ask a question" box can also answer absolutely anything, live, if you add your own API key below &mdash; without one it falls back to a quick keyword match against this page's own English text.</div>
+    <div class="sub">Open a role and a small holographic tutor spins up beside it &mdash; <b>Max</b> or <b>Nova</b>, swappable any time with "Switch tutor." Pick a narration language below (ten of the world's most common) and both the spoken narration and the written subtitle follow along. <b>Read aloud</b> only ever speaks in a voice confirmed to match the tutor's gender <em>and</em> your chosen language, going quiet rather than faking it when this browser/device doesn't have one installed. Each tutor can also field literally any question, live, once you add your own API key below &mdash; no key, and it falls back to a quick match against this page's own English text instead.</div>
   </header>
 
   <div class="ai-settings-panel">
@@ -1292,18 +1302,23 @@ function escapeMentorHtml(str) {
     .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 }
 
+// A JARVIS-style holographic projection, not an illustrated face -- two
+// counter-rotating rings, a soft pulsing core, and a small three-bar
+// waveform at the center that comes alive with ".speaking" instead of an
+// animated mouth. Deliberately identical for both tutors (gender lives in
+// the name/voice, not the avatar) -- an actual holographic AI construct
+// has no face to animate, which is also what reads as JARVIS rather than
+// an uncanny cartoon.
 function charAvatarSVG(gender, color) {
-  const topBit = gender === "female"
-    ? `<path d="M32 14 L24 7 L32 10 L40 7 Z" fill="${color}"></path><circle cx="32" cy="10" r="2.5" fill="${color}"></circle>`
-    : `<line x1="32" y1="14" x2="32" y2="6" stroke="${color}" stroke-width="2" stroke-linecap="round"></line><circle cx="32" cy="5" r="3" fill="${color}"></circle>`;
   return `<svg viewBox="0 0 64 64" width="64" height="64">
-    <g class="char-bob">
-      ${topBit}
-      <circle cx="32" cy="34" r="20" fill="${color}" opacity="0.16"></circle>
-      <circle cx="32" cy="34" r="20" fill="none" stroke="${color}" stroke-width="2"></circle>
-      <circle class="char-eye" cx="25" cy="32" r="3" fill="${color}"></circle>
-      <circle class="char-eye" cx="39" cy="32" r="3" fill="${color}"></circle>
-      <rect class="char-mouth" x="24" y="42" width="16" height="3" rx="1.5" fill="${color}"></rect>
+    <circle class="holo-ring-outer" cx="32" cy="32" r="27" fill="none" stroke="${color}" stroke-width="1.2" stroke-dasharray="2.5 5" opacity="0.55"></circle>
+    <circle class="holo-ring-mid" cx="32" cy="32" r="20" fill="none" stroke="${color}" stroke-width="1.5" stroke-dasharray="9 4" opacity="0.75"></circle>
+    <circle class="holo-core" cx="32" cy="32" r="12" fill="${color}" opacity="0.16"></circle>
+    <circle cx="32" cy="32" r="12" fill="none" stroke="${color}" stroke-width="1" opacity="0.6"></circle>
+    <g class="holo-bars">
+      <rect class="holo-bar holo-bar-1" x="27.2" y="28" width="2.2" height="8" rx="1.1" fill="${color}"></rect>
+      <rect class="holo-bar holo-bar-2" x="30.9" y="25" width="2.2" height="14" rx="1.1" fill="${color}"></rect>
+      <rect class="holo-bar holo-bar-3" x="34.6" y="28" width="2.2" height="8" rx="1.1" fill="${color}"></rect>
     </g>
   </svg>`;
 }
@@ -1350,8 +1365,22 @@ function voiceGenderGuess(voiceName, langCode) {
   if (/\bmale\b|\bman\b/.test(name)) return "male";
   return null;
 }
+// Modern "Online/Natural/Neural/Multilingual"-tagged voices sound
+// dramatically more natural than old robotic SAPI-era voices (think
+// Microsoft David/Zira) -- when more than one confirmed match exists,
+// prefer the better-sounding one instead of just taking the first.
+function voiceQualityScore(name) {
+  const n = name.toLowerCase();
+  let score = 0;
+  if (n.includes("neural")) score += 3;
+  if (n.includes("online")) score += 2;
+  if (n.includes("natural")) score += 2;
+  if (n.includes("multilingual")) score += 1;
+  return score;
+}
 // Exact-language AND confirmed-gender match only -- same honesty rule as
-// the earlier country-based system, just keyed by language now.
+// the earlier country-based system, just keyed by language now -- and
+// among confirmed matches, the best-sounding voice available.
 function pickVoiceFor(langCode, gender) {
   if (!("speechSynthesis" in window)) return null;
   const voices = window.speechSynthesis.getVoices() || [];
@@ -1359,7 +1388,10 @@ function pickVoiceFor(langCode, gender) {
   if (!db) return null;
   const prefixes = db.prefixes.map((p) => p.toLowerCase());
   const langMatches = voices.filter((v) => v.lang && prefixes.some((p) => v.lang.toLowerCase().startsWith(p)));
-  return langMatches.find((v) => voiceGenderGuess(v.name, langCode) === gender) || null;
+  const confirmed = langMatches.filter((v) => voiceGenderGuess(v.name, langCode) === gender);
+  if (confirmed.length === 0) return null;
+  confirmed.sort((a, b) => voiceQualityScore(b.name) - voiceQualityScore(a.name));
+  return confirmed[0];
 }
 
 const MENTOR_PANEL_REGISTRY = new Map(); // roleId -> { tutor, speakBtn, noteEl, subtitleEl }
@@ -1398,7 +1430,7 @@ function stopMentorSpeech() {
   MENTOR_SPEAKING_ENTRY = null;
   if (entry) {
     entry.speakBtn.classList.remove("speaking");
-    if (entry.charMouthEl) entry.charMouthEl.classList.remove("speaking");
+    if (entry.waveEl) entry.waveEl.classList.remove("speaking");
     refreshSpeakButtonState(entry);
   }
 }
@@ -1415,7 +1447,7 @@ function speakText(entry, text) {
   utter.onerror = () => stopMentorSpeech();
   MENTOR_SPEAKING_ENTRY = entry;
   entry.speakBtn.classList.add("speaking");
-  if (entry.charMouthEl) entry.charMouthEl.classList.add("speaking");
+  if (entry.waveEl) entry.waveEl.classList.add("speaking");
   entry.speakBtn.innerHTML = "&#9632; Stop";
   window.speechSynthesis.speak(utter);
 }
@@ -1548,9 +1580,9 @@ function renderMentorPanel(detailsEl, roleId, colorIdx) {
   panel.innerHTML = `
     <div class="mentor-avatar">${charAvatarSVG(tutor.gender, color)}</div>
     <div class="mentor-info">
-      <div class="mentor-tag">Career tutor</div>
+      <div class="mentor-tag">Holographic tutor</div>
       <div class="mentor-name">${tutor.name}</div>
-      <div class="mentor-sub">${tutor.gender === "male" ? "Male" : "Female"} tutor &middot; narrating in ${escapeMentorHtml(langMeta.label)} (${escapeMentorHtml(langMeta.native)})</div>
+      <div class="mentor-sub">${tutor.gender === "male" ? "Male" : "Female"} tutor &middot; narrating in ${escapeMentorHtml(langMeta.label)}${langMeta.native !== langMeta.label ? " (" + escapeMentorHtml(langMeta.native) + ")" : ""}</div>
       <p class="mentor-subtitle" lang="${GLOBAL_LANG}">${escapeMentorHtml(subtitleText)}</p>
       <div class="mentor-actions">
         <button type="button" class="mentor-btn speak-btn">&#128264; Read aloud</button>
@@ -1572,7 +1604,7 @@ function renderMentorPanel(detailsEl, roleId, colorIdx) {
 
   const entry = {
     tutor, speakBtn: panel.querySelector(".speak-btn"), noteEl: panel.querySelector(".mentor-voice-note"),
-    subtitleEl: panel.querySelector(".mentor-subtitle"), charMouthEl: panel.querySelector(".char-mouth"),
+    subtitleEl: panel.querySelector(".mentor-subtitle"), waveEl: panel.querySelector(".holo-bars"),
   };
   MENTOR_PANEL_REGISTRY.set(roleId, entry);
   entry.speakBtn.addEventListener("click", () => speakText(entry, subtitleText));
