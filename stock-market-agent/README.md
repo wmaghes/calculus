@@ -358,60 +358,55 @@ valuation, Value-at-Risk), and — where one exists — a deep link straight
 into the matching Simulator mode (the Simulator reads a `?mode=` query param
 on load, e.g. `simulator/index.html?mode=ib`).
 
-### Career mentors: a persona, a real-accent voice, and a Q&A box
+### Career tutors: two animated characters, 10 languages, optional real AI
 
-Opening any of the 13 role cards assigns a **career mentor** persona — a
-name, home region/flag and English accent drawn from a pool spanning
-India, the UK, Scotland, Ireland, South Africa, Australia, the US and
-Canada — shown via an abstract animated HUD avatar rather than an
-illustrated face (the diversity lives in the name/region/voice, not a
-drawn likeness). "New mentor" rerolls to a different persona, remembered
-per role in `localStorage`.
+Opening any of the 13 role cards introduces **Max** or **Nova** — two
+animated AI-tutor characters (a simple HUD-style face, not an illustrated
+human likeness, built as inline SVG with a floating bob, blinking eyes and
+a talking mouth) who walk you through that role. "Switch tutor" toggles
+between them per role, remembered in `localStorage`. A global **narration
+&amp; subtitle language** selector near the top of the page (ten of the
+world's most common languages: English, Spanish, Mandarin Chinese, Hindi,
+Arabic, French, Portuguese, Russian, Japanese, German) controls every
+tutor at once — the written subtitle under each tutor's name, and what
+"Read aloud" speaks, both switch with it. All ten languages' narration is
+a genuinely separate, AI-translated two-sentence summary per role (what
+the role does with the market, and how it's paid), not a live machine
+translation call — translated once in advance and checked into the page,
+clearly labeled as AI-generated rather than professionally localized.
 
-**Voice authenticity is hard-enforced, not best-effort.** "Read aloud"
-narrates the role using the browser's own Web Speech API, and will only
-ever use a voice that's a *confirmed* match on both country **and**
-gender — checked against `CULTURAL_VOICE_DB`, a catalog of real, named
-voices (sourced from the community-maintained
-[web-speech-recommended-voices / readium/speech](https://github.com/readium/speech)
-project, not guessed) documenting which actual voice names Edge, Chrome,
-Android, ChromeOS and macOS/Apple ship per region and gender. The persona
-pool is deliberately limited to accents with at least one voice that ships
-*outside* Edge's online-only neural catalog — a native macOS/Safari voice,
-a classic Chrome "Google ... English" voice, or a legacy (non-"Online")
-Windows voice — so narration actually works on ordinary Chrome/Safari/
-Firefox setups, not just Edge; an earlier version included several accents
-(Nigerian, Kenyan, Tanzanian, Hong Kong, Filipino, Singaporean, New
-Zealand English) whose only real voice anywhere was Edge-exclusive, so
-most visitors just saw "no voice here" on them constantly. If a mentor's
-confirmed voice still isn't installed on this particular visitor's device,
-"Read aloud" is disabled with an explicit on-screen reason instead of
-narrating in a different accent or the wrong gender under that mentor's
-name — this applies to the main narration and to spoken answers alike.
-On top of that, both the very first persona assigned to a role *and*
-"New mentor" prefer a persona who can actually speak on the current
-device once the real voice list is known (voices often load a tick after
-first paint), auto-upgrading any role still on its untouched default —
-never overriding a role you've already explicitly rerolled. Web Speech
-has no notion of ethnicity, only language/region plus a vendor-assigned
-voice name, so "cultural authenticity" beyond country + gender means
-preferring, among equally-valid confirmed options, a voice whose own name
-is commonly associated with a mentor's heritage where one genuinely
-exists in the catalog (e.g. "Ana" among en-US female voices for a
-Latina-coded persona) — never a fabricated "ethnic accent" the API can't
-actually produce.
+**Voice authenticity is still hard-enforced, not best-effort**, now keyed
+by language instead of country. "Read aloud" only ever uses a voice that's
+a *confirmed* match on both the selected language **and** the tutor's
+gender — checked against `LANG_VOICE_DB`, a catalog of real, named voices
+per language (sourced the same way as before, from the
+community-maintained [readium/speech](https://github.com/readium/speech)
+project's per-language voice lists, not guessed) covering all ten
+languages. If this browser/device has no confirmed voice for the current
+language + tutor combination, "Read aloud" disables itself with an
+explicit on-screen reason instead of narrating in the wrong gender or a
+different language under that tutor's name — this applies to the main
+narration and to spoken Q&A answers alike. Web Speech has no notion of
+ethnicity at all, only language and a vendor-assigned voice name, which is
+exactly why this version moved from "guess an accent for someone's
+heritage" to "you choose the language outright" — a real, unambiguous
+voice property instead of an approximation of one.
 
-**Ask your mentor a question.** Each mentor panel has a text box: type a
-question and it's matched, by keyword overlap against the role's own
-written content (the same paragraphs, variants and tool chips already on
-the page, plus a small synonym layer so "how much money can I make" finds
-the pay section even though that text says "paid"/"fee"), and answered
-with whichever piece actually covers it — read aloud, if you like, through
-the same accent/gender-confirmed voice system. This is **not a general
-AI** — there's no model and no server call, just the static page searching
-its own text — and it says so plainly ("I don't see anything about that in
-what's written here...") when a question isn't covered by the role's
-content rather than guessing.
+**Ask your tutor literally anything, with your own API key.** A settings
+panel above the role list lets you paste your own Anthropic API key
+(`console.anthropic.com`) — stored *only* in your browser's
+`localStorage`, used *only* to call `api.anthropic.com` directly from your
+browser (via Anthropic's documented direct-browser-access header), and
+billed to your own account; it's never sent to this site or its author.
+With a key saved, every tutor's "Ask a question" box sends your question
+straight to Claude with a system prompt keeping it in character for that
+role, answering in whatever language you've selected, and can speak the
+answer back using the same confirmed-voice system. Without a key — or if
+the live call fails (network, CORS, a bad key) — it falls back to the
+original approach: matching your question, by keyword overlap plus a
+small synonym layer, against that role's own written content (English
+only), clearly labeled as a quick keyword match rather than a real answer,
+and saying plainly when nothing on the page covers it.
 
 The second part, **Types of Securities**, explains every instrument type
 traded anywhere on the site in plain language: Common Stock (including the
@@ -424,13 +419,20 @@ Futures, and Short Selling — each cross-linked to where it shows up live
 This is a static site: no backend, no server-side code, no database, no
 real (server-side) accounts, and no payments. The Simulator's player codes
 (see above) are a local `localStorage` save-game namespace, not a backend
-account system. The only outbound network calls the live pages make are to
-Google Fonts; everything else is either a relative `fetch()` to a JSON file
-checked into this repo, or the browser's own built-in Web Speech API for
-the Career Guide's mentor voices. All simulator/trading/plan/mentor state
-lives in the visitor's own browser `localStorage` and is never transmitted
-anywhere, so there is no shared state between visitors and nothing
-server-side to compromise.
+account system. The only outbound network calls the live pages make on
+their own are to Google Fonts; everything else is either a relative
+`fetch()` to a JSON file checked into this repo, or the browser's own
+built-in Web Speech API for the Career Guide's tutor voices. The one
+*opt-in* exception is the Career Guide's AI Q&A: if a visitor pastes their
+own Anthropic API key into the settings panel, their browser calls
+`api.anthropic.com` directly (never through this site) to answer "Ask a
+question" boxes — that key lives only in that visitor's own
+`localStorage`, is never read or transmitted by this repo's own code
+except as the one request header Anthropic's API requires, and the
+feature is fully optional (everything works without ever entering a key).
+All simulator/trading/plan/tutor/API-key state lives in the visitor's own
+browser `localStorage` and is never transmitted anywhere else, so there is
+no shared state between visitors and nothing server-side to compromise.
 
 That said, it's worth being concrete about what was actually checked rather
 than asserting "it's safe":
@@ -439,15 +441,17 @@ than asserting "it's safe":
   passwords — none exist. The only credential-adjacent string is
   `SEC_USER_AGENT`, a descriptive contact string SEC's fair-access policy
   asks for, not a secret.
-- **XSS**: the only free-text user inputs anywhere on the site are the
-  Simulator's Private Banker client name and Financial Advisor plan name
-  fields, both of which get rendered back into the page in several places
-  (tables, headings, `<option>` labels). These are escaped through a shared
-  `escapeHtml()` helper before interpolation — verified with an actual
-  `<img src=x onerror=...>` payload in a Playwright test confirming it
-  renders as inert text rather than executing. Every other piece of dynamic
-  content on the site (company names, tickers, financials) comes from this
-  repo's own generated JSON, not visitor input.
+- **XSS**: the free-text user inputs on the site are the Simulator's
+  Private Banker client name and Financial Advisor plan name fields, and
+  the Career Guide's "Ask a question" box (plus whatever text comes back
+  from Anthropic's API when a visitor's own key is in use) — all of which
+  get rendered back into the page. These are escaped through a shared
+  `escapeHtml()` helper (`escapeMentorHtml()` on the Guide page) before
+  interpolation — verified with an actual `<img src=x onerror=...>`
+  payload in a Playwright test confirming it renders as inert text rather
+  than executing. Every other piece of dynamic content on the site
+  (company names, tickers, financials) comes from this repo's own
+  generated JSON, not visitor input.
 - **No `eval`/`Function` constructor, no shell-outs**: grep-audited across
   both the JS and the Python research scripts; none exist.
 - **Dependency surface**: zero npm packages, zero CDN JS libraries — every
