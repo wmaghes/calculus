@@ -223,6 +223,40 @@ A one-time disclaimer gate (shown once per browser, acknowledged via a
 button, never dismissible by clicking outside it) makes explicit that this
 is a simulation, not real trading, before anyone touches the market panel.
 
+### Player codes: a game save, not a real account
+
+The Simulator is a game you can walk away from and resume. On every visit it
+first asks for a **player code** — any code the player picks themselves (3-30
+letters/numbers/spaces/dashes, not case-sensitive) — before anything else
+loads:
+
+- **New code** → a brand-new save starts under it immediately (starting cash
+  in every mode, no holdings, no history).
+- **Same code again, any time later** → the browser remembers the last code
+  used and offers a one-click "Continue as `<CODE>`" button; typing the code
+  back in manually works identically even without that shortcut.
+- **"Restart this code instead"** (shown on the gate once a code with an
+  existing save is typed, and again as a button in-page next to "Switch /
+  log out") wipes that one code's save back to a fresh start, after a
+  confirmation — the code itself is kept, only its progress is erased.
+
+This is **not a real account system** — there is no server or database
+anywhere in this project, by design (see "Make it downloadable outside of
+Claude" below). A player code is just a `localStorage` namespace: every
+mode's state (cash, holdings, shorts, options, futures, clients, plans, and
+the market engine's own price history) is stored under
+`simState.v2::<CODE>` / `simEngine.v1::<CODE>` in that one browser. The same
+code resumes the same game **in that same browser, on that same computer,
+indefinitely** — closing the tab, shutting down, or coming back next week all
+work — but it has no way to reach a different browser or a different
+computer, and clearing that browser's site data erases every code's save
+permanently. A registry of codes seen on this browser is kept in
+`simProfiles.v1` purely so the "Continue as" shortcut and a future
+my-profiles list have something to read; the one-time migration path for
+anyone updating from the pre-player-code version of this project (back when
+all state was one unkeyed global save) is a "claim it with a code" prompt
+that appears on the gate only when that old, un-keyed save is still present.
+
 ### Market engine: two universes, one of them real-time only
 
 A settings panel at the top of the page controls the market itself, before
@@ -295,11 +329,11 @@ trading state — switching modes never mixes a fake holding with a real one.
   own "Shorts" category surfaced as candidate ideas.
 
 All state (cash, holdings, shorts, options, futures, clients, plans, and the
-engine's own price history) is stored in the browser's `localStorage` —
-nothing is sent anywhere, and it resets if site data is cleared. None of
-this is real trading or real investment, legal or tax advice — it's a
-teaching tool for how each role thinks about risk, return, leverage and time
-horizon.
+engine's own price history) is stored in the browser's `localStorage`, keyed
+to the player code chosen at startup (see above) — nothing is sent anywhere,
+and it resets if site data is cleared. None of this is real trading or real
+investment, legal or tax advice — it's a teaching tool for how each role
+thinks about risk, return, leverage and time horizon.
 
 ## Career Guide
 
