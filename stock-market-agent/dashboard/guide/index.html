@@ -23,23 +23,8 @@
     <div class="eyebrow">Career guide</div>
     <h1 class="title">How Each Role Uses the Stock Market</h1>
     <div class="sub">The same ticker means something different depending on who's looking at it. This is a plain-language tour of thirteen finance careers and how each actually relates to public companies and their stock &mdash; what they do day to day, the different flavors the job comes in, how they're paid, the math they lean on, and which parts of that you can practice in the Simulator. Pick a role below to open its own page.</div>
-    <div class="sub">Open a role and a small holographic tutor spins up beside it &mdash; <b>Max</b> or <b>Nova</b>, swappable any time with "Switch tutor." Pick a narration language below (ten of the world's most common) and both the spoken narration and the written subtitle follow along on every role page. <b>Read aloud</b> only ever speaks in a voice confirmed to match the tutor's gender <em>and</em> your chosen language, going quiet rather than faking it when this browser/device doesn't have one installed. Each tutor can also field literally any question, live, once you add your own API key below &mdash; no key, and it falls back to a quick match against that role's own text instead.</div>
+    <div class="sub">Open a role and a small holographic tutor spins up beside it &mdash; <b>Max</b> or <b>Nova</b>, swappable any time with "Switch tutor." Pick a narration language below (ten of the world's most common) and both the spoken narration and the written subtitle follow along on every role page. <b>Read aloud</b> only ever speaks in a voice confirmed to match the tutor's gender <em>and</em> your chosen language, going quiet rather than faking it when this browser/device doesn't have one installed. Each tutor is a built-in expert on its own role &mdash; ask about comp by level, hours and time off, or how the job's technical side actually works (how an LBO or a DCF works, how market-making spreads are captured, and more) and it answers from what it already knows, with no account, no API key, and no data leaving your browser.</div>
   </header>
-
-  <div class="ai-settings-panel">
-    <div class="ai-settings-head"><h3>Ask Max or Nova anything (optional)</h3></div>
-    <p class="ai-settings-note">Each role page's "Ask a question" box can give a real AI answer to <em>anything</em> you ask, powered by Claude -- not just what's written on that page. That needs your own Anthropic API key: paste it below and it's saved only in this browser's local storage, used only to call Anthropic directly from your browser, and billed to your own account -- it never passes through this site or anyone else. This is saved once here and applies on every role page. No key? The Ask boxes still work, just as a quick keyword match against that page's own text, in English only. Get a key at <span class="mono">console.anthropic.com</span> if you want one.</p>
-    <div class="ai-settings-row">
-      <input type="password" id="aiKeyInput" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
-      <button type="button" class="mentor-btn" id="aiKeySaveBtn">Save key</button>
-      <button type="button" class="mentor-btn" id="aiKeyClearBtn">Remove key</button>
-    </div>
-    <div class="ai-settings-row">
-      <label for="aiModelInput" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-faint)">Model (advanced, optional):</label>
-      <input type="text" id="aiModelInput" placeholder="claude-haiku-4-5-20251001" style="min-width:220px">
-    </div>
-    <div class="ai-settings-status" id="aiKeyStatus"></div>
-  </div>
 
   <div class="lang-select-row">
     <label for="globalLangSelect">Narration &amp; subtitle language</label>
@@ -112,7 +97,6 @@ async function renderRoleGrid() {
 }
 
 wireLangSelector(null);
-wireAISettings();
 renderSecurityGrid();
 renderRoleGrid();
 </script>

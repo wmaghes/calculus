@@ -337,82 +337,81 @@ thinks about risk, return, leverage and time horizon.
 
 ## Career Guide
 
-`dashboard/guide/index.html` is a fourth tab, in two parts. Every entry in
-both parts is a collapsed-by-default `<details>` accordion (click to open;
-an "Expand all" / "Collapse all" toggle and a table-of-contents sit above
-each part, and the two parts' accordions are independent of each other).
+`dashboard/guide/` is a fourth tab: a landing page (`index.html`) with two
+card grids linking out to their own pages — `roles/<id>.html` for thirteen
+finance careers, `securities/<id>.html` for seven instrument types — all
+rendered from `dashboard/guide/data/careers.json` plus a shared
+`tutor.js`/`calculators.js`/`role-page.js`, instead of one long accordion
+page.
 
-The first part is a plain-language reference on how thirteen finance careers
-actually relate to the stock market — Individual Investor, Financial
-Advisor, Private Banker/Wealth Manager, Investment Banker, Trader (sales &
-trading / prop / day trader), Quantitative Analyst, Private Equity, Venture
-Capitalist, Hedge Fund/Portfolio Manager, Chief Financial Officer (the
-issuer side), Market Maker/Broker-Dealer, Equity Research Analyst, and Risk
-Manager/Compliance Officer. Each entry covers what the role does day to day,
-how the role varies in practice (e.g. fee-only vs. commission advisor,
-sell-side vs. buy-side trader), how people in it are actually paid, the
-concepts/tools it relies on, a small interactive calculator so the math
-isn't just words (compound growth, position sizing, IRR/MOIC, ownership
-dilution, Sharpe ratio, buyback EPS impact, bid-ask spread economics, comps
-valuation, Value-at-Risk), and — where one exists — a deep link straight
-into the matching Simulator mode (the Simulator reads a `?mode=` query param
-on load, e.g. `simulator/index.html?mode=ib`).
+The thirteen roles — Individual Investor, Financial Advisor, Private
+Banker/Wealth Manager, Investment Banker, Trader (sales & trading / prop /
+day trader), Quantitative Analyst, Private Equity, Venture Capitalist,
+Hedge Fund/Portfolio Manager, Chief Financial Officer (the issuer side),
+Market Maker/Broker-Dealer, Equity Research Analyst, and Risk
+Manager/Compliance Officer — each get a page covering what the role does
+day to day, how the role varies in practice (e.g. fee-only vs. commission
+advisor, sell-side vs. buy-side trader), how people in it are actually
+paid, the concepts/tools it relies on, a small interactive calculator so
+the math isn't just words (compound growth, position sizing, IRR/MOIC,
+ownership dilution, Sharpe ratio, buyback EPS impact, bid-ask spread
+economics, comps valuation, Value-at-Risk), and — where one exists — a
+deep link straight into the matching Simulator mode (the Simulator reads a
+`?mode=` query param on load, e.g. `simulator/index.html?mode=ib`).
 
-### Career tutors: two animated characters, 10 languages, optional real AI
+### Career tutors: two animated characters, 10 languages, built-in expertise
 
-Opening any of the 13 role cards introduces **Max** or **Nova** — two
-animated AI-tutor characters (a simple HUD-style face, not an illustrated
-human likeness, built as inline SVG with a floating bob, blinking eyes and
-a talking mouth) who walk you through that role. "Switch tutor" toggles
-between them per role, remembered in `localStorage`. A global **narration
-&amp; subtitle language** selector near the top of the page (ten of the
-world's most common languages: English, Spanish, Mandarin Chinese, Hindi,
-Arabic, French, Portuguese, Russian, Japanese, German) controls every
-tutor at once — the written subtitle under each tutor's name, and what
-"Read aloud" speaks, both switch with it. All ten languages' narration is
-a genuinely separate, AI-translated two-sentence summary per role (what
-the role does with the market, and how it's paid), not a live machine
-translation call — translated once in advance and checked into the page,
-clearly labeled as AI-generated rather than professionally localized.
+Opening any role page introduces **Max** or **Nova** — two JARVIS-style
+holographic tutor characters (counter-rotating rings and a pulsing core
+around a small waveform, not an illustrated face) who walk you through
+that role. "Switch tutor" toggles between them per role, remembered in
+`localStorage`. A global **narration &amp; subtitle language** selector on
+the landing page (ten of the world's most common languages: English,
+Spanish, Mandarin Chinese, Hindi, Arabic, French, Portuguese, Russian,
+Japanese, German) controls every tutor at once, on every role/security
+page, without re-selecting it — the written subtitle under each tutor's
+name, and what "Read aloud" speaks, both switch with it. All ten
+languages' narration is a genuinely separate, AI-translated two-sentence
+summary per role (what the role does with the market, and how it's paid),
+not a live machine translation call — translated once in advance and
+checked into `careers.json`, clearly labeled as AI-generated rather than
+professionally localized.
 
-**Voice authenticity is still hard-enforced, not best-effort**, now keyed
-by language instead of country. "Read aloud" only ever uses a voice that's
-a *confirmed* match on both the selected language **and** the tutor's
+**Voice authenticity is still hard-enforced, not best-effort**, keyed by
+language instead of country. "Read aloud" only ever uses a voice that's a
+*confirmed* match on both the selected language **and** the tutor's
 gender — checked against `LANG_VOICE_DB`, a catalog of real, named voices
-per language (sourced the same way as before, from the
-community-maintained [readium/speech](https://github.com/readium/speech)
-project's per-language voice lists, not guessed) covering all ten
-languages. If this browser/device has no confirmed voice for the current
-language + tutor combination, "Read aloud" disables itself with an
-explicit on-screen reason instead of narrating in the wrong gender or a
-different language under that tutor's name — this applies to the main
-narration and to spoken Q&A answers alike. Web Speech has no notion of
-ethnicity at all, only language and a vendor-assigned voice name, which is
-exactly why this version moved from "guess an accent for someone's
-heritage" to "you choose the language outright" — a real, unambiguous
-voice property instead of an approximation of one.
+per language (sourced from the community-maintained
+[readium/speech](https://github.com/readium/speech) project's per-language
+voice lists, not guessed) covering all ten languages. If this
+browser/device has no confirmed voice for the current language + tutor
+combination, "Read aloud" disables itself with an explicit on-screen
+reason instead of narrating in the wrong gender or a different language
+under that tutor's name — this applies to the main narration and to
+spoken Q&A answers alike.
 
-**Ask your tutor literally anything, with your own API key.** A settings
-panel above the role list lets you paste your own Anthropic API key
-(`console.anthropic.com`) — stored *only* in your browser's
-`localStorage`, used *only* to call `api.anthropic.com` directly from your
-browser (via Anthropic's documented direct-browser-access header), and
-billed to your own account; it's never sent to this site or its author.
-With a key saved, every tutor's "Ask a question" box sends your question
-straight to Claude with a system prompt keeping it in character for that
-role, answering in whatever language you've selected, and can speak the
-answer back using the same confirmed-voice system. Without a key — or if
-the live call fails (network, CORS, a bad key) — it falls back to the
-original approach: matching your question, by keyword overlap plus a
-small synonym layer, against that role's own written content (English
-only), clearly labeled as a quick keyword match rather than a real answer,
-and saying plainly when nothing on the page covers it.
+**Ask your tutor anything about the role — no account, no API key.** Every
+tutor answers "Ask a question" entirely from a knowledge base baked into
+`careers.json` for that one role: the same day-to-day/pay/skills content
+shown on the page, plus a deeper `expertiseQA` set per role — illustrative
+comp ranges by level (e.g. analyst vs. MD bonus for an Investment Banker),
+hours and lifestyle by level, and the core technical mechanics of the job
+explained plainly (how an LBO or a DCF actually works, how a market
+maker's spread or a long/short book's net exposure works, and more). A
+question is matched, by keyword overlap plus a small synonym layer,
+against that whole knowledge base (English only) and answered in
+character; it says plainly when nothing in that role's knowledge base
+covers the question instead of guessing. There is no live model call of
+any kind here — nothing leaves the visitor's browser, and every claim
+beyond what was already in the page's own prose is hedged as illustrative
+and logged in `docs/CONTENT_TODO.md` for human verification.
 
-The second part, **Types of Securities**, explains every instrument type
-traded anywhere on the site in plain language: Common Stock (including the
-mega/large/mid/small-cap risk gradient), ETFs, Mutual Funds, Bonds, Options,
-Futures, and Short Selling — each cross-linked to where it shows up live
-(the Funds & Company Size Scanner desk, or the matching Simulator mode).
+**Types of Securities** (`securities/<id>.html`) explains every instrument
+type traded anywhere on the site in plain language: Common Stock (including
+the mega/large/mid/small-cap risk gradient), ETFs, Mutual Funds, Bonds,
+Options, Futures, and Short Selling — each cross-linked to where it shows
+up live (the Funds & Company Size Scanner desk, or the matching Simulator
+mode).
 
 ## Security & scope
 
@@ -422,17 +421,13 @@ real (server-side) accounts, and no payments. The Simulator's player codes
 account system. The only outbound network calls the live pages make on
 their own are to Google Fonts; everything else is either a relative
 `fetch()` to a JSON file checked into this repo, or the browser's own
-built-in Web Speech API for the Career Guide's tutor voices. The one
-*opt-in* exception is the Career Guide's AI Q&A: if a visitor pastes their
-own Anthropic API key into the settings panel, their browser calls
-`api.anthropic.com` directly (never through this site) to answer "Ask a
-question" boxes — that key lives only in that visitor's own
-`localStorage`, is never read or transmitted by this repo's own code
-except as the one request header Anthropic's API requires, and the
-feature is fully optional (everything works without ever entering a key).
-All simulator/trading/plan/tutor/API-key state lives in the visitor's own
-browser `localStorage` and is never transmitted anywhere else, so there is
-no shared state between visitors and nothing server-side to compromise.
+built-in Web Speech API for the Career Guide's tutor voices. The Career
+Guide's "Ask a question" boxes are answered entirely from `careers.json`'s
+own built-in knowledge base (see above) — there is no outbound call for
+them at all, no account, and no API key, optional or otherwise. All
+simulator/trading/plan/tutor state lives in the visitor's own browser
+`localStorage` and is never transmitted anywhere else, so there is no
+shared state between visitors and nothing server-side to compromise.
 
 That said, it's worth being concrete about what was actually checked rather
 than asserting "it's safe":
@@ -443,9 +438,8 @@ than asserting "it's safe":
   asks for, not a secret.
 - **XSS**: the free-text user inputs on the site are the Simulator's
   Private Banker client name and Financial Advisor plan name fields, and
-  the Career Guide's "Ask a question" box (plus whatever text comes back
-  from Anthropic's API when a visitor's own key is in use) — all of which
-  get rendered back into the page. These are escaped through a shared
+  the Career Guide's "Ask a question" box — all of which get rendered
+  back into the page. These are escaped through a shared
   `escapeHtml()` helper (`escapeMentorHtml()` on the Guide page) before
   interpolation — verified with an actual `<img src=x onerror=...>`
   payload in a Playwright test confirming it renders as inert text rather

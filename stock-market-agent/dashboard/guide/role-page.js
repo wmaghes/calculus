@@ -27,6 +27,7 @@ function buildKnowledgeBase(role) {
   role.variations.forEach((v) => kb.push({ lead: "One version of this role:", text: stripHtml(v) }));
   if (role.skills.length) kb.push({ lead: "The tools and concepts I lean on:", text: role.skills.map(stripHtml).join(", ") + "." });
   if (role.tryItHtml) kb.push({ lead: "If you want to try this yourself:", text: stripHtml(role.tryItHtml) });
+  (role.expertiseQA || []).forEach((e) => kb.push({ lead: stripHtml(e.lead), text: stripHtml(e.text) }));
   return kb;
 }
 

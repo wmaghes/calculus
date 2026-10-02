@@ -1,20 +1,18 @@
 /* ---------- Career Guide tutor system ----------
  * Shared by every role page (dashboard/guide/roles/*.html). Two animated
  * tutor characters (Max / Nova), 10-language narration/subtitles with
- * hard-enforced voice matching, and an "Ask a question" box that calls
- * Claude directly with a visitor's own API key, falling back to an
- * offline keyword match against that role's own content.
+ * hard-enforced voice matching, and an "Ask a question" box that answers
+ * from that role's own built-in expertise (careers.json's dayToDay/pay/
+ * skills content plus a deeper expertiseQA knowledge base -- comp by
+ * level, lifestyle/hours, and core technical mechanics like how an LBO
+ * or a DCF actually works) via an offline keyword match. No external API
+ * call and no account/key of any kind -- every tutor's expertise is
+ * baked into this site, not borrowed from a live model.
  *
- * The AI settings panel and the narration-language selector are rendered
- * once, on the Guide landing page (index.html) -- every page here reads
- * the same localStorage keys, so a key or language saved on the landing
- * page applies on every role/security page without re-entering it.
- *
- * Migrated unchanged (content + logic) from the original single-page
- * dashboard/guide/index.html; only the DOM-scraping knowledge-base
- * builder was replaced with one that takes an explicit {lead, text}[]
- * array, since role content is now data-driven (careers.json) rather
- * than scraped from rendered HTML.
+ * The narration-language selector is rendered once, on the Guide landing
+ * page (index.html) -- every page here reads the same localStorage key,
+ * so a language saved on the landing page applies on every role/security
+ * page without re-selecting it.
  */
 
 // AI-generated translations of a condensed, two-sentence narration per
@@ -366,10 +364,12 @@ function speakText(entry, text) {
   window.speechSynthesis.speak(utter);
 }
 
-/* ---------- static (no-API-key) fallback Q&A: English-only keyword match
- * against a role's own content, passed in as an explicit {lead, text}[]
- * knowledge base (built by role-page.js from careers.json) instead of
- * scraped from rendered DOM. ---------- */
+/* ---------- Q&A engine: English-only keyword match against a role's own
+ * built-in expertise, passed in as an explicit {lead, text}[] knowledge
+ * base (built by role-page.js from careers.json's prose plus its deeper
+ * expertiseQA entries -- comp by level, lifestyle, core technical
+ * mechanics). This is the only way "Ask a question" is answered; there
+ * is no live API call to fall back from. ---------- */
 const MENTOR_STOPWORDS = new Set(["the", "a", "an", "and", "or", "but", "is", "are", "was", "were", "be", "been",
   "being", "of", "to", "in", "on", "at", "for", "with", "about", "as", "by", "from", "into", "over", "after",
   "before", "between", "this", "that", "these", "those", "it", "its", "i", "you", "your", "they", "them", "their",
@@ -388,13 +388,35 @@ function mentorTokenize(text) {
     .filter((w) => w.length > 2 && !MENTOR_STOPWORDS.has(w))
     .map((w) => MENTOR_SYNONYMS[w] || w);
 }
+// Loose stem match (plural/verb-form tolerant) so "LBOs"/"works" still
+// matches an entry written as "LBO"/"work" -- a short common prefix with a
+// small length difference, not a real stemmer, same spirit as the voice
+// name matching elsewhere in this file (includes()-style, not exact-only).
+function tokensMatch(a, b) {
+  if (a === b) return true;
+  const shorter = a.length <= b.length ? a : b;
+  const longer = a.length <= b.length ? b : a;
+  return shorter.length >= 3 && longer.startsWith(shorter) && longer.length - shorter.length <= 2;
+}
+// Ranks by how many DISTINCT question concepts an entry covers first, then
+// by total match frequency as a tiebreak only within that. Plain frequency
+// alone lets one generic, repeated word (e.g. several incidental "risk"
+// mentions) beat an entry that actually covers more of what was asked --
+// distinct-coverage-first fixes that while still preferring, among equally
+// on-topic entries, the one that discusses the topic more.
 function bestMentorMatch(entries, qTokenSet) {
-  let best = null, bestOverlap = 0;
+  let best = null, bestDistinct = 0, bestRaw = 0;
   for (const entry of entries) {
-    const entryTokens = mentorTokenize(entry.text);
-    let overlap = 0;
-    for (const t of qTokenSet) for (const et of entryTokens) if (et === t) overlap++;
-    if (overlap > bestOverlap) { bestOverlap = overlap; best = entry; }
+    const entryTokens = mentorTokenize(entry.lead + " " + entry.text);
+    let distinct = 0, raw = 0;
+    for (const t of qTokenSet) {
+      let count = 0;
+      for (const et of entryTokens) if (tokensMatch(et, t)) count++;
+      if (count > 0) { distinct++; raw += count; }
+    }
+    if (distinct > bestDistinct || (distinct === bestDistinct && raw > bestRaw)) {
+      best = entry; bestDistinct = distinct; bestRaw = raw;
+    }
   }
   return best;
 }
@@ -406,49 +428,6 @@ function answerMentorQuestionStatic(kb, question) {
   const match = bestMentorMatch(kb.filter((e) => !e.generic), qTokenSet)
     || bestMentorMatch(kb.filter((e) => e.generic), qTokenSet);
   return match ? match.lead + " " + match.text : null;
-}
-
-/* ---------- real AI Q&A (bring-your-own Anthropic API key) ---------- */
-const AI_KEY_STORE = "guideAIKey.v1";
-const AI_MODEL_STORE = "guideAIModel.v1";
-const AI_DEFAULT_MODEL = "claude-haiku-4-5-20251001";
-function loadAIKey() { try { return localStorage.getItem(AI_KEY_STORE) || ""; } catch (e) { return ""; } }
-function saveAIKey(k) { try { if (k) localStorage.setItem(AI_KEY_STORE, k); else localStorage.removeItem(AI_KEY_STORE); } catch (e) {} }
-function loadAIModel() { try { return localStorage.getItem(AI_MODEL_STORE) || AI_DEFAULT_MODEL; } catch (e) { return AI_DEFAULT_MODEL; } }
-function saveAIModel(m) { try { localStorage.setItem(AI_MODEL_STORE, m || AI_DEFAULT_MODEL); } catch (e) {} }
-
-async function askClaude(question, roleTitle) {
-  const apiKey = loadAIKey();
-  if (!apiKey) return { ok: false, reason: "no-key" };
-  const langLabel = (LANG_VOICE_DB[GLOBAL_LANG] || {}).label || "English";
-  const system = `You are a friendly, knowledgeable career mentor for the "${roleTitle}" role in finance, on an educational stock-market site. Answer the visitor's question helpfully and concisely (3-6 sentences), staying in character as someone who actually does this job. This is education only, never investment advice -- if asked for a stock pick or real financial advice, redirect to general education instead. Respond in ${langLabel}.`;
-  try {
-    const res = await fetch("https://api.anthropic.com/v1/messages", {
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        "x-api-key": apiKey,
-        "anthropic-version": "2023-06-01",
-        "anthropic-dangerous-direct-browser-access": "true",
-      },
-      body: JSON.stringify({
-        model: loadAIModel(),
-        max_tokens: 500,
-        system,
-        messages: [{ role: "user", content: question }],
-      }),
-    });
-    if (!res.ok) {
-      let msg = "API error (" + res.status + ")";
-      try { const errBody = await res.json(); if (errBody.error && errBody.error.message) msg = errBody.error.message; } catch (e) {}
-      return { ok: false, reason: "api-error", detail: msg };
-    }
-    const data = await res.json();
-    const text = (data.content || []).map((b) => b.text || "").join("").trim();
-    return text ? { ok: true, text } : { ok: false, reason: "empty" };
-  } catch (e) {
-    return { ok: false, reason: "network", detail: e.message };
-  }
 }
 
 /* ---------- rendering: one mentor panel per role page ----------
@@ -483,9 +462,9 @@ function renderMentorPanel(mountEl, roleId, roleTitle, kb, colorIdx) {
       </div>
       <div class="mentor-voice-note"></div>
       <div class="mentor-ask">
-        <div class="mentor-ask-label">Ask ${escapeMentorHtml(tutor.name)} a question about this role</div>
+        <div class="mentor-ask-label">Ask ${escapeMentorHtml(tutor.name)} a question about this role &mdash; comp by level, hours, how the job's technical side actually works</div>
         <div class="mentor-ask-row">
-          <input type="text" class="mentor-ask-input" placeholder="Ask anything about this career...">
+          <input type="text" class="mentor-ask-input" placeholder="e.g. how much does an analyst make, or how do LBOs work?">
           <button type="button" class="mentor-btn ask-btn">Ask</button>
         </div>
         <div class="mentor-answer" style="display:none"></div>
@@ -523,36 +502,15 @@ function renderMentorPanel(mountEl, roleId, roleTitle, kb, colorIdx) {
     answerSpeakBtn.addEventListener("click", () => speakText(answerEntry, text));
   }
 
-  async function submitAsk() {
+  function submitAsk() {
     const q = askInput.value.trim();
     if (!q) return;
     answerBox.style.display = "block";
-    const hasKey = !!loadAIKey();
-    if (hasKey) {
-      askBtn.disabled = true;
-      answerBox.innerHTML = `<div class="mentor-answer-q">You asked: &ldquo;${escapeMentorHtml(q)}&rdquo;</div>Thinking&hellip;`;
-      const result = await askClaude(q, roleTitle);
-      askBtn.disabled = false;
-      if (result.ok) {
-        renderAnswer(q, result.text, "Answered live by Claude, using your API key.");
-        return;
-      }
-      const reasonText = result.reason === "no-key" ? "no API key set"
-        : result.reason === "network" ? "couldn't reach the API (network or CORS issue)"
-        : "the API call failed (" + (result.detail || result.reason) + ")";
-      const fallback = answerMentorQuestionStatic(kb, q);
-      if (fallback) {
-        renderAnswer(q, fallback, "Live AI answer unavailable (" + reasonText + ") -- showing a quick keyword match from this page instead (English only).");
-      } else {
-        renderAnswer(q, "I don't see anything about that in what's written here for this role.", "Live AI answer unavailable (" + reasonText + "), and no quick match was found either.");
-      }
-      return;
-    }
-    const fallback = answerMentorQuestionStatic(kb, q);
-    if (fallback) {
-      renderAnswer(q, fallback, "Quick keyword match from this page (English only). Add your API key on the Guide landing page for a full AI answer, in any language, to anything.");
+    const match = answerMentorQuestionStatic(kb, q);
+    if (match) {
+      renderAnswer(q, match, "English only -- matched against everything " + tutor.name + " knows about this role.");
     } else {
-      renderAnswer(q, "I don't see anything about that in what's written here for this role -- try asking about how I use the market, what a typical day looks like, how I'm paid, or the different flavors this role comes in. Add your API key on the Guide landing page for a full AI answer to anything.", "");
+      renderAnswer(q, "I don't have anything on that specific question for this role -- try asking about comp by level, hours and time off, how I use the market day to day, or the technical mechanics behind the job (like how an LBO or a DCF actually works).", "");
     }
   }
   askBtn.addEventListener("click", submitAsk);
@@ -572,33 +530,6 @@ function wireLangSelector(onChange) {
     GLOBAL_LANG = sel.value;
     saveGlobalLang(GLOBAL_LANG);
     if (onChange) onChange();
-  });
-}
-
-function wireAISettings() {
-  const input = document.getElementById("aiKeyInput");
-  const saveBtn = document.getElementById("aiKeySaveBtn");
-  const clearBtn = document.getElementById("aiKeyClearBtn");
-  const status = document.getElementById("aiKeyStatus");
-  const modelInput = document.getElementById("aiModelInput");
-  if (!input) return;
-  function refreshStatus() {
-    const k = loadAIKey();
-    status.textContent = k ? "API key saved in this browser -- Ask boxes on every role page will use real Claude answers." : "No API key saved -- Ask boxes will use a quick keyword match instead.";
-    status.classList.toggle("ok", !!k);
-  }
-  input.value = loadAIKey();
-  modelInput.value = loadAIModel();
-  refreshStatus();
-  saveBtn.addEventListener("click", () => {
-    saveAIKey(input.value.trim());
-    saveAIModel(modelInput.value.trim());
-    refreshStatus();
-  });
-  clearBtn.addEventListener("click", () => {
-    input.value = "";
-    saveAIKey("");
-    refreshStatus();
   });
 }
 

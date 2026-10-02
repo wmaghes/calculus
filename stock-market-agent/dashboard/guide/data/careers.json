@@ -44,7 +44,21 @@
       "isPrimaryTrack": false,
       "existingSimulatorMode": "individual",
       "calculatorId": "cg",
-      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=individual\">Individual Investor mode in the Simulator &#8599;</a> &mdash; trade a real or fictional watchlist with a single account."
+      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=individual\">Individual Investor mode in the Simulator &#8599;</a> &mdash; trade a real or fictional watchlist with a single account.",
+      "expertiseQA": [
+        {
+          "lead": "On compounding, specifically:",
+          "text": "Compounding is just earning returns on your past returns, not only your original contribution -- $10,000 growing at 7%/year is worth about $19,700 after 10 years but about $38,700 after 20, because the second decade compounds on a much bigger base. It's why starting early matters more than almost any other single decision, and why fees (even 1%/year) compound against you the same way."
+        },
+        {
+          "lead": "On why index funds are so cheap, mechanically:",
+          "text": "A broad index fund just holds every stock in an index in proportion to its size and rarely trades, so it has almost no research staff, almost no trading costs, and almost no capital-gains tax events to pass on to you -- that's the entire mechanical reason an S&P 500 index fund can charge ~0.03%/year while an actively managed fund charges 0.5%-1%+."
+        },
+        {
+          "lead": "On rebalancing, mechanically:",
+          "text": "Rebalancing just means selling a bit of whatever grew into too large a share of your target mix and buying more of whatever shrank, which mechanically forces you to sell high and buy low on a schedule instead of on emotion -- most people do it once or twice a year, not constantly, since over-rebalancing just adds trading costs and taxes for little benefit."
+        }
+      ]
     },
     {
       "id": "advisor",
@@ -93,7 +107,21 @@
       "isPrimaryTrack": false,
       "existingSimulatorMode": "advisor",
       "calculatorId": null,
-      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=advisor\">Financial Advisor mode in the Simulator &#8599;</a> &mdash; set a target, horizon and risk tolerance, then fund and track the plan."
+      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=advisor\">Financial Advisor mode in the Simulator &#8599;</a> &mdash; set a target, horizon and risk tolerance, then fund and track the plan.",
+      "expertiseQA": [
+        {
+          "lead": "On how advisors are actually paid, by stage:",
+          "text": "A new advisor is often salaried (sometimes with a small book-building bonus) while they build their own client base, commonly over 3-5 years; an established advisor's pay is mostly the 0.5%-1%/year AUM fee on the book they've built, so the real career bottleneck isn't investing skill -- it's sales and relationship-building, which is why many advisors describe the first several years as the hardest."
+        },
+        {
+          "lead": "On the lifestyle, specifically:",
+          "text": "Hours are generally more humane than trading or banking -- commonly 45-55 hours/week -- but the job is front-loaded around tax season (Jan-Apr) and market selloffs, when every client wants a call the same week; vacation is realistic to take, but a sharp market drop can turn a planned day off into a day of phone calls."
+        },
+        {
+          "lead": "On how the fee-only vs. commission conflict actually works:",
+          "text": "A commission-based advisor is paid by the product (a mutual fund's sales load, an annuity's commission), so a fund that pays them 5% up front is mechanically more attractive to recommend than an equally good fund that pays 0% -- a fee-only fiduciary removes that specific conflict by charging the client directly instead, which is the entire reason the fee-only model exists as a category."
+        }
+      ]
     },
     {
       "id": "private-banker",
@@ -141,7 +169,21 @@
       "isPrimaryTrack": true,
       "existingSimulatorMode": "banker",
       "calculatorId": null,
-      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=banker\">Private Banker mode in the Simulator &#8599;</a> &mdash; add multiple named clients and trade inside each book separately."
+      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=banker\">Private Banker mode in the Simulator &#8599;</a> &mdash; add multiple named clients and trade inside each book separately.",
+      "expertiseQA": [
+        {
+          "lead": "On comp by level:",
+          "text": "A Relationship Associate is usually a flat salary learning the book; a Private Banker's pay shifts toward the 0.75%-1.5%/year fee on assets they personally bring in and retain, so a $50M book at the low end of that range is roughly $375k/year in fees (shared with the bank, not all take-home); a Market/Team Head's pay scales with the whole team's book, not just their own relationships."
+        },
+        {
+          "lead": "On the lifestyle, specifically:",
+          "text": "Less trading-floor intensity than banking, but heavily relationship- and travel-driven -- dinners, golf, client events -- so the hours are real even when they don't look like a banker's all-nighter; client emergencies (a death, a sudden liquidity need, a market panic call) don't respect a calendar, so being reachable matters more than raw hour count."
+        },
+        {
+          "lead": "On how securities-based lending actually works:",
+          "text": "A client pledges their stock portfolio as collateral instead of selling it (avoiding a taxable sale) and borrows against it at a loan-to-value ratio well under 100% -- often 50%-70% for diversified holdings, lower for a single concentrated stock -- so if the pledged stock drops enough to breach that ratio, the bank issues a margin call demanding more collateral or partial repayment, the same mechanical risk as any margin loan, just applied to a wealthy client's existing portfolio instead of a trader's."
+        }
+      ]
     },
     {
       "id": "investment-banker",
@@ -193,7 +235,21 @@
       "isPrimaryTrack": true,
       "existingSimulatorMode": "ib",
       "calculatorId": null,
-      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=ib\">Investment Banker mode in the Simulator &#8599;</a> &mdash; model a merger's EPS accretion/dilution against live prices."
+      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=ib\">Investment Banker mode in the Simulator &#8599;</a> &mdash; model a merger's EPS accretion/dilution against live prices.",
+      "expertiseQA": [
+        {
+          "lead": "On salary and bonus by level, specifically:",
+          "text": "Widely reported ranges (these move every cycle and vary by bank/group, so verify current numbers before relying on them): first-year Analyst base commonly cited around $110k-$125k at bulge-bracket banks, plus a bonus often in the $50k-$100k range depending on the year; Associate base commonly $175k-$225k with a larger bonus; VP total comp often $350k-$500k+; Director/MD total comp is where the real jump happens, frequently $500k-$1M+ at Director and into the low millions at MD, because MD pay is driven directly by the deal revenue they personally originate, not a fixed scale."
+        },
+        {
+          "lead": "On time off, specifically for MDs and juniors alike:",
+          "text": "Analysts nominally get standard vacation (often 15-20 days) but live-deal timelines routinely interrupt it -- a deal closing doesn't pause for a pre-booked trip, which is one of the most discussed tradeoffs of the job and part of why many banks have publicly committed to protected weekends in recent years, with mixed real-world follow-through. MDs have far more schedule control day-to-day, but they're the ones clients call at any hour, so \"time off\" for an MD usually means working remotely from somewhere nicer, not truly disconnecting."
+        },
+        {
+          "lead": "On how an LBO actually works, mechanically:",
+          "text": "A buyer purchases a company using mostly borrowed money (commonly 50%-70% debt) against a smaller equity check, so the target's own future cash flows -- not the buyer's -- are what pay down that debt over a typical 3-7 year hold. Equity value then grows two ways even with no change in the company's operating multiple: the debt balance shrinks (debt paydown), and if the company's earnings grow, the equity slice of a now-less-indebted company grows faster than earnings did, which is the leverage effect that makes LBO returns outsized relative to the operating improvement alone."
+        }
+      ]
     },
     {
       "id": "trader",
@@ -243,7 +299,21 @@
       "isPrimaryTrack": true,
       "existingSimulatorMode": "individual",
       "calculatorId": "ps",
-      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=individual\">Individual Investor mode in the Simulator &#8599;</a>, set the speed to <b>Day Trader</b> in the market panel, and watch a year of price action unfold in minutes. For the derivatives side of trading, see <a href=\"../../simulator/index.html?mode=derivatives\">Options &amp; Futures Trader mode &#8599;</a> &mdash; Black-Scholes-priced options and margined futures."
+      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=individual\">Individual Investor mode in the Simulator &#8599;</a>, set the speed to <b>Day Trader</b> in the market panel, and watch a year of price action unfold in minutes. For the derivatives side of trading, see <a href=\"../../simulator/index.html?mode=derivatives\">Options &amp; Futures Trader mode &#8599;</a> &mdash; Black-Scholes-priced options and margined futures.",
+      "expertiseQA": [
+        {
+          "lead": "On comp by level:",
+          "text": "A Junior Trader/Desk Assistant is typically a modest fixed salary while learning the seat; a sell-side Trader's pay becomes base-plus-bonus tied to desk P&L and client flow; a Proprietary Trader instead negotiates a direct split of their own trading profits -- commonly cited around 10%-30% to the trader at junior-to-mid levels and higher at senior levels -- often with a small or no base salary at all, so a bad year can mean very little pay regardless of effort."
+        },
+        {
+          "lead": "On the lifestyle, specifically:",
+          "text": "Hours are bounded by market hours (pre-market prep often starts well before the open), but intensity spikes hard in the first and last hour of the trading day and during scheduled news (earnings, Fed decisions). Many traders find vacation easier to actually take than bankers do, since a flat or closed book has no live deal to interrupt it -- but watching risk never fully turns off if positions stay open."
+        },
+        {
+          "lead": "On how leverage and margin actually amplify results:",
+          "text": "Trading on margin means borrowing part of a position's cost, so a 10% move in the underlying becomes roughly a 20% move in your money at 2x leverage, in both directions -- that's the entire mechanical reason leverage increases both expected upside and the odds of a margin call wiping out the position, not a separate risk on top of the trade."
+        }
+      ]
     },
     {
       "id": "quant",
@@ -293,7 +363,21 @@
       "isPrimaryTrack": false,
       "existingSimulatorMode": null,
       "calculatorId": null,
-      "tryItHtml": "Closest hands-on practice: run the <a href=\"../../simulator/index.html?mode=individual\">Individual Investor mode &#8599;</a> at <b>Super Simulator</b> + fastest speed to generate lots of fresh, consequence-free price history to test an idea against."
+      "tryItHtml": "Closest hands-on practice: run the <a href=\"../../simulator/index.html?mode=individual\">Individual Investor mode &#8599;</a> at <b>Super Simulator</b> + fastest speed to generate lots of fresh, consequence-free price history to test an idea against.",
+      "expertiseQA": [
+        {
+          "lead": "On comp by level:",
+          "text": "A Quant Analyst's base alone is often cited as high relative to other entry-level finance roles, reflecting competition with tech for the same statistics/CS talent, before any bonus; a Quant Researcher or Senior Quant/PM's total comp scales with the P&L their strategies generate, and at top systematic funds that can rival or exceed banking comp with meaningfully better average hours."
+        },
+        {
+          "lead": "On the lifestyle, specifically:",
+          "text": "Generally steadier than banking -- commonly cited around 50-60 hours/week rather than 70-100 -- with intensity concentrated in bursts: a model breaking in live markets, a research deadline, or a market dislocation that invalidates several strategies' assumptions at once, rather than a predictable weekly deal cycle."
+        },
+        {
+          "lead": "On how backtesting and overfitting actually work:",
+          "text": "A backtest runs a strategy's rules against historical data to estimate how it would have performed, but testing hundreds of variations against the same historical data makes it easy to find one that worked purely by chance (overfitting) -- the standard defense is splitting data into an in-sample period to build the model and an out-of-sample period it never saw to validate it, and even then live performance often undershoots the backtest (alpha decay), partly because other funds crowd into the same discovered edge."
+        }
+      ]
     },
     {
       "id": "private-equity",
@@ -344,7 +428,21 @@
       "isPrimaryTrack": true,
       "existingSimulatorMode": null,
       "calculatorId": "pe",
-      "tryItHtml": null
+      "tryItHtml": null,
+      "expertiseQA": [
+        {
+          "lead": "On comp, specifically carried interest:",
+          "text": "Cash comp (base plus annual bonus) for Analysts/Associates is often similar to or modestly below investment-banking pay for the same level, but the defining number is carried interest -- commonly 20% of a fund's profits above a hurdle rate, split among the investment team -- which is why a PE professional's real paycheck is backloaded: a Partner's \"take-home\" in any given year understates their actual economics until fund investments are realized, often 5-10 years after the initial check."
+        },
+        {
+          "lead": "On the lifestyle, specifically:",
+          "text": "Generally somewhat less relentless than investment banking on average (a PE firm runs fewer, bigger deals than a banking group covers simultaneously), but diligence sprints around a live deal and fundraising periods are still long-hours stretches -- the job trades banking's constant grind for sharper, more concentrated bursts of intensity."
+        },
+        {
+          "lead": "On how an LBO's returns are actually generated, mechanically:",
+          "text": "Three levers, and a real deal usually uses all three: (1) debt paydown -- the target's own cash flow retires the debt used to buy it, so equity value rises even with flat operations; (2) EBITDA growth -- improving the business's actual profit; (3) multiple expansion -- selling at a higher earnings multiple than you paid, which can also work against you (multiple compression). A simplified illustration: buy at 10x EBITDA with 60% debt, grow EBITDA 5%/year for 5 years, pay debt down to 30% of the capital structure, and exit at the same 10x multiple -- the equity alone can return roughly 2.5x-3x invested capital from paydown and growth with no multiple expansion at all, which is the core mechanical reason leverage magnifies equity returns."
+        }
+      ]
     },
     {
       "id": "venture-capital",
@@ -391,7 +489,21 @@
       "isPrimaryTrack": true,
       "existingSimulatorMode": null,
       "calculatorId": "vc",
-      "tryItHtml": null
+      "tryItHtml": null,
+      "expertiseQA": [
+        {
+          "lead": "On comp, specifically carried interest and power law:",
+          "text": "An Associate is usually a modest salary plus a small carry allocation; a Partner's pay is dominated by carried interest (commonly the same 20%-of-profits mechanic as Private Equity) on a fund that typically doesn't fully realize for 7-10 years, and because VC returns follow a power law -- a small number of huge winners produce most of a fund's entire return -- a Partner's real career payday often depends on having backed just one or two of those outliers, not on broad batting average."
+        },
+        {
+          "lead": "On the lifestyle, specifically:",
+          "text": "Less trading-floor intensity, but meeting-dense and travel-heavy -- sourcing and pitch meetings fill much of the week, plus board meetings for existing portfolio companies -- with sharp, unscheduled crunches around a portfolio company's fundraising crisis or a founder conflict that needs the VC's direct involvement."
+        },
+        {
+          "lead": "On how a term sheet, cap table and dilution actually work:",
+          "text": "Pre-money valuation is what the company is worth before new money comes in; post-money is pre-money plus the new investment, and the new investor's ownership percentage is simply their investment divided by post-money valuation -- every existing holder's percentage shrinks proportionally (dilution) even though the dollar value of their stake may still be rising. A liquidation preference (commonly \"1x non-participating\") means preferred investors get their money back first in a sale before common holders see anything, which matters enormously in a mediocre exit and barely at all in a great one."
+        }
+      ]
     },
     {
       "id": "hedge-fund",
@@ -442,7 +554,21 @@
       "isPrimaryTrack": true,
       "existingSimulatorMode": "shortseller",
       "calculatorId": "hf",
-      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=shortseller\">Short Selling / Buy-Side Investor mode in the Simulator &#8599;</a> &mdash; run a real long/short book, including the margin and borrow-fee mechanics of shorting."
+      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=shortseller\">Short Selling / Buy-Side Investor mode in the Simulator &#8599;</a> &mdash; run a real long/short book, including the margin and borrow-fee mechanics of shorting.",
+      "expertiseQA": [
+        {
+          "lead": "On comp by level:",
+          "text": "Junior/Analyst pay is base-plus-bonus, with the bonus tied to the fund's overall performance; Senior Analyst and Portfolio Manager pay increasingly shifts toward a direct cut of the P&L they personally generate -- the fund-level \"2 and 20\" (a 2%/year management fee plus 20% of profits) flows down to individual comp this way, so a strong year can mean an outsized bonus and a weak one can mean almost none, even at senior levels."
+        },
+        {
+          "lead": "On the lifestyle, specifically:",
+          "text": "Varies enormously by strategy -- a macro or quantitative fund can run meaningfully saner hours than banking, while a concentrated long/short equity fund can be just as intense as banking during earnings season, when every held position might report at once. An \"always reachable\" culture is common across strategies: a market-moving headline on a held position doesn't wait for a day off to end."
+        },
+        {
+          "lead": "On how gross and net exposure actually work:",
+          "text": "Gross exposure is the sum of every long and short position's size (a measure of total leverage and activity); net exposure is longs minus shorts (a measure of actual directional market bet). A fund can run very high gross -- say 200% long and 150% short -- while keeping net exposure near zero, meaning it's taking on a lot of individual stock-picking risk while deliberately hedging out broad market direction, which is the mechanical reason a well-run long/short book can make money in a flat or falling market."
+        }
+      ]
     },
     {
       "id": "cfo",
@@ -490,7 +616,21 @@
       "isPrimaryTrack": true,
       "existingSimulatorMode": null,
       "calculatorId": "cfo",
-      "tryItHtml": null
+      "tryItHtml": null,
+      "expertiseQA": [
+        {
+          "lead": "On comp by level:",
+          "text": "A Financial Analyst or FP&A Manager earns a standard corporate-finance salary plus a modest bonus; a Controller/VP Finance's total comp starts including meaningful equity; a public-company CFO's pay is usually salary plus an annual performance bonus plus a large annual stock/option grant that, at many large companies, makes up more than half of total compensation -- meaning a sizable share of a CFO's own wealth rides on the same share price every other role in this guide reacts to."
+        },
+        {
+          "lead": "On the lifestyle, specifically:",
+          "text": "Driven hard by the earnings calendar -- the 1-2 weeks around quarterly close, the earnings call, and analyst/investor follow-up are genuinely intense -- with calmer stretches in between, except at the top, where board meetings and investor-relations travel add a steady background load year-round."
+        },
+        {
+          "lead": "On how a stock buyback actually lifts EPS, mechanically:",
+          "text": "Earnings per share is net income divided by shares outstanding -- buy back and retire 10% of shares with no change in net income at all, and EPS rises by roughly that same 10% purely from the smaller denominator, with zero actual improvement in the business. That's mechanically different from the company becoming more valuable, which is exactly why buybacks are controversial: they can flatter a per-share metric that investors and sometimes executive pay plans are judged on."
+        }
+      ]
     },
     {
       "id": "market-maker",
@@ -537,7 +677,21 @@
       "isPrimaryTrack": false,
       "existingSimulatorMode": null,
       "calculatorId": "mm",
-      "tryItHtml": null
+      "tryItHtml": null,
+      "expertiseQA": [
+        {
+          "lead": "On comp by level:",
+          "text": "A Trading Assistant is typically a modest base while learning the systems and risk controls; a Market Maker's pay scales directly with the spread captured and the volume quoted, closer to \"eat what you kill\" than a fixed ladder; a wholesale market maker's desk head economics scale with the payment-for-order-flow revenue and spread capture of the whole desk, not any one person's trades."
+        },
+        {
+          "lead": "On the lifestyle, specifically:",
+          "text": "Tightly bound to market hours with real pre-market system and risk checks beforehand; intensity concentrates hard at the open and close and around volatile headlines, but there's generally far less travel or client-entertainment load than banking or wealth management -- the job lives at the screen, not in a client's office."
+        },
+        {
+          "lead": "On how payment for order flow (PFOF) actually works:",
+          "text": "A wholesale market maker pays a retail broker for the right to fill that broker's customer orders internally rather than sending them to a public exchange, then profits from the bid-ask spread (and manages the resulting inventory risk) on those fills -- which is the mechanical reason \"commission-free\" retail trading isn't free to produce: the market maker, not the trader, pays for the order flow, and that cost is recovered through the spread."
+        }
+      ]
     },
     {
       "id": "research-analyst",
@@ -585,7 +739,21 @@
       "isPrimaryTrack": true,
       "existingSimulatorMode": null,
       "calculatorId": "eq",
-      "tryItHtml": "See it in action: the <a href=\"../../index.html\">Market Scanner &#8599;</a> and <a href=\"../../research/index.html\">Company Research &#8599;</a> pages are this job's deliverables, built by an agent instead of a person."
+      "tryItHtml": "See it in action: the <a href=\"../../index.html\">Market Scanner &#8599;</a> and <a href=\"../../research/index.html\">Company Research &#8599;</a> pages are this job's deliverables, built by an agent instead of a person.",
+      "expertiseQA": [
+        {
+          "lead": "On comp by level:",
+          "text": "A Research Associate earns a standard base supporting a senior analyst's coverage; an Analyst/Senior Analyst's bonus is tied to call accuracy and, on the sell side, to the trading commissions and banking business their research helps generate -- a sell-side analyst's pay and influence often track how closely institutional investors actually follow their published calls, which is externally visible in a way most finance bonuses aren't; a Director of Research is paid for the whole team's output and client relationships."
+        },
+        {
+          "lead": "On the lifestyle, specifically:",
+          "text": "Spikes hard around earnings season -- updating models and publishing notes within hours of every covered company's report is the single most time-pressured part of the job -- with calmer stretches between reports, though maintaining ongoing coverage of 15-25 names means something in the sector is almost always moving."
+        },
+        {
+          "lead": "On how a DCF and comps valuation actually combine into a price target:",
+          "text": "A DCF estimates intrinsic value by projecting a company's future free cash flows and discounting them back to today at a rate reflecting their risk -- it's sensitive to assumptions, especially the terminal growth rate and discount rate. Comps instead check what similar companies currently trade for (on P/E, EV/EBITDA, etc.) as a market-reality sanity check. Analysts blend both rather than trusting either alone, and the resulting price target compared to the current price is what actually determines the Buy/Hold/Sell rating, not a gut feeling about the company."
+        }
+      ]
     },
     {
       "id": "risk-manager",
@@ -636,7 +804,21 @@
       "isPrimaryTrack": false,
       "existingSimulatorMode": null,
       "calculatorId": "risk",
-      "tryItHtml": null
+      "tryItHtml": null,
+      "expertiseQA": [
+        {
+          "lead": "On comp by level:",
+          "text": "A Risk/Compliance Analyst and Risk Manager earn a standard base-plus-bonus with meaningfully smaller year-to-year swings than the traders and bankers they oversee -- intentional, since their job is partly to resist pressure from the very desks whose bonuses depend on risk-taking; a Chief Risk/Compliance Officer at a large bank, by contrast, is a senior executive role that can be highly paid, closer to senior trading or banking comp than to a junior risk analyst's."
+        },
+        {
+          "lead": "On the lifestyle, specifically:",
+          "text": "Generally steadier than trading or banking -- often a standard 45-55 hour week -- but with sharp, unscheduled crunches: a regulatory exam, a filing deadline, or a desk breaching a risk limit on a volatile day can turn a quiet week into an intense one with little warning."
+        },
+        {
+          "lead": "On how Value-at-Risk (VaR) actually works:",
+          "text": "A 1-day 95% VaR of $1M means that, based on recent volatility, losses on a typical day shouldn't exceed $1M -- but by construction, the actual loss WILL exceed that figure on roughly 5% of days (about 1 trading day in 20), and VaR says nothing about how bad that tail day could be, which is exactly why stress testing (replaying a specific historical shock like 2008 against today's book) exists alongside it rather than instead of it -- the calculator above on this page computes exactly this VaR figure."
+        }
+      ]
     }
   ]
 }
