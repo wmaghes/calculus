@@ -358,6 +358,51 @@ valuation, Value-at-Risk), and — where one exists — a deep link straight
 into the matching Simulator mode (the Simulator reads a `?mode=` query param
 on load, e.g. `simulator/index.html?mode=ib`).
 
+### Career mentors: a persona, a real-accent voice, and a Q&A box
+
+Opening any of the 13 role cards assigns a **career mentor** persona — a
+name, home region/flag and English accent drawn from a pool spanning
+Nigeria, Kenya, Tanzania, South Africa, India, the UK, Scotland, Ireland,
+Australia, New Zealand, the Philippines, Singapore, Hong Kong, the US and
+Canada — shown via an abstract animated HUD avatar rather than an
+illustrated face (the diversity lives in the name/region/voice, not a
+drawn likeness). "New mentor" rerolls to a different persona, remembered
+per role in `localStorage`.
+
+**Voice authenticity is hard-enforced, not best-effort.** "Read aloud"
+narrates the role using the browser's own Web Speech API, and will only
+ever use a voice that's a *confirmed* match on both country **and**
+gender — checked against `CULTURAL_VOICE_DB`, a catalog of real, named
+voices (sourced from the community-maintained
+[web-speech-recommended-voices / readium/speech](https://github.com/readium/speech)
+project, not guessed) documenting which actual voice names Edge, Chrome,
+Android, ChromeOS and macOS/Apple ship per region and gender. If a
+mentor's confirmed voice isn't installed on the visitor's device, "Read
+aloud" is disabled with an explicit on-screen reason instead of narrating
+in a different accent or the wrong gender under that mentor's name — this
+applies to the main narration and to spoken answers alike. Web Speech has
+no notion of ethnicity, only language/region plus a vendor-assigned voice
+name, so "cultural authenticity" beyond country + gender means preferring,
+among equally-valid confirmed options, a voice whose own name is commonly
+associated with a mentor's heritage where one genuinely exists in the
+catalog (e.g. "Ana" among en-US female voices for a Latina-coded persona)
+— never a fabricated "ethnic accent" the API can't actually produce.
+"New mentor" also prefers personas whose voice is actually installed on
+the current device, so rerolling tends to land you on someone who can
+genuinely speak.
+
+**Ask your mentor a question.** Each mentor panel has a text box: type a
+question and it's matched, by keyword overlap against the role's own
+written content (the same paragraphs, variants and tool chips already on
+the page, plus a small synonym layer so "how much money can I make" finds
+the pay section even though that text says "paid"/"fee"), and answered
+with whichever piece actually covers it — read aloud, if you like, through
+the same accent/gender-confirmed voice system. This is **not a general
+AI** — there's no model and no server call, just the static page searching
+its own text — and it says so plainly ("I don't see anything about that in
+what's written here...") when a question isn't covered by the role's
+content rather than guessing.
+
 The second part, **Types of Securities**, explains every instrument type
 traded anywhere on the site in plain language: Common Stock (including the
 mega/large/mid/small-cap risk gradient), ETFs, Mutual Funds, Bonds, Options,
@@ -367,12 +412,15 @@ Futures, and Short Selling — each cross-linked to where it shows up live
 ## Security & scope
 
 This is a static site: no backend, no server-side code, no database, no
-accounts, and no payments. The only outbound network call the live pages
-make is to Google Fonts; everything else is a relative `fetch()` to a JSON
-file checked into this repo. All simulator/trading/plan state lives in the
-visitor's own browser `localStorage` and is never transmitted anywhere, so
-there is no shared state between visitors and nothing server-side to
-compromise.
+real (server-side) accounts, and no payments. The Simulator's player codes
+(see above) are a local `localStorage` save-game namespace, not a backend
+account system. The only outbound network calls the live pages make are to
+Google Fonts; everything else is either a relative `fetch()` to a JSON file
+checked into this repo, or the browser's own built-in Web Speech API for
+the Career Guide's mentor voices. All simulator/trading/plan/mentor state
+lives in the visitor's own browser `localStorage` and is never transmitted
+anywhere, so there is no shared state between visitors and nothing
+server-side to compromise.
 
 That said, it's worth being concrete about what was actually checked rather
 than asserting "it's safe":

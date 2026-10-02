@@ -128,6 +128,25 @@
   .mentor-btn.speaking { background: var(--mc); color: #fff; border-color: transparent; }
   .mentor-voice-note { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; color: var(--ink-faint); margin-top: 6px; min-height: 1.3em; }
 
+  .mentor-ask { margin-top: 12px; }
+  .mentor-ask-label { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 5px; }
+  .mentor-ask-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .mentor-ask-input {
+    flex: 1 1 200px; min-width: 140px;
+    font-family: "IBM Plex Sans", sans-serif; font-size: 13px; padding: 7px 10px;
+    border: 1px solid var(--border); border-radius: 7px; background: var(--surface); color: var(--ink);
+  }
+  .mentor-answer {
+    margin-top: 10px; font-size: 13.5px; line-height: 1.55; color: var(--ink);
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px;
+  }
+  .mentor-answer .mentor-answer-q { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; color: var(--ink-faint); margin-bottom: 5px; }
+  .mentor-answer-speak {
+    margin-top: 8px; font-family: "IBM Plex Mono", monospace; font-size: 11px; cursor: pointer;
+    border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; background: var(--surface); color: var(--ink);
+  }
+  .mentor-answer-speak:disabled { opacity: 0.4; cursor: not-allowed; }
+
   @media (max-width: 480px) {
     .mentor-panel { flex-direction: column; align-items: flex-start; }
   }
@@ -1030,41 +1049,68 @@ document.getElementById("risk-calc").addEventListener("click", () => {
  * avatar (no human face/skin illustration, deliberately -- the diversity
  * here lives in the name, region and voice, not a cartoon face).
  *
- * ACCENT AUTHENTICITY IS HARD-ENFORCED, NOT BEST-EFFORT:
+ * ACCENT + GENDER AUTHENTICITY ARE HARD-ENFORCED, NOT BEST-EFFORT:
  * each persona has exactly one real BCP-47 locale code for their own
- * country (voiceLang), and pickVoiceFor() below ONLY ever returns a voice
- * whose lang code matches that exact country -- never a neighboring
- * country's accent, never a generic/default voice passed off as theirs.
- * If this browser/device has no voice installed for a persona's own
- * country, that mentor's "Read aloud" is disabled with an explicit note
- * instead of speaking in the wrong accent under their name. "New mentor"
- * also prefers personas whose accent is actually available on this
- * device, so rerolling tends to land you on someone who can genuinely
- * speak. This is entirely client-side (the Web Speech API, no server, no
- * AI voice model) -- voice availability depends on the visitor's own
- * browser/OS, which this site has no way to change or guarantee.
+ * country (voiceLang) plus a gender. pickVoiceFor() below cross-checks
+ * BOTH against CULTURAL_VOICE_DB -- a catalog of real, named voices
+ * (sourced from the community-maintained web-speech-recommended-voices /
+ * readium/speech project, not guessed) documenting which actual voice
+ * names each major browser/OS ships per region and gender. A voice is
+ * only ever used for a mentor if it matches their exact country AND their
+ * gender is confirmed from that catalog (or, for an unrecognized engine,
+ * an explicit "female"/"male" word in its own name) -- never a borrowed
+ * accent, never a guessed gender. If this browser/device has no
+ * confirmed-matching voice, "Read aloud" is disabled with an explicit
+ * note instead of narrating in the wrong voice under a mentor's name. Web
+ * Speech has no notion of ethnicity, only language/region + a
+ * vendor-assigned voice name, so "cultural authenticity" beyond country +
+ * gender means picking, among equally-valid confirmed options, a voice
+ * whose own name is commonly associated with a mentor's heritage where
+ * one genuinely exists in the catalog (see preferredNameHints below) --
+ * never a fabricated "ethnic accent" the API can't actually produce. This
+ * is entirely client-side (no server, no AI voice model) -- which voices
+ * exist at all depends on the visitor's own browser/OS.
  */
+const CULTURAL_VOICE_DB = {
+  "en-us": { female: ["emmamultilingual", "avamultilingual", "jenny", "aria", "michelle", "ana", "google us english", "ava", "zoe", "allison", "nicky", "samantha", "joelle", "zira", "google us english 5 (natural)", "google us english 1 (natural)", "google us english 2 (natural)", "google us english 7 (natural)", "android speech recognition and synthesis from google en-us-x-sfg-network", "chrome os us english 8"], male: ["andrewmultilingual", "brianmultilingual", "guy", "eric", "steffan", "christopher", "roger", "evan", "nathan", "tom", "alex", "aaron", "david", "mark", "google us english 4 (natural)", "google us english 3 (natural)", "google us english 6 (natural)"] },
+  "en-gb": { female: ["sonia", "libby", "maisie", "google uk english female", "kate", "stephanie", "serena", "martha", "hazel", "susan", "google uk english 2 (natural)", "google uk english 4 (natural)", "google uk english 6 (natural)", "chrome os uk english 7"], male: ["ryan", "thomas", "google uk english male", "jamie", "oliver", "daniel", "arthur", "george", "google uk english 1 (natural)", "google uk english 3 (natural)", "google uk english 5 (natural)"] },
+  "en-gb-u-sd-gbsct": { female: ["fiona"], male: [] },
+  "en-ie": { female: ["emily", "moira"], male: ["connor", "sean"] },
+  "en-ng": { female: ["ezinne"], male: ["abeo"] },
+  "en-za": { female: ["leah", "tessa"], male: ["luke"] },
+  "en-ke": { female: ["asilia"], male: ["chilemba"] },
+  "en-tz": { female: ["imani"], male: ["elimu"] },
+  "en-au": { female: ["natasha", "hayley", "matilda", "karen", "catherine", "google australian english 1 (natural)", "google australian english 3 (natural)"], male: ["william", "lee", "gordon", "richard", "google australian english 2 (natural)", "google australian english 4 (natural)", "chrome os australian english 5"] },
+  "en-nz": { female: ["molly"], male: ["mitchell"] },
+  "en-ph": { female: ["rosa"], male: ["james"] },
+  "en-sg": { female: ["luna"], male: ["wayne"] },
+  "en-hk": { female: ["yan"], male: ["sam"] },
+  "en-ca": { female: ["clara", "heather", "linda"], male: ["liam", "richard"] },
+  "en-in": { female: ["neerja", "tara", "isha", "sangeeta", "veena", "heera", "android speech recognition and synthesis from google en-in-x-ena-network", "android speech recognition and synthesis from google en-in-x-enc-network"], male: ["prabhat", "aman", "rishi", "ravi", "android speech recognition and synthesis from google en-in-x-end-network", "android speech recognition and synthesis from google en-in-x-ene-network"] },
+};
+
 const MENTOR_PERSONAS = [
-  { name: "Amara Chukwu", gender: "woman", flag: "🇳🇬", region: "Lagos, Nigeria", accent: "Nigerian English", voiceLang: "en-NG" },
-  { name: "Olusegun Adebayo", gender: "man", flag: "🇳🇬", region: "Abuja, Nigeria", accent: "Nigerian English", voiceLang: "en-NG" },
-  { name: "Priya Raman", gender: "woman", flag: "🇮🇳", region: "Bengaluru, India", accent: "Indian English", voiceLang: "en-IN" },
-  { name: "Arjun Mehta", gender: "man", flag: "🇮🇳", region: "Mumbai, India", accent: "Indian English", voiceLang: "en-IN" },
-  { name: "James Whitfield", gender: "man", flag: "🇬🇧", region: "London, UK", accent: "British English", voiceLang: "en-GB" },
-  { name: "Tom Ashworth", gender: "man", flag: "🇬🇧", region: "Leeds, UK", accent: "British English", voiceLang: "en-GB" },
-  { name: "Freya Lindqvist", gender: "woman", flag: "🇬🇧", region: "Edinburgh, UK", accent: "British English", voiceLang: "en-GB" },
-  { name: "Liam O'Connor", gender: "man", flag: "🇮🇪", region: "Dublin, Ireland", accent: "Irish English", voiceLang: "en-IE" },
-  { name: "Sipho Dlamini", gender: "man", flag: "🇿🇦", region: "Johannesburg, South Africa", accent: "South African English", voiceLang: "en-ZA" },
-  { name: "Zanele Nkosi", gender: "woman", flag: "🇿🇦", region: "Cape Town, South Africa", accent: "South African English", voiceLang: "en-ZA" },
-  { name: "Wanjiru Kamau", gender: "woman", flag: "🇰🇪", region: "Nairobi, Kenya", accent: "Kenyan English", voiceLang: "en-KE" },
-  { name: "Grace Osei", gender: "woman", flag: "🇬🇭", region: "Accra, Ghana", accent: "Ghanaian English", voiceLang: "en-GH" },
-  { name: "Isla Thompson", gender: "woman", flag: "🇦🇺", region: "Sydney, Australia", accent: "Australian English", voiceLang: "en-AU" },
-  { name: "Mitchell Carter", gender: "man", flag: "🇳🇿", region: "Auckland, New Zealand", accent: "New Zealand English", voiceLang: "en-NZ" },
-  { name: "Carlos Mendoza", gender: "man", flag: "🇵🇭", region: "Manila, Philippines", accent: "Filipino English", voiceLang: "en-PH" },
-  { name: "Luna Santos", gender: "woman", flag: "🇸🇬", region: "Singapore", accent: "Singaporean English", voiceLang: "en-SG" },
-  { name: "Chloe Nguyen", gender: "woman", flag: "🇭🇰", region: "Hong Kong", accent: "Hong Kong English", voiceLang: "en-HK" },
-  { name: "Ethan Brooks", gender: "man", flag: "🇺🇸", region: "Chicago, USA", accent: "American English", voiceLang: "en-US" },
-  { name: "Maya Rodriguez", gender: "woman", flag: "🇺🇸", region: "Phoenix, USA", accent: "American English", voiceLang: "en-US" },
-  { name: "Noah Bergstrom", gender: "man", flag: "🇨🇦", region: "Toronto, Canada", accent: "Canadian English", voiceLang: "en-CA" },
+  { name: "Amara Chukwu", gender: "female", flag: "🇳🇬", region: "Lagos, Nigeria", accent: "Nigerian English", voiceLang: "en-NG" },
+  { name: "Olusegun Adebayo", gender: "male", flag: "🇳🇬", region: "Abuja, Nigeria", accent: "Nigerian English", voiceLang: "en-NG" },
+  { name: "Priya Raman", gender: "female", flag: "🇮🇳", region: "Bengaluru, India", accent: "Indian English", voiceLang: "en-IN" },
+  { name: "Arjun Mehta", gender: "male", flag: "🇮🇳", region: "Mumbai, India", accent: "Indian English", voiceLang: "en-IN" },
+  { name: "James Whitfield", gender: "male", flag: "🇬🇧", region: "London, UK", accent: "British English", voiceLang: "en-GB" },
+  { name: "Tom Ashworth", gender: "male", flag: "🇬🇧", region: "Leeds, UK", accent: "British English", voiceLang: "en-GB" },
+  { name: "Freya Lindqvist", gender: "female", flag: "🇬🇧", region: "Edinburgh, Scotland", accent: "Scottish English", voiceLang: "en-GB-u-sd-gbsct" },
+  { name: "Liam O'Connor", gender: "male", flag: "🇮🇪", region: "Dublin, Ireland", accent: "Irish English", voiceLang: "en-IE" },
+  { name: "Sipho Dlamini", gender: "male", flag: "🇿🇦", region: "Johannesburg, South Africa", accent: "South African English", voiceLang: "en-ZA" },
+  { name: "Zanele Nkosi", gender: "female", flag: "🇿🇦", region: "Cape Town, South Africa", accent: "South African English", voiceLang: "en-ZA" },
+  { name: "Wanjiru Kamau", gender: "female", flag: "🇰🇪", region: "Nairobi, Kenya", accent: "Kenyan English", voiceLang: "en-KE" },
+  { name: "Zawadi Mushi", gender: "female", flag: "🇹🇿", region: "Dar es Salaam, Tanzania", accent: "Tanzanian English", voiceLang: "en-TZ" },
+  { name: "Isla Thompson", gender: "female", flag: "🇦🇺", region: "Sydney, Australia", accent: "Australian English", voiceLang: "en-AU" },
+  { name: "Mitchell Carter", gender: "male", flag: "🇳🇿", region: "Auckland, New Zealand", accent: "New Zealand English", voiceLang: "en-NZ" },
+  { name: "Carlos Mendoza", gender: "male", flag: "🇵🇭", region: "Manila, Philippines", accent: "Filipino English", voiceLang: "en-PH" },
+  { name: "Luna Santos", gender: "female", flag: "🇸🇬", region: "Singapore", accent: "Singaporean English", voiceLang: "en-SG" },
+  { name: "Chloe Nguyen", gender: "female", flag: "🇭🇰", region: "Hong Kong", accent: "Hong Kong English", voiceLang: "en-HK" },
+  { name: "Ethan Brooks", gender: "male", flag: "🇺🇸", region: "Chicago, USA", accent: "American English", voiceLang: "en-US" },
+  { name: "Maya Rodriguez", gender: "female", flag: "🇺🇸", region: "Phoenix, USA", accent: "American English", voiceLang: "en-US",
+    preferredNameHints: ["ana"] }, // among equally-valid confirmed en-US female voices, "Ana" is the one in the catalog commonly associated with Latina heritage -- a soft name preference only, never a claim of a distinct "Latina accent" (Web Speech has no such category)
+  { name: "Noah Bergstrom", gender: "male", flag: "🇨🇦", region: "Toronto, Canada", accent: "Canadian English", voiceLang: "en-CA" },
 ];
 const MENTOR_INTRO_TEMPLATES = [
   "Hi, I'm {name}. I've spent my career as a {role}, and I'm here to walk you through what that actually looks like.",
@@ -1108,18 +1154,48 @@ function mentorAvatarSVG(color) {
   </svg>`;
 }
 
+function escapeMentorHtml(str) {
+  return String(str)
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
 const MENTOR_PANEL_REGISTRY = new Map(); // roleId -> { persona, speakBtn, noteEl }
 let MENTOR_SPEAKING_ENTRY = null;
 
-// Exact-country match only: voice.lang must start with this persona's own
-// locale code. No generic "en" catch-all, no borrowing a neighboring
-// country's voice -- if nothing matches, the caller gets null and the UI
+// Looks up whether a real voice name is cataloged as female or male for a
+// given locale. Falls back to an explicit "female"/"male" word in the
+// voice's own name for an engine we haven't catalogued; returns null
+// (unconfirmed) rather than guessing when neither applies.
+function voiceGenderGuess(voiceName, localeKey) {
+  const name = voiceName.toLowerCase();
+  const db = CULTURAL_VOICE_DB[localeKey];
+  if (db) {
+    if (db.female.some((tok) => name.includes(tok) || tok.includes(name))) return "female";
+    if (db.male.some((tok) => name.includes(tok) || tok.includes(name))) return "male";
+  }
+  if (/\bfemale\b|\bwoman\b/.test(name)) return "female";
+  if (/\bmale\b|\bman\b/.test(name)) return "male";
+  return null;
+}
+
+// Exact-country AND confirmed-gender match only: a voice is only ever used
+// for a mentor if both check out against the real catalog above. No
+// generic "en" catch-all, no borrowing a neighboring country's voice, no
+// gender guessing -- if nothing confirms, the caller gets null and the UI
 // disables narration for that mentor instead of faking it.
 function pickVoiceFor(persona) {
   if (!("speechSynthesis" in window)) return null;
   const voices = window.speechSynthesis.getVoices() || [];
   const target = persona.voiceLang.toLowerCase();
-  return voices.find((v) => v.lang && v.lang.toLowerCase().startsWith(target)) || null;
+  const localeMatches = voices.filter((v) => v.lang && v.lang.toLowerCase().startsWith(target));
+  const confirmed = localeMatches.filter((v) => voiceGenderGuess(v.name, target) === persona.gender);
+  if (confirmed.length === 0) return null;
+  if (persona.preferredNameHints) {
+    const preferred = confirmed.find((v) => persona.preferredNameHints.some((h) => v.name.toLowerCase().includes(h)));
+    if (preferred) return preferred;
+  }
+  return confirmed[0];
 }
 
 function refreshSpeakButtonState(entry) {
@@ -1140,9 +1216,9 @@ function refreshSpeakButtonState(entry) {
     noteEl.textContent = "";
   } else {
     speakBtn.disabled = true;
-    speakBtn.innerHTML = "&#128263; No " + persona.accent + " voice here";
-    speakBtn.title = "This browser/device has no " + persona.accent + " voice installed.";
-    noteEl.textContent = "This browser/device doesn't have a " + persona.accent + " voice installed, so spoken narration is turned off for " + persona.name + " rather than playing a different accent under their name. Chrome or Edge on Windows/macOS tend to carry the widest range of accents -- or just read the text below.";
+    speakBtn.innerHTML = "&#128263; No " + persona.gender + " " + persona.accent + " voice here";
+    speakBtn.title = "This browser/device has no confirmed " + persona.gender + " " + persona.accent + " voice installed.";
+    noteEl.textContent = "This browser/device doesn't have a confirmed " + persona.gender + " " + persona.accent + " voice installed, so spoken narration is turned off for " + persona.name + " rather than guessing at a voice that could be the wrong gender or accent. Chrome or Edge on Windows/macOS tend to carry the widest range -- or just read the text below.";
   }
 }
 function refreshAllMentorButtons() {
@@ -1171,16 +1247,16 @@ function stopMentorSpeech() {
   if (entry) { entry.speakBtn.classList.remove("speaking"); refreshSpeakButtonState(entry); }
 }
 
-function speakAsMentor(detailsEl, roleTitle, entry) {
+function speakAsMentor(detailsEl, roleTitle, entry, overrideText) {
   if (!("speechSynthesis" in window)) return;
   if (MENTOR_SPEAKING_ENTRY === entry) { stopMentorSpeech(); return; }
   stopMentorSpeech();
   const voice = pickVoiceFor(entry.persona);
   if (!voice) { refreshSpeakButtonState(entry); return; } // voice vanished between render and click; stay honest, don't speak
-  const text = buildMentorScript(detailsEl, entry.persona, roleTitle);
+  const text = overrideText || buildMentorScript(detailsEl, entry.persona, roleTitle);
   const utter = new SpeechSynthesisUtterance(text);
   utter.voice = voice;
-  entry.noteEl.textContent = "Voice: " + voice.name + " (" + voice.lang + ") \u2014 genuinely " + entry.persona.accent + ".";
+  entry.noteEl.textContent = "Voice: " + voice.name + " (" + voice.lang + ") \u2014 confirmed " + entry.persona.gender + " " + entry.persona.accent + ".";
   utter.onend = () => stopMentorSpeech();
   utter.onerror = () => stopMentorSpeech();
   MENTOR_SPEAKING_ENTRY = entry;
@@ -1189,7 +1265,7 @@ function speakAsMentor(detailsEl, roleTitle, entry) {
   window.speechSynthesis.speak(utter);
 }
 
-// Prefers a persona whose accent voice actually exists on this
+// Prefers a persona whose accent+gender voice actually exists on this
 // browser/device, so "New mentor" tends to land on someone who can
 // genuinely speak rather than someone who'll just show "no voice here".
 function pickRerollPersonaIdx(currentIdx) {
@@ -1197,6 +1273,100 @@ function pickRerollPersonaIdx(currentIdx) {
   const voiced = others.filter((i) => pickVoiceFor(MENTOR_PERSONAS[i]));
   const pool = voiced.length > 0 ? voiced : others;
   return pool.length > 0 ? pool[Math.floor(Math.random() * pool.length)] : currentIdx;
+}
+
+/* ---------- "ask your mentor" ----------
+ * A typed question is matched, by keyword overlap, against this role's own
+ * written content (the same paragraphs/variants/chips already on the page)
+ * and answered with whichever piece actually covers it. This is NOT a
+ * general AI -- there's no model and no server call, just a static site
+ * searching its own text -- so it only ever answers from what's written
+ * below, and says so plainly when nothing on the page covers the question.
+ */
+const MENTOR_STOPWORDS = new Set(["the", "a", "an", "and", "or", "but", "is", "are", "was", "were", "be", "been",
+  "being", "of", "to", "in", "on", "at", "for", "with", "about", "as", "by", "from", "into", "over", "after",
+  "before", "between", "this", "that", "these", "those", "it", "its", "i", "you", "your", "they", "them", "their",
+  "he", "she", "his", "her", "do", "does", "did", "doing", "have", "has", "had", "having", "what", "when", "where",
+  "why", "how", "who", "which", "can", "could", "would", "should", "will", "shall", "my", "me", "we", "us", "our",
+  "so", "if", "than", "then", "there", "not", "no", "yes", "just", "really", "actually", "like", "get", "got",
+  "much", "many", "more", "most"]);
+
+// A small synonym map so "how much money can I make" lands on the "How
+// they're paid" section even though that text says "paid"/"fee"/"salary",
+// not "money" or "make" -- still plain keyword matching, just a little
+// less literal about it.
+const MENTOR_SYNONYMS = {
+  money: "paid", earn: "paid", earns: "paid", earning: "paid", earnings: "paid",
+  make: "paid", makes: "paid", making: "paid", salary: "paid", salaries: "paid",
+  income: "paid", wage: "paid", wages: "paid", pay: "paid", pays: "paid", paying: "paid",
+  compensation: "paid", bonus: "paid", bonuses: "paid", cost: "paid", costs: "paid", fee: "paid", fees: "paid",
+};
+function mentorTokenize(text) {
+  return (text.toLowerCase().match(/[a-z']+/g) || [])
+    .filter((w) => w.length > 2 && !MENTOR_STOPWORDS.has(w))
+    .map((w) => MENTOR_SYNONYMS[w] || w);
+}
+
+function buildRoleKnowledgeBase(detailsEl) {
+  const kb = [];
+  const oneliner = detailsEl.querySelector(".role-oneliner");
+  // Flagged generic: the one-liner is vague enough to spuriously overlap
+  // with almost any question, so it's only used as a last resort when no
+  // specific section (how they use the market, pay, variations, tools...)
+  // matches anything at all.
+  if (oneliner) kb.push({ lead: "In short:", text: oneliner.textContent.trim(), generic: true });
+
+  const LEADS = {
+    "How they use the market": "Here's how I use the market in this job:",
+    "In practice": "Day to day, here's what it actually looks like:",
+    "How they're paid": "As for how I'm paid:",
+  };
+  detailsEl.querySelectorAll(".role-body h3").forEach((h) => {
+    const label = h.textContent.trim();
+    const node = h.nextElementSibling;
+    if (label === "Variations on this role" && node && node.classList.contains("variant-list")) {
+      node.querySelectorAll(".variant").forEach((v) => kb.push({ lead: "One version of this role:", text: v.textContent.trim() }));
+      return;
+    }
+    if (label === "Key tools & concepts" && node && node.classList.contains("chip-row")) {
+      const chips = Array.from(node.querySelectorAll(".chip")).map((c) => c.textContent.trim()).join(", ");
+      if (chips) kb.push({ lead: "The tools and concepts I lean on:", text: chips + "." });
+      return;
+    }
+    if (node && node.tagName === "P") kb.push({ lead: LEADS[label] || (label + ":"), text: node.textContent.trim() });
+  });
+
+  const tryIt = detailsEl.querySelector(".try-it");
+  if (tryIt) kb.push({ lead: "If you want to try this yourself:", text: tryIt.textContent.trim() });
+  return kb;
+}
+
+function bestMentorMatch(entries, qTokenSet) {
+  // Frequency-weighted, not just "does this word appear at all": an entry
+  // that's actually about pay (using "paid"/"fee"/"salary" repeatedly)
+  // outscores one that just happens to mention a related word once in
+  // passing (e.g. a variant mentioning "low cost" investing).
+  let best = null, bestOverlap = 0;
+  for (const entry of entries) {
+    const entryTokens = mentorTokenize(entry.text);
+    let overlap = 0;
+    for (const t of qTokenSet) for (const et of entryTokens) if (et === t) overlap++;
+    if (overlap > bestOverlap) { bestOverlap = overlap; best = entry; }
+  }
+  return best;
+}
+
+function answerMentorQuestion(detailsEl, question) {
+  const qTokenSet = new Set(mentorTokenize(question));
+  if (qTokenSet.size === 0) return null;
+  const kb = buildRoleKnowledgeBase(detailsEl);
+  // Prefer a specific section (how they use the market, pay, variations,
+  // tools...) over the generic one-liner, which overlaps almost any
+  // question just by being vague -- only fall back to it if nothing more
+  // specific matches at all.
+  const match = bestMentorMatch(kb.filter((e) => !e.generic), qTokenSet)
+    || bestMentorMatch(kb.filter((e) => e.generic), qTokenSet);
+  return match ? match.lead + " " + match.text : null;
 }
 
 function renderMentorPanel(detailsEl, roleId, colorIdx) {
@@ -1226,6 +1396,14 @@ function renderMentorPanel(detailsEl, roleId, colorIdx) {
         <button type="button" class="mentor-btn reroll-btn">&#8635; New mentor</button>
       </div>
       <div class="mentor-voice-note"></div>
+      <div class="mentor-ask">
+        <div class="mentor-ask-label">Ask ${escapeMentorHtml(persona.name)} a question about this role</div>
+        <div class="mentor-ask-row">
+          <input type="text" class="mentor-ask-input" placeholder="e.g. How much could I earn doing this?" maxlength="200">
+          <button type="button" class="mentor-btn ask-btn">Ask</button>
+        </div>
+        <div class="mentor-answer" style="display:none"></div>
+      </div>
     </div>`;
 
   const body = detailsEl.querySelector(".role-body");
@@ -1243,6 +1421,26 @@ function renderMentorPanel(detailsEl, roleId, colorIdx) {
     saveMentorAssignment(roleId, { personaIdx: nextPersonaIdx, templateIdx: nextTemplateIdx });
     renderMentorPanel(detailsEl, roleId, colorIdx);
   });
+
+  const askInput = panel.querySelector(".mentor-ask-input");
+  const answerBox = panel.querySelector(".mentor-answer");
+  function submitAsk() {
+    const q = askInput.value.trim();
+    if (!q) return;
+    const answer = answerMentorQuestion(detailsEl, q);
+    answerBox.style.display = "block";
+    if (!answer) {
+      answerBox.innerHTML = `<div class="mentor-answer-q">You asked: &ldquo;${escapeMentorHtml(q)}&rdquo;</div>I don't see anything about that in what's written here for this role &mdash; try asking about how I use the market, what a typical day looks like, how I'm paid, or the different flavors this role comes in.`;
+      return;
+    }
+    answerBox.innerHTML = `<div class="mentor-answer-q">You asked: &ldquo;${escapeMentorHtml(q)}&rdquo;</div>${escapeMentorHtml(answer)}<br><button type="button" class="mentor-answer-speak">&#128264; Read this answer aloud</button>`;
+    const answerSpeakBtn = answerBox.querySelector(".mentor-answer-speak");
+    const answerEntry = { persona, speakBtn: answerSpeakBtn, noteEl: document.createElement("div") };
+    refreshSpeakButtonState(answerEntry);
+    answerSpeakBtn.addEventListener("click", () => speakAsMentor(detailsEl, roleTitle, answerEntry, answer));
+  }
+  panel.querySelector(".ask-btn").addEventListener("click", submitAsk);
+  askInput.addEventListener("keydown", (e) => { if (e.key === "Enter") submitAsk(); });
 }
 
 function initMentors() {
