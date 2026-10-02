@@ -85,6 +85,52 @@
     .calc-field input, .calc-field select { width: 100%; }
     .calc-field { width: 100%; }
   }
+
+  /* ---------- mentor system ---------- */
+  .mentor-panel {
+    --mc: var(--accent);
+    display: flex; gap: 14px; align-items: flex-start;
+    background: var(--surface);
+    background: linear-gradient(135deg, color-mix(in srgb, var(--mc) 10%, var(--surface)), var(--surface));
+    border: 1px solid var(--border);
+    border: 1px solid color-mix(in srgb, var(--mc) 35%, var(--border));
+    border-radius: 12px; padding: 14px 16px; margin: 14px 0 20px;
+  }
+  .mentor-avatar { flex: none; width: 56px; height: 56px; }
+  .mentor-avatar svg { display: block; }
+  .mentor-avatar .ring-outer { transform-origin: 32px 32px; animation: mentor-spin 14s linear infinite; }
+  .mentor-avatar .ring-mid { transform-origin: 32px 32px; animation: mentor-spin-rev 9s linear infinite; }
+  .mentor-avatar .core-dot { transform-origin: 32px 32px; animation: mentor-pulse 2.2s ease-in-out infinite; }
+  @keyframes mentor-spin { to { transform: rotate(360deg); } }
+  @keyframes mentor-spin-rev { to { transform: rotate(-360deg); } }
+  @keyframes mentor-pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.55; transform: scale(0.82); } }
+  @media (prefers-reduced-motion: reduce) {
+    .mentor-avatar .ring-outer, .mentor-avatar .ring-mid, .mentor-avatar .core-dot { animation: none; }
+  }
+  .mentor-info { flex: 1; min-width: 0; }
+  .mentor-tag {
+    font-family: "IBM Plex Mono", monospace; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--mc); margin-bottom: 3px;
+  }
+  .mentor-name { font-size: 15.5px; font-weight: 600; color: var(--ink); }
+  .mentor-flag { margin-left: 2px; }
+  .mentor-sub { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink-faint); margin-top: 1px; }
+  .mentor-intro { font-size: 13.5px; font-style: italic; color: var(--ink-muted); margin: 8px 0 10px; line-height: 1.5; }
+  .mentor-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .mentor-btn {
+    font-family: "IBM Plex Mono", monospace; font-size: 11.5px; cursor: pointer;
+    border: 1px solid var(--border);
+    border: 1px solid color-mix(in srgb, var(--mc) 45%, var(--border)); border-radius: 999px;
+    padding: 6px 12px; background: var(--surface-2); background: color-mix(in srgb, var(--mc) 12%, var(--surface)); color: var(--ink);
+  }
+  .mentor-btn:hover { background: var(--surface); background: color-mix(in srgb, var(--mc) 22%, var(--surface)); }
+  .mentor-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .mentor-btn.speaking { background: var(--mc); color: #fff; border-color: transparent; }
+  .mentor-voice-note { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; color: var(--ink-faint); margin-top: 6px; min-height: 1.3em; }
+
+  @media (max-width: 480px) {
+    .mentor-panel { flex-direction: column; align-items: flex-start; }
+  }
 </style>
 <link rel="stylesheet" href="../assets/theme.css">
 </head>
@@ -100,6 +146,7 @@
     <div class="eyebrow">Career guide</div>
     <h1 class="title">How Each Role Uses the Stock Market</h1>
     <div class="sub">The same ticker means something different depending on who's looking at it. This is a plain-language tour of thirteen finance careers and how each actually relates to public companies and their stock &mdash; what they do day to day, the different flavors the job comes in, how they're paid, the math they lean on, and which parts of that you can practice in the Simulator. Each entry below is collapsed by default &mdash; click any row to open it up.</div>
+    <div class="sub">Open a role and you'll be greeted by a personal mentor for it &mdash; a different name, home region and voice every time, assigned the moment you open that card. Hit <b>Read aloud</b> and your browser's own text-to-speech will narrate their walkthrough, in whichever of its installed voices best matches that mentor's accent (which voices are available depends entirely on your own browser/device &mdash; there's no server or AI model behind this, just your system's built-in speech engine). Not feeling the mentor you got? Hit <b>New mentor</b> for a different one.</div>
   </header>
 
   <nav class="toc" id="tocNav">
@@ -976,6 +1023,201 @@ document.getElementById("risk-calc").addEventListener("click", () => {
   document.getElementById("risk-out").innerHTML =
     `1-day Value-at-Risk: <b>${fmtUSD(varAmount)}</b><br>Interpretation: on a typical day, losses shouldn't exceed this &mdash; but the confidence level means it still will, some of the time.`;
 });
+
+/* ---------- mentor system ----------
+ * Every career card gets a personal "mentor" persona, drawn from a pool of
+ * names/regions/accents spanning several continents, with an abstract
+ * HUD-style avatar (no human face/skin illustration, deliberately -- the
+ * diversity here lives in the name, region and voice, not a cartoon face).
+ * "Accent" is honest, not guaranteed: it's a best-effort match against
+ * whatever voices the visitor's own browser happens to have installed,
+ * using the Web Speech API entirely client-side (no server, no AI model).
+ */
+const MENTOR_PERSONAS = [
+  { name: "Amara Chukwu", gender: "woman", flag: "🇳🇬", region: "Lagos, Nigeria", accent: "Nigerian English", voiceLangs: ["en-NG", "en-GB", "en"] },
+  { name: "Olusegun Adebayo", gender: "man", flag: "🇳🇬", region: "Abuja, Nigeria", accent: "Nigerian English", voiceLangs: ["en-NG", "en-GB", "en"] },
+  { name: "Priya Raman", gender: "woman", flag: "🇮🇳", region: "Bengaluru, India", accent: "Indian English", voiceLangs: ["en-IN", "en"] },
+  { name: "Arjun Mehta", gender: "man", flag: "🇮🇳", region: "Mumbai, India", accent: "Indian English", voiceLangs: ["en-IN", "en"] },
+  { name: "James Whitfield", gender: "man", flag: "🇬🇧", region: "London, UK", accent: "British English", voiceLangs: ["en-GB", "en"] },
+  { name: "Tom Ashworth", gender: "man", flag: "🇬🇧", region: "Leeds, UK", accent: "British English", voiceLangs: ["en-GB", "en"] },
+  { name: "Freya Lindqvist", gender: "woman", flag: "🇬🇧", region: "Edinburgh, UK", accent: "Scottish English", voiceLangs: ["en-GB", "en"] },
+  { name: "Liam O'Connor", gender: "man", flag: "🇮🇪", region: "Dublin, Ireland", accent: "Irish English", voiceLangs: ["en-IE", "en-GB", "en"] },
+  { name: "Sipho Dlamini", gender: "man", flag: "🇿🇦", region: "Johannesburg, South Africa", accent: "South African English", voiceLangs: ["en-ZA", "en-GB", "en"] },
+  { name: "Zanele Nkosi", gender: "woman", flag: "🇿🇦", region: "Cape Town, South Africa", accent: "South African English", voiceLangs: ["en-ZA", "en-GB", "en"] },
+  { name: "Wanjiru Kamau", gender: "woman", flag: "🇰🇪", region: "Nairobi, Kenya", accent: "Kenyan English", voiceLangs: ["en-KE", "en-GB", "en"] },
+  { name: "Grace Osei", gender: "woman", flag: "🇬🇭", region: "Accra, Ghana", accent: "Ghanaian English", voiceLangs: ["en-GH", "en-NG", "en-GB", "en"] },
+  { name: "Isla Thompson", gender: "woman", flag: "🇦🇺", region: "Sydney, Australia", accent: "Australian English", voiceLangs: ["en-AU", "en"] },
+  { name: "Mitchell Carter", gender: "man", flag: "🇳🇿", region: "Auckland, New Zealand", accent: "New Zealand English", voiceLangs: ["en-NZ", "en-AU", "en"] },
+  { name: "Carlos Mendoza", gender: "man", flag: "🇵🇭", region: "Manila, Philippines", accent: "Filipino English", voiceLangs: ["en-PH", "en"] },
+  { name: "Luna Santos", gender: "woman", flag: "🇸🇬", region: "Singapore", accent: "Singaporean English", voiceLangs: ["en-SG", "en"] },
+  { name: "Chloe Nguyen", gender: "woman", flag: "🇭🇰", region: "Hong Kong", accent: "Hong Kong English", voiceLangs: ["en-HK", "en-GB", "en"] },
+  { name: "Ethan Brooks", gender: "man", flag: "🇺🇸", region: "Chicago, USA", accent: "American English (Midwest)", voiceLangs: ["en-US", "en"] },
+  { name: "Maya Rodriguez", gender: "woman", flag: "🇺🇸", region: "Phoenix, USA", accent: "American English (Southwest)", voiceLangs: ["en-US", "en"] },
+  { name: "Noah Bergstrom", gender: "man", flag: "🇨🇦", region: "Toronto, Canada", accent: "Canadian English", voiceLangs: ["en-CA", "en-US", "en"] },
+];
+const MENTOR_INTRO_TEMPLATES = [
+  "Hi, I'm {name}. I've spent my career as a {role}, and I'm here to walk you through what that actually looks like.",
+  "Hello there, {name} here. I work as a {role} -- let me show you around this one.",
+  "I'm {name}, and this is my world: {role}. Open me up and I'll talk you through it.",
+];
+const MENTOR_COLORS = [
+  "var(--accent)", "var(--accent-2)", "var(--growth)", "var(--stability)", "var(--short)",
+  "var(--nextgen)", "var(--funds)", "var(--pos)", "var(--neg)", "#6FA8DC", "#F2C14E", "#C792EA", "#FF5C72",
+];
+const MENTOR_SPOKEN_SECTIONS = [
+  { heading: "How they use the market", lead: "Here's how I use the market in this job." },
+  { heading: "In practice", lead: "In practice, here's what my day-to-day actually looks like." },
+  { heading: "How they're paid", lead: "And as for how I'm paid:" },
+];
+
+function mentorStoreKey(roleId) { return "guideMentor.v1::" + roleId; }
+function hashStr(s) {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+function loadMentorAssignment(roleId) {
+  try {
+    const raw = JSON.parse(localStorage.getItem(mentorStoreKey(roleId)) || "null");
+    if (raw && typeof raw.personaIdx === "number" && typeof raw.templateIdx === "number") return raw;
+  } catch (e) {}
+  const seed = hashStr(roleId);
+  return { personaIdx: seed % MENTOR_PERSONAS.length, templateIdx: seed % MENTOR_INTRO_TEMPLATES.length };
+}
+function saveMentorAssignment(roleId, assignment) {
+  try { localStorage.setItem(mentorStoreKey(roleId), JSON.stringify(assignment)); } catch (e) {}
+}
+
+function mentorAvatarSVG(color) {
+  return `<svg viewBox="0 0 64 64" width="56" height="56">
+    <circle class="ring-outer" cx="32" cy="32" r="28" fill="none" stroke="${color}" stroke-width="1.5" opacity="0.35"></circle>
+    <circle class="ring-mid" cx="32" cy="32" r="21" fill="none" stroke="${color}" stroke-width="2" opacity="0.6" stroke-dasharray="10 6"></circle>
+    <circle cx="32" cy="32" r="12" fill="${color}" opacity="0.18"></circle>
+    <circle class="core-dot" cx="32" cy="32" r="5" fill="${color}"></circle>
+  </svg>`;
+}
+
+let MENTOR_SPEAKING_BTN = null;
+function stopMentorSpeech() {
+  try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
+  if (MENTOR_SPEAKING_BTN) { MENTOR_SPEAKING_BTN.classList.remove("speaking"); MENTOR_SPEAKING_BTN.innerHTML = "&#128264; Read aloud"; }
+  MENTOR_SPEAKING_BTN = null;
+}
+
+function pickVoiceFor(persona) {
+  if (!("speechSynthesis" in window)) return null;
+  const voices = window.speechSynthesis.getVoices() || [];
+  if (voices.length === 0) return null;
+  for (const lang of persona.voiceLangs) {
+    const match = voices.find((v) => v.lang && v.lang.toLowerCase().startsWith(lang.toLowerCase()));
+    if (match) return match;
+  }
+  return voices.find((v) => v.lang && v.lang.toLowerCase().startsWith("en")) || voices[0];
+}
+
+function buildMentorScript(detailsEl, persona, roleTitle) {
+  const parts = [`Hi, I'm ${persona.name}, your mentor for the ${roleTitle} track.`];
+  const headings = detailsEl.querySelectorAll(".role-body h3");
+  for (const cfg of MENTOR_SPOKEN_SECTIONS) {
+    for (const h of headings) {
+      if (h.textContent.trim() === cfg.heading) {
+        const p = h.nextElementSibling;
+        if (p && p.tagName === "P") parts.push(cfg.lead + " " + p.textContent.trim());
+        break;
+      }
+    }
+  }
+  return parts.join(" ");
+}
+
+function speakAsMentor(detailsEl, persona, roleTitle, btn, noteEl) {
+  if (!("speechSynthesis" in window)) return;
+  if (MENTOR_SPEAKING_BTN === btn) { stopMentorSpeech(); return; }
+  stopMentorSpeech();
+  const text = buildMentorScript(detailsEl, persona, roleTitle);
+  const utter = new SpeechSynthesisUtterance(text);
+  const voice = pickVoiceFor(persona);
+  if (voice) {
+    utter.voice = voice;
+    noteEl.textContent = "Voice: " + voice.name + " (" + voice.lang + ")";
+  } else {
+    noteEl.textContent = "No " + persona.accent + " voice found on this device -- using your browser's default voice instead.";
+  }
+  utter.onend = () => stopMentorSpeech();
+  utter.onerror = () => stopMentorSpeech();
+  MENTOR_SPEAKING_BTN = btn;
+  btn.classList.add("speaking");
+  btn.innerHTML = "&#9632; Stop";
+  window.speechSynthesis.speak(utter);
+}
+
+function renderMentorPanel(detailsEl, roleId, colorIdx) {
+  const existing = detailsEl.querySelector(".mentor-panel");
+  if (existing) existing.remove();
+
+  const roleTitle = detailsEl.querySelector(".role-head h2").textContent.trim();
+  const assignment = loadMentorAssignment(roleId);
+  const persona = MENTOR_PERSONAS[assignment.personaIdx];
+  const template = MENTOR_INTRO_TEMPLATES[assignment.templateIdx];
+  const intro = template.replace("{name}", persona.name).replace("{role}", roleTitle);
+  const color = MENTOR_COLORS[colorIdx % MENTOR_COLORS.length];
+
+  const panel = document.createElement("div");
+  panel.className = "mentor-panel";
+  panel.style.setProperty("--mc", color);
+  panel.innerHTML = `
+    <div class="mentor-avatar">${mentorAvatarSVG(color)}</div>
+    <div class="mentor-info">
+      <div class="mentor-tag">Career mentor</div>
+      <div class="mentor-name">${persona.name}<span class="mentor-flag">${persona.flag}</span></div>
+      <div class="mentor-sub">${persona.region} &middot; ${persona.accent}</div>
+      <p class="mentor-intro">&ldquo;${intro}&rdquo;</p>
+      <div class="mentor-actions">
+        <button type="button" class="mentor-btn speak-btn">&#128264; Read aloud</button>
+        <button type="button" class="mentor-btn reroll-btn">&#8635; New mentor</button>
+      </div>
+      <div class="mentor-voice-note"></div>
+    </div>`;
+
+  const body = detailsEl.querySelector(".role-body");
+  body.insertBefore(panel, body.firstChild);
+
+  const speakBtn = panel.querySelector(".speak-btn");
+  const noteEl = panel.querySelector(".mentor-voice-note");
+  if (!("speechSynthesis" in window)) {
+    speakBtn.disabled = true;
+    speakBtn.title = "Spoken narration isn't supported in this browser.";
+  } else {
+    speakBtn.addEventListener("click", () => speakAsMentor(detailsEl, persona, roleTitle, speakBtn, noteEl));
+  }
+
+  panel.querySelector(".reroll-btn").addEventListener("click", () => {
+    stopMentorSpeech();
+    let nextPersonaIdx;
+    do { nextPersonaIdx = Math.floor(Math.random() * MENTOR_PERSONAS.length); }
+    while (nextPersonaIdx === assignment.personaIdx && MENTOR_PERSONAS.length > 1);
+    const nextTemplateIdx = Math.floor(Math.random() * MENTOR_INTRO_TEMPLATES.length);
+    saveMentorAssignment(roleId, { personaIdx: nextPersonaIdx, templateIdx: nextTemplateIdx });
+    renderMentorPanel(detailsEl, roleId, colorIdx);
+  });
+}
+
+function initMentors() {
+  const sections = document.querySelectorAll("section.role");
+  let colorIdx = 0;
+  sections.forEach((section) => {
+    const details = section.querySelector("details.role-card:not(.security-card)");
+    if (!details) return;
+    renderMentorPanel(details, section.id, colorIdx);
+    colorIdx++;
+  });
+  if ("speechSynthesis" in window) {
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => {};
+  }
+}
+window.addEventListener("beforeunload", stopMentorSpeech);
+initMentors();
 </script>
 </body>
 </html>
