@@ -372,5 +372,15 @@ const MarketEngine = (function () {
   return {
     MS_PER_YEAR, SPEED_PRESETS, clamp, stepPrice, deriveRealParams,
     createRealWorld, createSuperWorld, tick, indexSeries,
+    // Exposed in addition to the runtime API above solely so Milestone 0's
+    // node:test suite (engine.test.js) can exercise it directly without
+    // going through the full createSuperWorld() pipeline.
+    createExtraDiversifiedTickers,
   };
 })();
+
+// Node's CommonJS module.exports is undefined in a browser <script> tag, so
+// this only runs under `node --test`; it has no effect on the shipped page.
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = MarketEngine;
+}

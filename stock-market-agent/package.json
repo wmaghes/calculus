@@ -1,0 +1,8 @@
+{
+  "name": "vantage-stock-market-agent",
+  "private": true,
+  "description": "VANTAGE static site (no backend, no build step, no bundler). This package.json exists only to run the node:test suite -- no dependencies, no build tooling.",
+  "scripts": {
+    "test": "node --test"
+  }
+}
