@@ -1,0 +1,29 @@
+# Example host firewall for the lexreview application host (nftables).
+# Default-deny OUTBOUND. The in-process egress guard (netguard.py) is only a
+# second layer; this is the primary control. Adjust addresses to your site.
+table inet lexreview {
+  set vault      { type ipv4_addr; elements = { 10.0.10.5 } }   # Vault Transit / HSM
+  set resolvers  { type ipv4_addr; elements = { 10.0.0.53 } }   # internal DNS only
+  set idp        { type ipv4_addr; elements = { 10.0.20.7 } }   # firm IdP (OIDC)
+
+  chain output {
+    type filter hook output priority 0; policy drop;
+    oif "lo" accept
+    ct state established,related accept
+    ip daddr @vault tcp dport 8200 accept
+    ip daddr @resolvers udp dport 53 accept
+    ip daddr @idp tcp dport 443 accept
+    # Phase 5 legal-authority gateway ONLY (LEXREVIEW_LEGAL_SOURCES=1), ideally via
+    # a separate egress proxy that itself allows only these HTTPS hosts:
+    #   www.courtlistener.com  api.govinfo.gov  www.ecfr.gov
+    #   codes.ohio.gov  www.legislature.mi.gov
+    # ip daddr <legal egress proxy> tcp dport 3128 accept
+    log prefix "lexreview-egress-drop " counter drop
+  }
+  chain input {
+    type filter hook input priority 0; policy drop;
+    iif "lo" accept
+    ct state established,related accept
+    tcp dport 443 accept        # reverse proxy / API (TLS 1.3)
+  }
+}

@@ -1,0 +1,574 @@
+{
+  "_note": "Prepared Second Chair analyses for the SYNTHETIC demo matter. Every quote must exist verbatim (whitespace-normalized) in the cited document; demo/build.py refuses to build otherwise. No legal authority is cited: authority comes only from the Legal research leads workflow.",
+  "issues": [
+    "maintain product between 2 and 8 degrees temperature excursion",
+    "notify temperature excursion within two hours of detection",
+    "liability limitation per shipment gross negligence",
+    "cargo claim insurer denied late notice",
+    "compressor flagged maintenance never replaced",
+    "customer rejected pallets reefer temperature",
+    "recorder readings peaked reset",
+    "dispatcher off shift unmonitored inbox",
+    "calibrated continuous temperature recorders"
+  ],
+  "plaintiff": {
+    "party": "Harbor Point Cold Storage",
+    "role": "Plaintiff",
+    "opponent": "Meridian Freightways",
+    "theory": "Meridian let the April 12 load on trailer 4471 run warm for hours, told no one until morning, and knew the compressor was failing. Harbor Point lost all 22 pallets and is owed the full USD 412,500.",
+    "arguments": [
+      {
+        "title": "Meridian broke the temperature promise on the April 12 load",
+        "text": "The MSA requires Meridian to hold product between 2 and 8 degrees Celsius at all times. The trailer's recorder, the shipment log and Meridian's own witness all show readings far above that range for hours.",
+        "cites": [
+          {
+            "doc": "docs/contracts/master_services_agreement.pdf",
+            "quote": "Meridian shall maintain product between 2 and 8 degrees Celsius at all times."
+          },
+          {
+            "doc": "docs/emails/e05.eml::attachment::recorder_4471.pdf",
+            "quote": "23:40 8.9C 00:10 10.2C 00:40 11.4C 01:10 11.1C 01:40 10.6C"
+          },
+          {
+            "doc": "docs/logs/shipment_log_2023.xlsx",
+            "quote": "L00144 2023-04-12 4471 Stockton Sacramento 3.4 11.4 YES - high"
+          },
+          {
+            "doc": "docs/depositions/okafor_deposition_vol1.pdf",
+            "quote": "Yes. The recorder showed 11.4 degrees for about three hours."
+          }
+        ]
+      },
+      {
+        "title": "Meridian gave no notice for roughly five hours",
+        "text": "Section 7.3 requires notice within two hours of detection. Meridian's driver reset the unit at 2:10 AM, so the excursion was known on the road, yet the first notice is Meridian's 7:02 AM email. Meridian's dispatch director admits the alarm went to an unmonitored inbox.",
+        "cites": [
+          {
+            "doc": "docs/contracts/master_services_agreement.pdf",
+            "quote": "Meridian shall notify Harbor Point of any Temperature Excursion within two hours of detection."
+          },
+          {
+            "doc": "docs/emails/e05.eml",
+            "quote": "Driver Tomas Ferreira reset the unit at 2:10 AM."
+          },
+          {
+            "doc": "docs/depositions/lindqvist_deposition.docx",
+            "quote": "No. Our dispatcher was off shift and the alarm went to an unmonitored inbox."
+          },
+          {
+            "doc": "docs/depositions/okafor_deposition_vol1.pdf",
+            "quote": "Not until the next morning, April 13. Nobody called me that night."
+          }
+        ]
+      },
+      {
+        "title": "The loss flows directly from the excursion",
+        "text": "Section 8 makes Meridian liable for loss caused by a Temperature Excursion. The consignee rejected the entire load and wrote the temperature reading on the receipt as the reason.",
+        "cites": [
+          {
+            "doc": "docs/contracts/master_services_agreement.pdf",
+            "quote": "Meridian is liable for loss or damage to Product caused by a Temperature Excursion, subject to Section 9."
+          },
+          {
+            "doc": "docs/scans/delivery_receipt_0412.pdf",
+            "quote": "Consignee REJECTED 22 pallets."
+          },
+          {
+            "doc": "docs/scans/delivery_receipt_0412.pdf",
+            "quote": "Reason: reefer temperature 11.4 C above limit."
+          }
+        ]
+      },
+      {
+        "title": "The USD 250,000 cap falls away for gross negligence",
+        "text": "The cap has an express gross-negligence exception. Meridian's own maintenance ticket (Bates HPCS-000412) shows the 4471 compressor was flagged in February and its replacement deferred; Meridian kept the trailer in service and routed alarms to an inbox nobody watched.",
+        "cites": [
+          {
+            "doc": "docs/contracts/master_services_agreement.pdf",
+            "quote": "Liability per shipment shall not exceed USD 250,000 except for gross negligence."
+          },
+          {
+            "doc": "docs/large/production_vol2.pdf",
+            "quote": "Maintenance ticket: compressor on trailer 4471 flagged for replacement in February 2023, deferred."
+          },
+          {
+            "doc": "docs/emails/e08.eml",
+            "quote": "the compressor on 4471 was flagged in February maintenance and never replaced."
+          },
+          {
+            "doc": "docs/depositions/lindqvist_deposition.docx",
+            "quote": "the alarm went to an unmonitored inbox."
+          }
+        ]
+      },
+      {
+        "title": "Meridian was already on notice from the March 4410 excursion",
+        "text": "A month earlier, another Meridian trailer ran warm past the 30-minute threshold and Harbor Point complained in writing that the two-hour notice never came. Meridian cannot call April 12 a one-off.",
+        "cites": [
+          {
+            "doc": "docs/emails/e02.eml",
+            "quote": "trailer 4410 recorder shows a 42-minute excursion to 9.1C on March 13 near Lodi."
+          },
+          {
+            "doc": "docs/emails/e03.eml",
+            "quote": "we did not receive the two-hour notice required by Section 7.3 for the 4410 excursion."
+          }
+        ]
+      },
+      {
+        "title": "The claim was timely, and Meridian's insurance promise is in play",
+        "text": "Harbor Point submitted its written claim on May 2, well inside the 90-day window. Meridian had to insure the cargo with Harbor Point as loss payee; its insurer then denied the claim for late notice, which was Meridian's own failure.",
+        "cites": [
+          {
+            "doc": "docs/contracts/master_services_agreement.pdf",
+            "quote": "Claims must be submitted in writing within ninety days of delivery."
+          },
+          {
+            "doc": "docs/emails/e07.eml",
+            "quote": "attached is our cargo claim for USD 412,500 for the April 12 load."
+          },
+          {
+            "doc": "docs/contracts/master_services_agreement.pdf",
+            "quote": "Meridian shall carry cargo insurance of not less than USD 1,000,000 per occurrence naming Harbor Point as loss payee."
+          },
+          {
+            "doc": "docs/emails/e11.eml",
+            "quote": "our insurer denied the claim citing late notice under the policy."
+          }
+        ]
+      }
+    ],
+    "anticipate": [
+      {
+        "title": "Meridian: liability is capped at USD 250,000",
+        "text": "Our response: the cap carries its own gross-negligence exception. Meridian's maintenance ticket and internal email both show it knowingly deferred the compressor repair. Build that record before any cap argument is briefed.",
+        "cites": [
+          {
+            "doc": "docs/contracts/master_services_agreement.pdf",
+            "quote": "Liability per shipment shall not exceed USD 250,000 except for gross negligence."
+          },
+          {
+            "doc": "docs/large/production_vol2.pdf",
+            "quote": "Maintenance ticket: compressor on trailer 4471 flagged for replacement in February 2023, deferred."
+          },
+          {
+            "doc": "docs/emails/e08.eml",
+            "quote": "the compressor on 4471 was flagged in February maintenance and never replaced."
+          }
+        ]
+      },
+      {
+        "title": "Meridian: notice was timely because nobody detected the alarm until morning",
+        "text": "Our response: the driver reset the unit at 2:10 AM, so the excursion was detected on the road. An inbox nobody monitored is Meridian's choice, not a reason the clock never started.",
+        "cites": [
+          {
+            "doc": "docs/emails/e05.eml",
+            "quote": "Driver Tomas Ferreira reset the unit at 2:10 AM."
+          },
+          {
+            "doc": "docs/depositions/lindqvist_deposition.docx",
+            "quote": "Our dispatcher was off shift and the alarm went to an unmonitored inbox."
+          }
+        ]
+      },
+      {
+        "title": "Meridian: the parties changed the notice terms",
+        "text": "Our response: Amendment No. 1 was signed April 28, after the April 12 loss, so the two-hour rule governs. If anything, tightening notice to one hour shows both sides treated notice as essential. (Attorneys' eyes only document.)",
+        "cites": [
+          {
+            "doc": "docs/contracts/amendment_1.docx",
+            "quote": "Section 7.3 is amended to require notice of any Temperature Excursion within one hour of detection."
+          },
+          {
+            "doc": "docs/contracts/amendment_1.docx",
+            "quote": "Signed April 28, 2023 by Elaine Voss and Victor Lindqvist."
+          }
+        ]
+      },
+      {
+        "title": "Meridian: Harbor Point has not proven the product was actually damaged",
+        "text": "Our response: the consignee rejected all 22 pallets for temperature, and the readings reached 11.4C. But this is a real gap: the production holds no product testing or valuation records behind USD 412,500. Collect them now.",
+        "cites": [
+          {
+            "doc": "docs/scans/delivery_receipt_0412.pdf",
+            "quote": "Reason: reefer temperature 11.4 C above limit."
+          },
+          {
+            "doc": "docs/emails/e07.eml",
+            "quote": "attached is our cargo claim for USD 412,500 for the April 12 load."
+          }
+        ]
+      },
+      {
+        "title": "Meridian: the recorder readings are unreliable",
+        "text": "Our response: the contract put the duty to supply calibrated recorders, and to keep their data, on Meridian. Meridian's own email reports the same 11.4C peak.",
+        "cites": [
+          {
+            "doc": "docs/contracts/master_services_agreement.pdf",
+            "quote": "Meridian shall supply reefer trailers with calibrated continuous temperature recorders."
+          },
+          {
+            "doc": "docs/emails/e05.eml",
+            "quote": "Readings peaked at 11.4C."
+          }
+        ]
+      }
+    ],
+    "strategy": [
+      {
+        "title": "Lead with notice, the cleanest liability fact",
+        "text": "Open every brief and the mediation statement with the unmonitored inbox and the five-hour silence. It is Meridian's own testimony and needs no expert.",
+        "cites": [
+          {
+            "doc": "docs/depositions/lindqvist_deposition.docx",
+            "quote": "No. Our dispatcher was off shift and the alarm went to an unmonitored inbox."
+          },
+          {
+            "doc": "docs/contracts/master_services_agreement.pdf",
+            "quote": "Meridian shall notify Harbor Point of any Temperature Excursion within two hours of detection."
+          }
+        ]
+      },
+      {
+        "title": "Build the gross-negligence record to break the cap",
+        "text": "Feature Bates HPCS-000412, the deferred-repair ticket buried in the 600-page production. Depose driver Tomas Ferreira on the reset and the compressor, and request every work order for trailer 4471 since February.",
+        "cites": [
+          {
+            "doc": "docs/large/production_vol2.pdf",
+            "quote": "Maintenance ticket: compressor on trailer 4471 flagged for replacement in February 2023, deferred."
+          },
+          {
+            "doc": "docs/emails/e08.eml",
+            "quote": "the compressor on 4471 was flagged in February maintenance and never replaced."
+          },
+          {
+            "doc": "docs/emails/e05.eml",
+            "quote": "Driver Tomas Ferreira reset the unit at 2:10 AM."
+          }
+        ]
+      },
+      {
+        "title": "Demand the full recorder data and calibration file",
+        "text": "Invoke the five-business-day production right for 4471's complete recorder history and its calibration certificates. A missing certificate weakens any attack on the readings.",
+        "cites": [
+          {
+            "doc": "docs/contracts/master_services_agreement.pdf",
+            "quote": "Recorder data shall be retained for three years and produced on request within five business days."
+          },
+          {
+            "doc": "docs/emails/e13.eml",
+            "quote": "the recorder calibration certificates for Meridian trailers are due in February."
+          }
+        ]
+      },
+      {
+        "title": "Use March to show a pattern",
+        "text": "Pair the 4410 excursion with Harbor Point's written complaint about missing notice. It shows Meridian knew its notice process failed before April 12.",
+        "cites": [
+          {
+            "doc": "docs/emails/e03.eml",
+            "quote": "we did not receive the two-hour notice required by Section 7.3 for the 4410 excursion."
+          }
+        ]
+      },
+      {
+        "title": "Press the insurance covenant in parallel",
+        "text": "Ask for the policy and the denial letter. If late notice voided coverage Meridian promised to carry for Harbor Point, that is a second path to recovery.",
+        "cites": [
+          {
+            "doc": "docs/contracts/master_services_agreement.pdf",
+            "quote": "Meridian shall carry cargo insurance of not less than USD 1,000,000 per occurrence naming Harbor Point as loss payee."
+          },
+          {
+            "doc": "docs/emails/e11.eml",
+            "quote": "our insurer denied the claim citing late notice under the policy."
+          }
+        ]
+      },
+      {
+        "title": "Close the damages gap before Meridian finds it",
+        "text": "Assemble the product invoices, the consignee's rejection paperwork and any disposal records behind the USD 412,500 figure.",
+        "cites": [
+          {
+            "doc": "docs/emails/e06.eml",
+            "quote": "the customer rejected all 22 pallets from 4471. We need to open a cargo claim."
+          }
+        ]
+      }
+    ],
+    "gaps": [
+      {
+        "title": "No valuation support for USD 412,500",
+        "text": "No searchable document shows how the claim amount was calculated. Expect Meridian to attack it.",
+        "cites": [
+          {
+            "doc": "docs/emails/e07.eml",
+            "quote": "attached is our cargo claim for USD 412,500 for the April 12 load."
+          }
+        ]
+      },
+      {
+        "title": "No calibration certificate for trailer 4471",
+        "text": "The only certificate in the production is for trailer 4502. Meridian may question the 4471 readings.",
+        "cites": [
+          {
+            "doc": "docs/emails/e15.eml",
+            "quote": "calibrated the recorder on trailer 4502 on 03/04/2023."
+          }
+        ]
+      },
+      {
+        "title": "Harbor Point's own excursion records cut both ways",
+        "text": "Harbor Point logged a June low-side excursion on trailer 4488. Meridian may use it to argue excursions were routine and tolerated.",
+        "cites": [
+          {
+            "doc": "docs/emails/e09.eml",
+            "quote": "trailer 4488 logged 1.2C for 55 minutes on June 6."
+          }
+        ]
+      }
+    ]
+  },
+  "defendant": {
+    "party": "Meridian Freightways",
+    "role": "Defendant",
+    "opponent": "Harbor Point Cold Storage",
+    "theory": "Any recovery is capped at USD 250,000. The excursion was corrected on the road, the rejection was the consignee's business decision, and Harbor Point has not shown product damage or a USD 412,500 loss.",
+    "arguments": [
+      {
+        "title": "Liability is capped at USD 250,000 per shipment",
+        "text": "The parties agreed a per-shipment cap. Harbor Point's USD 412,500 claim exceeds it, and Harbor Point carries the burden of proving gross negligence to get past it.",
+        "cites": [
+          {
+            "doc": "docs/contracts/master_services_agreement.pdf",
+            "quote": "Liability per shipment shall not exceed USD 250,000 except for gross negligence."
+          },
+          {
+            "doc": "docs/emails/e07.eml",
+            "quote": "attached is our cargo claim for USD 412,500 for the April 12 load."
+          }
+        ]
+      },
+      {
+        "title": "Liability requires loss caused by the excursion, and that is unproven",
+        "text": "Section 8 covers loss caused by a Temperature Excursion. The receipt records a rejection based on a temperature reading, not any test showing the product was spoiled.",
+        "cites": [
+          {
+            "doc": "docs/contracts/master_services_agreement.pdf",
+            "quote": "Meridian is liable for loss or damage to Product caused by a Temperature Excursion, subject to Section 9."
+          },
+          {
+            "doc": "docs/scans/delivery_receipt_0412.pdf",
+            "quote": "Reason: reefer temperature 11.4 C above limit."
+          }
+        ]
+      },
+      {
+        "title": "Earlier notice would not have changed the outcome",
+        "text": "The readings had already reached 11.4C at 00:40, and the driver corrected the unit, which recovered to 6.0C. Any notice delay did not cause the loss.",
+        "cites": [
+          {
+            "doc": "docs/emails/e05.eml::attachment::recorder_4471.pdf",
+            "quote": "00:40 11.4C"
+          },
+          {
+            "doc": "docs/emails/e05.eml::attachment::recorder_4471.pdf",
+            "quote": "02:10 reset 02:40 6.0C"
+          }
+        ]
+      },
+      {
+        "title": "The notice clock runs from detection",
+        "text": "Section 7.3 measures notice from detection, and Meridian reported the event in writing the same morning. Expect this argument to be contested (see risks).",
+        "cites": [
+          {
+            "doc": "docs/contracts/master_services_agreement.pdf",
+            "quote": "within two hours of detection."
+          },
+          {
+            "doc": "docs/emails/e05.eml",
+            "quote": "the reefer on 4471 alarmed overnight on April 12."
+          }
+        ]
+      },
+      {
+        "title": "Meridian kept its insurance promise",
+        "text": "Section 10 required Meridian to carry cargo insurance. It did, and the claim went to its insurer. The coverage decision was the insurer's.",
+        "cites": [
+          {
+            "doc": "docs/contracts/master_services_agreement.pdf",
+            "quote": "Meridian shall carry cargo insurance of not less than USD 1,000,000 per occurrence"
+          },
+          {
+            "doc": "docs/emails/e11.eml",
+            "quote": "our insurer denied the claim citing late notice under the policy."
+          }
+        ]
+      }
+    ],
+    "anticipate": [
+      {
+        "title": "Harbor Point: the notice breach is admitted",
+        "text": "Our response: concede the inbox lapse candidly and turn to causation. The product had already hit 11.4C before two hours from the first high reading could run.",
+        "cites": [
+          {
+            "doc": "docs/depositions/lindqvist_deposition.docx",
+            "quote": "Our dispatcher was off shift and the alarm went to an unmonitored inbox."
+          },
+          {
+            "doc": "docs/emails/e05.eml::attachment::recorder_4471.pdf",
+            "quote": "23:40 8.9C 00:10 10.2C 00:40 11.4C"
+          }
+        ]
+      },
+      {
+        "title": "Harbor Point: the compressor email proves gross negligence",
+        "text": "Our response: a deferred repair is not proof that the flagged item caused this failure. Retain a refrigeration expert on causation now; if the ticket history is worse than it looks, re-evaluate settlement value immediately.",
+        "cites": [
+          {
+            "doc": "docs/emails/e08.eml",
+            "quote": "the compressor on 4471 was flagged in February maintenance and never replaced."
+          },
+          {
+            "doc": "docs/large/production_vol2.pdf",
+            "quote": "Maintenance ticket: compressor on trailer 4471 flagged for replacement in February 2023, deferred."
+          }
+        ]
+      },
+      {
+        "title": "Harbor Point: March shows a pattern",
+        "text": "Our response: March involved a different trailer, 4410, and a 42-minute event. It says nothing about the 4471 compressor or the April 12 load.",
+        "cites": [
+          {
+            "doc": "docs/emails/e02.eml",
+            "quote": "trailer 4410 recorder shows a 42-minute excursion to 9.1C on March 13 near Lodi."
+          }
+        ]
+      },
+      {
+        "title": "Harbor Point: the recorder data proves the excursion",
+        "text": "Our response: the excursion itself is hard to deny on this record. Concede it and spend credibility on the cap, causation and damages.",
+        "cites": [
+          {
+            "doc": "docs/depositions/okafor_deposition_vol1.pdf",
+            "quote": "Yes. The recorder showed 11.4 degrees for about three hours."
+          }
+        ]
+      }
+    ],
+    "strategy": [
+      {
+        "title": "Make the cap the battleground",
+        "text": "Frame exposure at USD 250,000 from the first letter. Force Harbor Point to prove gross negligence, not mere negligence.",
+        "cites": [
+          {
+            "doc": "docs/contracts/master_services_agreement.pdf",
+            "quote": "Liability per shipment shall not exceed USD 250,000 except for gross negligence."
+          }
+        ]
+      },
+      {
+        "title": "Contest causation and damages",
+        "text": "Serve requests for the consignee's rejection file, any product testing, disposal records and the invoices behind USD 412,500.",
+        "cites": [
+          {
+            "doc": "docs/scans/delivery_receipt_0412.pdf",
+            "quote": "Consignee REJECTED 22 pallets."
+          },
+          {
+            "doc": "docs/emails/e07.eml",
+            "quote": "attached is our cargo claim for USD 412,500 for the April 12 load."
+          }
+        ]
+      },
+      {
+        "title": "Get ahead of the maintenance record",
+        "text": "Harbor Point will find Bates HPCS-000412. Collect trailer 4471's full maintenance history and the reason the repair was deferred, then prepare Tomas Ferreira on the February flag and the 2:10 AM reset.",
+        "cites": [
+          {
+            "doc": "docs/large/production_vol2.pdf",
+            "quote": "Maintenance ticket: compressor on trailer 4471 flagged for replacement in February 2023, deferred."
+          },
+          {
+            "doc": "docs/emails/e08.eml",
+            "quote": "the compressor on 4471 was flagged in February maintenance and never replaced."
+          },
+          {
+            "doc": "docs/emails/e05.eml",
+            "quote": "Driver Tomas Ferreira reset the unit at 2:10 AM."
+          }
+        ]
+      },
+      {
+        "title": "Prepare Lindqvist on the alarm inbox",
+        "text": "He has already admitted the inbox was unmonitored. Prepare him to explain what changed afterward, including the April 28 amendment tightening notice to one hour. (Attorneys' eyes only document.)",
+        "cites": [
+          {
+            "doc": "docs/depositions/lindqvist_deposition.docx",
+            "quote": "No. Our dispatcher was off shift and the alarm went to an unmonitored inbox."
+          },
+          {
+            "doc": "docs/contracts/amendment_1.docx",
+            "quote": "Section 7.3 is amended to require notice of any Temperature Excursion within one hour of detection."
+          }
+        ]
+      },
+      {
+        "title": "Bring the insurer back in",
+        "text": "Have coverage counsel review the late-notice denial. Coverage would fund a resolution and blunt the insurance-covenant theory.",
+        "cites": [
+          {
+            "doc": "docs/emails/e11.eml",
+            "quote": "our insurer denied the claim citing late notice under the policy."
+          }
+        ]
+      },
+      {
+        "title": "Price an early resolution near the cap",
+        "text": "The notice facts are poor for Meridian. A resolution at or below USD 250,000 before the gross-negligence discovery fight is worth evaluating.",
+        "cites": [
+          {
+            "doc": "docs/depositions/okafor_deposition_vol1.pdf",
+            "quote": "Not until the next morning, April 13. Nobody called me that night."
+          }
+        ]
+      }
+    ],
+    "gaps": [
+      {
+        "title": "The notice argument is weak",
+        "text": "The driver acted at 2:10 AM, which a fact-finder may treat as detection. Do not lead with timeliness.",
+        "cites": [
+          {
+            "doc": "docs/emails/e05.eml",
+            "quote": "Driver Tomas Ferreira reset the unit at 2:10 AM."
+          }
+        ]
+      },
+      {
+        "title": "Meridian's own ticket confirms the deferred repair",
+        "text": "Bates HPCS-000412 shows the compressor was flagged and its replacement deferred. It corroborates the internal email and is the strongest evidence against the cap.",
+        "cites": [
+          {
+            "doc": "docs/large/production_vol2.pdf",
+            "quote": "Maintenance ticket: compressor on trailer 4471 flagged for replacement in February 2023, deferred."
+          },
+          {
+            "doc": "docs/emails/e08.eml",
+            "quote": "the compressor on 4471 was flagged in February maintenance and never replaced."
+          }
+        ]
+      },
+      {
+        "title": "The March complaint is in writing",
+        "text": "Harbor Point flagged a missed notice a month before April 12. It undercuts any claim that the April lapse was unforeseeable.",
+        "cites": [
+          {
+            "doc": "docs/emails/e03.eml",
+            "quote": "we did not receive the two-hour notice required by Section 7.3 for the 4410 excursion."
+          }
+        ]
+      }
+    ]
+  }
+}
