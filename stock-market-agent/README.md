@@ -362,8 +362,7 @@ on load, e.g. `simulator/index.html?mode=ib`).
 
 Opening any of the 13 role cards assigns a **career mentor** persona — a
 name, home region/flag and English accent drawn from a pool spanning
-Nigeria, Kenya, Tanzania, South Africa, India, the UK, Scotland, Ireland,
-Australia, New Zealand, the Philippines, Singapore, Hong Kong, the US and
+India, the UK, Scotland, Ireland, South Africa, Australia, the US and
 Canada — shown via an abstract animated HUD avatar rather than an
 illustrated face (the diversity lives in the name/region/voice, not a
 drawn likeness). "New mentor" rerolls to a different persona, remembered
@@ -376,20 +375,31 @@ gender — checked against `CULTURAL_VOICE_DB`, a catalog of real, named
 voices (sourced from the community-maintained
 [web-speech-recommended-voices / readium/speech](https://github.com/readium/speech)
 project, not guessed) documenting which actual voice names Edge, Chrome,
-Android, ChromeOS and macOS/Apple ship per region and gender. If a
-mentor's confirmed voice isn't installed on the visitor's device, "Read
-aloud" is disabled with an explicit on-screen reason instead of narrating
-in a different accent or the wrong gender under that mentor's name — this
-applies to the main narration and to spoken answers alike. Web Speech has
-no notion of ethnicity, only language/region plus a vendor-assigned voice
-name, so "cultural authenticity" beyond country + gender means preferring,
-among equally-valid confirmed options, a voice whose own name is commonly
-associated with a mentor's heritage where one genuinely exists in the
-catalog (e.g. "Ana" among en-US female voices for a Latina-coded persona)
-— never a fabricated "ethnic accent" the API can't actually produce.
-"New mentor" also prefers personas whose voice is actually installed on
-the current device, so rerolling tends to land you on someone who can
-genuinely speak.
+Android, ChromeOS and macOS/Apple ship per region and gender. The persona
+pool is deliberately limited to accents with at least one voice that ships
+*outside* Edge's online-only neural catalog — a native macOS/Safari voice,
+a classic Chrome "Google ... English" voice, or a legacy (non-"Online")
+Windows voice — so narration actually works on ordinary Chrome/Safari/
+Firefox setups, not just Edge; an earlier version included several accents
+(Nigerian, Kenyan, Tanzanian, Hong Kong, Filipino, Singaporean, New
+Zealand English) whose only real voice anywhere was Edge-exclusive, so
+most visitors just saw "no voice here" on them constantly. If a mentor's
+confirmed voice still isn't installed on this particular visitor's device,
+"Read aloud" is disabled with an explicit on-screen reason instead of
+narrating in a different accent or the wrong gender under that mentor's
+name — this applies to the main narration and to spoken answers alike.
+On top of that, both the very first persona assigned to a role *and*
+"New mentor" prefer a persona who can actually speak on the current
+device once the real voice list is known (voices often load a tick after
+first paint), auto-upgrading any role still on its untouched default —
+never overriding a role you've already explicitly rerolled. Web Speech
+has no notion of ethnicity, only language/region plus a vendor-assigned
+voice name, so "cultural authenticity" beyond country + gender means
+preferring, among equally-valid confirmed options, a voice whose own name
+is commonly associated with a mentor's heritage where one genuinely
+exists in the catalog (e.g. "Ana" among en-US female voices for a
+Latina-coded persona) — never a fabricated "ethnic accent" the API can't
+actually produce.
 
 **Ask your mentor a question.** Each mentor panel has a text box: type a
 question and it's matched, by keyword overlap against the role's own

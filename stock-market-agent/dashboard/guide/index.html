@@ -165,7 +165,7 @@
     <div class="eyebrow">Career guide</div>
     <h1 class="title">How Each Role Uses the Stock Market</h1>
     <div class="sub">The same ticker means something different depending on who's looking at it. This is a plain-language tour of thirteen finance careers and how each actually relates to public companies and their stock &mdash; what they do day to day, the different flavors the job comes in, how they're paid, the math they lean on, and which parts of that you can practice in the Simulator. Each entry below is collapsed by default &mdash; click any row to open it up.</div>
-    <div class="sub">Open a role and you'll be greeted by a personal mentor for it &mdash; a different name and home region every time, assigned the moment you open that card. Hit <b>Read aloud</b> and your browser's own text-to-speech narrates their walkthrough in a voice from that mentor's own country &mdash; never a different accent passed off as theirs. If this browser/device doesn't have a voice for that country installed, <b>Read aloud</b> is disabled for that mentor rather than faking it, and it'll tell you so; <b>New mentor</b> favors mentors who can actually speak on your setup when any are available. Voice coverage depends entirely on your own browser/OS (Chrome and Edge on Windows/macOS carry the widest range) &mdash; there's no server or AI voice model behind this, just your system's own built-in speech engine.</div>
+    <div class="sub">Open a role and you'll be greeted by a personal mentor for it &mdash; a different name and home region every time, assigned the moment you open that card. Hit <b>Read aloud</b> and your browser's own text-to-speech narrates their walkthrough in a voice confirmed to match that mentor's own country <em>and</em> gender &mdash; never a different accent, and never the wrong gender, passed off as theirs. The mentor pool is deliberately limited to accents with a real voice built into mainstream browsers/OSes (not ones that only exist in one vendor's extra voice pack), so <b>Read aloud</b> should work for most mentors on most computers; if this specific browser/device still doesn't have a matching voice installed, it's disabled rather than faking it, and says so. <b>New mentor</b> favors mentors who can actually speak on your setup when any are available. There's no server or AI voice model behind this, just your system's own built-in speech engine.</div>
   </header>
 
   <nav class="toc" id="tocNav">
@@ -1071,42 +1071,35 @@ document.getElementById("risk-calc").addEventListener("click", () => {
  * is entirely client-side (no server, no AI voice model) -- which voices
  * exist at all depends on the visitor's own browser/OS.
  */
+// Only locales with at least one voice that ships OUTSIDE Edge's
+// online-only neural catalog -- a native macOS/Safari voice, a Chrome
+// built-in "Google ... English" voice, or a legacy (non-"Online") Windows
+// SAPI voice -- are included below. A real voice existing *somewhere*
+// (e.g. only as an Edge neural voice) wasn't enough: if the only match is
+// Edge-exclusive, most visitors on Chrome/Safari/Firefox will never have
+// it installed and just see "no voice here" every time, which defeats the
+// point. Trimming to locales that resolve on ordinary setups, not just
+// Edge, is what actually fixes that.
 const CULTURAL_VOICE_DB = {
   "en-us": { female: ["emmamultilingual", "avamultilingual", "jenny", "aria", "michelle", "ana", "google us english", "ava", "zoe", "allison", "nicky", "samantha", "joelle", "zira", "google us english 5 (natural)", "google us english 1 (natural)", "google us english 2 (natural)", "google us english 7 (natural)", "android speech recognition and synthesis from google en-us-x-sfg-network", "chrome os us english 8"], male: ["andrewmultilingual", "brianmultilingual", "guy", "eric", "steffan", "christopher", "roger", "evan", "nathan", "tom", "alex", "aaron", "david", "mark", "google us english 4 (natural)", "google us english 3 (natural)", "google us english 6 (natural)"] },
   "en-gb": { female: ["sonia", "libby", "maisie", "google uk english female", "kate", "stephanie", "serena", "martha", "hazel", "susan", "google uk english 2 (natural)", "google uk english 4 (natural)", "google uk english 6 (natural)", "chrome os uk english 7"], male: ["ryan", "thomas", "google uk english male", "jamie", "oliver", "daniel", "arthur", "george", "google uk english 1 (natural)", "google uk english 3 (natural)", "google uk english 5 (natural)"] },
   "en-gb-u-sd-gbsct": { female: ["fiona"], male: [] },
   "en-ie": { female: ["emily", "moira"], male: ["connor", "sean"] },
-  "en-ng": { female: ["ezinne"], male: ["abeo"] },
   "en-za": { female: ["leah", "tessa"], male: ["luke"] },
-  "en-ke": { female: ["asilia"], male: ["chilemba"] },
-  "en-tz": { female: ["imani"], male: ["elimu"] },
   "en-au": { female: ["natasha", "hayley", "matilda", "karen", "catherine", "google australian english 1 (natural)", "google australian english 3 (natural)"], male: ["william", "lee", "gordon", "richard", "google australian english 2 (natural)", "google australian english 4 (natural)", "chrome os australian english 5"] },
-  "en-nz": { female: ["molly"], male: ["mitchell"] },
-  "en-ph": { female: ["rosa"], male: ["james"] },
-  "en-sg": { female: ["luna"], male: ["wayne"] },
-  "en-hk": { female: ["yan"], male: ["sam"] },
   "en-ca": { female: ["clara", "heather", "linda"], male: ["liam", "richard"] },
   "en-in": { female: ["neerja", "tara", "isha", "sangeeta", "veena", "heera", "android speech recognition and synthesis from google en-in-x-ena-network", "android speech recognition and synthesis from google en-in-x-enc-network"], male: ["prabhat", "aman", "rishi", "ravi", "android speech recognition and synthesis from google en-in-x-end-network", "android speech recognition and synthesis from google en-in-x-ene-network"] },
 };
 
 const MENTOR_PERSONAS = [
-  { name: "Amara Chukwu", gender: "female", flag: "🇳🇬", region: "Lagos, Nigeria", accent: "Nigerian English", voiceLang: "en-NG" },
-  { name: "Olusegun Adebayo", gender: "male", flag: "🇳🇬", region: "Abuja, Nigeria", accent: "Nigerian English", voiceLang: "en-NG" },
   { name: "Priya Raman", gender: "female", flag: "🇮🇳", region: "Bengaluru, India", accent: "Indian English", voiceLang: "en-IN" },
   { name: "Arjun Mehta", gender: "male", flag: "🇮🇳", region: "Mumbai, India", accent: "Indian English", voiceLang: "en-IN" },
   { name: "James Whitfield", gender: "male", flag: "🇬🇧", region: "London, UK", accent: "British English", voiceLang: "en-GB" },
-  { name: "Tom Ashworth", gender: "male", flag: "🇬🇧", region: "Leeds, UK", accent: "British English", voiceLang: "en-GB" },
   { name: "Freya Lindqvist", gender: "female", flag: "🇬🇧", region: "Edinburgh, Scotland", accent: "Scottish English", voiceLang: "en-GB-u-sd-gbsct" },
   { name: "Liam O'Connor", gender: "male", flag: "🇮🇪", region: "Dublin, Ireland", accent: "Irish English", voiceLang: "en-IE" },
-  { name: "Sipho Dlamini", gender: "male", flag: "🇿🇦", region: "Johannesburg, South Africa", accent: "South African English", voiceLang: "en-ZA" },
   { name: "Zanele Nkosi", gender: "female", flag: "🇿🇦", region: "Cape Town, South Africa", accent: "South African English", voiceLang: "en-ZA" },
-  { name: "Wanjiru Kamau", gender: "female", flag: "🇰🇪", region: "Nairobi, Kenya", accent: "Kenyan English", voiceLang: "en-KE" },
-  { name: "Zawadi Mushi", gender: "female", flag: "🇹🇿", region: "Dar es Salaam, Tanzania", accent: "Tanzanian English", voiceLang: "en-TZ" },
   { name: "Isla Thompson", gender: "female", flag: "🇦🇺", region: "Sydney, Australia", accent: "Australian English", voiceLang: "en-AU" },
-  { name: "Mitchell Carter", gender: "male", flag: "🇳🇿", region: "Auckland, New Zealand", accent: "New Zealand English", voiceLang: "en-NZ" },
-  { name: "Carlos Mendoza", gender: "male", flag: "🇵🇭", region: "Manila, Philippines", accent: "Filipino English", voiceLang: "en-PH" },
-  { name: "Luna Santos", gender: "female", flag: "🇸🇬", region: "Singapore", accent: "Singaporean English", voiceLang: "en-SG" },
-  { name: "Chloe Nguyen", gender: "female", flag: "🇭🇰", region: "Hong Kong", accent: "Hong Kong English", voiceLang: "en-HK" },
+  { name: "Jack Sullivan", gender: "male", flag: "🇦🇺", region: "Melbourne, Australia", accent: "Australian English", voiceLang: "en-AU" },
   { name: "Ethan Brooks", gender: "male", flag: "🇺🇸", region: "Chicago, USA", accent: "American English", voiceLang: "en-US" },
   { name: "Maya Rodriguez", gender: "female", flag: "🇺🇸", region: "Phoenix, USA", accent: "American English", voiceLang: "en-US",
     preferredNameHints: ["ana"] }, // among equally-valid confirmed en-US female voices, "Ana" is the one in the catalog commonly associated with Latina heritage -- a soft name preference only, never a claim of a distinct "Latina accent" (Web Speech has no such category)
@@ -1369,13 +1362,13 @@ function answerMentorQuestion(detailsEl, question) {
   return match ? match.lead + " " + match.text : null;
 }
 
-function renderMentorPanel(detailsEl, roleId, colorIdx) {
+function renderMentorPanel(detailsEl, roleId, colorIdx, forcedAssignment) {
   const existing = detailsEl.querySelector(".mentor-panel");
   if (existing) existing.remove();
   MENTOR_PANEL_REGISTRY.delete(roleId);
 
   const roleTitle = detailsEl.querySelector(".role-head h2").textContent.trim();
-  const assignment = loadMentorAssignment(roleId);
+  const assignment = forcedAssignment || loadMentorAssignment(roleId);
   const persona = MENTOR_PERSONAS[assignment.personaIdx];
   const template = MENTOR_INTRO_TEMPLATES[assignment.templateIdx];
   const intro = template.replace("{name}", persona.name).replace("{role}", roleTitle);
@@ -1409,7 +1402,7 @@ function renderMentorPanel(detailsEl, roleId, colorIdx) {
   const body = detailsEl.querySelector(".role-body");
   body.insertBefore(panel, body.firstChild);
 
-  const entry = { persona, speakBtn: panel.querySelector(".speak-btn"), noteEl: panel.querySelector(".mentor-voice-note") };
+  const entry = { persona, speakBtn: panel.querySelector(".speak-btn"), noteEl: panel.querySelector(".mentor-voice-note"), detailsEl, colorIdx };
   MENTOR_PANEL_REGISTRY.set(roleId, entry);
   entry.speakBtn.addEventListener("click", () => speakAsMentor(detailsEl, roleTitle, entry));
   refreshSpeakButtonState(entry);
@@ -1443,6 +1436,26 @@ function renderMentorPanel(detailsEl, roleId, colorIdx) {
   askInput.addEventListener("keydown", (e) => { if (e.key === "Enter") submitAsk(); });
 }
 
+// The deterministic per-role default (nothing saved yet in localStorage)
+// was picked before voices were known to exist, so it can easily land on
+// a persona with no voice on THIS device even though another persona in
+// the pool would work fine. Once the real voice list is known, quietly
+// swap any still-default, still-unvoiced role over to a persona that can
+// actually speak -- without touching any role the visitor has already
+// explicitly rerolled (that choice is saved and left alone).
+function autoUpgradeUnvoicedDefaults() {
+  MENTOR_PANEL_REGISTRY.forEach((entry, roleId) => {
+    let saved = null;
+    try { saved = localStorage.getItem(mentorStoreKey(roleId)); } catch (e) {}
+    if (saved) return;
+    if (pickVoiceFor(entry.persona)) return;
+    const assignment = loadMentorAssignment(roleId);
+    const betterIdx = pickRerollPersonaIdx(assignment.personaIdx);
+    if (betterIdx === assignment.personaIdx || !pickVoiceFor(MENTOR_PERSONAS[betterIdx])) return;
+    renderMentorPanel(entry.detailsEl, roleId, entry.colorIdx, { personaIdx: betterIdx, templateIdx: assignment.templateIdx });
+  });
+}
+
 function initMentors() {
   const sections = document.querySelectorAll("section.role");
   let colorIdx = 0;
@@ -1454,10 +1467,10 @@ function initMentors() {
   });
   if ("speechSynthesis" in window) {
     window.speechSynthesis.getVoices();
-    window.speechSynthesis.onvoiceschanged = refreshAllMentorButtons;
+    window.speechSynthesis.onvoiceschanged = () => { refreshAllMentorButtons(); autoUpgradeUnvoicedDefaults(); };
     // Some browsers populate the voice list a tick after first paint
     // without reliably firing voiceschanged; this catches that case too.
-    setTimeout(refreshAllMentorButtons, 350);
+    setTimeout(() => { refreshAllMentorButtons(); autoUpgradeUnvoicedDefaults(); }, 350);
   }
 }
 window.addEventListener("beforeunload", stopMentorSpeech);
