@@ -3,7 +3,7 @@
 <head>
 <script>try{if(localStorage.getItem('siteTheme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
 <meta charset="utf-8">
-<title>PARA Financials</title>
+<title>PSKY Market Data</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -43,16 +43,16 @@
 
 <div id="siteNav"></div><script>window.SITE_NAV = { base: "../../", active: "research" };</script><script src="../../assets/nav.js"></script>
 <div class="wrap">
-  <nav class="crumbs"><a href="../index.html">&larr; All companies</a><a href="financials.html" class="current">PARA Financials</a><a href="market.html">PARA Market Data</a></nav>
+  <nav class="crumbs"><a href="../index.html">&larr; All companies</a><a href="financials.html">PSKY Financials</a><a href="market.html" class="current">PSKY Market Data</a></nav>
   <header class="hero">
-    <div class="eyebrow">Research Analyst &middot; Financials (10-K)</div>
-    <h1 class="title">Paramount Skydance <span class="mono" style="color:var(--ink-faint)">PARA</span></h1>
-    <div class="period">Period: n/a</div>
+    <div class="eyebrow">Research Analyst &middot; Market Data &amp; Ratios</div>
+    <h1 class="title">Paramount Skydance Corporation <span class="mono" style="color:var(--ink-faint)">PSKY</span></h1>
+    <div class="period">Live figures reused from the Market Scanner where available; ratios added from web search.</div>
   </header>
-  <p>No 10-K figures were confidently sourced for this company in this pass.</p>
+  <div class="stat-grid"><div class="stat"><div class="label">Price</div><div class="value mono ">$9.34</div></div></div>
   <footer>
-    Figures are drawn from each company's most recent 10-K / annual report available via web search in this session, not a live XBRL feed.
-    See the companion <span class="mono">fetch_10k.py</span> script for the real SEC EDGAR-based pipeline this stands in for.
+    Price, market cap, dividend yield and beta are shared with the Market Scanner's own daily refresh.
+    Valuation ratios (P/E, P/B, P/S) and 52-week ranges are a one-time snapshot from this session.
     Not investment advice.
   </footer>
 </div>

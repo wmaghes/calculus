@@ -102,7 +102,7 @@ COMPANIES = {
     "NET": "Cloudflare",
     "NTLA": "Intellia Therapeutics",
     "O": "Realty Income",
-    "PARA": "Paramount Skydance",
+    "PSKY": "Paramount Skydance Corporation",
     "PATH": "UiPath",
     "PLUG": "Plug Power",
     "PTON": "Peloton Interactive",

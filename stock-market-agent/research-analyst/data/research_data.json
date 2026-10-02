@@ -3,7 +3,7 @@
   "companies": {
     "NVDA": {
       "ticker": "NVDA",
-      "name": "NVIDIA Corporation",
+      "name": "NVIDIA",
       "financials": {
         "period": "FY2026 (ended Jan 25, 2026)",
         "revenue": "$215.9B",
@@ -25,18 +25,23 @@
       "market": {
         "ticker": "NVDA",
         "name": "NVIDIA",
-        "price": 231.14,
-        "mktCap": "$5.42T",
+        "price": 230.16,
+        "mktCap": "$5.50T",
         "metric_label": "1-day price change",
-        "metric": 1.0,
+        "metric": 0.78,
         "conviction": 5,
-        "blurb": "AI GPU dominance; FY26 revenue +65% YoY; still near its highs, Street sees further upside.",
-        "rating": "Strong Buy"
+        "blurb": "AI GPU dominance continues to anchor the market's largest valuation at roughly $5.50T, with shares up about 0.8% today to $230.16 even as some analysts flag the stock's multiple as historically compressed relative to its growth rate.",
+        "rating": "Strong Buy",
+        "sector": "Technology",
+        "industry": "Semiconductors",
+        "fortune100": true,
+        "fortune100Rank": 16,
+        "capTier": "mega"
       }
     },
     "META": {
       "ticker": "META",
-      "name": "Meta Platforms, Inc.",
+      "name": "Meta Platforms",
       "financials": {
         "period": "FY2025 (ended Dec 31, 2025)",
         "revenue": "$200.97B",
@@ -56,18 +61,23 @@
       "market": {
         "ticker": "META",
         "name": "Meta Platforms",
-        "price": 777.59,
-        "mktCap": "$1.90T",
-        "metric_label": "Weekly price change",
-        "metric": 16.7,
+        "price": 725.93,
+        "mktCap": "$1.85T",
+        "metric_label": "1-day price change",
+        "metric": -0.2,
         "conviction": 5,
-        "blurb": "Up sharply this week (+12% in one session alone, adding ~$200B in market value) on renewed AI/ad-business momentum. (A recurring search result pegging META far lower looks like a stale cache, not a real quote \u2014 worth a live-quote sanity check.)",
-        "rating": "Buy"
+        "blurb": "Shares trade near $726 (market cap $1.85T) as renewed AI/ad-business momentum keeps Meta among the market's most valuable companies, with the stock dipping a modest 0.2% today after a 29% surge in September alone.",
+        "rating": "Buy",
+        "sector": "Communication Services",
+        "industry": "Interactive Media",
+        "fortune100": true,
+        "fortune100Rank": 17,
+        "capTier": "mega"
       }
     },
     "SHOP": {
       "ticker": "SHOP",
-      "name": "Shopify Inc.",
+      "name": "Shopify",
       "financials": {
         "period": "FY2025 (ended Dec 31, 2025)",
         "revenue": "$11,556M",
@@ -87,18 +97,23 @@
       "market": {
         "ticker": "SHOP",
         "name": "Shopify",
-        "price": 140.0,
-        "mktCap": "$265.0B",
+        "price": 148.3,
+        "mktCap": "$190.8B",
         "metric_label": "1-day price change",
         "metric": 0.0,
         "conviction": 4,
-        "blurb": "E-commerce infrastructure grower; holding its jump to a new range around $140, up sharply from two weeks ago's ~$120.",
-        "rating": "Buy"
+        "blurb": "E-commerce infrastructure grower trading at $148.30 ($190.8B market cap); Moderate Buy consensus carries a $172 price target, implying roughly 16% upside from current levels.",
+        "rating": "Buy",
+        "sector": "Technology",
+        "industry": "Internet Software & Services",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "capTier": "large"
       }
     },
     "PLTR": {
       "ticker": "PLTR",
-      "name": "Palantir Technologies Inc.",
+      "name": "Palantir Technologies",
       "financials": {
         "period": "FY2025 (ended Dec 31, 2025)",
         "revenue": "$4.48B",
@@ -120,18 +135,23 @@
       "market": {
         "ticker": "PLTR",
         "name": "Palantir Technologies",
-        "price": 187.0,
-        "mktCap": "$444.5B",
+        "price": 191.57,
+        "mktCap": "$449.5B",
         "metric_label": "1-day price change",
         "metric": 0.0,
         "conviction": 4,
-        "blurb": "Enterprise/government AI analytics; revenue +56% YoY (2025), holding its recent range.",
-        "rating": "Buy"
+        "blurb": "Enterprise/government AI analytics play now valued near $449.5B (the world's 29th most valuable company) with shares at $191.57, up from roughly $187 earlier this quarter; P/E remains above 160.",
+        "rating": "Buy",
+        "sector": "Technology",
+        "industry": "Software - Application",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "capTier": "mega"
       }
     },
     "DELL": {
       "ticker": "DELL",
-      "name": "Dell Technologies Inc.",
+      "name": "Dell Technologies",
       "financials": {
         "period": "FY2026 (ended ~Jan 2026)",
         "revenue": "$113.5B",
@@ -153,18 +173,23 @@
       "market": {
         "ticker": "DELL",
         "name": "Dell Technologies",
-        "price": 545.6,
-        "mktCap": "$357.9B",
-        "metric_label": "Weekly price change",
-        "metric": 3.63,
+        "price": 544.1,
+        "mktCap": "$344.4B",
+        "metric_label": "1-day price change",
+        "metric": 0.0,
         "conviction": 4,
-        "blurb": "Opened +3.6% higher this week after joining the S&P 100; AI server backlog (Q2 FY27 revenue +58% YoY) intact.",
-        "rating": "Buy"
+        "blurb": "AI server backlog remains the core growth driver; shares hold near $544 with the market cap around $344B as investors watch backlog-to-revenue conversion timing.",
+        "rating": "Buy",
+        "sector": "Technology",
+        "industry": "Computer Hardware",
+        "fortune100": true,
+        "fortune100Rank": 41,
+        "capTier": "mega"
       }
     },
     "AVGO": {
       "ticker": "AVGO",
-      "name": "Broadcom Inc.",
+      "name": "Broadcom",
       "financials": {
         "period": "FY2025 (ended ~Nov 2025)",
         "revenue": "$63.89B",
@@ -187,18 +212,23 @@
       "market": {
         "ticker": "AVGO",
         "name": "Broadcom",
-        "price": 355.1,
-        "mktCap": "$1.67T",
+        "price": 345.38,
+        "mktCap": "$1.64T",
         "metric_label": "1-day price change",
-        "metric": 1.58,
+        "metric": 0.51,
         "conviction": 4,
-        "blurb": "AI networking/custom-silicon leader; +1.6% today, still up strongly over the past couple of weeks.",
-        "rating": "Buy"
+        "blurb": "AI networking/custom-silicon leader has cooled to a $1.64T market cap (shares $345.38, +0.5% today) off its summer highs, though accelerating custom-ASIC demand keeps the growth thesis intact.",
+        "rating": "Buy",
+        "sector": "Technology",
+        "industry": "Semiconductors",
+        "fortune100": true,
+        "fortune100Rank": 70,
+        "capTier": "mega"
       }
     },
     "SNDK": {
       "ticker": "SNDK",
-      "name": "SanDisk Corporation",
+      "name": "SanDisk",
       "financials": {
         "period": "FY2025 (partial year, spun off from Western Digital Feb 21, 2025)",
         "revenue": "$7.36B",
@@ -221,18 +251,23 @@
       "market": {
         "ticker": "SNDK",
         "name": "SanDisk",
-        "price": 1712.89,
-        "mktCap": "$260.3B",
+        "price": 1787.84,
+        "mktCap": "$254.8B",
         "metric_label": "1-day price change",
-        "metric": 0.98,
+        "metric": 2.76,
         "conviction": 4,
-        "blurb": "2026's best-performing large-cap on AI-driven flash/HBM memory demand; volatile day-to-day but still near its highs \u2014 a reminder that momentum this extreme cuts both ways.",
-        "rating": "Momentum"
+        "blurb": "2026's best-performing large-cap on AI-driven flash/HBM memory demand rose another 2.8% today to $1,787.84 ($254.8B market cap), extending a run that has lifted trailing-twelve-month revenue growth above 175%.",
+        "rating": "Momentum",
+        "sector": "Technology",
+        "industry": "Semiconductors",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "capTier": "mega"
       }
     },
     "AAOI": {
       "ticker": "AAOI",
-      "name": "Applied Optoelectronics, Inc.",
+      "name": "Applied Optoelectronics",
       "financials": {
         "period": "FY2025 (ended Dec 31, 2025)",
         "revenue": "$455.7M",
@@ -256,18 +291,23 @@
       "market": {
         "ticker": "AAOI",
         "name": "Applied Optoelectronics",
-        "price": 101.07,
-        "mktCap": "$8.58B",
-        "metric_label": "1-day price change",
-        "metric": 0.0,
+        "price": 106.6,
+        "mktCap": "$8.43B",
+        "metric_label": "YTD price change",
+        "metric": 184.74,
         "conviction": 2,
-        "blurb": "AI-datacenter optics demand story intact; holding its bounce after last week's -8% drop. Supply-chain strain and dilution risk from a recent $600M raise remain live.",
-        "rating": "Speculative"
+        "blurb": "AI-datacenter optics demand story remains intact, with shares up roughly 185% year-to-date (near $106.60 after an after-hours pop) even as dilution risk from a recent $600M raise stays live.",
+        "rating": "Speculative",
+        "sector": "Technology",
+        "industry": "Communication Equipment",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "capTier": "mid"
       }
     },
     "MCD": {
       "ticker": "MCD",
-      "name": "McDonald's Corporation",
+      "name": "McDonald's",
       "financials": {
         "period": "FY2025 (ended Dec 31, 2025)",
         "revenue": "$26.9B",
@@ -289,19 +329,24 @@
       "market": {
         "ticker": "MCD",
         "name": "McDonald's",
-        "price": 233.98,
+        "price": 231.19,
         "mktCap": null,
         "metric_label": "Beta (5yr)",
-        "metric": 0.44,
+        "metric": 0.3,
         "divYield": 3.26,
-        "blurb": "Franchise-driven cash flows; long multi-decade dividend growth streak.",
+        "blurb": "McDonald's is down roughly 24% in 2026 on weak sales, but its beta near 0.30 and a 3.26% yield underscore the franchise model's defensive cash flows.",
         "streak": "18+ yrs",
-        "score": 91.3
+        "sector": "Consumer Discretionary",
+        "industry": "Restaurants",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "score": 58.3,
+        "capTier": null
       }
     },
     "PG": {
       "ticker": "PG",
-      "name": "The Procter & Gamble Company",
+      "name": "Procter & Gamble",
       "financials": {
         "period": "FY2026 (ended ~Jun 2026)",
         "revenue": "$87.0B",
@@ -323,19 +368,24 @@
       "market": {
         "ticker": "PG",
         "name": "Procter & Gamble",
-        "price": 148.34,
+        "price": 144.34,
         "mktCap": null,
         "metric_label": "Beta (5yr)",
-        "metric": 0.37,
-        "divYield": 2.88,
-        "blurb": "70 consecutive years of dividend increases; 136 years of uninterrupted dividends.",
+        "metric": 0.29,
+        "divYield": 2.95,
+        "blurb": "Procter & Gamble shares have slipped under $145 in 2026, pushing the yield to roughly 2.95% while its beta near 0.29 keeps volatility among the lowest in consumer staples.",
         "streak": "70 yrs",
-        "score": 86.6
+        "sector": "Consumer Staples",
+        "industry": "Household Products",
+        "fortune100": true,
+        "fortune100Rank": 51,
+        "score": 57.0,
+        "capTier": null
       }
     },
     "IBM": {
       "ticker": "IBM",
-      "name": "International Business Machines Corporation",
+      "name": "IBM",
       "financials": {
         "period": "FY2025 (ended Dec 31, 2025)",
         "revenue": "$67.5B",
@@ -358,19 +408,24 @@
       "market": {
         "ticker": "IBM",
         "name": "IBM",
-        "price": 219.76,
-        "mktCap": "$234.6B",
+        "price": 225.62,
+        "mktCap": "$212.6B",
         "metric_label": "Beta (5yr)",
         "metric": 0.71,
-        "divYield": 3.05,
-        "blurb": "31 years of dividend growth; enterprise AI/hybrid-cloud pivot. Recently upgraded to Buy on dividend strength.",
+        "divYield": 3.07,
+        "blurb": "IBM's beta ticked up to roughly 0.71 as the stock slipped from its highs, but the 3.07% yield and 31-year dividend-growth streak still anchor its enterprise AI/hybrid-cloud pivot.",
         "streak": "31 yrs",
-        "score": 84.5
+        "sector": "Technology",
+        "industry": "IT Services",
+        "fortune100": true,
+        "fortune100Rank": 69,
+        "score": 33.5,
+        "capTier": "mega"
       }
     },
     "XOM": {
       "ticker": "XOM",
-      "name": "Exxon Mobil Corporation",
+      "name": "ExxonMobil",
       "financials": {
         "period": "FY2025 (ended Dec 31, 2025)",
         "revenue": "$323.91B",
@@ -392,19 +447,24 @@
       "market": {
         "ticker": "XOM",
         "name": "ExxonMobil",
-        "price": 164.0,
-        "mktCap": "$681.3B",
+        "price": 162.75,
+        "mktCap": "$669.2B",
         "metric_label": "Beta (5yr)",
         "metric": 0.17,
-        "divYield": 2.55,
-        "blurb": "Low-beta energy major; steady cash generation and buybacks.",
-        "streak": "\u2014",
-        "score": 84.4
+        "divYield": 2.53,
+        "blurb": "ExxonMobil's beta of 0.17 remains among the lowest of any energy major, and its 43-year streak of dividend increases continues uninterrupted at a 2.53% yield.",
+        "streak": "43 yrs",
+        "sector": "Energy",
+        "industry": "Oil & Gas Integrated",
+        "fortune100": true,
+        "fortune100Rank": 9,
+        "score": 61.4,
+        "capTier": "mega"
       }
     },
     "KO": {
       "ticker": "KO",
-      "name": "The Coca-Cola Company",
+      "name": "Coca-Cola",
       "financials": {
         "period": "FY2025 (ended Dec 31, 2025)",
         "revenue": "$47.94B",
@@ -426,14 +486,19 @@
       "market": {
         "ticker": "KO",
         "name": "Coca-Cola",
-        "price": 87.18,
-        "mktCap": "$381.7B",
+        "price": 86.1,
+        "mktCap": "$377.8B",
         "metric_label": "Beta (5yr)",
         "metric": 0.34,
         "divYield": 2.41,
-        "blurb": "Global beverage staple with highly predictable cash flows.",
-        "streak": "60+ yrs",
-        "score": 80.1
+        "blurb": "Coca-Cola's beta of 0.34 and steady 2.41% yield reflect the beverage giant's highly predictable cash flows, now in a 54th consecutive year of dividend growth.",
+        "streak": "54 yrs",
+        "sector": "Consumer Staples",
+        "industry": "Beverages",
+        "fortune100": true,
+        "fortune100Rank": 96,
+        "score": 50.9,
+        "capTier": "mega"
       }
     },
     "JNJ": {
@@ -461,19 +526,24 @@
       "market": {
         "ticker": "JNJ",
         "name": "Johnson & Johnson",
-        "price": 267.48,
+        "price": 264.74,
         "mktCap": null,
         "metric_label": "Beta (5yr)",
         "metric": 0.23,
         "divYield": 2.0,
-        "blurb": "64 consecutive years of dividend increases; healthcare defensiveness.",
+        "blurb": "Johnson & Johnson's beta of about 0.23 remains near the bottom of the healthcare sector, supporting a 64-year streak of dividend increases at a 2.00% yield.",
         "streak": "64 yrs",
-        "score": 75.5
+        "sector": "Healthcare",
+        "industry": "Pharmaceuticals",
+        "fortune100": true,
+        "fortune100Rank": 48,
+        "score": 54.8,
+        "capTier": null
       }
     },
     "WMT": {
       "ticker": "WMT",
-      "name": "Walmart Inc.",
+      "name": "Walmart",
       "financials": {
         "period": "FY2026 (ended Jan 31, 2026)",
         "revenue": "$713.2B",
@@ -497,19 +567,24 @@
       "market": {
         "ticker": "WMT",
         "name": "Walmart",
-        "price": 107.98,
-        "mktCap": "$850.0B",
+        "price": 104.26,
+        "mktCap": "$876.9B",
         "metric_label": "Beta (5yr)",
         "metric": 0.6,
-        "divYield": 0.91,
-        "blurb": "Retail scale leader; low beta, resilient through downturns; dividend just hit its 53rd straight annual increase.",
+        "divYield": 0.95,
+        "blurb": "Walmart's beta near 0.60 and modest 0.95% yield reflect its retail-scale defensiveness, with the dividend-aristocrat streak now running 53 years.",
         "streak": "53 yrs",
-        "score": 54.3
+        "sector": "Consumer Staples",
+        "industry": "Discount Stores",
+        "fortune100": true,
+        "fortune100Rank": 2,
+        "score": 27.1,
+        "capTier": "mega"
       }
     },
     "PEP": {
       "ticker": "PEP",
-      "name": "PepsiCo, Inc.",
+      "name": "PepsiCo",
       "financials": {
         "period": "FY2025 (ended Dec 27, 2025)",
         "revenue": "$93.93B",
@@ -532,19 +607,24 @@
       "market": {
         "ticker": "PEP",
         "name": "PepsiCo",
-        "price": 128.63,
-        "mktCap": "$212.2B",
+        "price": 126.72,
+        "mktCap": "$171.5B",
         "metric_label": "Dividend yield",
-        "metric": 4.61,
-        "divYield": 4.61,
-        "blurb": "Highest yield of the group, now near a two-year high; diversified snacks & beverages.",
-        "streak": "50+ yrs",
-        "score": 40.0
+        "metric": 4.67,
+        "divYield": 4.67,
+        "blurb": "PepsiCo's 2026 slide has pushed its yield to roughly 4.67%, the highest of this group, while a beta around 0.28 keeps the snacks-and-beverages giant's volatility low even after the drawdown.",
+        "streak": "54 yrs",
+        "sector": "Consumer Staples",
+        "industry": "Beverages",
+        "fortune100": true,
+        "fortune100Rank": 45,
+        "score": 68.0,
+        "capTier": "mega"
       }
     },
     "RKLB": {
       "ticker": "RKLB",
-      "name": "Rocket Lab Corporation",
+      "name": "Rocket Lab",
       "financials": {
         "period": "FY2025 (ended Dec 31, 2025)",
         "revenue": "$601.8M",
@@ -566,18 +646,23 @@
       "market": {
         "ticker": "RKLB",
         "name": "Rocket Lab",
-        "price": 70.31,
-        "mktCap": null,
+        "price": 70.46,
+        "mktCap": "$41.7B",
         "metric_label": "Revenue growth (trailing 12mo)",
-        "metric": 59.2,
+        "metric": 45.8,
         "conviction": 5,
-        "blurb": "Neutron rocket + space services; already closed its $155M Mynaric acquisition and has a pending ~$8B deal for Iridium; Raymond James sees Neutron expanding its addressable market in 2027; trailing revenue +59% YoY.",
-        "theme": "Space"
+        "blurb": "Neutron rocket + space services; trailing revenue is still climbing roughly 45-46% YoY on a launch backlog that has swelled past 100 missions, with shares near $70 against a 52-week range of $37.57 to $151.",
+        "theme": "Space",
+        "sector": "Industrials",
+        "industry": "Aerospace & Defense",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "capTier": "large"
       }
     },
     "IONQ": {
       "ticker": "IONQ",
-      "name": "IonQ, Inc.",
+      "name": "IonQ",
       "financials": {
         "period": "FY2025 (ended Dec 31, 2025)",
         "revenue": "$130.0M",
@@ -598,18 +683,23 @@
       "market": {
         "ticker": "IONQ",
         "name": "IonQ",
-        "price": 43.91,
-        "mktCap": "$14.7B",
-        "metric_label": "Revenue growth (Q2 2026)",
-        "metric": 287,
+        "price": 44.34,
+        "mktCap": "$17.8B",
+        "metric_label": "Revenue growth (2025)",
+        "metric": 201.9,
         "conviction": 5,
-        "blurb": "Trapped-ion quantum computing leader; record Q2 revenue +287% YoY to $80M, raised FY26 guidance to $280-290M with ~$3B cash on hand; BofA just initiated coverage Buy ($60 target). Strong Buy consensus with $67 average target (+46% upside).",
-        "theme": "Quantum computing"
+        "blurb": "Trapped-ion quantum computing leader trading near $44 (market cap ~$17.8B) after a volatile year on a 52-week range of $25.89-$84.64; FY26 revenue guidance of $450-460M following the SkyWater deal keeps the Strong Buy consensus intact even with shares down about 28% over the past year.",
+        "theme": "Quantum computing",
+        "sector": "Technology",
+        "industry": "Computer Hardware",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "capTier": "large"
       }
     },
     "TEM": {
       "ticker": "TEM",
-      "name": "Tempus AI, Inc.",
+      "name": "Tempus AI",
       "financials": {
         "period": "FY2025 (ended Dec 31, 2025)",
         "revenue": "~$1.27B (Q4 rev. $367.2M, +83% YoY)",
@@ -629,13 +719,18 @@
       "market": {
         "ticker": "TEM",
         "name": "Tempus AI",
-        "price": 76.32,
-        "mktCap": "$10.7B",
-        "metric_label": "Revenue growth (2025)",
-        "metric": 89.6,
+        "price": 82.7,
+        "mktCap": "$15.0B",
+        "metric_label": "Revenue growth (2026E)",
+        "metric": 25.5,
         "conviction": 5,
-        "blurb": "AI-driven precision medicine/diagnostics; raised FY2026 revenue guidance to $1.59-1.6B (+25% YoY); H.C. Wainwright just raised its target from $90 to $98, Buy-rated.",
-        "theme": "AI healthcare"
+        "blurb": "AI-driven precision medicine/diagnostics name near $83 (market cap ~$15B, 52-week range $40.77-$104.32), still guiding to roughly $1.6B of 2026 revenue (+25.5% YoY) as its genomic-sequencing and AI-diagnostics platform keeps scaling with large pharma partners.",
+        "theme": "AI healthcare",
+        "sector": "Healthcare",
+        "industry": "Health Information Services",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "capTier": "large"
       }
     },
     "IREN": {
@@ -661,18 +756,23 @@
       "market": {
         "ticker": "IREN",
         "name": "IREN Limited",
-        "price": 46.03,
-        "mktCap": "$17.0B",
+        "price": 40.65,
+        "mktCap": "$16.1B",
         "metric_label": "Analyst upside",
-        "metric": 81.5,
+        "metric": 100.4,
         "conviction": 4,
-        "blurb": "Ex-bitcoin miner pivoted to AI cloud; landed a new $9.7B Microsoft AI-cloud agreement, but down ~30% from its 52-week high after a recent EPS miss. Moderate Buy consensus, $68 average target.",
-        "theme": "AI infrastructure"
+        "blurb": "Ex-bitcoin miner turned AI cloud operator trading near $41 (market cap ~$16.1B); a consensus target of $81.47 implies roughly 100% upside, backed by its $25-30B 2027 AI-datacenter capex buildout.",
+        "theme": "AI infrastructure",
+        "sector": "Technology",
+        "industry": "Information Technology Services",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "capTier": "large"
       }
     },
     "QBTS": {
       "ticker": "QBTS",
-      "name": "D-Wave Quantum Inc.",
+      "name": "D-Wave Quantum",
       "financials": {
         "period": "FY2025 (ended Dec 31, 2025)",
         "revenue": null,
@@ -692,18 +792,23 @@
       "market": {
         "ticker": "QBTS",
         "name": "D-Wave Quantum",
-        "price": 17.42,
-        "mktCap": "$6.61B",
+        "price": 16.56,
+        "mktCap": "$6.17B",
         "metric_label": "Analyst upside",
-        "metric": 102,
+        "metric": 109.2,
         "conviction": 3,
-        "blurb": "Secured a Dept. of Commerce agreement for up to $100M; Strong Buy consensus with a $35 average target (+~100% upside); annealing quantum computing, pre-profit.",
-        "theme": "Quantum computing"
+        "blurb": "D-Wave's annealing quantum computers trade near $17 (market cap ~$6.2B); a Strong Buy consensus with a $34.65 average target implies roughly 109% upside, backed by its Dept. of Commerce funding agreement worth up to $100M.",
+        "theme": "Quantum computing",
+        "sector": "Technology",
+        "industry": "Computer Hardware",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "capTier": "mid"
       }
     },
     "RGTI": {
       "ticker": "RGTI",
-      "name": "Rigetti Computing, Inc.",
+      "name": "Rigetti Computing",
       "financials": {
         "period": "FY2025 (ended Dec 31, 2025)",
         "revenue": "$7.1M",
@@ -723,18 +828,23 @@
       "market": {
         "ticker": "RGTI",
         "name": "Rigetti Computing",
-        "price": 16.04,
-        "mktCap": "$5.33B",
-        "metric_label": "1-day price change",
-        "metric": 0.0,
+        "price": 15.62,
+        "mktCap": "$5.21B",
+        "metric_label": "YTD stock decline",
+        "metric": -29.5,
         "conviction": 3,
-        "blurb": "Part of ~$200M combined US government quantum funding; steadied after last week's pullback.",
-        "theme": "Quantum computing"
+        "blurb": "Rigetti's superconducting quantum processors trade near $16 (market cap ~$5.2B), down about 30% year-to-date and well off their 52-week high of $58.15, even as the broader quantum-computing group has rallied over 35% YTD on federal funding momentum.",
+        "theme": "Quantum computing",
+        "sector": "Technology",
+        "industry": "Computer Hardware",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "capTier": "mid"
       }
     },
     "CRSP": {
       "ticker": "CRSP",
-      "name": "CRISPR Therapeutics AG",
+      "name": "CRISPR Therapeutics",
       "financials": {
         "period": "FY2025 (ended Dec 31, 2025)",
         "revenue": "$3.51M (collab/grant revenue)",
@@ -751,18 +861,23 @@
       "market": {
         "ticker": "CRSP",
         "name": "CRISPR Therapeutics",
-        "price": 55.64,
-        "mktCap": "$5.39B",
+        "price": 56.07,
+        "mktCap": "$5.42B",
         "metric_label": "Analyst upside",
-        "metric": 65.3,
-        "conviction": 3,
-        "blurb": "Gene-editing therapeutics (Casgevix); lumpy revenue but Street sees upside, Buy-rated.",
-        "theme": "Biotech / gene editing"
+        "metric": 50.1,
+        "conviction": 4,
+        "blurb": "Gene-editing therapeutics name (Casgevy) near $56 (market cap ~$5.4B); consensus Buy rating with an average target around $87-88 implies roughly 50% upside, with Morgan Stanley and Piper Sandler among the bulls calling 2026 a defining year for the pipeline.",
+        "theme": "Gene editing",
+        "sector": "Healthcare",
+        "industry": "Biotechnology",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "capTier": "mid"
       }
     },
     "RXRX": {
       "ticker": "RXRX",
-      "name": "Recursion Pharmaceuticals, Inc.",
+      "name": "Recursion Pharmaceuticals",
       "financials": {
         "period": "FY2025 (ended Dec 31, 2025)",
         "revenue": "$74.68M",
@@ -782,18 +897,23 @@
       "market": {
         "ticker": "RXRX",
         "name": "Recursion Pharmaceuticals",
-        "price": 3.89,
-        "mktCap": "$1.98B",
-        "metric_label": "1-day price change",
-        "metric": -0.81,
+        "price": 4.07,
+        "mktCap": "$2.18B",
+        "metric_label": "Analyst upside",
+        "metric": 77.4,
         "conviction": 2,
-        "blurb": "AI-driven drug discovery platform partnered with large pharma; still pre-profit micro-cap.",
-        "theme": "AI drug discovery"
+        "blurb": "AI-driven drug discovery platform partnered with large pharma, trading near $4 (market cap ~$2.2B); a consensus target of $7.22 implies roughly 77% upside (Hold rating) as the pre-profit story remains a show-me case.",
+        "theme": "AI drug discovery",
+        "sector": "Healthcare",
+        "industry": "Biotechnology",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "capTier": "mid"
       }
     },
     "OSIS": {
       "ticker": "OSIS",
-      "name": "OSI Systems, Inc.",
+      "name": "OSI Systems",
       "financials": {
         "period": "FY2025 (ended ~Jun 2025)",
         "revenue": "$1,713.2M",
@@ -814,17 +934,22 @@
       "market": {
         "ticker": "OSIS",
         "name": "OSI Systems",
-        "price": 210.25,
+        "price": 196.62,
         "metric_label": "Short % of float",
-        "metric": 93.83,
-        "blurb": "Highest short interest in the market; security & healthcare imaging; -1.0% today.",
-        "flag": "Extreme short interest",
-        "score": 100.0
+        "metric": 13.3,
+        "blurb": "Security-screening and healthcare-imaging bears have kept short interest near 13.3% of float as the stock trades around $196.62 ahead of its next earnings print.",
+        "flag": "High short interest",
+        "sector": "Industrials",
+        "industry": "Security & Protection Services",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "score": 18.5,
+        "capTier": null
       }
     },
     "INDI": {
       "ticker": "INDI",
-      "name": "indie Semiconductor, Inc.",
+      "name": "indie Semiconductor",
       "financials": {
         "period": "FY2025 (ended Dec 31, 2025)",
         "revenue": null,
@@ -841,17 +966,22 @@
       "market": {
         "ticker": "INDI",
         "name": "indie Semiconductor",
-        "price": null,
+        "price": 2.88,
         "metric_label": "Short % of float",
-        "metric": 86.24,
-        "blurb": "Automotive chip demand and cash-burn concerns.",
-        "flag": "Extreme short interest",
-        "score": 91.2
+        "metric": 29.3,
+        "blurb": "Short interest has climbed to roughly 29.3% of float, among the highest readings this cycle, as automotive chip demand softness and cash-burn concerns weigh on shares near $2.88.",
+        "flag": "Rising short interest",
+        "sector": "Technology",
+        "industry": "Semiconductors",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "score": 46.6,
+        "capTier": null
       }
     },
     "UA": {
       "ticker": "UA",
-      "name": "Under Armour, Inc.",
+      "name": "Under Armour",
       "financials": {
         "period": "Trailing 12 months",
         "revenue": "$4.97B",
@@ -868,17 +998,22 @@
       "market": {
         "ticker": "UA",
         "name": "Under Armour",
-        "price": null,
+        "price": 5.03,
         "metric_label": "Short % of float",
-        "metric": 85.21,
-        "blurb": "Turnaround skepticism; ongoing apparel demand softness.",
-        "flag": "Extreme short interest",
-        "score": 90.0
+        "metric": 8.51,
+        "blurb": "Short interest sits little changed at about 8.5% of float with shares near $5.03, as the apparel brand's turnaround skepticism has largely faded from its earlier extreme levels.",
+        "flag": "Short interest declining",
+        "sector": "Consumer Discretionary",
+        "industry": "Apparel",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "score": 10.1,
+        "capTier": null
       }
     },
     "KSS": {
       "ticker": "KSS",
-      "name": "Kohl's Corporation",
+      "name": "Kohl's",
       "financials": {
         "period": "FY2025 (ended Jan 31, 2026)",
         "revenue": null,
@@ -898,17 +1033,22 @@
       "market": {
         "ticker": "KSS",
         "name": "Kohl's",
-        "price": 19.44,
+        "price": 17.72,
         "metric_label": "Short % of float",
-        "metric": 27.07,
-        "blurb": "Structural department-store decline; ~27% of shares still sold short.",
-        "flag": "High short interest",
-        "score": 22.4
+        "metric": 29.4,
+        "blurb": "Short interest has climbed to a two-month high near 29.4% of float as shares trade around $17.72, with bears still questioning dividend sustainability amid structural department-store decline.",
+        "flag": "Rising short interest",
+        "sector": "Consumer Discretionary",
+        "industry": "Department Stores",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "score": 46.8,
+        "capTier": null
       }
     },
     "SMCI": {
       "ticker": "SMCI",
-      "name": "Super Micro Computer, Inc.",
+      "name": "Super Micro Computer",
       "financials": {
         "period": "FY2025 (ended Jun 30, 2025)",
         "revenue": "$21.97B",
@@ -929,17 +1069,22 @@
       "market": {
         "ticker": "SMCI",
         "name": "Super Micro Computer",
-        "price": 35.64,
+        "price": 41.92,
         "metric_label": "Short % of float",
-        "metric": 25.65,
-        "blurb": "Prior accounting controversy; days-to-cover has fallen to ~3.0 \u2014 a fast squeeze is now easier if sentiment flips.",
-        "flag": "Rising short interest + weak print",
-        "score": 20.7
+        "metric": 16.0,
+        "blurb": "Short interest remains near 16% of outstanding shares as the stock holds around $41.92, with bears still wary of the prior accounting controversy even as AI-server demand drives a fiscal 2026 rebound.",
+        "flag": "Moderate short interest",
+        "sector": "Technology",
+        "industry": "Computer Hardware",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "score": 23.3,
+        "capTier": null
       }
     },
     "TMDX": {
       "ticker": "TMDX",
-      "name": "TransMedics Group, Inc.",
+      "name": "TransMedics Group",
       "financials": {
         "period": "FY2024 (ended Dec 31, 2024)",
         "revenue": "$441.5M",
@@ -961,17 +1106,22 @@
       "market": {
         "ticker": "TMDX",
         "name": "TransMedics Group",
-        "price": 87.0,
+        "price": 78.64,
         "metric_label": "Short % of float",
         "metric": 23.3,
-        "blurb": "Organ-transport technology; growth deceleration and valuation concerns; short interest still climbing, +5.9% today.",
-        "flag": "High short interest",
-        "score": 18.0
+        "blurb": "Shares have slid sharply from 2026 highs to near $78.64, and short interest has climbed back to roughly 23.3% of float as bears target decelerating organ-transport volumes.",
+        "flag": "Rising short interest",
+        "sector": "Healthcare",
+        "industry": "Medical Devices",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "score": 36.1,
+        "capTier": null
       }
     },
     "LULU": {
       "ticker": "LULU",
-      "name": "lululemon athletica inc.",
+      "name": "lululemon athletica",
       "financials": {
         "period": "FY2024 (ended Feb 2, 2025)",
         "revenue": "$10.6B",
@@ -993,12 +1143,17 @@
       "market": {
         "ticker": "LULU",
         "name": "lululemon athletica",
-        "price": 98.37,
+        "price": 96.0,
         "metric_label": "Short % of float",
-        "metric": 11.86,
-        "blurb": "Cut its full-year guidance again after a Q2 miss (revenue now seen down 5-7%); short interest has climbed as the stock keeps sliding under $100.",
-        "flag": "Guidance cut (twice) + leadership change",
-        "score": 4.7
+        "metric": 10.0,
+        "blurb": "Short interest has eased to roughly 10% of float as shares trade near $96, though bears remain positioned against lingering guidance concerns in the athletic-apparel category.",
+        "flag": "Short interest declining",
+        "sector": "Consumer Discretionary",
+        "industry": "Apparel Retail",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "score": 12.7,
+        "capTier": null
       }
     },
     "CPB": {
@@ -1024,12 +1179,17 @@
       "market": {
         "ticker": "CPB",
         "name": "The Campbell's Company",
-        "price": 23.78,
+        "price": 20.26,
         "metric_label": "Short % of float",
-        "metric": 7.81,
-        "blurb": "36% dividend cut, sales -8% YoY, and a weak FY27 guide.",
-        "flag": "Guidance cut",
-        "score": 0.0
+        "metric": 25.57,
+        "blurb": "Short interest has surged to roughly 25.6% of float since the company slashed its dividend by more than a third on weak snacks-segment results, with shares near $20.26.",
+        "flag": "Rising short interest",
+        "sector": "Consumer Staples",
+        "industry": "Packaged Foods",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "score": 40.1,
+        "capTier": null
       }
     },
     "AMZN": {
@@ -1040,17 +1200,18 @@
       "market": {
         "ticker": "AMZN",
         "name": "Amazon.com",
-        "price": 249.4,
+        "price": 248.23,
         "mktCap": "$2.69T",
         "metric_label": "AWS revenue growth (Q2 2026, YoY)",
-        "metric": 36.7,
+        "metric": 37.0,
         "conviction": 5,
-        "blurb": "AWS revenue surged 36.7% YoY to $42.2B in Q2 2026 \u2014 its fastest growth in 18 quarters \u2014 driving a 43% jump in operating income and a fresh post-earnings high for the stock.",
+        "blurb": "AWS net sales grew 37% YoY to a $169B annualized run rate in Q2 2026 — its fastest growth in 18 quarters — driving a 43% jump in operating income to $27.5B, even as 2026 capex guidance rises to $220B.",
         "rating": "Strong Buy",
         "sector": "Consumer Discretionary",
         "industry": "Internet Retail",
         "fortune100": true,
-        "fortune100Rank": 1
+        "fortune100Rank": 1,
+        "capTier": "mega"
       }
     },
     "GOOGL": {
@@ -1061,17 +1222,18 @@
       "market": {
         "ticker": "GOOGL",
         "name": "Alphabet Inc.",
-        "price": 342.23,
+        "price": 344.08,
         "mktCap": "$4.21T",
         "metric_label": "Revenue growth (Q2 2026, YoY)",
         "metric": 24.0,
         "conviction": 5,
-        "blurb": "Google Cloud revenue accelerated to 82% growth and total revenue rose 24% YoY to $119.8B in Q2 2026, the 12th straight quarter of double-digit growth even as shares dipped on a capex hike.",
+        "blurb": "Google Cloud revenue accelerated to 82% growth and total revenue rose 24% YoY to $119.8B in Q2 2026, the 12th straight quarter of double-digit growth; shares are up 0.9% today to $344.08 and over 8% YTD.",
         "rating": "Strong Buy",
         "sector": "Communication Services",
         "industry": "Internet Content & Search",
         "fortune100": true,
-        "fortune100Rank": 5
+        "fortune100Rank": 5,
+        "capTier": "mega"
       }
     },
     "MSFT": {
@@ -1082,17 +1244,18 @@
       "market": {
         "ticker": "MSFT",
         "name": "Microsoft Corporation",
-        "price": 513.19,
-        "mktCap": "$3.81T",
+        "price": 515.34,
+        "mktCap": "$3.83T",
         "metric_label": "Azure revenue growth (FY26 Q4, YoY)",
         "metric": 43.0,
         "conviction": 5,
-        "blurb": "Azure cloud revenue grew 43% YoY last quarter \u2014 the fastest pace since early 2022 \u2014 pushing annual Azure revenue past $100B with CFO Amy Hood guiding toward 45% growth next quarter.",
+        "blurb": "Azure cloud revenue grew 43% YoY last quarter — the fastest pace since early 2022 — pushing annual Azure revenue past $100B; shares sit near $515 (market cap $3.83T) with CFO Amy Hood guiding toward continued acceleration.",
         "rating": "Strong Buy",
         "sector": "Technology",
         "industry": "Software Infrastructure",
         "fortune100": true,
-        "fortune100Rank": 11
+        "fortune100Rank": 11,
+        "capTier": "mega"
       }
     },
     "LLY": {
@@ -1108,12 +1271,13 @@
         "metric_label": "Revenue growth (Q2 2026, YoY)",
         "metric": 48.0,
         "conviction": 5,
-        "blurb": "Mounjaro sales nearly doubled YoY to $9.94B and Zepbound rose 46% to $4.93B, driving 48% total revenue growth in Q2 2026 and a raised full-year guidance of $82-85B.",
+        "blurb": "Mounjaro sales nearly doubled YoY to $9.94B and Zepbound rose 46% to $4.93B, driving 48% total revenue growth in Q2 2026; shares trade near $1,155 within a 52-week range of $763-$1,293 after guidance was raised to $82-85B for the year.",
         "rating": "Strong Buy",
         "sector": "Healthcare",
         "industry": "Pharmaceuticals",
         "fortune100": true,
-        "fortune100Rank": 100
+        "fortune100Rank": 100,
+        "capTier": "mega"
       }
     },
     "V": {
@@ -1124,17 +1288,18 @@
       "market": {
         "ticker": "V",
         "name": "Visa Inc.",
-        "price": 358.99,
-        "mktCap": "$671.13B",
+        "price": 359.85,
+        "mktCap": "$672.22B",
         "metric_label": "Adjusted EPS growth (fiscal Q3 2026, YoY)",
         "metric": 11.0,
         "conviction": 4,
-        "blurb": "Visa's fiscal Q3 adjusted EPS rose 11% YoY to $3.32 on revenue of $11.63B, beating consensus as cross-border payment volumes stayed resilient.",
+        "blurb": "Visa's fiscal Q3 adjusted EPS rose 11% YoY to $3.32 on revenue of $11.63B; shares now trade near $360 (market cap ~$672B) with cross-border payment volumes staying resilient heading into fiscal Q4 results.",
         "rating": "Buy",
         "sector": "Financials",
         "industry": "Payment Processing",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "mega"
       }
     },
     "MA": {
@@ -1145,17 +1310,18 @@
       "market": {
         "ticker": "MA",
         "name": "Mastercard Inc.",
-        "price": 549.37,
-        "mktCap": "$481.26B",
+        "price": 551.84,
+        "mktCap": "$483.41B",
         "metric_label": "Net revenue growth (Q2 2026, YoY)",
         "metric": 14.0,
         "conviction": 4,
-        "blurb": "Mastercard's Q2 net revenue climbed 14% YoY to $9.3B, powered by 22% growth in value-added services even as cross-border volumes cooled amid a travel slowdown.",
+        "blurb": "Mastercard's Q2 net revenue climbed 14% YoY to $9.3B, powered by 22% growth in value-added services; shares sit near $552 (market cap $483B) even as cross-border volumes cool amid a travel slowdown.",
         "rating": "Buy",
         "sector": "Financials",
         "industry": "Payment Processing",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "mega"
       }
     },
     "CAT": {
@@ -1166,17 +1332,18 @@
       "market": {
         "ticker": "CAT",
         "name": "Caterpillar Inc.",
-        "price": 810.79,
-        "mktCap": "$372.70B",
+        "price": 834.22,
+        "mktCap": "$379.85B",
         "metric_label": "Revenue growth (TTM, YoY)",
         "metric": 21.5,
         "conviction": 4,
-        "blurb": "Caterpillar posted a 31% EPS surprise last quarter on a record $72B backlog and surging AI-driven power-generation demand, with trailing-twelve-month revenue up 21.5% YoY.",
+        "blurb": "Caterpillar's trailing-twelve-month revenue growth remains 21.5% YoY on a record $72B backlog and surging AI-driven power-generation demand; shares have rallied to around $834 (+44% YTD, $380B market cap) after a 31% EPS beat last quarter.",
         "rating": "Buy",
         "sector": "Industrials",
         "industry": "Construction Machinery",
         "fortune100": true,
-        "fortune100Rank": 65
+        "fortune100Rank": 65,
+        "capTier": "mega"
       }
     },
     "GE": {
@@ -1187,17 +1354,18 @@
       "market": {
         "ticker": "GE",
         "name": "GE Aerospace",
-        "price": 319.0,
-        "mktCap": "$330.98B",
+        "price": 312.42,
+        "mktCap": "$327.46B",
         "metric_label": "Adjusted revenue growth (Q2 2026, YoY)",
         "metric": 24.0,
         "conviction": 4,
-        "blurb": "GE Aerospace's Q2 adjusted revenue grew 24% YoY to $12.6B, led by 27% growth in Commercial Engines & Services, with full-year 2026 revenue now guided to grow more than 18%.",
+        "blurb": "GE Aerospace's Q2 adjusted revenue grew 24% YoY to $12.6B, led by 27% growth in Commercial Engines & Services; shares trade near $312 (market cap $327.5B) ahead of Q3 results due October 20, with full-year revenue still guided to grow more than 18%.",
         "rating": "Buy",
         "sector": "Industrials",
         "industry": "Aerospace & Defense",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "mega"
       }
     },
     "JPM": {
@@ -1208,17 +1376,18 @@
       "market": {
         "ticker": "JPM",
         "name": "JPMorgan Chase & Co.",
-        "price": 327.6,
-        "mktCap": "$870.83B",
+        "price": 333.29,
+        "mktCap": "$886.05B",
         "metric_label": "Revenue growth (most recent quarter, YoY)",
         "metric": 27.7,
         "conviction": 4,
-        "blurb": "JPMorgan's latest quarterly revenue jumped 27.7% YoY to $58.02B, beating consensus by over $7B as EPS of $6.14 topped estimates on surging trading and investment-banking fees.",
+        "blurb": "JPMorgan's most recent quarterly revenue jumped 27.7% YoY to $58.02B, beating consensus by over $7B; shares trade near $333 (market cap ~$886B) ahead of the bank's October 13 earnings report.",
         "rating": "Buy",
         "sector": "Financials",
         "industry": "Diversified Banks",
         "fortune100": true,
-        "fortune100Rank": 12
+        "fortune100Rank": 12,
+        "capTier": "mega"
       }
     },
     "AAPL": {
@@ -1229,17 +1398,18 @@
       "market": {
         "ticker": "AAPL",
         "name": "Apple Inc.",
-        "price": 336.3,
-        "mktCap": "$4.91T",
+        "price": 333.02,
+        "mktCap": "$4.86T",
         "metric_label": "Revenue growth (fiscal Q3 2026, YoY)",
         "metric": 16.0,
         "conviction": 4,
-        "blurb": "Apple's fiscal Q3 revenue rose 16% YoY to $109.4B on 22% iPhone growth and record $30.7B Services revenue, though guidance points to growth decelerating to 9-11% next quarter.",
+        "blurb": "Apple's fiscal Q3 revenue rose 16% YoY to $109.4B on 22% iPhone growth and record $30.7B Services revenue; shares trade near $333 (market cap $4.86T) with guidance pointing to growth decelerating to 9-11% next quarter.",
         "rating": "Buy",
         "sector": "Technology",
         "industry": "Consumer Electronics",
         "fortune100": true,
-        "fortune100Rank": 4
+        "fortune100Rank": 4,
+        "capTier": "mega"
       }
     },
     "COST": {
@@ -1250,17 +1420,18 @@
       "market": {
         "ticker": "COST",
         "name": "Costco Wholesale",
-        "price": 917.63,
-        "mktCap": "$409.84B",
-        "metric_label": "Comparable sales growth (latest quarter)",
+        "price": 915.4,
+        "mktCap": "$405.54B",
+        "metric_label": "Comparable sales growth (fiscal Q4 2026)",
         "metric": 9.4,
         "conviction": 3,
-        "blurb": "Costco's total comparable sales rose 9.4% with digitally-enabled comps up 19.5% and e-commerce traffic up 30%, as net sales growth of 11.2% beat estimates in the latest quarter.",
+        "blurb": "Costco's fiscal Q4 comparable sales rose 9.4% (U.S. comps +10.7%) with digitally-enabled comps up 19.5%, as net sales grew 11.2% to $93.9B and EPS of $6.75 beat estimates for the quarter ended August 30, 2026.",
         "rating": "Buy",
         "sector": "Consumer Staples",
         "industry": "Warehouse Clubs",
         "fortune100": true,
-        "fortune100Rank": 13
+        "fortune100Rank": 13,
+        "capTier": "mega"
       }
     },
     "TSLA": {
@@ -1271,17 +1442,18 @@
       "market": {
         "ticker": "TSLA",
         "name": "Tesla, Inc.",
-        "price": 354.81,
-        "mktCap": "$1.39T",
+        "price": 354.11,
+        "mktCap": "$1.40T",
         "metric_label": "Q3 2026 delivery growth (analyst consensus est., YoY)",
-        "metric": 8.0,
-        "conviction": 3,
-        "blurb": "Tesla's Q3 delivery consensus of roughly 462,000 vehicles would mark its first annual delivery increase since 2023 (+8% YoY), even with the stock still down about 22% year-to-date.",
-        "rating": "Momentum",
+        "metric": -7.1,
+        "conviction": 2,
+        "blurb": "Analyst consensus ahead of today's Q3 report calls for about 461,974 deliveries, down roughly 7% YoY from Q3 2025's 497,099 — a reversal from the growth narrative priced in earlier this year — with the stock still down about 22% year-to-date.",
+        "rating": "Hold",
         "sector": "Consumer Discretionary",
         "industry": "Automobiles",
         "fortune100": true,
-        "fortune100Rank": 43
+        "fortune100Rank": 43,
+        "capTier": "mega"
       }
     },
     "DE": {
@@ -1292,17 +1464,18 @@
       "market": {
         "ticker": "DE",
         "name": "Deere & Company",
-        "price": 690.46,
-        "mktCap": "$186.17B",
+        "price": 665.89,
+        "mktCap": "$179.54B",
         "metric_label": "Revenue growth (fiscal Q3 2026, YoY)",
         "metric": 5.0,
         "conviction": 3,
-        "blurb": "Deere's fiscal Q3 revenue rose 5% YoY to $12.61B, well ahead of estimates as tariff refunds and construction-equipment strength offset a soft ag cycle, prompting a raised profit outlook.",
+        "blurb": "Deere's fiscal Q3 revenue rose 5% YoY to $12.61B, well ahead of estimates as tariff refunds and construction-equipment strength offset a soft ag cycle; shares have climbed to about $666 (+43% YTD, ~$180B market cap) after a raised profit outlook.",
         "rating": "Buy",
         "sector": "Industrials",
         "industry": "Farm Machinery",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "large"
       }
     },
     "BA": {
@@ -1313,17 +1486,18 @@
       "market": {
         "ticker": "BA",
         "name": "The Boeing Company",
-        "price": 187.68,
-        "mktCap": "$148.19B",
+        "price": 192.24,
+        "mktCap": "$152.06B",
         "metric_label": "Revenue growth (H1 2026, YoY)",
         "metric": 11.0,
         "conviction": 3,
-        "blurb": "Boeing's H1 2026 revenue grew 11% YoY to $46.8B as 737 MAX deliveries rose 14% to 171 jets and backlog hit a record $715B, though shares stay volatile on recurring certification delays.",
+        "blurb": "Boeing's H1 2026 revenue grew 11% YoY to $46.8B as 737 MAX deliveries rose 14% to 171 jets and backlog hit a record $715B; shares jumped 3.5% this week after winning a Navy F/A-XX fighter contract worth more than $20B, though certification-delay volatility persists.",
         "rating": "Speculative",
         "sector": "Industrials",
         "industry": "Aerospace & Defense",
         "fortune100": true,
-        "fortune100Rank": 46
+        "fortune100Rank": 46,
+        "capTier": "large"
       }
     },
     "NEE": {
@@ -1334,17 +1508,18 @@
       "market": {
         "ticker": "NEE",
         "name": "NextEra Energy",
-        "price": 75.53,
-        "mktCap": "$158.2B",
+        "price": 76.4,
+        "mktCap": "$159.25B",
         "metric_label": "Adjusted EPS growth (Q2 2026, YoY)",
         "metric": 9.5,
         "conviction": 3,
-        "blurb": "NextEra grew adjusted EPS 9.5% YoY in Q2 2026 and reaffirmed its 8%+ annual EPS growth target through 2032, with shares still near the low end of their 52-week range.",
+        "blurb": "NextEra grew adjusted EPS 9.5% YoY in Q2 2026 and reaffirmed its 8%+ annual EPS growth target through 2032; the stock ($76.40, $159B market cap) is also drawing attention for a $67B Dominion acquisition and a new $22.3B data-center power campus in Texas.",
         "rating": "Buy",
         "sector": "Utilities",
         "industry": "Electric Utilities",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "large"
       }
     },
     "ADBE": {
@@ -1355,17 +1530,18 @@
       "market": {
         "ticker": "ADBE",
         "name": "Adobe Inc.",
-        "price": 245.48,
-        "mktCap": "$97.58B",
+        "price": 241.28,
+        "mktCap": "$93.91B",
         "metric_label": "Annualized recurring revenue growth (Q3 FY26, YoY)",
         "metric": 11.2,
         "conviction": 3,
-        "blurb": "Adobe's annualized recurring revenue hit $27.5B, up 11.2% YoY in fiscal Q3, with EPS of $6.13 beating estimates as Firefly and AI-assisted Creative Cloud tools gain traction.",
+        "blurb": "Adobe's annualized recurring revenue hit $27.5B, up 11.2% YoY in fiscal Q3, with EPS of $6.13 beating estimates as Firefly and AI-assisted Creative Cloud tools gain traction, though shares have fallen about 31% YTD to $241 as investors weigh AI-disruption risk to the core business.",
         "rating": "Buy",
         "sector": "Technology",
         "industry": "Application Software",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "large"
       }
     },
     "UNH": {
@@ -1376,17 +1552,18 @@
       "market": {
         "ticker": "UNH",
         "name": "UnitedHealth Group",
-        "price": 364.45,
-        "mktCap": "$327.13B",
-        "metric_label": "Revenue growth (Q1 2026, YoY)",
-        "metric": 2.0,
+        "price": 366.66,
+        "mktCap": "$327.77B",
+        "metric_label": "Revenue growth (Q2 2026, YoY)",
+        "metric": 0.4,
         "conviction": 2,
-        "blurb": "UnitedHealth raised full-year 2026 adjusted EPS guidance to $19.50-$20.00 after a strong Q2, but revenue growth has slowed to just 2% YoY as elevated medical costs keep pressuring margins.",
+        "blurb": "UnitedHealth's Q2 2026 revenue grew just 0.4% YoY to $112.0B even as operating earnings jumped 55% to $8.0B on cost discipline; full-year adjusted EPS guidance was raised to $19.50-$20.00, but the stalled top line keeps this one in watch-and-wait territory ahead of Q3 results due October 13.",
         "rating": "Hold",
         "sector": "Healthcare",
         "industry": "Managed Health Care",
         "fortune100": true,
-        "fortune100Rank": 3
+        "fortune100Rank": 3,
+        "capTier": "mega"
       }
     },
     "GIS": {
@@ -1397,18 +1574,19 @@
       "market": {
         "ticker": "GIS",
         "name": "General Mills",
-        "price": 33.82,
-        "mktCap": "$18.1B",
+        "price": 31.67,
+        "mktCap": "$16.9B",
         "metric_label": "Beta (5yr)",
-        "metric": 0.09,
-        "divYield": 7.21,
-        "blurb": "General Mills shares are down over 20% in 2026, pushing the yield above 7%, though its current increase streak of roughly 6 years is modest next to packaged-food peers.",
+        "metric": 0.03,
+        "divYield": 7.59,
+        "blurb": "General Mills shares are near 52-week lows in 2026, pushing the yield above 7.5%, though its beta near 0.03 and a modest 6-year increase streak keep it a lower-conviction pick next to packaged-food peers.",
         "streak": "6 yrs",
         "sector": "Consumer Staples",
         "industry": "Packaged Foods",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 100.0
+        "score": 100.0,
+        "capTier": "large"
       }
     },
     "VZ": {
@@ -1419,18 +1597,19 @@
       "market": {
         "ticker": "VZ",
         "name": "Verizon",
-        "price": 45.87,
-        "mktCap": "$190.6B",
+        "price": 46.09,
+        "mktCap": "$193.3B",
         "metric_label": "Beta (5yr)",
         "metric": 0.24,
-        "divYield": 6.09,
-        "blurb": "Verizon's 20th consecutive annual dividend hike in early 2026 pushed the yield near 6%, among the highest in the S&P 500, as it closes in on Dividend King status.",
+        "divYield": 6.15,
+        "blurb": "Verizon's beta near 0.24 is among the lowest in this group, and its roughly 6.15% yield follows a 20th consecutive annual dividend hike as it closes in on Dividend King status.",
         "streak": "20 yrs",
         "sector": "Communication Services",
         "industry": "Telecom Services",
         "fortune100": true,
         "fortune100Rank": 28,
-        "score": 90.9
+        "score": 79.2,
+        "capTier": "large"
       }
     },
     "O": {
@@ -1441,18 +1620,19 @@
       "market": {
         "ticker": "O",
         "name": "Realty Income",
-        "price": 55.35,
-        "mktCap": "$52.4B",
+        "price": 53.53,
+        "mktCap": "$51.4B",
         "metric_label": "Beta (5yr)",
-        "metric": 0.4,
-        "divYield": 5.86,
-        "blurb": "Realty Income, 'The Monthly Dividend Company,' has raised its payout for 31 consecutive years and yields 5.9%, distributed monthly rather than quarterly.",
+        "metric": 0.71,
+        "divYield": 5.91,
+        "blurb": "Realty Income's beta of about 0.71 and 5.91% monthly-paid yield continue a 31-year streak of dividend increases for 'The Monthly Dividend Company.'",
         "streak": "31 yrs",
         "sector": "Real Estate",
         "industry": "Net Lease REIT",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 87.3
+        "score": 50.6,
+        "capTier": "large"
       }
     },
     "KMB": {
@@ -1463,18 +1643,19 @@
       "market": {
         "ticker": "KMB",
         "name": "Kimberly-Clark",
-        "price": 97.43,
-        "mktCap": "$32.4B",
+        "price": 94.34,
+        "mktCap": "$31.4B",
         "metric_label": "Beta (5yr)",
-        "metric": 0.22,
+        "metric": 0.27,
         "divYield": 5.26,
-        "blurb": "Kimberly-Clark has increased its dividend for 54 consecutive years, and today's 5.3% yield sits well above the consumer-staples sector average.",
+        "blurb": "Kimberly-Clark's beta near 0.27 and 5.26% yield sit well above the consumer-staples average, backed by 54 consecutive years of dividend increases.",
         "streak": "54 yrs",
         "sector": "Consumer Staples",
         "industry": "Household Products",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 85.9
+        "score": 72.1,
+        "capTier": "large"
       }
     },
     "UPS": {
@@ -1485,18 +1666,19 @@
       "market": {
         "ticker": "UPS",
         "name": "United Parcel Service",
-        "price": 93.93,
+        "price": 93.89,
         "mktCap": "$79.9B",
         "metric_label": "Beta (5yr)",
         "metric": 1.04,
-        "divYield": 6.34,
-        "blurb": "UPS has raised its dividend for 16 consecutive years, but a payout ratio above 120% of trailing earnings signals the pace of future hikes may need to slow.",
+        "divYield": 7.02,
+        "blurb": "UPS's beta near 1.04 is the second-highest in this group, but a 7.02% yield atop 16 consecutive years of dividend growth still signals a payout investors are watching closely given its elevated payout ratio.",
         "streak": "16 yrs",
         "sector": "Industrials",
         "industry": "Air Freight & Logistics",
         "fortune100": true,
         "fortune100Rank": 49,
-        "score": 81.8
+        "score": 38.3,
+        "capTier": "large"
       }
     },
     "T": {
@@ -1507,18 +1689,19 @@
       "market": {
         "ticker": "T",
         "name": "AT&T",
-        "price": 24.4,
-        "mktCap": "$167.2B",
+        "price": 24.47,
+        "mktCap": "$167.8B",
         "metric_label": "Beta (5yr)",
-        "metric": 0.39,
-        "divYield": 4.53,
-        "blurb": "AT&T slashed its dividend 47% in 2022 alongside the WarnerMedia spinoff and has held it flat at $0.2775/quarter since, prioritizing debt paydown over payout growth.",
-        "streak": "\u2014",
+        "metric": 0.43,
+        "divYield": 4.55,
+        "blurb": "AT&T's beta of roughly 0.43 and 4.55% yield reflect its post-spinoff stability, though the dividend has been held flat since the 2022 cut rather than resuming growth.",
+        "streak": "—",
         "sector": "Communication Services",
         "industry": "Telecom Services",
         "fortune100": true,
         "fortune100Rank": 30,
-        "score": 79.0
+        "score": 58.6,
+        "capTier": "large"
       }
     },
     "DUK": {
@@ -1529,18 +1712,19 @@
       "market": {
         "ticker": "DUK",
         "name": "Duke Energy",
-        "price": 114.22,
-        "mktCap": "$88.0B",
+        "price": 113.74,
+        "mktCap": "$88.7B",
         "metric_label": "Beta (5yr)",
         "metric": 0.36,
-        "divYield": 3.8,
-        "blurb": "Duke Energy has lifted its dividend for 22 consecutive years and has paid a cash dividend for 100 straight years, the definition of regulated-utility stability.",
+        "divYield": 3.81,
+        "blurb": "Duke Energy's beta of about 0.36 and 3.81% yield reflect regulated-utility stability, backed by 22 consecutive years of dividend increases and a century of unbroken payouts.",
         "streak": "22 yrs",
         "sector": "Utilities",
         "industry": "Regulated Electric",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 74.7
+        "score": 58.2,
+        "capTier": "large"
       }
     },
     "SO": {
@@ -1551,18 +1735,19 @@
       "market": {
         "ticker": "SO",
         "name": "Southern Company",
-        "price": 83.1,
-        "mktCap": "$100.3B",
+        "price": 83.46,
+        "mktCap": "$96.0B",
         "metric_label": "Beta (5yr)",
         "metric": 0.32,
-        "divYield": 3.69,
-        "blurb": "Southern Company's 25th consecutive annual dividend increase in 2026 newly qualified it as an S&P 500 Dividend Aristocrat, backed by 79 straight years of steady-or-higher payouts.",
+        "divYield": 3.67,
+        "blurb": "Southern Company's beta near 0.32 and 3.67% yield follow its 25th consecutive annual dividend increase, newly qualifying it as an S&P 500 Dividend Aristocrat.",
         "streak": "25 yrs",
         "sector": "Utilities",
         "industry": "Regulated Electric",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 74.6
+        "score": 59.7,
+        "capTier": "large"
       }
     },
     "CVX": {
@@ -1574,17 +1759,18 @@
         "ticker": "CVX",
         "name": "Chevron",
         "price": 204.21,
-        "mktCap": "$403.8B",
+        "mktCap": "$400.6B",
         "metric_label": "Beta (5yr)",
-        "metric": 0.49,
-        "divYield": 3.45,
-        "blurb": "Chevron has raised its dividend for 39 straight years, a streak that held through oil crashes, the 2008 crisis, and the pandemic without a single cut or freeze.",
+        "metric": 0.5,
+        "divYield": 3.49,
+        "blurb": "Chevron's beta near 0.50 and 3.49% yield highlight a 39-year streak of dividend increases that has held through multiple oil-price cycles.",
         "streak": "39 yrs",
         "sector": "Energy",
         "industry": "Oil & Gas Integrated",
         "fortune100": true,
         "fortune100Rank": 20,
-        "score": 70.8
+        "score": 48.2,
+        "capTier": "mega"
       }
     },
     "MRK": {
@@ -1595,18 +1781,19 @@
       "market": {
         "ticker": "MRK",
         "name": "Merck",
-        "price": 147.16,
-        "mktCap": "$366.8B",
+        "price": 145.31,
+        "mktCap": "$368.3B",
         "metric_label": "Beta (5yr)",
         "metric": 0.22,
-        "divYield": 2.36,
-        "blurb": "Merck has raised its dividend for 15 consecutive years on top of a 55-year unbroken payment history, underpinned by steady pharmaceutical cash flows.",
+        "divYield": 2.3,
+        "blurb": "Merck's beta of roughly 0.22 remains among the lowest in healthcare, with a 2.30% yield continuing a 15-year streak of dividend increases atop a 55-year unbroken payment history.",
         "streak": "15 yrs",
         "sector": "Healthcare",
         "industry": "Pharmaceuticals",
         "fortune100": true,
         "fortune100Rank": 67,
-        "score": 67.5
+        "score": 57.2,
+        "capTier": "mega"
       }
     },
     "CL": {
@@ -1617,18 +1804,19 @@
       "market": {
         "ticker": "CL",
         "name": "Colgate-Palmolive",
-        "price": 85.5,
-        "mktCap": "$68.8B",
+        "price": 84.54,
+        "mktCap": "$68.0B",
         "metric_label": "Beta (5yr)",
         "metric": 0.25,
-        "divYield": 2.41,
-        "blurb": "Colgate-Palmolive is a Dividend King with 64 consecutive years of increases and an unbroken dividend payment record dating back to 1895.",
+        "divYield": 2.48,
+        "blurb": "Colgate-Palmolive's beta around 0.25 and 2.48% yield support its Dividend King status, with 64 consecutive years of increases and an unbroken payment record dating to 1895.",
         "streak": "64 yrs",
         "sector": "Consumer Staples",
         "industry": "Household Products",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 67.4
+        "score": 56.5,
+        "capTier": "large"
       }
     },
     "ADM": {
@@ -1639,18 +1827,19 @@
       "market": {
         "ticker": "ADM",
         "name": "Archer-Daniels-Midland",
-        "price": 79.38,
+        "price": 79.52,
         "mktCap": "$38.3B",
         "metric_label": "Beta (5yr)",
-        "metric": 0.61,
-        "divYield": 2.62,
-        "blurb": "ADM made its 377th consecutive quarterly dividend payment in 2026, marking 53 straight years of annual increases and Dividend King status in agribusiness.",
+        "metric": 0.62,
+        "divYield": 2.42,
+        "blurb": "ADM's beta of roughly 0.62 and 2.42% yield continue a 53-year streak of annual increases, cementing its Dividend King status in agribusiness.",
         "streak": "53 yrs",
         "sector": "Consumer Staples",
         "industry": "Agricultural Processing",
         "fortune100": true,
         "fortune100Rank": 66,
-        "score": 64.0
+        "score": 34.8,
+        "capTier": "large"
       }
     },
     "ABT": {
@@ -1661,18 +1850,19 @@
       "market": {
         "ticker": "ABT",
         "name": "Abbott Laboratories",
-        "price": 101.0,
+        "price": 98.83,
         "mktCap": "$174.7B",
         "metric_label": "Beta (5yr)",
-        "metric": 0.59,
+        "metric": 0.37,
         "divYield": 2.5,
-        "blurb": "Abbott has increased its dividend for 54 consecutive years, a Dividend Aristocrat record built on diversified revenue across devices, diagnostics, nutrition, and generics.",
+        "blurb": "Abbott's beta near 0.37 and 2.50% yield sit on a 54-year streak of dividend increases, a Dividend Aristocrat record built on diversified devices, diagnostics, and nutrition revenue.",
         "streak": "54 yrs",
         "sector": "Healthcare",
         "industry": "Medical Devices & Diagnostics",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 63.4
+        "score": 49.7,
+        "capTier": "large"
       }
     },
     "TGT": {
@@ -1683,18 +1873,19 @@
       "market": {
         "ticker": "TGT",
         "name": "Target",
-        "price": 157.5,
-        "mktCap": "$71.4B",
+        "price": 158.43,
+        "mktCap": "$72.0B",
         "metric_label": "Beta (5yr)",
         "metric": 0.99,
-        "divYield": 2.97,
-        "blurb": "Target extended its Dividend King streak to roughly 55 straight years in 2026, even while posting its smallest percentage dividend increase in over five decades.",
+        "divYield": 2.93,
+        "blurb": "Target's beta near 0.99 trails most of this list, and its 2.93% yield extends a roughly 55-year Dividend King streak even after its smallest percentage increase in decades.",
         "streak": "55 yrs",
         "sector": "Consumer Discretionary",
         "industry": "General Merchandise Retail",
         "fortune100": true,
         "fortune100Rank": 40,
-        "score": 61.1
+        "score": 16.5,
+        "capTier": "large"
       }
     },
     "AFL": {
@@ -1705,18 +1896,19 @@
       "market": {
         "ticker": "AFL",
         "name": "Aflac",
-        "price": 111.78,
-        "mktCap": "$56.0B",
+        "price": 116.52,
+        "mktCap": "$58.5B",
         "metric_label": "Beta (5yr)",
-        "metric": 0.62,
-        "divYield": 2.06,
-        "blurb": "Aflac extended its dividend increase streak to roughly 44 years in 2026, a four-decade run that cements its Dividend King status in the insurance sector.",
+        "metric": 0.61,
+        "divYield": 2.08,
+        "blurb": "Aflac's beta near 0.61 and 2.08% yield extend a roughly 44-year dividend increase streak, cementing its Dividend King status in the insurance sector.",
         "streak": "44 yrs",
         "sector": "Financials",
         "industry": "Insurance (Life & Health)",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 60.2
+        "score": 33.3,
+        "capTier": "large"
       }
     },
     "MMM": {
@@ -1727,18 +1919,19 @@
       "market": {
         "ticker": "MMM",
         "name": "3M",
-        "price": 169.48,
-        "mktCap": "$87.4B",
+        "price": 163.4,
+        "mktCap": "$84.3B",
         "metric_label": "Beta (5yr)",
-        "metric": 1.1,
-        "divYield": 1.84,
-        "blurb": "3M's 64-year dividend growth streak ended with a 2024 cut tied to the Solventum spinoff, and the payout has since resumed growing for two straight years.",
+        "metric": 1.07,
+        "divYield": 1.9,
+        "blurb": "3M's beta near 1.07 is now the highest of this group, and its 1.90% yield reflects a dividend that is still rebuilding after the 2024 cut tied to the Solventum spinoff.",
         "streak": "2 yrs",
         "sector": "Industrials",
         "industry": "Diversified Industrials",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 52.5
+        "score": 5.7,
+        "capTier": "large"
       }
     },
     "HON": {
@@ -1749,18 +1942,19 @@
       "market": {
         "ticker": "HON",
         "name": "Honeywell",
-        "price": 211.34,
+        "price": 209.62,
         "mktCap": "$67.0B",
         "metric_label": "Beta (5yr)",
-        "metric": 0.9,
-        "divYield": 1.33,
-        "blurb": "Honeywell has raised its dividend for roughly 14 consecutive years, though its 2026 aerospace-unit spin-off activity adds near-term uncertainty to the payout's path.",
+        "metric": 0.82,
+        "divYield": 1.35,
+        "blurb": "Honeywell's beta around 0.82 and 1.35% yield trail the group average, with its roughly 14-year increase streak facing added uncertainty from the 2026 aerospace spin-off.",
         "streak": "14 yrs",
         "sector": "Industrials",
         "industry": "Aerospace & Diversified",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 51.9
+        "score": 16.8,
+        "capTier": "large"
       }
     },
     "CRWD": {
@@ -1771,17 +1965,18 @@
       "market": {
         "ticker": "CRWD",
         "name": "CrowdStrike",
-        "price": 264.75,
-        "mktCap": "$271.7B",
+        "price": 266.17,
+        "mktCap": "$272.3B",
         "metric_label": "TTM revenue growth",
         "metric": 24.3,
         "conviction": 4,
-        "blurb": "CrowdStrike's trailing revenue reached $5.40B (up 24.3% YoY) with Q2 FY2027 revenue growth of 26% and $377M in free cash flow, cementing its position as the AI-native cybersecurity platform of record even as shares trade near all-time highs around $265.",
+        "blurb": "CrowdStrike's trailing revenue remains near $5.4B (up roughly 24% YoY), and with shares up about 113% over the past 12 months to a market cap north of $272B it has cemented its place as the AI-native cybersecurity platform of record, even though that run leaves less room for further multiple expansion.",
         "theme": "Cybersecurity",
         "sector": "Technology",
         "industry": "Cybersecurity Software",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "mega"
       }
     },
     "NET": {
@@ -1792,17 +1987,18 @@
       "market": {
         "ticker": "NET",
         "name": "Cloudflare",
-        "price": 352.26,
-        "mktCap": "$114.8B",
+        "price": 351.0,
+        "mktCap": "$124.8B",
         "metric_label": "Q2 2026 revenue growth (YoY)",
         "metric": 36.0,
         "conviction": 4,
-        "blurb": "Cloudflare's Q2 2026 revenue jumped 36% YoY to $696.1M as the stock has rallied nearly 79% year-to-date on AI traffic monetization and enterprise expansion, positioning its network as critical infrastructure for both security and AI inference workloads.",
+        "blurb": "Cloudflare shares near $351 (market cap ~$124.8B, up from ~$115B) keep being powered by AI-traffic monetization and enterprise expansion, with Q2 2026 revenue growth of 36% YoY reinforcing its role as critical infrastructure for both security and AI inference workloads.",
         "theme": "Cybersecurity",
         "sector": "Technology",
         "industry": "Internet Infrastructure",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "large"
       }
     },
     "SOFI": {
@@ -1814,16 +2010,17 @@
         "ticker": "SOFI",
         "name": "SoFi Technologies",
         "price": 15.72,
-        "mktCap": "$20.6B",
+        "mktCap": "$20.9B",
         "metric_label": "TTM revenue growth",
         "metric": 26.64,
         "conviction": 4,
-        "blurb": "SoFi's Q2 2026 adjusted net revenue hit a record $1.2B (up 40%) with members up 35% to 15.8 million and adjusted EBITDA up 44% to $358M, prompting management to raise full-year 2026 adjusted net revenue guidance to $4.75-4.85B.",
+        "blurb": "SoFi's digital-banking platform keeps compounding, with members up 35% to 15.8 million and adjusted EBITDA up 44% last quarter, even as shares sit near $16 (market cap ~$20.9B) after full-year 2026 adjusted net revenue guidance was raised to $4.75-4.85B.",
         "theme": "Fintech",
         "sector": "Financials",
         "industry": "Digital Banking",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "large"
       }
     },
     "AFRM": {
@@ -1834,17 +2031,18 @@
       "market": {
         "ticker": "AFRM",
         "name": "Affirm",
-        "price": 70.0,
-        "mktCap": "$23.7B",
+        "price": 70.43,
+        "mktCap": "$25.9B",
         "metric_label": "FY2026 revenue growth",
         "metric": 32.0,
         "conviction": 4,
-        "blurb": "Affirm's fiscal 2026 revenue grew 32% to $4.26B on GMV of $50.2B (up 37%), and operating income swung to a $417M profit from an $87.3M loss a year earlier, validating the buy-now-pay-later model's path to sustained profitability.",
+        "blurb": "Affirm shares near $70 (market cap ~$25.9B) following fiscal 2026 revenue growth of 32% to $4.26B on GMV of $50.2B, and a swing to a $417M operating profit from an $87.3M loss a year earlier, validating the buy-now-pay-later model's path to sustained profitability.",
         "theme": "Fintech",
         "sector": "Financials",
         "industry": "BNPL / Consumer Finance",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "large"
       }
     },
     "ASTS": {
@@ -1855,17 +2053,18 @@
       "market": {
         "ticker": "ASTS",
         "name": "AST SpaceMobile",
-        "price": 57.68,
-        "mktCap": "$22.4B",
-        "metric_label": "Q2 2026 revenue growth (QoQ)",
-        "metric": 99.4,
+        "price": 57.36,
+        "mktCap": "$22.2B",
+        "metric_label": "Analyst upside",
+        "metric": 37.85,
         "conviction": 3,
-        "blurb": "Q2 2026 revenue doubled sequentially to $31.5M on commercial and U.S. government traffic, and with $3.7B in pro forma cash plus a Piper Sandler Overweight call at a $100 target, the bull case rests on 2026 revenue guidance of $150-200M actually landing after the quarter missed estimates.",
+        "blurb": "Satellite-to-phone connectivity play near $57 (market cap ~$22.2B); Piper Sandler's Overweight call and a $79.61 average target (~38% upside) rest on 2026 revenue guidance of $150-200M actually landing after a recent quarter missed estimates.",
         "theme": "Space",
         "sector": "Communication Services",
         "industry": "Satellite Communications",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "large"
       }
     },
     "LUNR": {
@@ -1876,17 +2075,18 @@
       "market": {
         "ticker": "LUNR",
         "name": "Intuitive Machines",
-        "price": 14.42,
-        "mktCap": "$3.3B",
+        "price": 14.05,
+        "mktCap": "$3.22B",
         "metric_label": "Q2 2026 revenue growth (YoY)",
         "metric": 400.0,
         "conviction": 3,
-        "blurb": "Record Q2 2026 revenue of $206.2M came in over 4x Q2 2025 on satellite manufacturing and lunar lander work, and with NASA's IM-5 and IM-6 CLPS awards layering in and FY2026 guidance reaffirmed at $900M-$1B, analysts rate it Strong Buy with a $29.50 target versus the current $14.42.",
+        "blurb": "Lunar lander and satellite-manufacturing name near $14 (market cap ~$3.2B); analysts rate it Strong Buy with a $29.50 target (~110% upside) as NASA's IM-5 and IM-6 CLPS awards layer onto FY2026 revenue guidance of $900M-$1B.",
         "theme": "Space",
         "sector": "Industrials",
         "industry": "Aerospace & Defense",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "mid"
       }
     },
     "BEAM": {
@@ -1897,17 +2097,18 @@
       "market": {
         "ticker": "BEAM",
         "name": "Beam Therapeutics",
-        "price": 29.02,
-        "mktCap": "$2.97B",
-        "metric_label": "Market cap growth (trailing 12mo)",
-        "metric": 88.4,
+        "price": 24.52,
+        "mktCap": "$2.52B",
+        "metric_label": "Share price change (trailing quarter)",
+        "metric": -15.5,
         "conviction": 3,
-        "blurb": "Beam dosed its first patient in the global pivotal cohort of BEAM-302 for alpha-1 antitrypsin deficiency in July 2026 and published differentiated Phase 1/2 BEACON data for sickle-cell candidate risto-cel in NEJM, with a BLA submission possible as early as year-end 2026.",
+        "blurb": "Beam shares have pulled back to around $25 (market cap ~$2.5B) even as the company advances its pivotal BEAM-302 cohort for alpha-1 antitrypsin deficiency and differentiated sickle-cell data for risto-cel, with a BLA submission still possible by year-end 2026.",
         "theme": "Gene editing",
         "sector": "Healthcare",
         "industry": "Gene Editing Biotech",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "mid"
       }
     },
     "PATH": {
@@ -1918,17 +2119,18 @@
       "market": {
         "ticker": "PATH",
         "name": "UiPath",
-        "price": 12.32,
-        "mktCap": "$6.4B",
+        "price": 13.39,
+        "mktCap": "$6.98B",
         "metric_label": "TTM revenue growth",
         "metric": 15.24,
         "conviction": 3,
-        "blurb": "UiPath's trailing-twelve-month revenue hit $1.67B (up 15.24% YoY) with the most recent quarter accelerating to 17.3% growth, as the company repositions its automation platform around agentic AI orchestration to reignite growth off a depressed ~$6-9B valuation range.",
+        "blurb": "UiPath's trailing revenue is still growing in the mid-teens percent YoY, with shares near $13 (market cap ~$7B) carrying a Hold consensus and roughly 19% upside to target as the automation platform repositions around agentic AI orchestration to reignite growth.",
         "theme": "Robotics",
         "sector": "Technology",
         "industry": "Software - Automation",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "mid"
       }
     },
     "FSLR": {
@@ -1939,17 +2141,18 @@
       "market": {
         "ticker": "FSLR",
         "name": "First Solar",
-        "price": 175.16,
-        "mktCap": "$18.6B",
+        "price": 173.21,
+        "mktCap": "$18.8B",
         "metric_label": "TTM revenue growth",
         "metric": 24.09,
         "conviction": 3,
-        "blurb": "First Solar grew trailing revenue 24% to $5.22B with 2026 EPS projected to climb 59.5% to $23.30, but the stock is down roughly 32% YTD on weaker utility-scale solar demand signals and tariff-policy uncertainty clouding next year's guidance.",
+        "blurb": "First Solar shares near $173 (market cap ~$18.8B) with trailing revenue growth around 24% and 2026 EPS still projected to climb sharply, though the stock remains pressured by weaker utility-scale solar demand signals and tariff-policy uncertainty clouding next year's guidance.",
         "theme": "Clean energy",
         "sector": "Technology",
         "industry": "Solar Equipment",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "large"
       }
     },
     "NTLA": {
@@ -1960,17 +2163,18 @@
       "market": {
         "ticker": "NTLA",
         "name": "Intellia Therapeutics",
-        "price": 12.45,
-        "mktCap": "$1.7B",
+        "price": 12.12,
+        "mktCap": "$1.70B",
         "metric_label": "Patients enrolled in Phase 3 nex-z program",
         "metric": 650.0,
         "conviction": 2,
-        "blurb": "Shares remain roughly 56% off their 52-week high after the FDA-lifted clinical hold on the MAGNITUDE Phase 3 trials, with over 650 ATTR-CM patients now enrolled and Regeneron-partnered nex-z enrollment targeted to complete in MAGNITUDE-2 in 2H 2026, making this a high-risk, data-readout-driven bet.",
+        "blurb": "Shares remain roughly 57% off their 52-week high near $12 (market cap ~$1.7B) even after the FDA lifted its clinical hold on the MAGNITUDE Phase 3 trials, with over 650 ATTR-CM patients enrolled and Regeneron-partnered nex-z enrollment targeted to complete in 2H 2026, making this a high-risk, data-readout-driven bet.",
         "theme": "Gene editing",
         "sector": "Healthcare",
         "industry": "Gene Editing Biotech",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "small"
       }
     },
     "SERV": {
@@ -1981,17 +2185,18 @@
       "market": {
         "ticker": "SERV",
         "name": "Serve Robotics",
-        "price": 4.63,
-        "mktCap": "$401M",
+        "price": 4.74,
+        "mktCap": "$403M",
         "metric_label": "Q2 2026 revenue growth (YoY)",
         "metric": 404.0,
         "conviction": 2,
-        "blurb": "Serve's sidewalk delivery robots posted over 400% YoY revenue growth in Q2 2026 to $3.2M on a ~2,000-robot fleet (7x larger than a year ago) with recurring revenue now topping 50% of the mix, even as the stock itself is down roughly 59% over the past year on dilution and execution concerns.",
+        "blurb": "Serve's sidewalk delivery robots posted over 400% YoY revenue growth last quarter on a fleet roughly 7x larger than a year ago, with recurring revenue now above half the mix, even as the stock near $5 (market cap ~$400M) remains down sharply from its 52-week high of $18.64 on dilution concerns.",
         "theme": "Robotics",
         "sector": "Industrials",
         "industry": "Autonomous Robotics",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "small"
       }
     },
     "SOUN": {
@@ -2002,17 +2207,18 @@
       "market": {
         "ticker": "SOUN",
         "name": "SoundHound AI",
-        "price": 6.02,
-        "mktCap": "$2.62B",
+        "price": 6.05,
+        "mktCap": "$2.75B",
         "metric_label": "Q2 2026 revenue growth (YoY)",
         "metric": 45.0,
-        "conviction": 2,
-        "blurb": "SoundHound posted Q2 2026 revenue of $61.9M (up 45% YoY) after a record 52%-growth Q1, with full-year guidance of $225-260M reflecting momentum in automotive and IoT voice-AI deployments, though the stock has given back more than a third of its 2026 peak market cap.",
+        "conviction": 3,
+        "blurb": "SoundHound's voice-AI platform keeps posting 45%+ YoY quarterly revenue growth on automotive and IoT deployments, with shares near $6 (market cap ~$2.75B) now flagged among analysts' top AI picks and carrying roughly 95% upside to target despite sitting well off their 2026 peak.",
         "theme": "AI",
         "sector": "Technology",
         "industry": "Conversational AI Software",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "mid"
       }
     },
     "AI": {
@@ -2023,17 +2229,18 @@
       "market": {
         "ticker": "AI",
         "name": "C3.ai",
-        "price": 9.93,
-        "mktCap": "$1.6B",
+        "price": 11.12,
+        "mktCap": "$1.79B",
         "metric_label": "TTM revenue (YoY change)",
         "metric": -16.7,
         "conviction": 2,
-        "blurb": "C3.ai's market cap has nearly halved over the past year to roughly $1.6-1.7B as trailing revenue slipped to about $250M, a reminder that not every enterprise-AI story is compounding and that this is now a turnaround bet on new leadership and partner-channel sales rather than a growth story.",
+        "blurb": "C3.ai's market cap sits near $1.8B as shares trade around $11 (down roughly 18% YTD) and trailing revenue remains in decline, underscoring that this is now a turnaround bet on new leadership and partner-channel sales rather than a growth story.",
         "theme": "AI",
         "sector": "Technology",
         "industry": "Enterprise AI Software",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "small"
       }
     },
     "ENVX": {
@@ -2044,17 +2251,18 @@
       "market": {
         "ticker": "ENVX",
         "name": "Enovix",
-        "price": 2.9,
-        "mktCap": "$621M",
+        "price": 2.81,
+        "mktCap": "$630M",
         "metric_label": "H1 2026 revenue growth (YoY)",
         "metric": 32.0,
         "conviction": 2,
-        "blurb": "Enovix grew first-half 2026 revenue 32% YoY to $16.6M on its fifth straight quarter of YoY growth, with smart-eyewear battery shipments ramping toward a 50,000-pack order, even as the stock sits roughly 80% below its 52-week high on slow scale-up of silicon-anode production.",
+        "blurb": "Enovix shares near $3 (market cap ~$630M) continue to grow revenue around 32% YoY on silicon-anode battery shipments for smart eyewear, even as the stock sits roughly 85% below its 52-week high on slow scale-up of production.",
         "theme": "EV battery",
         "sector": "Technology",
         "industry": "Battery Technology",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "small"
       }
     },
     "QS": {
@@ -2065,17 +2273,18 @@
       "market": {
         "ticker": "QS",
         "name": "QuantumScape",
-        "price": 4.64,
-        "mktCap": "$3.5B",
+        "price": 5.22,
+        "mktCap": "$3.00B",
         "metric_label": "YTD stock decline",
-        "metric": -56.1,
+        "metric": -47.9,
         "conviction": 2,
-        "blurb": "QuantumScape shares have fallen over 56% in 2026 after Morgan Stanley and TD Cowen slashed price targets to $8.50 and $6 respectively following a scaled-back Volkswagen/PowerCo agreement, leaving commercial solid-state cell manufacturing still targeted for as late as 2029.",
+        "blurb": "QuantumScape shares near $5 (market cap ~$3.0B) have stabilized off their 2026 lows after Morgan Stanley and TD Cowen slashed targets into the $6-8.50 range following a scaled-back Volkswagen/PowerCo agreement, with commercial solid-state cell manufacturing still not expected before 2029.",
         "theme": "EV battery",
         "sector": "Technology",
         "industry": "Battery Technology",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "mid"
       }
     },
     "CHPT": {
@@ -2086,17 +2295,18 @@
       "market": {
         "ticker": "CHPT",
         "name": "ChargePoint",
-        "price": 10.08,
-        "mktCap": "$271M",
+        "price": 10.2,
+        "mktCap": "$274M",
         "metric_label": "Q2 CY2026 revenue growth (YoY)",
         "metric": 17.7,
         "conviction": 2,
-        "blurb": "ChargePoint shares are up nearly 52% YTD after Q2 calendar-2026 revenue grew 17.7% YoY to $116.1M (beating estimates by over 10%) and subscription revenue climbed into double digits, a tentative inflection for a stock still classified as micro-cap after years of decline.",
+        "blurb": "ChargePoint shares near $10 (market cap ~$274M) have held recent gains after Q2 calendar-2026 revenue grew 17.7% YoY to $116.1M and subscription revenue climbed into double digits, a tentative inflection for a stock still classified as micro-cap after years of decline.",
         "theme": "EV infrastructure",
         "sector": "Technology",
         "industry": "EV Charging Infrastructure",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "small"
       }
     },
     "PLUG": {
@@ -2107,17 +2317,18 @@
       "market": {
         "ticker": "PLUG",
         "name": "Plug Power",
-        "price": 2.71,
-        "mktCap": "$3.2B",
+        "price": 1.89,
+        "mktCap": "$2.64B",
         "metric_label": "FY2026 revenue growth guidance",
         "metric": 16.0,
         "conviction": 2,
-        "blurb": "Plug Power raised full-year 2026 revenue growth guidance to 15-16% after Q1 revenue rose 22% to $163.5M on a 343% surge in electrolyzer sales, with gross margin improving 71 points YoY as management targets positive EBITDAS by Q4 2026.",
+        "blurb": "Plug Power shares near $1.90 (market cap ~$2.6B) continue to target 15-16% full-year 2026 revenue growth and positive EBITDAS by Q4 2026, even as hydrogen fuel-cell demand ramps more slowly than hoped and the stock sits near multi-year lows.",
         "theme": "Clean energy",
         "sector": "Industrials",
         "industry": "Hydrogen Fuel Cells",
         "fortune100": false,
-        "fortune100Rank": null
+        "fortune100Rank": null,
+        "capTier": "mid"
       }
     },
     "BYND": {
@@ -2128,16 +2339,17 @@
       "market": {
         "ticker": "BYND",
         "name": "Beyond Meat",
-        "price": 2.58,
+        "price": 8.23,
         "metric_label": "Short % of float",
-        "metric": 49.9,
-        "blurb": "Nearly half of Beyond Meat's float is sold short, among the highest in the market, as plant-based meat demand keeps shrinking and the company burns cash toward potential restructuring.",
-        "flag": "Extreme short interest",
+        "metric": 31.0,
+        "blurb": "Following a 1-for-30 reverse split, short interest has eased from its prior extreme to roughly 31% of float, though shares near $8.23 still carry some of the heaviest bearish positioning in the market as plant-based demand keeps shrinking.",
+        "flag": "High short interest",
         "sector": "Consumer Staples",
         "industry": "Packaged Foods",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 100.0
+        "score": 49.6,
+        "capTier": null
       }
     },
     "LCID": {
@@ -2148,16 +2360,17 @@
       "market": {
         "ticker": "LCID",
         "name": "Lucid Group",
-        "price": 4.07,
+        "price": 4.18,
         "metric_label": "Short % of float",
-        "metric": 30.1,
-        "blurb": "Shares short nearly doubled from about 55M to 91M+ in a single month, pushing short interest toward 30%+ of float as the $4 stock battles chronic cash burn.",
+        "metric": 42.5,
+        "blurb": "Short interest has rocketed to over 42% of float, among the highest in the market, as shares collapse toward $4.18 on persistent cash-burn, dilution, and demand concerns.",
         "flag": "Extreme short interest",
         "sector": "Consumer Discretionary",
         "industry": "Automobile Manufacturers",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 58.2
+        "score": 69.8,
+        "capTier": null
       }
     },
     "UPST": {
@@ -2168,16 +2381,17 @@
       "market": {
         "ticker": "UPST",
         "name": "Upstart Holdings",
-        "price": 66.57,
+        "price": 22.99,
         "metric_label": "Short % of float",
-        "metric": 29.7,
-        "blurb": "Nearly 30% of float is sold short as bears bet the AI-lending model's loan volume can't keep pace with its stretched valuation despite the recent rally to $66.57.",
+        "metric": 32.5,
+        "blurb": "Short interest has climbed to roughly 32.5% of float as shares slide to 52-week lows near $23, with bears betting the AI-lending model's credit performance and funding durability can't support the stock.",
         "flag": "Extreme short interest",
         "sector": "Financials",
         "industry": "Consumer Finance",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 57.4
+        "score": 52.2,
+        "capTier": null
       }
     },
     "HTZ": {
@@ -2190,14 +2404,15 @@
         "name": "Hertz Global Holdings",
         "price": 1.77,
         "metric_label": "Short % of float",
-        "metric": 28.6,
-        "blurb": "Shares near $1.77 carry roughly 28.6% short interest as fleet depreciation costs and EV residual-value writedowns continue to pressure the rental-car turnaround.",
-        "flag": "High short interest",
+        "metric": 59.7,
+        "blurb": "Short interest has exploded to nearly 60% of float, among the most heavily shorted names in the market, even as shares near $1.77 show signs of a short-squeeze setup after the latest earnings beat.",
+        "flag": "Extreme short interest",
         "sector": "Consumer Discretionary",
         "industry": "Car & Truck Rental",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 55.1
+        "score": 100.0,
+        "capTier": null
       }
     },
     "FUBO": {
@@ -2208,16 +2423,17 @@
       "market": {
         "ticker": "FUBO",
         "name": "fuboTV",
-        "price": 9.09,
+        "price": 9.8,
         "metric_label": "Short % of float",
-        "metric": 21.3,
-        "blurb": "Shares sit at $9.09 with about 21.3% of float short as bears question subscriber growth durability now that fuboTV has folded its sports-first strategy into the Disney/Hulu Live tie-up.",
+        "metric": 22.0,
+        "blurb": "After a 1-for-12 reverse split earlier in 2026, roughly 22% of fuboTV's float is sold short with shares near $9.80, as bears question subscriber durability under the Disney/Hulu Live tie-up.",
         "flag": "High short interest",
         "sector": "Communication Services",
         "industry": "Streaming Media",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 39.7
+        "score": 33.8,
+        "capTier": null
       }
     },
     "W": {
@@ -2228,16 +2444,17 @@
       "market": {
         "ticker": "W",
         "name": "Wayfair",
-        "price": 94.54,
+        "price": 77.59,
         "metric_label": "Short % of float",
-        "metric": 19.0,
-        "blurb": "Online furniture retailer still working toward sustained profitability; roughly 19% of float sold short as bears bet the recent rally outruns the turnaround.",
+        "metric": 18.5,
+        "blurb": "Roughly 18.5% of Wayfair's float remains sold short with shares near $77.59, trading well above several analysts' fair-value estimates as bears bet the online furniture retailer's rally outruns its turnaround.",
         "flag": "High short interest",
         "sector": "Consumer Discretionary",
         "industry": "Internet Retail",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 34.8
+        "score": 27.7,
+        "capTier": null
       }
     },
     "SIRI": {
@@ -2248,36 +2465,17 @@
       "market": {
         "ticker": "SIRI",
         "name": "Sirius XM Holdings",
-        "price": 25.48,
+        "price": 23.29,
         "metric_label": "Short % of float",
-        "metric": 16.5,
-        "blurb": "Satellite radio subscriber growth has stalled; short interest has climbed roughly 16% of float amid streaming competition and a complex Liberty Media spinoff structure.",
-        "flag": "Rising short interest",
+        "metric": 8.02,
+        "blurb": "Short interest as a share of float has fallen sharply to around 8% following the Liberty Media spinoff restructuring, even as shares near $23.29 continue to lag amid stalled subscriber growth.",
+        "flag": "Short interest declining",
         "sector": "Communication Services",
         "industry": "Broadcasting",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 29.5
-      }
-    },
-    "PARA": {
-      "ticker": "PARA",
-      "name": "Paramount Skydance",
-      "financials": null,
-      "ratios": {},
-      "market": {
-        "ticker": "PARA",
-        "name": "Paramount Skydance",
-        "price": 10.13,
-        "metric_label": "Short % of float",
-        "metric": 15.7,
-        "blurb": "About 15.7% of float is sold short on the newly merged studio as investors weigh integration costs and legacy linear-TV decline against its Warner Bros. Discovery acquisition ambitions.",
-        "flag": "High short interest",
-        "sector": "Communication Services",
-        "industry": "Media & Entertainment",
-        "fortune100": false,
-        "fortune100Rank": null,
-        "score": 27.8
+        "score": 9.3,
+        "capTier": null
       }
     },
     "RIVN": {
@@ -2288,16 +2486,17 @@
       "market": {
         "ticker": "RIVN",
         "name": "Rivian Automotive",
-        "price": 14.63,
+        "price": 14.82,
         "metric_label": "Short % of float",
-        "metric": 15.5,
-        "blurb": "Shares sit near $14.63 with roughly 15.5% of float sold short as the EV maker still burns cash ahead of its lower-cost R2 ramp.",
+        "metric": 15.0,
+        "blurb": "About 15% of Rivian's float remains sold short with shares near $14.82, as the EV maker continues burning cash ahead of its lower-cost R2 launch despite new robotaxi-fleet demand from Uber.",
         "flag": "High short interest",
         "sector": "Consumer Discretionary",
         "industry": "Automobile Manufacturers",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 27.4
+        "score": 21.5,
+        "capTier": null
       }
     },
     "RIOT": {
@@ -2308,16 +2507,17 @@
       "market": {
         "ticker": "RIOT",
         "name": "Riot Platforms",
-        "price": 20.53,
+        "price": 19.54,
         "metric_label": "Short % of float",
-        "metric": 14.8,
-        "blurb": "Shares fell nearly 4% to $20.53 with about 14.8% of float short, as bears target the bitcoin miner's exposure to swings in crypto prices and network hash-rate economics.",
+        "metric": 14.5,
+        "blurb": "Short interest holds near 14.5% of float with shares around $19.54, as bears continue targeting the bitcoin miner's exposure to crypto-price swings and hash-rate economics.",
         "flag": "High short interest",
         "sector": "Technology",
         "industry": "Bitcoin Mining",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 25.9
+        "score": 20.6,
+        "capTier": null
       }
     },
     "PTON": {
@@ -2328,16 +2528,17 @@
       "market": {
         "ticker": "PTON",
         "name": "Peloton Interactive",
-        "price": 4.79,
+        "price": 8.4,
         "metric_label": "Short % of float",
-        "metric": 14.7,
-        "blurb": "Shares near $4.79 carry about 14.7% short interest as subscriber churn and discretionary spending pullback keep pressure on the connected-fitness turnaround story.",
+        "metric": 15.0,
+        "blurb": "Roughly 15% of Peloton's float remains sold short with shares near $8.40, as subscriber churn and discretionary spending pressure continue to weigh on the connected-fitness turnaround.",
         "flag": "High short interest",
         "sector": "Consumer Discretionary",
         "industry": "Leisure Products",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 25.7
+        "score": 21.5,
+        "capTier": null
       }
     },
     "CVNA": {
@@ -2348,16 +2549,17 @@
       "market": {
         "ticker": "CVNA",
         "name": "Carvana",
-        "price": 60.47,
+        "price": 63.04,
         "metric_label": "Short % of float",
-        "metric": 13.8,
-        "blurb": "Shares dropped 7% to $60.47 on the latest print, with short interest running near 13.8% of float on concerns over loan-loss reserves and subprime auto credit exposure.",
-        "flag": "High short interest",
+        "metric": 10.6,
+        "blurb": "Short interest has eased to roughly 10.6% of float with shares near $63, as bears who bet against the online used-car retailer's turnaround keep getting squeezed out.",
+        "flag": "Short interest declining",
         "sector": "Consumer Discretionary",
         "industry": "Specialty Retail",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 23.8
+        "score": 13.8,
+        "capTier": null
       }
     },
     "JOBY": {
@@ -2368,16 +2570,17 @@
       "market": {
         "ticker": "JOBY",
         "name": "Joby Aviation",
-        "price": 6.13,
+        "price": 5.96,
         "metric_label": "Short % of float",
-        "metric": 11.9,
-        "blurb": "With about $200 million in quarterly cash burn and no commercial revenue yet, roughly 11.9% of Joby's float is sold short against the pre-certification eVTOL story.",
-        "flag": "High short interest",
+        "metric": 16.3,
+        "blurb": "Short interest has climbed to roughly 16.3% of float with shares near $5.96, as the pre-certification eVTOL maker continues burning cash with no commercial revenue yet.",
+        "flag": "Rising short interest",
         "sector": "Industrials",
         "industry": "Aerospace & Defense",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 19.8
+        "score": 23.8,
+        "capTier": null
       }
     },
     "GME": {
@@ -2388,16 +2591,17 @@
       "market": {
         "ticker": "GME",
         "name": "GameStop",
-        "price": 24.34,
+        "price": 20.92,
         "metric_label": "Short % of float",
-        "metric": 8.4,
-        "blurb": "Short interest has fallen roughly 44% year-over-year to about 8.4% of float, suggesting bears have largely moved on from this former meme-stock despite a declining physical-retail core.",
-        "flag": "Short interest declining",
+        "metric": 14.15,
+        "blurb": "Short interest has rebuilt to roughly 14.15% of float, nearly double where it stood earlier this year, as shares near $20.92 and bears bet the physical-retail core keeps shrinking.",
+        "flag": "Rising short interest",
         "sector": "Consumer Discretionary",
         "industry": "Specialty Retail",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 12.4
+        "score": 20.0,
+        "capTier": null
       }
     },
     "DJT": {
@@ -2408,16 +2612,17 @@
       "market": {
         "ticker": "DJT",
         "name": "Trump Media & Technology Group",
-        "price": 9.06,
+        "price": 8.84,
         "metric_label": "Short % of float",
-        "metric": 8.3,
-        "blurb": "Short interest of roughly 8.3% of float has crept back up as traders target the stock's history of sharp, news-driven swings disconnected from Truth Social's underlying ad revenue.",
+        "metric": 9.0,
+        "blurb": "Short interest has ticked up to roughly 9% of float with shares near $8.84, as traders keep targeting the stock's history of sharp, news-driven swings disconnected from Truth Social's underlying ad revenue.",
         "flag": "Meme-stock volatility",
         "sector": "Communication Services",
         "industry": "Social Media",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 12.2
+        "score": 11.0,
+        "capTier": null
       }
     },
     "AMC": {
@@ -2428,16 +2633,17 @@
       "market": {
         "ticker": "AMC",
         "name": "AMC Entertainment Holdings",
-        "price": 2.85,
+        "price": 3.31,
         "metric_label": "Short % of float",
-        "metric": 5.2,
-        "blurb": "Shares slid over 5% to roughly $2.85 after fresh debt pricing added to an already leveraged balance sheet, even as short interest sits modest at about 5.2% of float.",
+        "metric": 4.78,
+        "blurb": "Shares hover near $3.31 with short interest modest at about 4.8% of float, as the heavily leveraged theater chain continues layering on new debt.",
         "flag": "Meme-stock volatility",
         "sector": "Communication Services",
         "industry": "Movies & Entertainment",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 5.7
+        "score": 3.6,
+        "capTier": null
       }
     },
     "WBD": {
@@ -2448,16 +2654,17 @@
       "market": {
         "ticker": "WBD",
         "name": "Warner Bros. Discovery",
-        "price": 30.94,
+        "price": 30.96,
         "metric_label": "Short % of float",
-        "metric": 2.5,
-        "blurb": "Short interest is low at roughly 2.5% of float since the stock is now effectively trading on deal terms, with the pending Paramount Skydance acquisition set to close October 6, 2026.",
+        "metric": 2.74,
+        "blurb": "Short interest stays low at roughly 2.7% of float with shares near $30.96, as the stock continues trading essentially on deal terms ahead of the Paramount Skydance acquisition's expected October 6, 2026 close.",
         "flag": "Short interest declining",
         "sector": "Communication Services",
         "industry": "Media & Entertainment",
         "fortune100": false,
         "fortune100Rank": null,
-        "score": 0.0
+        "score": 0.0,
+        "capTier": null
       }
     },
     "AGG": {
@@ -2469,7 +2676,7 @@
         "ticker": "AGG",
         "name": "iShares Core U.S. Aggregate Bond ETF",
         "assetType": "etf",
-        "price": 94.6,
+        "price": 95.96,
         "mktCap": "$135.8B",
         "metric_label": "Beta (vs S&P 500)",
         "metric": 0.23,
@@ -2495,10 +2702,10 @@
         "ticker": "VIG",
         "name": "Vanguard Dividend Appreciation ETF",
         "assetType": "etf",
-        "price": 235.57,
+        "price": 240.06,
         "mktCap": "$112.7B",
         "metric_label": "Beta (vs S&P 500)",
-        "metric": 0.81,
+        "metric": 0.84,
         "expenseRatio": 0.04,
         "blurb": "Only holds companies with a decade-plus streak of raising dividends, a quality screen that tends to select steadier, more established businesses, so the fund moves less than the market even though it's still 100% stocks. Holds large U.S. companies with at least 10 consecutive years of dividend increases, filtered for financial health.",
         "holdingsNote": "Holds large U.S. companies with at least 10 consecutive years of dividend increases, filtered for financial health.",
@@ -2521,10 +2728,10 @@
         "ticker": "VWINX",
         "name": "Vanguard Wellesley Income Fund",
         "assetType": "mutual_fund",
-        "price": 25.14,
+        "price": 24.92,
         "mktCap": "$47.0B",
         "metric_label": "Beta (vs S&P 500)",
-        "metric": 0.65,
+        "metric": 0.7,
         "expenseRatio": 0.22,
         "blurb": "Keeps roughly 60-65% of assets in investment-grade bonds and only 35-40% in dividend-paying stocks, so its price barely budges compared to a pure stock fund or an individual company's share price. A balanced fund holding about 60-65% investment-grade bonds and 35-40% dividend-paying stocks.",
         "holdingsNote": "A balanced fund holding about 60-65% investment-grade bonds and 35-40% dividend-paying stocks.",
@@ -2547,12 +2754,12 @@
         "ticker": "SPY",
         "name": "SPDR S&P 500 ETF Trust",
         "assetType": "etf",
-        "price": 767.55,
+        "price": 766.71,
         "mktCap": "$820.7B",
         "metric_label": "Beta (vs S&P 500)",
-        "metric": 1.01,
+        "metric": 1.0,
         "expenseRatio": 0.09,
-        "blurb": "Owns a slice of all 505 S&P 500 companies at once, so a bad day for one company barely dents the fund, unlike an individual stock where one earnings miss can swing the price double digits. Tracks all 500+ companies in the S&P 500, weighted by market cap, across every major U.S. sector.",
+        "blurb": "Owns a slice of all 500+ S&P 500 companies at once, so a bad day for one company barely dents the fund, unlike an individual stock where one earnings miss can swing the price double digits. Tracks all 500+ companies in the S&P 500, weighted by market cap, across every major U.S. sector.",
         "holdingsNote": "Tracks all 500+ companies in the S&P 500, weighted by market cap, across every major U.S. sector.",
         "sector": "Diversified",
         "industry": "Large-Cap Blend ETF",
@@ -2573,7 +2780,7 @@
         "ticker": "VFIAX",
         "name": "Vanguard 500 Index Fund Admiral Shares",
         "assetType": "mutual_fund",
-        "price": 707.76,
+        "price": 707.43,
         "mktCap": "$693.0B",
         "metric_label": "Beta (vs S&P 500)",
         "metric": 1.0,
@@ -2599,10 +2806,10 @@
         "ticker": "FCNTX",
         "name": "Fidelity Contrafund",
         "assetType": "mutual_fund",
-        "price": 27.74,
+        "price": 27.53,
         "mktCap": "$177.3B",
         "metric_label": "Beta (vs S&P 500)",
-        "metric": 1.02,
+        "metric": 0.9,
         "expenseRatio": 0.74,
         "blurb": "A manager actively picks roughly a few hundred large-cap growth stocks rather than tracking an index, so it's more diversified than any single stock but can still drift from the market depending on the manager's bets. Actively managed; the portfolio manager selects several hundred large-cap growth-oriented stocks, with heavy exposure to a few mega-cap tech names.",
         "holdingsNote": "Actively managed; the portfolio manager selects several hundred large-cap growth-oriented stocks, with heavy exposure to a few mega-cap tech names.",
@@ -2625,10 +2832,10 @@
         "ticker": "QQQ",
         "name": "Invesco QQQ Trust",
         "assetType": "etf",
-        "price": 743.24,
+        "price": 742.03,
         "mktCap": "$489.0B",
         "metric_label": "Beta (vs S&P 500)",
-        "metric": 1.26,
+        "metric": 1.19,
         "expenseRatio": 0.18,
         "blurb": "Spreads money across the 100 largest non-financial Nasdaq companies, but its heavy tilt toward a handful of mega-cap tech names means it still swings noticeably harder than the broad market. Tracks the Nasdaq-100: the 100 largest non-financial companies listed on the Nasdaq, dominated by big tech.",
         "holdingsNote": "Tracks the Nasdaq-100: the 100 largest non-financial companies listed on the Nasdaq, dominated by big tech.",
@@ -2651,10 +2858,10 @@
         "ticker": "IWM",
         "name": "iShares Russell 2000 ETF",
         "assetType": "etf",
-        "price": 279.01,
-        "mktCap": "$77.6B",
+        "price": 279.02,
+        "mktCap": "$80.5B",
         "metric_label": "Beta (vs S&P 500)",
-        "metric": 1.27,
+        "metric": 1.24,
         "expenseRatio": 0.19,
         "blurb": "Diversifies across roughly 2,000 small companies rather than one, but small-caps as a group are more sensitive to economic swings and have less cash cushion than large-caps, so volatility stays elevated even with diversification. Holds about 2,000 small-cap U.S. companies that make up the Russell 2000 Index.",
         "holdingsNote": "Holds about 2,000 small-cap U.S. companies that make up the Russell 2000 Index.",
@@ -2678,11 +2885,11 @@
         "name": "Cal-Maine Foods",
         "assetType": "stock",
         "capTier": "mid",
-        "price": 68.06,
-        "mktCap": "$3.2B",
+        "price": 67.48,
+        "mktCap": "$3.17B",
         "metric_label": "revenue growth (YoY)",
         "metric": -41.5,
-        "blurb": "Q1 FY27 net sales plunged 41.5% to $539.6M as an industry egg glut drove conventional egg prices down ~59%, flipping CALM to a $58.6M net loss.",
+        "blurb": "Q1 FY27 net sales (reported Sept 30) plunged 41.5% to $539.6M as an industry egg glut drove conventional egg prices down ~59%, flipping CALM to a $58.6M net loss; the stock sits near $67.48 awaiting Q2 FY27 results due January 2027.",
         "sector": "Consumer Staples",
         "industry": "Packaged Foods",
         "riskScore": 4,
@@ -2702,11 +2909,11 @@
         "name": "Chemed Corp",
         "assetType": "stock",
         "capTier": "mid",
-        "price": 505.07,
-        "mktCap": "$6.57B",
-        "metric_label": "1-day price change",
-        "metric": -1.36,
-        "blurb": "Shares slipped 1.36% to $505.07 even as Oppenheimer raised its price target to $590 and RBC to $548 on strong VITAS hospice margins.",
+        "price": 539.82,
+        "mktCap": "$7.05B",
+        "metric_label": "revenue growth (YoY)",
+        "metric": 8.8,
+        "blurb": "Q2 2026 revenue rose 8.8% YoY to $673.3M as VITAS hospice revenue grew 11.9% on higher patient census and a lower Medicare Cap hit, prompting Chemed to raise full-year guidance; shares now trade near $539.82.",
         "sector": "Healthcare",
         "industry": "Hospice & Home Health",
         "riskScore": 4,
@@ -2726,11 +2933,11 @@
         "name": "Saia Inc",
         "assetType": "stock",
         "capTier": "mid",
-        "price": 360.1,
-        "mktCap": "$9.32B",
+        "price": 344.38,
+        "mktCap": "$9.16B",
         "metric_label": "revenue growth (YoY)",
-        "metric": 17.06,
-        "blurb": "Q2 revenue grew 17.1% YoY to $956.5M as Saia's LTL terminal network expansion kept driving volume share gains against larger rivals.",
+        "metric": 17.1,
+        "blurb": "Q2 2026 revenue grew 17.1% YoY to a record $956.5M as Saia's LTL terminal network expansion kept driving tonnage and share gains, though shares have pulled back to $344.38 from their 52-week high amid cost pressures.",
         "sector": "Industrials",
         "industry": "Trucking & Logistics",
         "riskScore": 4,
@@ -2750,11 +2957,11 @@
         "name": "Wingstop",
         "assetType": "stock",
         "capTier": "mid",
-        "price": 108.57,
-        "mktCap": "$2.98B",
+        "price": 104.36,
+        "mktCap": "$2.84B",
         "metric_label": "same-store sales growth (YoY)",
         "metric": -7.5,
-        "blurb": "Domestic same-store sales fell 7.5% in Q2 amid low-income-consumer pullback, and shares now trade over 70% below their 52-week high of $388.14.",
+        "blurb": "Domestic same-store sales fell 7.5% in Q2 2026 as low-income-consumer pullback persisted, prompting Wingstop to cut full-year same-store sales guidance to -4% to -6%; shares now trade near $104.36, well below their 52-week high of $388.14.",
         "sector": "Consumer Discretionary",
         "industry": "Restaurants",
         "riskScore": 4,
@@ -2778,7 +2985,7 @@
         "mktCap": "$930M",
         "metric_label": "1-day price change",
         "metric": 2.4,
-        "blurb": "Shares rose 2.4% as Q2 net income climbed to $23.5M ($0.79 EPS) on net interest income of $63.9M, up 1.0% sequentially on an improved funding mix.",
+        "blurb": "Shares sit near $31.60 after Q2 net income climbed to $23.5M ($0.79 EPS) on net interest income of $63.9M, up 1.0% sequentially on an improved funding mix; a ~$930M market cap still leaves it far more news-sensitive than a diversified bank ETF.",
         "sector": "Financials",
         "industry": "Regional Banks",
         "riskScore": 5,
@@ -2798,11 +3005,11 @@
         "name": "UMH Properties",
         "assetType": "stock",
         "capTier": "small",
-        "price": 15.4,
-        "mktCap": "$1.31B",
+        "price": 15.56,
+        "mktCap": "$1.32B",
         "metric_label": "1-day price change",
-        "metric": 0.0,
-        "blurb": "Manufactured-housing REIT with a $1.3B market cap; small enough that a single piece of unexpected news can move the stock far more than a diversified REIT fund would.",
+        "metric": 1.0,
+        "blurb": "Manufactured-housing REIT with a $1.32B market cap; small enough that a single piece of unexpected news can move the stock far more than a diversified REIT fund would.",
         "sector": "Real Estate",
         "industry": "Residential REIT",
         "riskScore": 5,
@@ -2822,11 +3029,11 @@
         "name": "CEVA Inc",
         "assetType": "stock",
         "capTier": "small",
-        "price": 28.96,
-        "mktCap": "$1.05B",
+        "price": 34.46,
+        "mktCap": "$960M",
         "metric_label": "1-day price change",
-        "metric": 7.64,
-        "blurb": "Shares jumped 7.6% today; this semiconductor-IP licensor's small size means a single contract win or chip-industry headline can swing the stock by high single digits in a session.",
+        "metric": -0.7,
+        "blurb": "Shares near $34.46, up roughly 19% from the prior update; this semiconductor-IP licensor's small size (~$960M market cap) means a single contract win or chip-industry headline can still swing the stock sharply in a session.",
         "sector": "Technology",
         "industry": "Semiconductor IP Licensing",
         "riskScore": 5,
@@ -2850,7 +3057,7 @@
         "mktCap": "$320M",
         "metric_label": "Market cap growth (YoY)",
         "metric": 86.0,
-        "blurb": "Permian Basin oil producer whose market cap is up 86% over the past year, but a sub-$2 share price and $320M market cap make it one of the most volatile names on this entire watchlist.",
+        "blurb": "Permian Basin oil producer still trading near $1.18 with a $320M market cap; a sub-$2 share price keeps it one of the most volatile names on this entire watchlist.",
         "sector": "Energy",
         "industry": "Oil & Gas E&P",
         "riskScore": 5,
@@ -2858,6 +3065,27 @@
         "conviction": 5,
         "fortune100": false,
         "fortune100Rank": null
+      }
+    },
+    "PSKY": {
+      "ticker": "PSKY",
+      "name": "Paramount Skydance Corporation",
+      "financials": null,
+      "ratios": {},
+      "market": {
+        "ticker": "PSKY",
+        "name": "Paramount Skydance Corporation",
+        "price": 9.34,
+        "metric_label": "Short % of float",
+        "metric": 15.83,
+        "blurb": "Now trading as PSKY after Paramount's legacy ticker was retired when the Skydance merger closed, shares sit near $9.34 with short interest around 15.8% of float as bears weigh $41 billion in new acquisition debt against the pending Warner Bros. Discovery deal.",
+        "flag": "High short interest",
+        "sector": "Communication Services",
+        "industry": "Media & Entertainment",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "score": 23.0,
+        "capTier": null
       }
     }
   }
