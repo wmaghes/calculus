@@ -47,132 +47,71 @@
     border-radius: 10px;
     padding: 14px 16px;
     font-size: 12.5px; line-height: 1.55; color: var(--ink-muted);
-    margin-bottom: 32px;
+    margin-bottom: 28px;
   }
   .disclaimer strong { color: var(--ink); }
 
-  nav.toc {
-    display: flex; gap: 8px; flex-wrap: wrap;
-    margin-bottom: 24px;
-  }
-  nav.toc a {
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 12px; text-decoration: none;
-    color: var(--ink);
-    border: 1px solid var(--border);
-    border-radius: 999px;
-    padding: 7px 13px;
-    display: inline-flex; align-items: center; gap: 7px;
-    background: var(--surface);
-  }
-  nav.toc a .dot { width: 7px; height: 7px; border-radius: 50%; }
-
-  .search-panel {
+  .quick-search {
     background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-    padding: 16px 18px; margin-bottom: 20px;
+    padding: 16px 18px; margin-bottom: 32px; position: relative;
   }
-  .search-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-  .search-row input[type="text"], .search-row select {
-    font-family: "IBM Plex Sans", sans-serif; font-size: 13.5px; padding: 9px 12px;
+  .quick-search label {
+    display: block; font-family: "IBM Plex Mono", monospace; font-size: 11.5px;
+    color: var(--ink-faint); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .quick-search input[type="text"] {
+    width: 100%; font-family: "IBM Plex Sans", sans-serif; font-size: 14px; padding: 10px 12px;
     border: 1px solid var(--border); border-radius: 8px; background: var(--bg); color: var(--ink);
   }
-  .search-row input[type="text"] { flex: 1 1 220px; min-width: 180px; }
-  .search-row select { min-width: 160px; }
-  .f100-toggle {
-    font-family: "IBM Plex Mono", monospace; font-size: 12.5px; cursor: pointer;
-    border: 1px solid var(--border); border-radius: 999px; padding: 8px 14px;
-    background: var(--surface-2); color: var(--ink); white-space: nowrap;
-    display: inline-flex; align-items: center; gap: 6px;
+  .quick-results {
+    margin-top: 10px; display: flex; flex-direction: column; gap: 2px;
+    max-height: 320px; overflow-y: auto;
   }
-  .f100-toggle.active { background: var(--accent); color: #fff; border-color: transparent; font-weight: 600; }
-  .clear-filters-btn {
-    font-family: "IBM Plex Mono", monospace; font-size: 12px; cursor: pointer;
-    border: none; background: transparent; color: var(--ink-faint); text-decoration: underline;
+  .quick-results a {
+    display: flex; align-items: center; gap: 10px; padding: 8px 6px;
+    border-radius: 6px; text-decoration: none; color: var(--ink);
+    font-size: 13px;
   }
-  .theme-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
-  .theme-chip {
-    font-family: "IBM Plex Mono", monospace; font-size: 11.5px; cursor: pointer;
-    border: 1px solid var(--border); border-radius: 999px; padding: 5px 11px;
-    background: var(--surface-2); color: var(--ink-muted);
+  .quick-results a:hover { background: var(--surface-2); }
+  .quick-results .qr-ticker {
+    font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 13px;
+    min-width: 54px;
   }
-  .theme-chip.active { background: var(--nextgen-soft); color: var(--nextgen); border-color: transparent; font-weight: 600; }
-  .filter-summary {
-    font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--ink-faint);
-    margin-top: 10px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  .quick-results .qr-name { color: var(--ink-muted); flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .quick-results .qr-cat {
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px; color: var(--ink-faint);
+    border: 1px solid var(--border); border-radius: 999px; padding: 2px 8px; white-space: nowrap;
   }
-  .f100-badge {
-    font-family: "IBM Plex Mono", monospace; font-size: 10px; font-weight: 600; letter-spacing: 0.02em;
-    color: var(--accent); background: var(--accent-soft); border-radius: 4px; padding: 1px 5px;
-  }
-  .empty-cat { font-size: 13px; color: var(--ink-faint); padding: 14px 4px; }
+  .quick-empty { font-size: 12.5px; color: var(--ink-faint); padding: 6px; }
 
-  section.category { margin-bottom: 44px; scroll-margin-top: 16px; }
-  .cat-head {
-    display: flex; align-items: baseline; justify-content: space-between;
-    gap: 12px; flex-wrap: wrap;
-    margin-bottom: 4px;
+  .desk-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 16px; margin-bottom: 8px;
   }
-  .cat-head .name { display: flex; align-items: center; gap: 10px; }
-  .cat-head .swatch { display: inline-flex; flex: none; }
-  .cat-head h2 { font-size: 21px; font-weight: 600; }
-  .cat-head .count { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--ink-faint); }
-  .cat-sub { font-size: 13px; color: var(--ink-muted); margin: 0 0 16px; max-width: 62ch; }
-
-  .rows { display: flex; flex-direction: column; border-top: 1px solid var(--border); }
-  .row {
-    display: grid;
-    grid-template-columns: 96px 1fr 128px;
-    gap: 16px;
-    align-items: center;
-    padding: 13px 4px;
-    border-bottom: 1px solid var(--border);
+  .desk-card {
+    display: flex; flex-direction: column; gap: 10px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+    padding: 20px; text-decoration: none; color: var(--ink);
+    transition: transform 0.15s ease, border-color 0.15s ease;
   }
-  .row:hover { background: var(--surface); }
-  .id { display: flex; flex-direction: column; gap: 2px; }
-  .id .ticker {
-    font-family: "IBM Plex Mono", monospace; font-weight: 600; font-size: 15px;
-    color: var(--ink); text-decoration: none; width: fit-content;
+  .desk-card:hover { border-color: var(--dc); transform: translateY(-2px); }
+  .desk-card .dc-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .desk-card .dc-icon { color: var(--dc); display: inline-flex; }
+  .desk-card h2 { font-size: 18px; font-weight: 600; }
+  .desk-card .dc-count {
+    font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--dc);
+    background: var(--dc-soft); border-radius: 999px; padding: 3px 10px; white-space: nowrap;
   }
-  .id .ticker:hover { color: var(--accent); text-decoration: underline; }
-  .id .company { font-size: 11.5px; color: var(--ink-faint); }
-  .mid { min-width: 0; }
-  .mid .blurb { font-size: 13px; color: var(--ink-muted); line-height: 1.45; margin: 0 0 6px; }
-  .mid .metaline {
-    display: flex; flex-wrap: wrap; gap: 6px 14px;
-    font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--ink-faint);
-  }
-  .mid .metaline .metric-val { color: var(--ink); font-weight: 500; }
-  .metaline .price-chg.pos { color: var(--pos); }
-  .metaline .price-chg.neg { color: var(--neg); }
-  .metaline a { color: inherit; text-decoration: none; border-bottom: 1px dotted var(--ink-faint); }
-
-  .gauge { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; }
-  .gauge .score-num { font-family: "IBM Plex Mono", monospace; font-size: 13px; font-weight: 600; }
-  .gauge .bar-track {
-    width: 100%; max-width: 118px; height: 6px; border-radius: 4px;
-    background: var(--surface-2); overflow: hidden;
-  }
-  .gauge .bar-fill { height: 100%; border-radius: 4px; }
-  .dots { display: flex; gap: 4px; }
-  .dots .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--surface-2); }
-  .dots .dot.on { background: var(--dotcolor); }
-
-  .rating-pill {
-    font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: 0.03em;
-    padding: 2px 8px; border-radius: 999px; white-space: nowrap;
+  .desk-card p { font-size: 13px; color: var(--ink-muted); line-height: 1.5; margin: 0; }
+  .desk-card .dc-go {
+    font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--dc);
+    margin-top: 2px;
   }
 
   footer {
     margin-top: 48px; padding-top: 18px; border-top: 1px solid var(--border);
     font-size: 12px; color: var(--ink-faint); font-family: "IBM Plex Mono", monospace;
     line-height: 1.7;
-  }
-
-  @media (max-width: 620px) {
-    .row { grid-template-columns: 1fr; gap: 8px; padding: 14px 4px; }
-    .gauge { flex-direction: row; align-items: center; justify-content: space-between; }
-    .gauge .bar-track { max-width: none; flex: 1; }
-    .id { flex-direction: row; align-items: baseline; gap: 8px; }
   }
 </style>
 <link rel="stylesheet" href="assets/theme.css">
@@ -189,240 +128,98 @@
     <h1 class="title">Market Scanner</h1>
     <div class="hero-meta">
       <span><b id="totalCount">&mdash;</b> names tracked</span>
-      <span>4 desks: Growth &middot; Stability &middot; Next-Gen &middot; Short Interest</span>
-      <span>Search &amp; filter by sector, Fortune 100 status, or growth niche below</span>
+      <span>5 desks: Growth &middot; Stability &middot; Next-Gen &middot; Short Interest &middot; Funds</span>
+      <span>Pick a desk below, or jump straight to a company</span>
     </div>
   </header>
 
   <div class="disclaimer">
-    <strong>How this is built.</strong> Prices, growth, dividend, beta and short-interest figures are pulled from free public sources (search-grounded snapshots today; the checked-in <code>run.py</code> agent uses yfinance + RSS feeds when run with normal internet access). Growth and Next-Gen Growth are ranked by an explicit <strong>conviction tier</strong> (1&ndash;5), not a blended score, because their underlying metrics use incompatible units (revenue growth vs. price momentum vs. analyst upside). Stability and Short Interest use a single consistent metric, so those two get a real normalized 0&ndash;100 score. Coverage spans <strong>10 GICS sectors</strong>, <strong id="f100TotalLabel">&mdash;</strong> current <strong>Fortune 100</strong> companies, and <strong>13 next-gen growth niches</strong> (quantum computing, space, gene editing, AI, cybersecurity, EV &amp; battery tech, fintech, clean energy, and more). A separate <strong>Funds &amp; Company Size</strong> desk sorts 16 ETFs, mutual funds, and small/mid-cap stocks from lowest to highest risk, so you can see diversification's effect on volatility side by side &mdash; in both Real Companies and Super Simulator mode in the Simulator. <strong>This is not financial advice</strong> &mdash; it's a research starting point; verify anything before acting on it.
+    <strong>How this is built.</strong> Prices, growth, dividend, beta and short-interest figures are pulled from free public sources (search-grounded snapshots today; the checked-in <code>run.py</code> agent uses yfinance + RSS feeds when run with normal internet access). Growth and Next-Gen Growth are ranked by an explicit <strong>conviction tier</strong> (1&ndash;5), not a blended score, because their underlying metrics use incompatible units. Stability and Short Interest get a real normalized 0&ndash;100 score. Coverage spans <strong>10 GICS sectors</strong>, <strong id="f100TotalLabel">&mdash;</strong> current <strong>Fortune 100</strong> companies, and <strong>13 next-gen growth niches</strong>. <strong>This is not financial advice</strong> &mdash; it's a research starting point; verify anything before acting on it.
   </div>
 
-  <div class="search-panel">
-    <div class="search-row">
-      <input type="text" id="searchInput" placeholder="Search by ticker, company, sector, or industry&hellip;">
-      <select id="sectorSelect"><option value="">All sectors</option></select>
-      <select id="capTierSelect">
-        <option value="">All company sizes</option>
-        <option value="mega">Mega-cap ($200B+)</option>
-        <option value="large">Large-cap ($10B&ndash;$200B)</option>
-        <option value="mid">Mid-cap ($2B&ndash;$10B)</option>
-        <option value="small">Small-cap ($300M&ndash;$2B)</option>
-      </select>
-      <button class="f100-toggle" id="f100Toggle" type="button">&#9733; Fortune 100 only</button>
-      <button class="clear-filters-btn" id="clearFiltersBtn" type="button">Clear filters</button>
-    </div>
-    <div class="theme-chips" id="themeChips"></div>
-    <div class="filter-summary" id="filterSummary"></div>
+  <div class="quick-search">
+    <label for="quickSearchInput">Jump to a company</label>
+    <input type="text" id="quickSearchInput" placeholder="Search any of the 116 names by ticker, company, sector, or industry&hellip;">
+    <div class="quick-results" id="quickResults"></div>
   </div>
 
-  <nav class="toc">
-    <a href="#growth"><span style="color:var(--growth);display:inline-flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,17 9,11 13,15 21,7"/><polyline points="14,7 21,7 21,14"/></svg></span>Biggest Growth</a>
-    <a href="#stability"><span style="color:var(--stability);display:inline-flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L19 5 V11 C19 16 15.5 19.5 12 21 C8.5 19.5 5 16 5 11 V5 Z"/></svg></span>Stability</a>
-    <a href="#nextgen"><span style="color:var(--nextgen);display:inline-flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L13.5 9.5 L21 11 L13.5 12.5 L12 20 L10.5 12.5 L3 11 L10.5 9.5 Z"/></svg></span>Next-Gen Growth</a>
-    <a href="#shorts"><span style="color:var(--short);display:inline-flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,7 9,13 13,9 21,17"/><polyline points="14,17 21,17 21,10"/></svg></span>Short Candidates</a>
-    <a href="#funds"><span style="color:var(--funds);display:inline-flex"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg></span>Funds &amp; Company Size</a>
-  </nav>
-
-  <main id="categories"></main>
+  <div class="desk-grid" id="deskGrid"></div>
 
   <footer>
-    <div>Sources: search-grounded public financial data (see per-row links) &middot; methodology in <span class="mono">scoring.py</span> of the companion repo.</div>
+    <div>Sources: search-grounded public financial data &middot; methodology in <span class="mono">scoring.py</span> of the companion repo.</div>
     <div>Not investment advice. Data may be delayed, incomplete, or approximate.</div>
   </footer>
 </div>
 
 <script>
 const ICONS = {
-  trendUp: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,17 9,11 13,15 21,7"/><polyline points="14,7 21,7 21,14"/></svg>',
-  trendDown: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,7 9,13 13,9 21,17"/><polyline points="14,17 21,17 21,10"/></svg>',
-  shield: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L19 5 V11 C19 16 15.5 19.5 12 21 C8.5 19.5 5 16 5 11 V5 Z"/></svg>',
-  sparkle: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L13.5 9.5 L21 11 L13.5 12.5 L12 20 L10.5 12.5 L3 11 L10.5 9.5 Z"/></svg>',
-  basket: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>',
+  trendUp: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,17 9,11 13,15 21,7"/><polyline points="14,7 21,7 21,14"/></svg>',
+  trendDown: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3,7 9,13 13,9 21,17"/><polyline points="14,17 21,17 21,10"/></svg>',
+  shield: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 L19 5 V11 C19 16 15.5 19.5 12 21 C8.5 19.5 5 16 5 11 V5 Z"/></svg>',
+  sparkle: '<svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 L13.5 9.5 L21 11 L13.5 12.5 L12 20 L10.5 12.5 L3 11 L10.5 9.5 Z"/></svg>',
+  basket: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></svg>',
 };
 
 const CATEGORY_META = {
-  growth:    { title: "Biggest Growth", color: "var(--growth)", soft: "var(--growth-soft)", icon: ICONS.trendUp,
-               sub: "Large/mid-cap names posting the fastest revenue growth or price momentum right now. Ranked by conviction tier, not a blended score \u2014 see disclaimer above." },
-  stability: { title: "Stability", color: "var(--stability)", soft: "var(--stability-soft)", icon: ICONS.shield,
-               sub: "Low-beta, dividend-consistent names built to hold up when growth stocks wobble. Score blends low beta (60%) and dividend yield (40%)." },
-  nextgen:   { title: "Next-Gen Growth", color: "var(--nextgen)", soft: "var(--nextgen-soft)", icon: ICONS.sparkle,
-               sub: "Smaller, thematic bets \u2014 quantum computing, AI infrastructure, gene editing, space \u2014 with outsized upside and outsized risk. Ranked by conviction tier." },
-  shorts:    { title: "Short Candidates", color: "var(--short)", soft: "var(--short-soft)", icon: ICONS.trendDown,
-               sub: "Highest short interest and clearest negative catalysts (guidance cuts, structural decline). Score is a normalized blend of short-%-of-float plus momentum/valuation flags." },
-  funds:     { title: "Funds & Company Size", color: "var(--funds)", soft: "var(--funds-soft)", icon: ICONS.basket,
-               sub: "A deliberately small, mixed set \u2014 broad-market and bond ETFs, mutual funds, and individual small/mid-cap stocks \u2014 sorted from lowest to highest risk so the diversification effect is visible at a glance. The \u201cRisk\u201d dots below use the same 1\u20135 scale as conviction elsewhere, just relabeled: more dots means more volatility, not more upside." },
+  growth:    { title: "Biggest Growth", page: "scanner/growth.html", color: "var(--growth)", soft: "var(--growth-soft)", icon: ICONS.trendUp,
+               sub: "Large/mid-cap names posting the fastest revenue growth or price momentum right now." },
+  stability: { title: "Stability", page: "scanner/stability.html", color: "var(--stability)", soft: "var(--stability-soft)", icon: ICONS.shield,
+               sub: "Low-beta, dividend-consistent names built to hold up when growth stocks wobble." },
+  nextgen:   { title: "Next-Gen Growth", page: "scanner/nextgen.html", color: "var(--nextgen)", soft: "var(--nextgen-soft)", icon: ICONS.sparkle,
+               sub: "Smaller, thematic bets — quantum computing, AI infrastructure, gene editing, space — with outsized upside and risk." },
+  shorts:    { title: "Short Candidates", page: "scanner/shorts.html", color: "var(--short)", soft: "var(--short-soft)", icon: ICONS.trendDown,
+               sub: "Highest short interest and clearest negative catalysts (guidance cuts, structural decline)." },
+  funds:     { title: "Funds & Company Size", page: "scanner/funds.html", color: "var(--funds)", soft: "var(--funds-soft)", icon: ICONS.basket,
+               sub: "ETFs, mutual funds, and small/mid-cap stocks sorted from lowest to highest risk, side by side." },
 };
-
-function fmtPrice(p) {
-  if (p === null || p === undefined) return null;
-  return "$" + Number(p).toFixed(2);
-}
-
-function renderRow(item, catKey) {
-  const meta = CATEGORY_META[catKey];
-  const priceStr = fmtPrice(item.price);
-  const chgVal = item.momentum ?? null;
-  let chgHtml = "";
-  if (typeof chgVal === "number") {
-    const cls = chgVal >= 0 ? "pos" : "neg";
-    chgHtml = `<span class="price-chg ${cls}">${chgVal >= 0 ? "+" : ""}${chgVal.toFixed(1)}%</span>`;
-  }
-
-  const metaBits = [];
-  if (priceStr) metaBits.push(priceStr);
-  if (item.mktCap) metaBits.push(item.mktCap);
-  if (item.metric_label) {
-    const isRatio = /beta/i.test(item.metric_label);
-    const val = typeof item.metric === "number" ? (Number.isInteger(item.metric) ? item.metric : item.metric.toFixed(isRatio ? 2 : 1)) : item.metric;
-    metaBits.push(`${item.metric_label}: <span class="metric-val">${val}${typeof item.metric === "number" && !isRatio ? "%" : ""}</span>`);
-  }
-  if (item.divYield) metaBits.push(`Yield: <span class="metric-val">${item.divYield}%</span>`);
-  if (item.streak) metaBits.push(`Streak: <span class="metric-val">${item.streak}</span>`);
-  if (item.theme) metaBits.push(item.theme);
-  if (item.flag) metaBits.push(`<span class="metric-val">${item.flag}</span>`);
-  if (item.expenseRatio != null) metaBits.push(`Expense ratio: <span class="metric-val">${item.expenseRatio}%</span>`);
-  if (item.assetType === "etf") metaBits.push(`<span class="metric-val">ETF</span>`);
-  if (item.assetType === "mutual_fund") metaBits.push(`<span class="metric-val">Mutual Fund</span>`);
-  if (item.capTier) metaBits.push(`<span class="metric-val">${item.capTier[0].toUpperCase()}${item.capTier.slice(1)}-Cap</span>`);
-  if (item.sector) metaBits.push(item.sector + (item.industry ? ` / ${item.industry}` : ""));
-  if (item.fortune100) metaBits.push(`<span class="f100-badge">FORTUNE 100${item.fortune100Rank ? " #" + item.fortune100Rank : ""}</span>`);
-
-  let gaugeHtml = "";
-  if (typeof item.score === "number") {
-    gaugeHtml = `
-      <div class="gauge">
-        <div class="score-num">${item.score.toFixed(0)}<span style="color:var(--ink-faint);font-weight:400"> /100</span></div>
-        <div class="bar-track"><div class="bar-fill" style="width:${item.score}%; background:${meta.color}"></div></div>
-      </div>`;
-  } else if (typeof item.conviction === "number") {
-    let dots = "";
-    for (let i = 1; i <= 5; i++) {
-      dots += `<div class="dot ${i <= item.conviction ? "on" : ""}" style="--dotcolor:${meta.color}"></div>`;
-    }
-    gaugeHtml = `
-      <div class="gauge">
-        <span class="rating-pill" style="background:${meta.soft}; color:${meta.color}">${item.rating || "conviction"}</span>
-        <div class="dots">${dots}</div>
-      </div>`;
-  }
-
-  return `
-    <div class="row">
-      <div class="id">
-        <a class="ticker" href="research/${item.ticker}/market.html">${item.ticker}</a>
-        <div class="company">${item.name || ""}</div>
-      </div>
-      <div class="mid">
-        <p class="blurb">${item.blurb || ""}</p>
-        <div class="metaline">${metaBits.map(b => `<span>${b}</span>`).join("")}${chgHtml ? `<span>${chgHtml}</span>` : ""}</div>
-      </div>
-      ${gaugeHtml}
-    </div>`;
-}
-
-function renderCategory(catKey, items, totalInCat) {
-  const meta = CATEGORY_META[catKey];
-  const rows = items.length
-    ? items.map(item => renderRow(item, catKey)).join("")
-    : `<p class="empty-cat">No companies in this desk match the current filters.</p>`;
-  const countLabel = items.length === totalInCat ? `${totalInCat} names` : `${items.length} of ${totalInCat} names`;
-  return `
-    <section class="category" id="${catKey}">
-      <div class="cat-head">
-        <div class="name">
-          <span class="swatch" style="color:${meta.color}">${meta.icon}</span>
-          <h2>${meta.title}</h2>
-        </div>
-        <span class="count">${countLabel}</span>
-      </div>
-      <p class="cat-sub">${meta.sub}</p>
-      <div class="rows">${rows}</div>
-    </section>`;
-}
-
 const CAT_ORDER = ["growth", "stability", "nextgen", "shorts", "funds"];
+
 let DATA = null;
-const FILTER = { text: "", sector: "", capTier: "", f100Only: false, themes: new Set() };
 
-function itemMatchesFilter(item) {
-  if (FILTER.f100Only && !item.fortune100) return false;
-  if (FILTER.sector && item.sector !== FILTER.sector) return false;
-  if (FILTER.capTier && item.capTier !== FILTER.capTier) return false;
-  if (FILTER.themes.size > 0 && !FILTER.themes.has(item.theme)) return false;
-  if (FILTER.text) {
-    const haystack = [item.ticker, item.name, item.sector, item.industry, item.theme]
-      .filter(Boolean).join(" ").toLowerCase();
-    if (!haystack.includes(FILTER.text)) return false;
-  }
-  return true;
-}
-
-function renderAll() {
-  let shown = 0;
+function renderDeskGrid() {
   const html = CAT_ORDER.map(k => {
-    const all = DATA.categories[k] || [];
-    const filtered = all.filter(itemMatchesFilter);
-    shown += filtered.length;
-    return renderCategory(k, filtered, all.length);
+    const meta = CATEGORY_META[k];
+    const count = (DATA.categories[k] || []).length;
+    return `
+      <a class="desk-card" href="${meta.page}" style="--dc:${meta.color}; --dc-soft:${meta.soft}">
+        <div class="dc-head">
+          <span class="dc-icon">${meta.icon}</span>
+          <span class="dc-count">${count} names</span>
+        </div>
+        <h2>${meta.title}</h2>
+        <p>${meta.sub}</p>
+        <span class="dc-go">Open desk &rarr;</span>
+      </a>`;
   }).join("");
-  document.getElementById("categories").innerHTML = html;
-
-  const total = CAT_ORDER.reduce((n, k) => n + (DATA.categories[k] || []).length, 0);
-  const anyFilterActive = FILTER.text || FILTER.sector || FILTER.capTier || FILTER.f100Only || FILTER.themes.size > 0;
-  document.getElementById("filterSummary").textContent = anyFilterActive
-    ? `Showing ${shown} of ${total} companies`
-    : "";
+  document.getElementById("deskGrid").innerHTML = html;
 }
 
-function wireFilterBar() {
-  const searchInput = document.getElementById("searchInput");
-  const sectorSelect = document.getElementById("sectorSelect");
-  const capTierSelect = document.getElementById("capTierSelect");
-  const f100Toggle = document.getElementById("f100Toggle");
-  const clearBtn = document.getElementById("clearFiltersBtn");
-  const themeChipsEl = document.getElementById("themeChips");
+function allItems() {
+  const items = [];
+  for (const k of CAT_ORDER) {
+    for (const item of (DATA.categories[k] || [])) items.push({ ...item, cat: k });
+  }
+  return items;
+}
 
-  const sectors = Array.from(new Set(CAT_ORDER.flatMap(k => (DATA.categories[k] || []).map(i => i.sector)).filter(Boolean))).sort();
-  sectorSelect.innerHTML = `<option value="">All sectors</option>` + sectors.map(s => `<option value="${s}">${s}</option>`).join("");
-
-  const themes = Array.from(new Set((DATA.categories.nextgen || []).map(i => i.theme).filter(Boolean))).sort();
-  themeChipsEl.innerHTML = themes.map(t => `<button type="button" class="theme-chip" data-theme="${t}">${t}</button>`).join("");
-
-  const f100Total = CAT_ORDER.reduce((n, k) => n + (DATA.categories[k] || []).filter(i => i.fortune100).length, 0);
-  document.getElementById("f100TotalLabel").textContent = f100Total;
-
-  searchInput.addEventListener("input", () => {
-    FILTER.text = searchInput.value.trim().toLowerCase();
-    renderAll();
-  });
-  sectorSelect.addEventListener("change", () => {
-    FILTER.sector = sectorSelect.value;
-    renderAll();
-  });
-  capTierSelect.addEventListener("change", () => {
-    FILTER.capTier = capTierSelect.value;
-    renderAll();
-  });
-  f100Toggle.addEventListener("click", () => {
-    FILTER.f100Only = !FILTER.f100Only;
-    f100Toggle.classList.toggle("active", FILTER.f100Only);
-    renderAll();
-  });
-  themeChipsEl.addEventListener("click", (ev) => {
-    const btn = ev.target.closest(".theme-chip");
-    if (!btn) return;
-    const t = btn.dataset.theme;
-    if (FILTER.themes.has(t)) FILTER.themes.delete(t); else FILTER.themes.add(t);
-    btn.classList.toggle("active", FILTER.themes.has(t));
-    renderAll();
-  });
-  clearBtn.addEventListener("click", () => {
-    FILTER.text = ""; FILTER.sector = ""; FILTER.capTier = ""; FILTER.f100Only = false; FILTER.themes.clear();
-    searchInput.value = ""; sectorSelect.value = ""; capTierSelect.value = "";
-    f100Toggle.classList.remove("active");
-    themeChipsEl.querySelectorAll(".theme-chip").forEach(b => b.classList.remove("active"));
-    renderAll();
+function wireQuickSearch() {
+  const input = document.getElementById("quickSearchInput");
+  const results = document.getElementById("quickResults");
+  input.addEventListener("input", () => {
+    const q = input.value.trim().toLowerCase();
+    if (!q) { results.innerHTML = ""; return; }
+    const matches = allItems().filter(item => {
+      const haystack = [item.ticker, item.name, item.sector, item.industry, item.theme].filter(Boolean).join(" ").toLowerCase();
+      return haystack.includes(q);
+    }).slice(0, 12);
+    results.innerHTML = matches.length
+      ? matches.map(item => `
+          <a href="research/${item.ticker}/market.html">
+            <span class="qr-ticker">${item.ticker}</span>
+            <span class="qr-name">${item.name || ""}</span>
+            <span class="qr-cat" style="color:${CATEGORY_META[item.cat].color}">${CATEGORY_META[item.cat].title}</span>
+          </a>`).join("")
+      : `<div class="quick-empty">No matches in the 116-name universe.</div>`;
   });
 }
 
@@ -431,17 +228,19 @@ async function boot() {
     const res = await fetch("./data.json");
     DATA = await res.json();
   } catch (e) {
-    document.getElementById("categories").innerHTML =
-      `<p style="color:var(--neg)">Could not load data.json \u2014 ${e.message}</p>`;
+    document.getElementById("deskGrid").innerHTML =
+      `<p style="color:var(--neg)">Could not load data.json — ${e.message}</p>`;
     return;
   }
 
-  document.getElementById("genTime").textContent = DATA.generated || "\u2014";
+  document.getElementById("genTime").textContent = DATA.generated || "—";
   const total = CAT_ORDER.reduce((n, k) => n + (DATA.categories[k] || []).length, 0);
   document.getElementById("totalCount").textContent = total;
+  const f100Total = CAT_ORDER.reduce((n, k) => n + (DATA.categories[k] || []).filter(i => i.fortune100).length, 0);
+  document.getElementById("f100TotalLabel").textContent = f100Total;
 
-  wireFilterBar();
-  renderAll();
+  renderDeskGrid();
+  wireQuickSearch();
 }
 
 boot();

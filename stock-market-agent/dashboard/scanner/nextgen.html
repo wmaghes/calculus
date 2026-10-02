@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('siteTheme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<meta charset="utf-8">
+<title>Next-Gen Growth — Market Scanner</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="scanner.css">
+<link rel="stylesheet" href="../assets/theme.css">
+</head>
+<body>
+
+<div id="siteNav"></div>
+<script>window.SITE_NAV = { base: "../", active: "scanner" };</script>
+<script src="../assets/nav.js"></script>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="eyebrow">Market Scanner &middot; generated <span id="genTime">&mdash;</span></div>
+    <h1 class="title"><span id="deskIcon"></span><span id="deskTitle">&mdash;</span></h1>
+    <div class="hero-meta">
+      <span><b id="deskCount">&mdash;</b> names in this desk</span>
+      <span><b id="f100CountLabel">&mdash;</b> Fortune 100</span>
+    </div>
+  </header>
+
+  <nav class="desk-nav">
+    <a href="../index.html" class="back">&larr; All desks</a>
+    <a href="growth.html"><span class="dot" style="background:var(--growth)"></span>Biggest Growth</a>
+    <a href="stability.html"><span class="dot" style="background:var(--stability)"></span>Stability</a>
+    <a href="nextgen.html" class="active" style="background:var(--nextgen)"><span class="dot" style="background:#fff"></span>Next-Gen Growth</a>
+    <a href="shorts.html"><span class="dot" style="background:var(--short)"></span>Short Candidates</a>
+    <a href="funds.html"><span class="dot" style="background:var(--funds)"></span>Funds &amp; Company Size</a>
+  </nav>
+
+  <div class="disclaimer">
+    <strong>How this is built.</strong> Next-Gen Growth is ranked by an explicit <strong>conviction tier</strong> (1–5), not a blended score, and leans thematic — quantum computing, AI infrastructure, gene editing, space, robotics — with outsized upside and outsized risk. Prices and momentum figures are pulled from free public sources. <strong>This is not financial advice</strong> — it's a research starting point; verify anything before acting on it.
+  </div>
+
+  <div class="search-panel">
+    <div class="search-row">
+      <input type="text" id="searchInput" placeholder="Search this desk by ticker, company, sector, or industry&hellip;">
+      <select id="sectorSelect"><option value="">All sectors</option></select>
+      <select id="capTierSelect">
+        <option value="">All company sizes</option>
+        <option value="mega">Mega-cap ($200B+)</option>
+        <option value="large">Large-cap ($10B&ndash;$200B)</option>
+        <option value="mid">Mid-cap ($2B&ndash;$10B)</option>
+        <option value="small">Small-cap ($300M&ndash;$2B)</option>
+      </select>
+      <button class="f100-toggle" id="f100Toggle" type="button">&#9733; Fortune 100 only</button>
+      <button class="clear-filters-btn" id="clearFiltersBtn" type="button">Clear filters</button>
+    </div>
+    <div class="theme-chips" id="themeChips"></div>
+    <div class="filter-summary" id="filterSummary"></div>
+  </div>
+
+  <main id="category"></main>
+
+  <footer>
+    <div>Sources: search-grounded public financial data (see per-row links) &middot; methodology in <span class="mono">scoring.py</span> of the companion repo.</div>
+    <div>Not investment advice. Data may be delayed, incomplete, or approximate.</div>
+  </footer>
+</div>
+
+<script>window.SCANNER_CATEGORY = "nextgen";</script>
+<script src="scanner.js"></script>
+</body>
+</html>
