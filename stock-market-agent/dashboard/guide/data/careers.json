@@ -1,0 +1,642 @@
+{
+  "roles": [
+    {
+      "id": "individual",
+      "title": "Individual Investor",
+      "tag": "Retail",
+      "icon": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"8\" r=\"4\"/><path d=\"M4 21c0-4 3.5-7 8-7s8 3 8 7\"/></svg>",
+      "oneLiner": "Manages their own money for their own goals &mdash; retirement, a house, general wealth-building.",
+      "dayToDay": {
+        "howTheyUseMarket": "They open a brokerage account and buy stocks, funds, or bonds directly with their own cash, holding a single portfolio they're fully accountable for. Decisions are usually driven by a personal time horizon and risk tolerance rather than a mandate from a client or employer, and success is just \"did my net worth grow the way I needed it to.\"",
+        "inPractice": "Most of the real work happens a few times a year, not daily: contributing to a 401(k) or brokerage account on autopilot, rebalancing once or twice a year back to a target mix, resisting the urge to do something rash after a big market move, and reviewing tax-loss harvesting opportunities each December. The investors who check and trade daily are usually the ones hurting their own long-run returns."
+      },
+      "variations": [
+        "<b>Passive / index investor</b> &mdash; buys broad index funds, rarely trades, and accepts the market's average return in exchange for low cost and little effort.",
+        "<b>Active stock-picker</b> &mdash; researches individual companies and tries to beat the index, taking on more risk and time for a shot at outperformance.",
+        "<b>Buy-and-hold vs. frequent trader</b> &mdash; some individuals trade constantly instead of investing for the long run; it's legal and common, but most underperform a simple index fund after costs.",
+        "<b>Robo-advised</b> &mdash; hands allocation and rebalancing to an algorithm for a small fee, splitting the difference between full DIY and a human advisor."
+      ],
+      "pay": "They're not paid &mdash; they're the client. Costs flow the other way instead: brokerage commissions (often $0 for stock trades today), fund expense ratios (as low as ~0.03%/year for a broad index fund), and advisory fees if they use a robo-advisor or human advisor (typically 0.25%&ndash;1%/year of assets).",
+      "skills": [
+        "Diversification",
+        "Dollar-cost averaging",
+        "Buy-and-hold vs. active trading",
+        "P/E &amp; dividend yield",
+        "Risk tolerance",
+        "Tax-advantaged accounts"
+      ],
+      "marketDependencies": [
+        "earnings-season",
+        "equity-vol"
+      ],
+      "entryPath": {
+        "typicalMajors": [
+          "Any major — no formal path"
+        ],
+        "internshipPath": "No formal internship track; many people start by opening a brokerage account and investing their own savings while in school or early in a career.",
+        "recruitingTrackId": null
+      },
+      "progressionLadder": [
+        "Self-directed beginner",
+        "Experienced DIY investor",
+        "Advanced / active investor"
+      ],
+      "isPrimaryTrack": false,
+      "existingSimulatorMode": "individual",
+      "calculatorId": "cg",
+      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=individual\">Individual Investor mode in the Simulator &#8599;</a> &mdash; trade a real or fictional watchlist with a single account."
+    },
+    {
+      "id": "advisor",
+      "title": "Financial Advisor",
+      "tag": "Retail / mass affluent",
+      "icon": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M15 9l-2 6-6 2 2-6z\"/></svg>",
+      "oneLiner": "Builds and manages investment plans for other people's money, tied to their clients' real-life goals.",
+      "dayToDay": {
+        "howTheyUseMarket": "Instead of picking stocks for themselves, they translate a client's goal &mdash; retire at 60, fund college in 15 years &mdash; into a target return, a risk tolerance, and an asset allocation across stocks, bonds, and cash. They rebalance over time, manage the emotional side of investing (talking clients out of panic-selling), and are usually paid a fee on assets under management rather than a commission per trade.",
+        "inPractice": "Client meetings reviewing progress toward a goal and talking through life changes (a new baby, a job loss, an inheritance), running financial plans and projections, rebalancing portfolios, and a lot of behavioral coaching &mdash; the single highest-value thing many advisors do in a given year is talk one client out of selling everything during a crash."
+      },
+      "variations": [
+        "<b>Fee-only fiduciary</b> &mdash; paid only by the client (flat fee, hourly, or a % of assets), legally required to act in the client's best interest.",
+        "<b>Commission-based broker</b> &mdash; paid by the products they sell (funds, insurance, annuities); a shrinking but still-common fee model with a built-in conflict of interest.",
+        "<b>Robo-advisor + human hybrid</b> &mdash; an algorithm handles portfolio construction while a human advisor is layered on for planning and hand-holding, at a lower fee than a pure human service.",
+        "<b>Wirehouse vs. independent RIA</b> &mdash; a wirehouse advisor (e.g. Merrill, Morgan Stanley) works inside a big bank's platform and products; an independent Registered Investment Adviser runs their own shop with more flexibility but more overhead."
+      ],
+      "pay": "Most commonly 0.5%&ndash;1% of assets under management per year (a $500k client pays roughly $2,500&ndash;$5,000/year), sometimes blended with flat planning fees. A commission-based advisor instead earns a cut of whatever product they sell &mdash; exactly the incentive fee-only advisors are hired to avoid.",
+      "skills": [
+        "Goal-based planning",
+        "Asset allocation",
+        "Risk tolerance questionnaires",
+        "Rebalancing",
+        "Fee-only vs. commission",
+        "Compounding projections"
+      ],
+      "marketDependencies": [
+        "rates",
+        "equity-vol"
+      ],
+      "entryPath": {
+        "typicalMajors": [
+          "Finance",
+          "Business",
+          "Economics"
+        ],
+        "internshipPath": "Often starts as a client-service associate or intern at a wealth-management firm, then pursuing licensing (e.g. Series 7/65) after school.",
+        "recruitingTrackId": null
+      },
+      "progressionLadder": [
+        "Associate Advisor",
+        "Financial Advisor",
+        "Senior Advisor / Partner",
+        "Practice owner"
+      ],
+      "isPrimaryTrack": false,
+      "existingSimulatorMode": "advisor",
+      "calculatorId": null,
+      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=advisor\">Financial Advisor mode in the Simulator &#8599;</a> &mdash; set a target, horizon and risk tolerance, then fund and track the plan."
+    },
+    {
+      "id": "private-banker",
+      "title": "Private Banker / Wealth Manager",
+      "tag": "High-net-worth",
+      "icon": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 10 L12 4 L21 10\"/><path d=\"M5 10 V20 M19 10 V20 M3 20 H21 M9 13 V20 M15 13 V20\"/></svg>",
+      "oneLiner": "Runs several client relationships at once for wealthy individuals and families, blending investing with banking.",
+      "dayToDay": {
+        "howTheyUseMarket": "They manage a book of clients rather than one portfolio, each with a different risk profile, tax situation, and set of goals &mdash; and often a concentrated position in one stock (like a founder's or executive's own company shares) that needs careful, low-key unwinding. On top of investment management, they typically also arrange lending against a portfolio, trust and estate structures, and access to private/alternative investments not open to retail clients.",
+        "inPractice": "Juggling a book of maybe 30&ndash;80 wealthy households: portfolio reviews, loan requests against a concentrated stock position, coordinating with the client's own tax and estate attorneys, and a lot of relationship maintenance &mdash; this is as much a relationship business as an investing one."
+      },
+      "variations": [
+        "<b>Private bank</b> (e.g. Goldman, JPMorgan, Citi) &mdash; bundles investing with lending, trust services, and access to the bank's own alternative-investment funds.",
+        "<b>Independent multi-family office</b> &mdash; serves a handful of very wealthy families directly, with more customization and fewer product conflicts than a bank platform.",
+        "<b>Trust company</b> &mdash; focuses specifically on managing money inside trusts and estates across generations."
+      ],
+      "pay": "A mix of a base salary plus a percentage of assets under management they bring in and retain (often 0.75%&ndash;1.5%/year on the book), plus sometimes a cut of lending and other banking products sold to the same clients.",
+      "skills": [
+        "Multi-client book management",
+        "Concentrated stock positions",
+        "Securities-based lending",
+        "Model portfolios by risk profile",
+        "Estate &amp; tax planning",
+        "Alternative investments"
+      ],
+      "marketDependencies": [
+        "rates",
+        "equity-vol"
+      ],
+      "entryPath": {
+        "typicalMajors": [
+          "Finance",
+          "Economics",
+          "Business"
+        ],
+        "internshipPath": "Often enters through a bank's private-banking or wealth-management internship/analyst program, sometimes after a few years in retail or commercial banking.",
+        "recruitingTrackId": "wealth-management-track"
+      },
+      "progressionLadder": [
+        "Relationship Associate",
+        "Private Banker",
+        "Senior Private Banker",
+        "Market / Team Head"
+      ],
+      "isPrimaryTrack": true,
+      "existingSimulatorMode": "banker",
+      "calculatorId": null,
+      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=banker\">Private Banker mode in the Simulator &#8599;</a> &mdash; add multiple named clients and trade inside each book separately."
+    },
+    {
+      "id": "investment-banker",
+      "title": "Investment Banker",
+      "tag": "Corporate finance",
+      "icon": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"8\" width=\"18\" height=\"12\" rx=\"2\"/><path d=\"M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2\"/></svg>",
+      "oneLiner": "Advises companies &mdash; not individual investors &mdash; on raising capital and doing deals.",
+      "dayToDay": {
+        "howTheyUseMarket": "They don't manage a personal portfolio of stocks; they use the stock market as a tool for their corporate clients. That means taking companies public (IPOs), helping already-public companies issue more shares or debt, and advising on mergers and acquisitions &mdash; where a huge part of the job is figuring out whether buying another company will make the acquirer's own stock more or less valuable per share (accretion/dilution).",
+        "inPractice": "Long hours building and tweaking financial models, drafting pitch books to win new deal mandates, due-diligence calls, and &mdash; once a deal is live &mdash; coordinating lawyers, accountants and regulators to close it on schedule. Junior bankers mostly build models and slides; senior bankers mostly sell relationships and manage the process."
+      },
+      "variations": [
+        "<b>M&amp;A advisory</b> &mdash; advises on buying or selling whole companies.",
+        "<b>Equity capital markets (ECM)</b> &mdash; runs IPOs and follow-on stock offerings.",
+        "<b>Debt capital markets (DCM)</b> &mdash; arranges bond issuance and leveraged loans.",
+        "<b>Restructuring</b> &mdash; advises distressed companies, and their creditors, through bankruptcy or an out-of-court workout."
+      ],
+      "pay": "A salary plus a large year-end bonus tied to the bank's and the group's deal volume &mdash; bonuses at senior levels are frequently multiples of base salary, the classic trade for brutal hours earlier in the career.",
+      "skills": [
+        "DCF &amp; comparable-company valuation",
+        "Precedent transactions",
+        "Accretion / dilution analysis",
+        "Underwriting &amp; deal structuring",
+        "IPOs &amp; follow-on offerings",
+        "Pro forma modeling"
+      ],
+      "marketDependencies": [
+        "rates",
+        "credit-spreads",
+        "earnings-season"
+      ],
+      "entryPath": {
+        "typicalMajors": [
+          "Finance",
+          "Economics",
+          "Accounting",
+          "Business"
+        ],
+        "internshipPath": "Commonly a summer analyst internship in the junior or senior year of college, converting into a full-time Analyst offer.",
+        "recruitingTrackId": "ib-track"
+      },
+      "progressionLadder": [
+        "Analyst",
+        "Associate",
+        "Vice President",
+        "Director",
+        "Managing Director"
+      ],
+      "isPrimaryTrack": true,
+      "existingSimulatorMode": "ib",
+      "calculatorId": null,
+      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=ib\">Investment Banker mode in the Simulator &#8599;</a> &mdash; model a merger's EPS accretion/dilution against live prices."
+    },
+    {
+      "id": "trader",
+      "title": "Trader (Sales &amp; Trading / Prop / Day Trader)",
+      "tag": "Markets &amp; execution",
+      "icon": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><rect x=\"4\" y=\"10\" width=\"3\" height=\"10\"/><rect x=\"10.5\" y=\"4\" width=\"3\" height=\"16\"/><rect x=\"17\" y=\"7\" width=\"3\" height=\"13\"/></svg>",
+      "oneLiner": "Buys and sells constantly, either to fill client orders, to profit from a firm's own capital, or independently from their own account.",
+      "dayToDay": {
+        "howTheyUseMarket": "A sell-side trader sits between clients and the market, executing orders and often making markets. A proprietary or independent day trader instead risks capital on short-term views &mdash; on price direction, volatility, or the relationship between related instruments &mdash; over minutes or hours rather than years. This is exactly why the Simulator's speed control matters: a day trader needs to see a year's worth of price action in minutes to get enough practice reps, where a long-term investor genuinely wants real-time pacing.",
+        "inPractice": "Pre-market prep (news, overnight moves, the economic calendar), then intensely focused hours watching screens and reacting &mdash; a lot of it concentrated in the first and last hour of the trading day when volume is highest. Post-close is reviewing the day's fills and risk, and resetting for tomorrow."
+      },
+      "variations": [
+        "<b>Sell-side flow trader</b> &mdash; executes client orders and makes markets for a bank, paid on the business the desk generates.",
+        "<b>Proprietary trader</b> &mdash; trades a firm's own capital at a prop shop, paid a share of their own P&amp;L.",
+        "<b>Independent / retail day trader</b> &mdash; trades their own account with their own capital, keeping 100% of the result (and 100% of the loss).",
+        "<b>Market-neutral / stat-arb trader</b> &mdash; tries to profit from relationships between instruments rather than outright direction (overlaps with Quant below)."
+      ],
+      "pay": "Sell-side: salary plus a bonus tied to desk P&amp;L and client revenue. Prop trader: a negotiated split of their own trading profits (commonly 10%&ndash;30% to the trader, more at senior levels), often with little or no salary at all. Independent: whatever they make trading their own money, minus their own losses.",
+      "skills": [
+        "Bid-ask spread &amp; order flow",
+        "Position sizing",
+        "Technical analysis",
+        "Leverage &amp; margin",
+        "Stop-loss discipline",
+        "Execution algorithms"
+      ],
+      "marketDependencies": [
+        "equity-vol",
+        "earnings-season"
+      ],
+      "entryPath": {
+        "typicalMajors": [
+          "Finance",
+          "Economics",
+          "Math",
+          "Computer Science"
+        ],
+        "internshipPath": "Often a summer sales & trading internship, sometimes including a trading-floor rotation or trading simulation.",
+        "recruitingTrackId": "sales-trading-track"
+      },
+      "progressionLadder": [
+        "Junior Trader / Desk Assistant",
+        "Trader",
+        "Senior Trader",
+        "Desk Head"
+      ],
+      "isPrimaryTrack": true,
+      "existingSimulatorMode": "individual",
+      "calculatorId": "ps",
+      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=individual\">Individual Investor mode in the Simulator &#8599;</a>, set the speed to <b>Day Trader</b> in the market panel, and watch a year of price action unfold in minutes. For the derivatives side of trading, see <a href=\"../../simulator/index.html?mode=derivatives\">Options &amp; Futures Trader mode &#8599;</a> &mdash; Black-Scholes-priced options and margined futures."
+    },
+    {
+      "id": "quant",
+      "title": "Quantitative Analyst / Quant Trader",
+      "tag": "Systematic",
+      "icon": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M6 4H18L13 12L18 20H6\"/></svg>",
+      "oneLiner": "Uses math, statistics and code &mdash; not a gut feeling about a company &mdash; to find and automate a trading edge.",
+      "dayToDay": {
+        "howTheyUseMarket": "Instead of reading a company's story, a quant builds a statistical model of price relationships &mdash; two stocks that usually move together, a pattern in order flow, a seasonal effect &mdash; and lets an algorithm trade it automatically, sometimes thousands of times a day. The model is validated on historical data (a backtest) before ever risking real money, and speed of execution can matter as much as the idea itself. A strategy that works is called \"alpha,\" and it tends to decay the more other funds discover and crowd into the same edge.",
+        "inPractice": "Writing and testing code, not reading news: building a hypothesis, backtesting it against historical data, checking it for overfitting, and &mdash; if it survives &mdash; handing it to (or building) the execution system that trades it live, then monitoring its real performance against the backtest."
+      },
+      "variations": [
+        "<b>Quant researcher</b> &mdash; focused on finding and validating new signals and strategies.",
+        "<b>Quant developer</b> &mdash; builds the infrastructure (data pipelines, execution systems, backtesters) researchers depend on.",
+        "<b>High-frequency trader (HFT)</b> &mdash; competes on pure speed, holding positions for seconds or less.",
+        "<b>Quant portfolio manager</b> &mdash; runs real capital against a portfolio of systematic strategies, responsible for the P&amp;L, not just the research."
+      ],
+      "pay": "Base salary &mdash; often high relative to other finance roles, reflecting the software/math skill overlap with tech &mdash; plus a bonus tied to the strategies' P&amp;L. A quant PM is typically paid more like a trader, often with a direct cut of profits.",
+      "skills": [
+        "Statistical arbitrage",
+        "Backtesting",
+        "Algorithmic execution",
+        "Machine learning signals",
+        "Latency &amp; infrastructure",
+        "Alpha decay"
+      ],
+      "marketDependencies": [
+        "equity-vol",
+        "credit-spreads"
+      ],
+      "entryPath": {
+        "typicalMajors": [
+          "Math",
+          "Statistics",
+          "Computer Science",
+          "Physics",
+          "Engineering"
+        ],
+        "internshipPath": "Commonly a quant research or software-engineering summer internship, frequently involving technical interviews (probability, statistics, coding).",
+        "recruitingTrackId": null
+      },
+      "progressionLadder": [
+        "Quant Analyst",
+        "Quant Researcher",
+        "Senior Quant / Portfolio Manager"
+      ],
+      "isPrimaryTrack": false,
+      "existingSimulatorMode": null,
+      "calculatorId": null,
+      "tryItHtml": "Closest hands-on practice: run the <a href=\"../../simulator/index.html?mode=individual\">Individual Investor mode &#8599;</a> at <b>Super Simulator</b> + fastest speed to generate lots of fresh, consequence-free price history to test an idea against."
+    },
+    {
+      "id": "private-equity",
+      "title": "Private Equity Professional",
+      "tag": "Ownership &amp; control",
+      "icon": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"7\" cy=\"15\" r=\"3\"/><path d=\"M9.5 12.5L20 2M16 6l2 2M13 9l2 2\"/></svg>",
+      "oneLiner": "Buys whole companies outright &mdash; often taking them private &mdash; rather than trading shares of them.",
+      "dayToDay": {
+        "howTheyUseMarket": "Instead of buying a small slice of a company on an exchange, a PE firm buys (or takes private) an entire company using a mix of investor capital and borrowed money (a leveraged buyout), then spends several years actively improving how it's run before selling it &mdash; often back onto the public market via an IPO, which is where it reconnects with the stock market this whole site is about. Returns are measured over years, not days, using metrics like IRR and multiple of invested capital rather than daily share-price moves.",
+        "inPractice": "Sourcing and underwriting new deals (financial modeling, management meetings, industry diligence), and for deals already done, sitting on portfolio-company boards and working with management on the operational plan. A junior PE associate's year looks a lot like a junior banker's &mdash; just with fewer, bigger deals."
+      },
+      "variations": [
+        "<b>Leveraged buyout (LBO) fund</b> &mdash; buys mature, cash-flow-generating companies using significant debt.",
+        "<b>Growth equity</b> &mdash; takes a minority stake in a fast-growing but already-proven company, with little to no debt.",
+        "<b>Distressed / turnaround</b> &mdash; buys companies in or near bankruptcy at a steep discount, betting on a fix.",
+        "<b>Fund of funds / secondaries</b> &mdash; buys stakes in other PE funds or their portfolio companies rather than doing deals directly."
+      ],
+      "pay": "A modest-by-finance-standards base salary plus \"carried interest\" &mdash; typically 20% of the fund's profits above a hurdle rate, split among the investment team &mdash; which is where the enormous PE paydays actually come from, and only shows up years later when the fund's companies are sold.",
+      "skills": [
+        "Leveraged buyouts (LBOs)",
+        "IRR &amp; MOIC",
+        "Capital structure &amp; leverage",
+        "Operational value creation",
+        "Exit strategy (sale or IPO)",
+        "PIPEs"
+      ],
+      "marketDependencies": [
+        "rates",
+        "credit-spreads"
+      ],
+      "entryPath": {
+        "typicalMajors": [
+          "Finance",
+          "Economics",
+          "Business"
+        ],
+        "internshipPath": "Most PE associates recruit after two to three years as an investment-banking analyst, rather than directly out of undergrad.",
+        "recruitingTrackId": "pe-track"
+      },
+      "progressionLadder": [
+        "Analyst",
+        "Associate",
+        "Senior Associate",
+        "Vice President",
+        "Principal",
+        "Partner"
+      ],
+      "isPrimaryTrack": true,
+      "existingSimulatorMode": null,
+      "calculatorId": "pe",
+      "tryItHtml": null
+    },
+    {
+      "id": "venture-capital",
+      "title": "Venture Capitalist",
+      "tag": "Private / early-stage",
+      "icon": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 16V8M8 12l4-4 4 4\"/></svg>",
+      "oneLiner": "Funds young private companies long before they'd ever qualify to trade on a public stock exchange.",
+      "dayToDay": {
+        "howTheyUseMarket": "A VC's money goes in years before a stock ticker exists &mdash; they buy equity directly from a startup, betting that a small number of huge winners will more than pay for the many that fail. The public stock market still matters enormously to them: an IPO (or an acquisition by a public company) is usually the \"exit\" that turns their paper stake into real, sellable money, so they're effectively underwriting a company's whole journey toward eventually becoming one of the tickers on a watchlist like this project's own.",
+        "inPractice": "Meeting founders &mdash; sourcing and pitch meetings make up a huge share of the week &mdash; deciding which few of the hundreds of pitches get a term sheet, and for portfolio companies, taking board seats and helping with hiring, strategy and the next fundraise rather than day-to-day operations."
+      },
+      "variations": [
+        "<b>Seed-stage VC</b> &mdash; writes the first institutional check into a company that may be just an idea and a founding team.",
+        "<b>Growth-stage VC</b> &mdash; writes much larger, later checks into already-proven companies to fund scaling.",
+        "<b>Corporate VC</b> &mdash; a big company's own venture arm, investing partly for strategic reasons (access to new tech) and partly for returns.",
+        "<b>Angel investor</b> &mdash; not really a firm job, but an individual doing the earliest version of this with their own money instead of a fund's."
+      ],
+      "pay": "A management fee on the fund (commonly 2%/year of committed capital, covering salaries and overhead) plus carried interest on profits (also commonly 20%, the same mechanic as Private Equity above) &mdash; meaning most of a VC's real payday, if it comes, is years out and depends on a small number of the fund's bets working out enormously.",
+      "skills": [
+        "Seed / Series A, B, C rounds",
+        "Cap tables &amp; dilution",
+        "Pre-money vs. post-money valuation",
+        "Power-law returns",
+        "IPO or acquisition exit",
+        "Board seats &amp; governance"
+      ],
+      "marketDependencies": [
+        "rates",
+        "equity-vol"
+      ],
+      "entryPath": {
+        "typicalMajors": [
+          "Any major; business, computer science, and engineering backgrounds are common"
+        ],
+        "internshipPath": "Often enters after operating or banking experience, or through a VC-specific fellowship/associate program; a direct-from-undergrad path is less common.",
+        "recruitingTrackId": "vc-track"
+      },
+      "progressionLadder": [
+        "Analyst",
+        "Associate",
+        "Senior Associate / Principal",
+        "Partner"
+      ],
+      "isPrimaryTrack": true,
+      "existingSimulatorMode": null,
+      "calculatorId": "vc",
+      "tryItHtml": null
+    },
+    {
+      "id": "hedge-fund",
+      "title": "Hedge Fund Manager / Portfolio Manager",
+      "tag": "Absolute return",
+      "icon": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 3V21\"/><path d=\"M4 7H20\"/><circle cx=\"4\" cy=\"11\" r=\"3\"/><circle cx=\"20\" cy=\"11\" r=\"3\"/></svg>",
+      "oneLiner": "Manages pooled money from institutions and wealthy investors, aiming to make money in both up and down markets.",
+      "dayToDay": {
+        "howTheyUseMarket": "Unlike a traditional fund that just tries to beat an index, a hedge fund manager is usually judged on absolute return &mdash; making money regardless of what the overall market does. That means being willing to bet a stock will fall (short selling) as well as rise, using derivatives to hedge or amplify bets, and often running very concentrated or leveraged positions guided by a specific strategy (long/short equity, macro, quantitative, event-driven). What matters isn't just the return, but how much risk was taken to get it.",
+        "inPractice": "Reviewing overnight P&amp;L and risk first thing, then a mix of idea generation (reading, modeling, talking to management teams or industry contacts), risk conversations with the firm's risk team, and investor relations if they also run the business side of the fund."
+      },
+      "variations": [
+        "<b>Long/short equity</b> &mdash; the \"classic\" strategy: long stocks expected to rise, short ones expected to fall.",
+        "<b>Global macro</b> &mdash; bets on big economic themes (interest rates, currencies, commodities) rather than individual companies.",
+        "<b>Quantitative / systematic</b> &mdash; rules- and model-driven (overlaps with Quant above), little or no discretionary judgment.",
+        "<b>Event-driven</b> &mdash; trades around specific catalysts: mergers, bankruptcies, spin-offs, activist campaigns."
+      ],
+      "pay": "The industry-standard \"2 and 20\": a 2%/year management fee on assets, plus 20% of profits above a watermark &mdash; though fee pressure has pushed many funds toward smaller numbers. A PM at a multi-strategy fund is often paid a direct percentage of the P&amp;L they personally generate instead.",
+      "skills": [
+        "Long/short equity",
+        "Short selling",
+        "Derivatives &amp; hedging",
+        "Sharpe ratio",
+        "Leverage",
+        "Quantitative &amp; algorithmic strategies"
+      ],
+      "marketDependencies": [
+        "equity-vol",
+        "credit-spreads",
+        "earnings-season"
+      ],
+      "entryPath": {
+        "typicalMajors": [
+          "Finance",
+          "Economics",
+          "Math",
+          "Computer Science"
+        ],
+        "internshipPath": "Many analysts recruit after a few years in investment banking or equity research, though some funds also hire directly from undergrad internships.",
+        "recruitingTrackId": "asset-management-track"
+      },
+      "progressionLadder": [
+        "Junior Analyst",
+        "Analyst",
+        "Senior Analyst",
+        "Portfolio Manager"
+      ],
+      "isPrimaryTrack": true,
+      "existingSimulatorMode": "shortseller",
+      "calculatorId": "hf",
+      "tryItHtml": "Try it live: <a href=\"../../simulator/index.html?mode=shortseller\">Short Selling / Buy-Side Investor mode in the Simulator &#8599;</a> &mdash; run a real long/short book, including the margin and borrow-fee mechanics of shorting."
+    },
+    {
+      "id": "cfo",
+      "title": "Chief Financial Officer",
+      "tag": "Issuer side",
+      "icon": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 10 L12 4 L21 10\"/><path d=\"M5 10 V20 M19 10 V20 M3 20 H21 M9 13 V20 M15 13 V20\"/></svg>",
+      "oneLiner": "Sits on the other side of the stock market from everyone else in this guide &mdash; their own company is the one being bought and sold.",
+      "dayToDay": {
+        "howTheyUseMarket": "A CFO decides how their company shows up to the market it trades on: whether to buy back stock (reducing the share count, which lifts earnings per share even if profit doesn't grow), whether to issue new shares to raise cash, how big a dividend to pay, and what guidance to give analysts about future earnings. Every one of those choices moves the same price everyone else in this guide is reacting to &mdash; which is why a public company's own finance team is, in its own way, also a stock market participant.",
+        "inPractice": "Running the finance organization (accounting, FP&amp;A, treasury), presenting quarterly results to the board and to analysts on earnings calls, and making the big capital-allocation calls &mdash; buy back stock? raise the dividend? make an acquisition? pay down debt? &mdash; that this role's calculator below illustrates one version of."
+      },
+      "variations": [
+        "<b>Public-company CFO</b> &mdash; answers to public shareholders and SEC disclosure rules every quarter.",
+        "<b>Private / PE-backed CFO</b> &mdash; answers to a small set of owners instead, often with heavier debt and tighter cash management.",
+        "<b>Startup CFO</b> &mdash; spends more time on fundraising and burn-rate management than on public-market mechanics."
+      ],
+      "pay": "Salary plus an annual bonus tied to company performance, plus &mdash; especially at public companies &mdash; a large stock/option grant meant to align the CFO's own wealth with the same share price every other role in this guide is reacting to.",
+      "skills": [
+        "Share buybacks",
+        "Dividend policy",
+        "Earnings guidance",
+        "Capital allocation",
+        "Investor relations",
+        "Credit ratings"
+      ],
+      "marketDependencies": [
+        "earnings-season",
+        "rates"
+      ],
+      "entryPath": {
+        "typicalMajors": [
+          "Accounting",
+          "Finance",
+          "Business"
+        ],
+        "internshipPath": "Typically built over a long career through accounting/FP&A roles (often starting in public accounting or a corporate-finance rotational program) rather than a single internship track.",
+        "recruitingTrackId": "corporate-finance-track"
+      },
+      "progressionLadder": [
+        "Financial Analyst",
+        "FP&A Manager",
+        "Controller / VP Finance",
+        "CFO"
+      ],
+      "isPrimaryTrack": true,
+      "existingSimulatorMode": null,
+      "calculatorId": "cfo",
+      "tryItHtml": null
+    },
+    {
+      "id": "market-maker",
+      "title": "Market Maker / Broker-Dealer",
+      "tag": "Liquidity",
+      "icon": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 7h13M16 7l-3-3M16 7l-3 3\"/><path d=\"M21 17H8M8 17l3-3M8 17l3 3\"/></svg>",
+      "oneLiner": "Stands ready to buy or sell a stock at any moment, and gets paid for providing that service, not for guessing direction.",
+      "dayToDay": {
+        "howTheyUseMarket": "A market maker continuously quotes both a price they'll buy at (the bid) and a slightly higher price they'll sell at (the ask), profiting from that small gap (the spread) across high volume rather than betting on whether a stock goes up or down. This is what makes a stock \"liquid\" &mdash; there's almost always someone on the other side of a trade &mdash; and the real job is risk management: managing the inventory that quoting both sides leaves you holding.",
+        "inPractice": "Continuously updating quotes as the market moves, managing the inventory risk that comes from being on the other side of a huge number of trades, and reacting fast to news that makes a stock's \"fair value\" jump before the quotes can even update."
+      },
+      "variations": [
+        "<b>Exchange-designated market maker</b> &mdash; has an obligation (and exchange incentives) to keep quoting a specific stock continuously, even in fast markets.",
+        "<b>Wholesale market maker</b> &mdash; executes retail brokerage orders directly, paying for that order flow (payment for order flow, PFOF).",
+        "<b>Options market maker</b> &mdash; quotes options contracts instead of (or alongside) the underlying stock, with a much bigger pricing/risk model to manage (volatility, time decay)."
+      ],
+      "pay": "The spread they capture across huge volume (illustrated by this role's calculator), plus, for wholesalers, payment-for-order-flow revenue from brokerages. Profitability here is almost entirely about volume and risk-management discipline, not picking winners.",
+      "skills": [
+        "Bid-ask spread",
+        "Liquidity provision",
+        "Order book",
+        "Inventory risk",
+        "High-frequency quoting",
+        "Payment for order flow"
+      ],
+      "marketDependencies": [
+        "equity-vol"
+      ],
+      "entryPath": {
+        "typicalMajors": [
+          "Finance",
+          "Math",
+          "Computer Science"
+        ],
+        "internshipPath": "Often a trading or quant-trading internship with a market-making firm, with technical/math-heavy interviews.",
+        "recruitingTrackId": null
+      },
+      "progressionLadder": [
+        "Trading Assistant",
+        "Market Maker",
+        "Senior Market Maker",
+        "Desk Head"
+      ],
+      "isPrimaryTrack": false,
+      "existingSimulatorMode": null,
+      "calculatorId": "mm",
+      "tryItHtml": null
+    },
+    {
+      "id": "research-analyst",
+      "title": "Equity Research Analyst",
+      "tag": "Analysis &amp; ratings",
+      "icon": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"10\" cy=\"10\" r=\"7\"/><line x1=\"21\" y1=\"21\" x2=\"15\" y2=\"15\"/></svg>",
+      "oneLiner": "Studies public companies in depth and publishes an opinion on whether their stock is worth buying.",
+      "dayToDay": {
+        "howTheyUseMarket": "They build detailed financial models of a company (or a whole industry), estimate what its stock is really worth, and publish a rating &mdash; Buy, Hold, or Sell &mdash; and a price target, along with the reasoning behind it. Sell-side analysts do this for outside investors and to support their bank's other business; buy-side analysts do the same work internally to inform a fund's own trades. The <span class=\"mono\">Strong Buy</span>-style rating pills and conviction tiers on this project's own <a href=\"../index.html\">Market Scanner</a> are exactly this job's output, simplified.",
+        "inPractice": "Building and maintaining detailed financial models for a handful of covered companies, writing notes after every earnings report, hosting or joining calls with company management, and defending (or changing) a rating when the stock moves against the thesis."
+      },
+      "variations": [
+        "<b>Sell-side analyst</b> &mdash; works at a bank, publishes ratings for outside clients, and supports the bank's trading/banking business (a structural conflict of interest that disclosure rules exist to manage).",
+        "<b>Buy-side analyst</b> &mdash; works inside a fund or asset manager, researching the same companies purely to inform that firm's own trades, with no public rating to publish.",
+        "<b>Independent research</b> &mdash; a smaller, subscription-funded shop with no banking relationship to create a conflict, trading broader reach for narrower resources."
+      ],
+      "pay": "Base salary plus a bonus tied to the quality and accuracy of their calls and, on the sell side, the trading commissions and banking business their research helps generate &mdash; a sell-side analyst's influence (and pay) often tracks how closely institutional investors follow their calls.",
+      "skills": [
+        "DCF &amp; comps valuation",
+        "Earnings estimates",
+        "Buy / Hold / Sell ratings",
+        "Price targets",
+        "Industry &amp; competitive analysis",
+        "Sell-side vs. buy-side"
+      ],
+      "marketDependencies": [
+        "earnings-season",
+        "equity-vol"
+      ],
+      "entryPath": {
+        "typicalMajors": [
+          "Finance",
+          "Economics",
+          "Accounting"
+        ],
+        "internshipPath": "Commonly starts as a research associate supporting a senior analyst, sometimes after an investment-banking or related internship.",
+        "recruitingTrackId": "equity-research-track"
+      },
+      "progressionLadder": [
+        "Research Associate",
+        "Equity Research Analyst",
+        "Senior / Lead Analyst",
+        "Director of Research"
+      ],
+      "isPrimaryTrack": true,
+      "existingSimulatorMode": null,
+      "calculatorId": "eq",
+      "tryItHtml": "See it in action: the <a href=\"../../index.html\">Market Scanner &#8599;</a> and <a href=\"../../research/index.html\">Company Research &#8599;</a> pages are this job's deliverables, built by an agent instead of a person."
+    },
+    {
+      "id": "risk-manager",
+      "title": "Risk Manager / Compliance Officer",
+      "tag": "Oversight",
+      "icon": "<svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 2 L19 5 V11 C19 16 15.5 19.5 12 21 C8.5 19.5 5 16 5 11 V5 Z\"/><path d=\"M9 11l2 2 4-4\"/></svg>",
+      "oneLiner": "Doesn't pick stocks at all &mdash; makes sure everyone else at the firm doesn't blow it up.",
+      "dayToDay": {
+        "howTheyUseMarket": "A risk manager sets and enforces limits on how much any trader or portfolio can lose before someone has to answer for it, using tools like Value-at-Risk to estimate a \"worst plausible day\" in dollar terms, and stress tests to see what a historical shock would do to the book today. A compliance officer's job overlaps heavily: making sure trades follow securities law, client suitability rules, and insider-trading restrictions. Neither role generates profit directly, but a firm without one is one bad trade away from not existing.",
+        "inPractice": "Running the firm's risk reports every morning (Value-at-Risk, stress tests, concentration limits), flagging breaches before they become disasters, and &mdash; for compliance specifically &mdash; reviewing trades for insider-trading red flags, approving marketing materials, and handling regulator exams and filings."
+      },
+      "variations": [
+        "<b>Market risk</b> &mdash; focused on price/volatility risk across trading books (the VaR calculator below is this job).",
+        "<b>Credit risk</b> &mdash; focused on counterparty default risk: will the other side of a trade actually pay?",
+        "<b>Operational risk</b> &mdash; focused on failures in process, systems, or people (a trade booked wrong, a system outage).",
+        "<b>Compliance</b> &mdash; focused on following the law and the firm's own policies, rather than quantifying market risk per se."
+      ],
+      "pay": "Salary plus a bonus, almost always smaller than the traders and bankers they oversee &mdash; a structural tension in finance, since the people who can stop a profitable-looking trade are paid less than the people making it &mdash; though senior Chief Risk Officers at large banks are highly compensated.",
+      "skills": [
+        "Value-at-Risk (VaR)",
+        "Stress testing",
+        "Position limits",
+        "Insider-trading rules",
+        "Suitability &amp; KYC",
+        "Regulatory capital"
+      ],
+      "marketDependencies": [
+        "credit-spreads",
+        "equity-vol",
+        "rates"
+      ],
+      "entryPath": {
+        "typicalMajors": [
+          "Finance",
+          "Math",
+          "Economics",
+          "Statistics"
+        ],
+        "internshipPath": "Often enters through a bank's risk-management or compliance analyst program, sometimes after a few years on a trading or banking desk.",
+        "recruitingTrackId": null
+      },
+      "progressionLadder": [
+        "Risk / Compliance Analyst",
+        "Risk Manager",
+        "Senior Risk Manager",
+        "Chief Risk / Compliance Officer"
+      ],
+      "isPrimaryTrack": false,
+      "existingSimulatorMode": null,
+      "calculatorId": "risk",
+      "tryItHtml": null
+    }
+  ]
+}

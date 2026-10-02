@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('siteTheme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<meta charset="utf-8">
+<title>Options (Calls &amp; Puts) &mdash; Career Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../guide.css">
+<link rel="stylesheet" href="../../assets/theme.css">
+</head>
+<body>
+
+<div id="siteNav"></div>
+<script>window.SITE_NAV = { base: "../../", active: "guide" };</script>
+<script src="../../assets/nav.js"></script>
+
+<div class="wrap">
+
+  <nav class="guide-nav"><a href="../index.html" class="back">&larr; Guide</a><a href="stocks.html"><span class="dot"></span>Common Stock (Equity)</a><a href="etf.html"><span class="dot"></span>ETFs (Exchange-Traded Funds)</a><a href="mutualfund.html"><span class="dot"></span>Mutual Funds</a><a href="bonds.html"><span class="dot"></span>Bonds</a><a href="options.html" class="active"><span class="dot"></span>Options (Calls &amp; Puts)</a><a href="futures.html"><span class="dot"></span>Futures</a><a href="short.html"><span class="dot"></span>Short Selling</a></nav>
+
+  <header class="role-page-head">
+    <div class="eyebrow">Career guide &middot; types of securities</div>
+    <div class="rp-top">
+      <span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v6M12 10 L6 20M12 10 L18 20"/></svg></span>
+      <h1 class="title" style="font-size:clamp(24px,4vw,34px)">Options (Calls &amp; Puts)</h1>
+      <span class="role-tag">Derivative</span>
+    </div>
+    <p class="role-oneliner">A contract giving you the right, but not the obligation, to buy or sell a stock at a fixed price before a set date.</p>
+  </header>
+
+  <div class="role-content">
+<h3>How it works</h3>
+<p>A <b>call</b> gives you the right to buy a stock at a set "strike" price before expiry &mdash; worth buying if you think the stock will rise above that strike. A <b>put</b> gives you the right to sell at the strike &mdash; worth buying if you think the stock will fall below it. You pay a premium upfront, priced (using a model like Black-Scholes) off the stock's price, the strike, time left, and the stock's own volatility; the more volatile the stock, the pricier the option.</p>
+<h3>Why it's leveraged</h3>
+<p>A small move in the underlying stock can mean a much larger percentage move in the option's value, because you're only paying for the right to the move, not the full share price. That cuts both ways: if the stock never reaches your strike, the option can expire completely worthless, and you lose the whole premium &mdash; a 100% loss is a normal, not a rare, outcome here.</p>
+<h3>Key tools &amp; concepts</h3>
+<div class="chip-row">
+        <span class="chip">Strike price</span><span class="chip">Expiry / time decay</span>
+        <span class="chip">Premium</span><span class="chip">Implied volatility</span>
+        <span class="chip">Black-Scholes pricing</span><span class="chip">Leverage</span>
+      </div>
+
+<div class="try-it">Try it live: <a href="../../simulator/index.html?mode=derivatives">Options &amp; Futures Trader mode in the Simulator &#8599;</a> &mdash; buy real Black-Scholes-priced calls/puts off each ticker's own simulated volatility.</div>
+  </div>
+
+  <footer>
+    Simplified for teaching purposes. Not investment advice.
+  </footer>
+</div>
+
+</body>
+</html>

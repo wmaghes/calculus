@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('siteTheme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<meta charset="utf-8">
+<title>Short Selling &mdash; Career Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../guide.css">
+<link rel="stylesheet" href="../../assets/theme.css">
+</head>
+<body>
+
+<div id="siteNav"></div>
+<script>window.SITE_NAV = { base: "../../", active: "guide" };</script>
+<script src="../../assets/nav.js"></script>
+
+<div class="wrap">
+
+  <nav class="guide-nav"><a href="../index.html" class="back">&larr; Guide</a><a href="stocks.html"><span class="dot"></span>Common Stock (Equity)</a><a href="etf.html"><span class="dot"></span>ETFs (Exchange-Traded Funds)</a><a href="mutualfund.html"><span class="dot"></span>Mutual Funds</a><a href="bonds.html"><span class="dot"></span>Bonds</a><a href="options.html"><span class="dot"></span>Options (Calls &amp; Puts)</a><a href="futures.html"><span class="dot"></span>Futures</a><a href="short.html" class="active"><span class="dot"></span>Short Selling</a></nav>
+
+  <header class="role-page-head">
+    <div class="eyebrow">Career guide &middot; types of securities</div>
+    <div class="rp-top">
+      <span class="role-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7l10 10M17 7v10H7"/></svg></span>
+      <h1 class="title" style="font-size:clamp(24px,4vw,34px)">Short Selling</h1>
+      <span class="role-tag">Bearish strategy</span>
+    </div>
+    <p class="role-oneliner">Borrowing shares to sell now, betting the price falls so you can buy them back cheaper later.</p>
+  </header>
+
+  <div class="role-content">
+<h3>How it works</h3>
+<p>You borrow shares you don't own (typically from your broker) and sell them at today's price, pocketing the proceeds. Later, you "cover" the position by buying the same number of shares back and returning them. If the price fell in between, you profit the difference; if it rose, you lose the difference. Opening a short requires margin (collateral) and costs an ongoing borrow fee for as long as the position stays open.</p>
+<h3>Why the risk is asymmetric</h3>
+<p>Buying a stock outright, the most you can ever lose is 100% of what you paid &mdash; a stock can't fall below zero. Shorting flips that: a stock can rise without any upper limit, so a short position's potential loss is theoretically unlimited. This is exactly why short sellers watch margin requirements so closely, and why a short squeeze (a sharp rally forcing short sellers to buy back at any price) can be so damaging.</p>
+<h3>Key tools &amp; concepts</h3>
+<div class="chip-row">
+        <span class="chip">Borrow fee</span><span class="chip">Initial margin</span>
+        <span class="chip">Short squeeze</span><span class="chip">Unlimited loss potential</span>
+        <span class="chip">Short interest / days-to-cover</span><span class="chip">Long/short books</span>
+      </div>
+
+<div class="try-it">Try it live: <a href="../../simulator/index.html?mode=shortseller">Short Selling / Buy-Side Investor mode in the Simulator &#8599;</a> &mdash; run a real long/short book with margin and an accruing borrow fee.</div>
+  </div>
+
+  <footer>
+    Simplified for teaching purposes. Not investment advice.
+  </footer>
+</div>
+
+</body>
+</html>

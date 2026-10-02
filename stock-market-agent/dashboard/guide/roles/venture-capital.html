@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>try{if(localStorage.getItem('siteTheme')==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}</script>
+<meta charset="utf-8">
+<title>Career Guide</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../guide.css">
+<link rel="stylesheet" href="../../assets/theme.css">
+</head>
+<body>
+
+<div id="siteNav"></div>
+<script>window.SITE_NAV = { base: "../../", active: "guide" };</script>
+<script src="../../assets/nav.js"></script>
+
+<div class="wrap">
+
+  <nav class="guide-nav" id="roleNav"></nav>
+
+  <header class="role-page-head">
+    <div class="eyebrow">Career guide &middot; role</div>
+    <div class="rp-top">
+      <span class="role-icon" id="rpIcon"></span>
+      <h1 class="title" id="rpTitle" style="font-size:clamp(24px,4vw,34px)">&mdash;</h1>
+      <span class="role-tag" id="rpTag"></span>
+    </div>
+    <p class="role-oneliner" id="rpOneliner"></p>
+  </header>
+
+  <div id="mentorMount"></div>
+
+  <div class="role-content" id="roleContent"></div>
+
+  <footer>
+    Simplified for teaching purposes &mdash; real roles blend across these lines constantly. All calculators are illustrative teaching formulas, not professional-grade models. Not investment or career advice.
+  </footer>
+</div>
+
+<script src="../tutor.js"></script>
+<script src="../calculators.js"></script>
+<script>window.GUIDE_ROLE = "venture-capital";</script>
+<script src="../role-page.js"></script>
+</body>
+</html>
