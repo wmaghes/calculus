@@ -1,13 +1,19 @@
 /* ---------- Career Guide tutor system ----------
  * Shared by every role page (dashboard/guide/roles/*.html). Two animated
  * tutor characters (Max / Nova), 10-language narration/subtitles with
- * hard-enforced voice matching, and an "Ask a question" box that answers
- * from that role's own built-in expertise (careers.json's dayToDay/pay/
- * skills content plus a deeper expertiseQA knowledge base -- comp by
- * level, lifestyle/hours, and core technical mechanics like how an LBO
- * or a DCF actually works) via an offline keyword match. No external API
- * call and no account/key of any kind -- every tutor's expertise is
- * baked into this site, not borrowed from a live model.
+ * hard-enforced voice matching, and an "Ask a question" box answered two
+ * ways, both offline (no external API call, no account/key of any kind):
+ *   1. Name one of the 116 real companies this site tracks (a ticker like
+ *      "NVDA" or a company name) and the tutor answers from the Market
+ *      Scanner's own data.json -- real price/market-cap/metric/rating,
+ *      refreshed daily by this project's own WebSearch-grounded routine
+ *      and committed to the repo. Not a per-question internet fetch (this
+ *      is a static site with no backend to do that from) and not invented
+ *      -- just real, already-gathered data, looked up instead of guessed.
+ *   2. Anything else is matched against that role's own built-in
+ *      expertise (careers.json's dayToDay/pay/skills content plus a
+ *      deeper expertiseQA knowledge base -- comp by level, lifestyle/
+ *      hours, core technical mechanics like how an LBO or a DCF works).
  *
  * The narration-language selector is rendered once, on the Guide landing
  * page (index.html) -- every page here reads the same localStorage key,
@@ -430,6 +436,109 @@ function answerMentorQuestionStatic(kb, question) {
   return match ? match.lead + " " + match.text : null;
 }
 
+/* ---------- real-company lookup: the Market Scanner's own daily-refreshed
+ * data, not a per-question internet fetch. This site has no backend, so
+ * "ask about a real company" is answered from dashboard/data.json -- the
+ * same 116-ticker file the Scanner page shows, refreshed daily by a
+ * WebSearch-grounded routine and committed to the repo, not invented or
+ * looked up live. If a question names a company outside that 116-ticker
+ * universe, this returns null and the caller falls back to (or combines
+ * with) the role's own written knowledge base -- it never fakes a number
+ * for a company this site doesn't actually track.
+ */
+const CATEGORY_LABELS = {
+  growth: "Biggest Growth desk", stability: "Stability desk", nextgen: "Next-Gen Growth desk",
+  shorts: "Short Candidates desk", funds: "Funds & Company Size desk",
+};
+let SCANNER_DATA_PROMISE = null;
+let TICKER_INDEX = null;   // "NVDA" -> { item, category }
+let NAME_INDEX = null;     // [{ alias, item, category }], longest alias first
+let SCANNER_GENERATED = null;
+
+// Strips legal-entity/generic suffix words so "Palantir Technologies"
+// yields the alias people actually type ("palantir"), and normalizes
+// punctuation (periods, commas, apostrophes, ".com") so "McDonald's" /
+// "mcdonalds" and "Amazon.com" / "amazon" both compare equal.
+const NAME_SUFFIX_WORDS = new Set(["inc", "corporation", "corp", "company", "co", "group",
+  "holdings", "holding", "limited", "ltd", "technologies", "technology", "therapeutics",
+  "pharmaceuticals", "platforms", "international", "industries", "worldwide", "entertainment",
+  "interactive", "global", "systems", "solutions", "ventures", "and", "&"]);
+function normalizeCompanyText(s) {
+  return String(s).toLowerCase().replace(/\.com\b/g, " ").replace(/[.,'"]/g, "")
+    .replace(/\s+/g, " ").trim();
+}
+function aliasWords(name) {
+  const words = normalizeCompanyText(name).replace(/^the\s+/, "").split(" ");
+  while (words.length > 1 && NAME_SUFFIX_WORDS.has(words[words.length - 1])) words.pop();
+  return words;
+}
+
+function loadScannerData() {
+  if (SCANNER_DATA_PROMISE) return SCANNER_DATA_PROMISE;
+  const base = (window.SITE_NAV && window.SITE_NAV.base) || "";
+  SCANNER_DATA_PROMISE = fetch(base + "data.json")
+    .then((res) => res.json())
+    .then((data) => {
+      TICKER_INDEX = {};
+      const aliasOwners = {}; // alias -> ticker, to detect/drop ambiguous short aliases (e.g. "vanguard")
+      const candidates = []; // [{alias, item, category}]
+      SCANNER_GENERATED = data.generated || "recently";
+      for (const [category, items] of Object.entries(data.categories || {})) {
+        for (const item of items) {
+          TICKER_INDEX[item.ticker] = { item, category };
+          if (!item.name) continue;
+          const words = aliasWords(item.name);
+          const aliases = new Set([words.join(" "), words[0]]);
+          for (const alias of aliases) {
+            if (alias.length < 4) continue;
+            if (aliasOwners[alias] && aliasOwners[alias] !== item.ticker) {
+              aliasOwners[alias] = "AMBIGUOUS";
+              continue;
+            }
+            aliasOwners[alias] = item.ticker;
+            candidates.push({ alias, item, category });
+          }
+        }
+      }
+      NAME_INDEX = candidates.filter((c) => aliasOwners[c.alias] !== "AMBIGUOUS");
+      NAME_INDEX.sort((a, b) => b.alias.length - a.alias.length);
+      return data;
+    })
+    .catch(() => null);
+  return SCANNER_DATA_PROMISE;
+}
+
+// Multi-letter tickers (3+) match case-insensitively; 1-2 letter tickers
+// (several real ones here: V, O, T, W, GE) only match if typed in the
+// exact uppercase a visitor would use for a ticker, not an ordinary word.
+function findCompanyMention(question) {
+  if (!TICKER_INDEX) return null;
+  const words = question.match(/[A-Za-z]+/g) || [];
+  for (const w of words) {
+    const upper = w.toUpperCase();
+    const hit = TICKER_INDEX[upper];
+    if (hit && (upper.length >= 3 || w === upper)) return hit;
+  }
+  const qNorm = normalizeCompanyText(question);
+  for (const entry of NAME_INDEX) {
+    if (qNorm.includes(entry.alias)) return { item: entry.item, category: entry.category };
+  }
+  return null;
+}
+
+function formatCompanyAnswer(hit) {
+  const { item, category } = hit;
+  const bits = [`${item.ticker} (${item.name}) is trading around $${Number(item.price).toFixed(2)}`];
+  if (item.mktCap) bits.push(`market cap ${item.mktCap}`);
+  if (item.metric_label && item.metric != null) {
+    const isPct = typeof item.metric === "number" && !/beta/i.test(item.metric_label);
+    bits.push(`${item.metric_label.toLowerCase()}: ${item.metric}${isPct ? "%" : ""}`);
+  }
+  const ratingBit = item.rating ? ` Current read: ${item.rating}.` : "";
+  const deskLabel = CATEGORY_LABELS[category] || category;
+  return `Real data from this site's Market Scanner (${deskLabel}, refreshed ${SCANNER_GENERATED}): ${bits.join(", ")}.${ratingBit} ${item.blurb || ""}`.trim();
+}
+
 /* ---------- rendering: one mentor panel per role page ----------
  * mountEl: the element the panel is inserted into (as its first child).
  * kb: [{lead, text, generic?}] plain-text knowledge base for the static
@@ -462,9 +571,9 @@ function renderMentorPanel(mountEl, roleId, roleTitle, kb, colorIdx) {
       </div>
       <div class="mentor-voice-note"></div>
       <div class="mentor-ask">
-        <div class="mentor-ask-label">Ask ${escapeMentorHtml(tutor.name)} a question about this role &mdash; comp by level, hours, how the job's technical side actually works</div>
+        <div class="mentor-ask-label">Ask ${escapeMentorHtml(tutor.name)} a question &mdash; name a real company for today's actual numbers, or ask about comp, hours, or how the job's technical side works</div>
         <div class="mentor-ask-row">
-          <input type="text" class="mentor-ask-input" placeholder="e.g. how much does an analyst make, or how do LBOs work?">
+          <input type="text" class="mentor-ask-input" placeholder="e.g. what's NVDA's price today, or how do LBOs work?">
           <button type="button" class="mentor-btn ask-btn">Ask</button>
         </div>
         <div class="mentor-answer" style="display:none"></div>
@@ -472,6 +581,7 @@ function renderMentorPanel(mountEl, roleId, roleTitle, kb, colorIdx) {
     </div>`;
 
   mountEl.insertBefore(panel, mountEl.firstChild);
+  loadScannerData(); // warm the cache so the first "ask" doesn't wait on it
 
   const entry = {
     tutor, speakBtn: panel.querySelector(".speak-btn"), noteEl: panel.querySelector(".mentor-voice-note"),
@@ -502,16 +612,30 @@ function renderMentorPanel(mountEl, roleId, roleTitle, kb, colorIdx) {
     answerSpeakBtn.addEventListener("click", () => speakText(answerEntry, text));
   }
 
+  function answerAndMaybeTieIn(q, companyAnswer) {
+    const kbMatch = answerMentorQuestionStatic(kb, q);
+    const tieIn = kbMatch ? ` As a ${roleTitle.toLowerCase()}, that's exactly the kind of figure I'd be looking at.` : "";
+    renderAnswer(q, companyAnswer + tieIn, "Real Scanner data, not a guess -- refreshed daily from this site's own data.json, covering the 116 companies tracked here.");
+  }
+
   function submitAsk() {
     const q = askInput.value.trim();
     if (!q) return;
     answerBox.style.display = "block";
-    const match = answerMentorQuestionStatic(kb, q);
-    if (match) {
-      renderAnswer(q, match, "English only -- matched against everything " + tutor.name + " knows about this role.");
-    } else {
-      renderAnswer(q, "I don't have anything on that specific question for this role -- try asking about comp by level, hours and time off, how I use the market day to day, or the technical mechanics behind the job (like how an LBO or a DCF actually works).", "");
-    }
+    answerBox.innerHTML = `<div class="mentor-answer-q">You asked: &ldquo;${escapeMentorHtml(q)}&rdquo;</div>Checking this site's own market data&hellip;`;
+    loadScannerData().then(() => {
+      const hit = findCompanyMention(q);
+      if (hit) {
+        answerAndMaybeTieIn(q, formatCompanyAnswer(hit));
+        return;
+      }
+      const match = answerMentorQuestionStatic(kb, q);
+      if (match) {
+        renderAnswer(q, match, "English only -- matched against everything " + tutor.name + " knows about this role.");
+      } else {
+        renderAnswer(q, "I don't have anything on that specific question for this role -- try naming one of the 116 companies this site tracks for real numbers, or ask about comp by level, hours and time off, how I use the market day to day, or the technical mechanics behind the job (like how an LBO or a DCF actually works).", "");
+      }
+    });
   }
   askBtn.addEventListener("click", submitAsk);
   askInput.addEventListener("keydown", (e) => { if (e.key === "Enter") submitAsk(); });

@@ -391,20 +391,37 @@ under that tutor's name — this applies to the main narration and to
 spoken Q&A answers alike.
 
 **Ask your tutor anything about the role — no account, no API key.** Every
-tutor answers "Ask a question" entirely from a knowledge base baked into
-`careers.json` for that one role: the same day-to-day/pay/skills content
-shown on the page, plus a deeper `expertiseQA` set per role — illustrative
-comp ranges by level (e.g. analyst vs. MD bonus for an Investment Banker),
-hours and lifestyle by level, and the core technical mechanics of the job
-explained plainly (how an LBO or a DCF actually works, how a market
-maker's spread or a long/short book's net exposure works, and more). A
-question is matched, by keyword overlap plus a small synonym layer,
-against that whole knowledge base (English only) and answered in
-character; it says plainly when nothing in that role's knowledge base
-covers the question instead of guessing. There is no live model call of
-any kind here — nothing leaves the visitor's browser, and every claim
-beyond what was already in the page's own prose is hedged as illustrative
-and logged in `docs/CONTENT_TODO.md` for human verification.
+tutor answers "Ask a question" one of two ways, both offline:
+
+1. **Name one of the 116 real companies this site tracks** (a ticker like
+   `NVDA` or the company name, loosely matched — "Tesla" or "tesla's"
+   both work, not just the exact legal name) and the tutor answers from
+   the Market Scanner's own `data.json`: real, current price, market cap,
+   and whatever metric that desk tracks for it, refreshed daily by this
+   project's own WebSearch-grounded routine (see "How it works" above)
+   and committed to the repo — not a per-question internet fetch (this
+   site has no backend to do that from) and not invented. A 1-2 letter
+   ticker (`V`, `T`, `O`, `W`, `GE` are all real tickers here) only
+   matches if typed in the exact uppercase a visitor would use for a
+   ticker, so it can't misfire on an ordinary word; a short, ambiguous
+   company-name fragment shared by more than one tracked name (e.g.
+   "Vanguard," which several mutual funds here start with) is deliberately
+   not matched rather than guessing which one was meant. Ask about a
+   company this site doesn't track and it says so plainly instead of
+   fabricating a number.
+2. **Anything else** is matched (by keyword overlap plus a small synonym
+   layer) against a knowledge base baked into `careers.json` for that
+   role: the same day-to-day/pay/skills content shown on the page, plus a
+   deeper `expertiseQA` set per role — illustrative comp ranges by level
+   (e.g. analyst vs. MD bonus for an Investment Banker), hours and
+   lifestyle by level, and the core technical mechanics of the job
+   explained plainly (how an LBO or a DCF actually works, how a market
+   maker's spread or a long/short book's net exposure works, and more).
+
+Either way there is no live model call and no live internet search —
+nothing leaves the visitor's browser, and every claim beyond what was
+already in the page's own prose or the Scanner's own data is hedged as
+illustrative and logged in `docs/CONTENT_TODO.md` for human verification.
 
 **Types of Securities** (`securities/<id>.html`) explains every instrument
 type traded anywhere on the site in plain language: Common Stock (including
