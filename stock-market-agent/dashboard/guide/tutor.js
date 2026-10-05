@@ -424,16 +424,19 @@ function bestMentorMatch(entries, qTokenSet) {
       best = entry; bestDistinct = distinct; bestRaw = raw;
     }
   }
-  return best;
+  return best ? { entry: best, distinct: bestDistinct, raw: bestRaw } : null;
 }
 // kb: [{lead, text, generic?}] -- plain-text strings (HTML already stripped
 // by the caller) describing the role, used for a crude keyword match.
+// Returns {text, distinct} so the caller can weigh this against a company
+// lookup (see findCompanyMention) -- a specific, multi-concept KB match
+// should win over a bare ticker/name mention, not just lose by going second.
 function answerMentorQuestionStatic(kb, question) {
   const qTokenSet = new Set(mentorTokenize(question));
   if (qTokenSet.size === 0) return null;
   const match = bestMentorMatch(kb.filter((e) => !e.generic), qTokenSet)
     || bestMentorMatch(kb.filter((e) => e.generic), qTokenSet);
-  return match ? match.lead + " " + match.text : null;
+  return match ? { text: match.entry.lead + " " + match.entry.text, distinct: match.distinct } : null;
 }
 
 /* ---------- real-company lookup: the Market Scanner's own daily-refreshed
@@ -612,8 +615,7 @@ function renderMentorPanel(mountEl, roleId, roleTitle, kb, colorIdx) {
     answerSpeakBtn.addEventListener("click", () => speakText(answerEntry, text));
   }
 
-  function answerAndMaybeTieIn(q, companyAnswer) {
-    const kbMatch = answerMentorQuestionStatic(kb, q);
+  function answerAndMaybeTieIn(q, companyAnswer, kbMatch) {
     const tieIn = kbMatch ? ` As a ${roleTitle.toLowerCase()}, that's exactly the kind of figure I'd be looking at.` : "";
     renderAnswer(q, companyAnswer + tieIn, "Real Scanner data, not a guess -- refreshed daily from this site's own data.json, covering the 116 companies tracked here.");
   }
@@ -625,16 +627,25 @@ function renderMentorPanel(mountEl, roleId, roleTitle, kb, colorIdx) {
     answerBox.innerHTML = `<div class="mentor-answer-q">You asked: &ldquo;${escapeMentorHtml(q)}&rdquo;</div>Checking this site's own market data&hellip;`;
     loadScannerData().then(() => {
       const hit = findCompanyMention(q);
-      if (hit) {
-        answerAndMaybeTieIn(q, formatCompanyAnswer(hit));
+      const kbMatch = answerMentorQuestionStatic(kb, q);
+      // A specific, multi-concept knowledge-base match wins over a bare
+      // company mention -- e.g. "the JPMorgan London Whale" or "price
+      // targets" (which contains the ticker-adjacent word "target") should
+      // surface the real explanation, not just today's JPM/TGT quote,
+      // which a company mention alone would otherwise return.
+      if (kbMatch && kbMatch.distinct >= 2) {
+        renderAnswer(q, kbMatch.text, "English only -- matched against everything " + tutor.name + " knows about this role.");
         return;
       }
-      const match = answerMentorQuestionStatic(kb, q);
-      if (match) {
-        renderAnswer(q, match, "English only -- matched against everything " + tutor.name + " knows about this role.");
-      } else {
-        renderAnswer(q, "I don't have anything on that specific question for this role -- try naming one of the 116 companies this site tracks for real numbers, or ask about comp by level, hours and time off, how I use the market day to day, or the technical mechanics behind the job (like how an LBO or a DCF actually works).", "");
+      if (hit) {
+        answerAndMaybeTieIn(q, formatCompanyAnswer(hit), kbMatch);
+        return;
       }
+      if (kbMatch) {
+        renderAnswer(q, kbMatch.text, "English only -- matched against everything " + tutor.name + " knows about this role.");
+        return;
+      }
+      renderAnswer(q, "I don't have anything on that specific question for this role -- try naming one of the 116 companies this site tracks for real numbers, or ask about comp by level, hours and time off, how I use the market day to day, or the technical mechanics behind the job (like how an LBO or a DCF actually works).", "");
     });
   }
   askBtn.addEventListener("click", submitAsk);
