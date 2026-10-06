@@ -342,7 +342,10 @@ function refreshSpeakButtonState(entry) {
 function refreshAllMentorButtons() {
   MENTOR_PANEL_REGISTRY.forEach(refreshSpeakButtonState);
 }
+let SPEECH_GENERATION = 0; // bumped on every stop/new speak, so a stale chunk chain can't keep talking
+
 function stopMentorSpeech() {
+  SPEECH_GENERATION++;
   try { window.speechSynthesis && window.speechSynthesis.cancel(); } catch (e) {}
   const entry = MENTOR_SPEAKING_ENTRY;
   MENTOR_SPEAKING_ENTRY = null;
@@ -352,22 +355,48 @@ function stopMentorSpeech() {
     refreshSpeakButtonState(entry);
   }
 }
+// Splits narration into sentence-length chunks spoken one at a time with a
+// short pause between, instead of one long SpeechSynthesisUtterance. Two
+// real problems this fixes, not just a stylistic one: Chrome's
+// speechSynthesis has a long-documented bug where a single long utterance
+// can stall or cut off mid-sentence (worse the longer the text, and this
+// project's knowledge-base entries run several sentences); and reading a
+// whole paragraph as one unbroken utterance comes out rushed and monotone
+// on most voices, however good the voice itself is. A slightly slower
+// rate plus a real pause at each sentence boundary reads as far more
+// composed -- the deliberate, unhurried cadence this was asked to sound
+// like -- on literally any installed voice, not just a great one.
+function splitIntoSpeechChunks(text) {
+  return text.split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter(Boolean);
+}
 function speakText(entry, text) {
   if (!("speechSynthesis" in window)) return;
   if (MENTOR_SPEAKING_ENTRY === entry) { stopMentorSpeech(); return; }
   stopMentorSpeech();
   const voice = pickVoiceFor(GLOBAL_LANG, entry.tutor.gender);
   if (!voice) { refreshSpeakButtonState(entry); return; }
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.voice = voice;
+
+  const myGeneration = SPEECH_GENERATION;
+  const chunks = splitIntoSpeechChunks(text);
+  let i = 0;
+
   entry.noteEl.textContent = "Voice: " + voice.name + " (" + voice.lang + ") -- confirmed " + entry.tutor.gender + " " + (LANG_VOICE_DB[GLOBAL_LANG] || {}).label + ".";
-  utter.onend = () => stopMentorSpeech();
-  utter.onerror = () => stopMentorSpeech();
   MENTOR_SPEAKING_ENTRY = entry;
   entry.speakBtn.classList.add("speaking");
   if (entry.waveEl) entry.waveEl.classList.add("speaking");
   entry.speakBtn.innerHTML = "&#9632; Stop";
-  window.speechSynthesis.speak(utter);
+
+  function speakNext() {
+    if (myGeneration !== SPEECH_GENERATION) return; // superseded by a stop or a different "speak"
+    if (i >= chunks.length) { stopMentorSpeech(); return; }
+    const utter = new SpeechSynthesisUtterance(chunks[i++]);
+    utter.voice = voice;
+    utter.rate = 0.93; // a touch slower than default -- calmer, more deliberate, less rushed
+    utter.onend = () => { if (myGeneration === SPEECH_GENERATION) setTimeout(speakNext, 140); };
+    utter.onerror = () => { if (myGeneration === SPEECH_GENERATION) stopMentorSpeech(); };
+    window.speechSynthesis.speak(utter);
+  }
+  speakNext();
 }
 
 /* ---------- Q&A engine: English-only keyword match against a role's own

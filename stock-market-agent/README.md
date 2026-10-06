@@ -390,6 +390,22 @@ reason instead of narrating in the wrong gender or a different language
 under that tutor's name — this applies to the main narration and to
 spoken Q&A answers alike.
 
+**Narration is spoken sentence by sentence, not as one long block.**
+Long text read aloud in a single `SpeechSynthesisUtterance` reads as
+rushed and monotone on most voices, and Chrome has a long-documented bug
+where a single long utterance can stall or cut off partway through — both
+of which got worse once the Career Guide's knowledge-base entries grew to
+several sentences each. `speakText()` now splits narration at sentence
+boundaries and speaks each one separately with a brief pause in between,
+at a slightly slower rate (0.93×) than the browser default, so the result
+reads as deliberate and composed rather than rushed — on whichever voice
+this browser/device actually has installed. This is a real ceiling worth
+being upfront about: true studio-quality, indistinguishable-from-a-person
+narration (the kind a paid cloud TTS service or a live AI voice API
+provides) is out of scope for a static, no-backend, no-account site —
+voice quality here is bounded by whatever voice the visitor's own
+browser/OS ships with, not by anything this project can fix client-side.
+
 **Ask your tutor anything about the role — no account, no API key.** Every
 tutor answers "Ask a question" one of two ways, both offline:
 
