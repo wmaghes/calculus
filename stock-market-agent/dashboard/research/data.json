@@ -1205,7 +1205,7 @@
         "metric_label": "AWS revenue growth (Q2 2026, YoY)",
         "metric": 37.0,
         "conviction": 5,
-        "blurb": "AWS net sales grew 37% YoY to a $169B annualized run rate in Q2 2026 — its fastest growth in 18 quarters — driving a 43% jump in operating income to $27.5B, even as 2026 capex guidance rises to $220B.",
+        "blurb": "AWS net sales grew 37% YoY to a $169B annualized run rate in Q2 2026 \u2014 its fastest growth in 18 quarters \u2014 driving a 43% jump in operating income to $27.5B, even as 2026 capex guidance rises to $220B.",
         "rating": "Strong Buy",
         "sector": "Consumer Discretionary",
         "industry": "Internet Retail",
@@ -1249,7 +1249,7 @@
         "metric_label": "Azure revenue growth (FY26 Q4, YoY)",
         "metric": 43.0,
         "conviction": 5,
-        "blurb": "Azure cloud revenue grew 43% YoY last quarter — the fastest pace since early 2022 — pushing annual Azure revenue past $100B; shares sit near $515 (market cap $3.83T) with CFO Amy Hood guiding toward continued acceleration.",
+        "blurb": "Azure cloud revenue grew 43% YoY last quarter \u2014 the fastest pace since early 2022 \u2014 pushing annual Azure revenue past $100B; shares sit near $515 (market cap $3.83T) with CFO Amy Hood guiding toward continued acceleration.",
         "rating": "Strong Buy",
         "sector": "Technology",
         "industry": "Software Infrastructure",
@@ -1447,7 +1447,7 @@
         "metric_label": "Q3 2026 delivery growth (analyst consensus est., YoY)",
         "metric": -7.1,
         "conviction": 2,
-        "blurb": "Analyst consensus ahead of today's Q3 report calls for about 461,974 deliveries, down roughly 7% YoY from Q3 2025's 497,099 — a reversal from the growth narrative priced in earlier this year — with the stock still down about 22% year-to-date.",
+        "blurb": "Analyst consensus ahead of today's Q3 report calls for about 461,974 deliveries, down roughly 7% YoY from Q3 2025's 497,099 \u2014 a reversal from the growth narrative priced in earlier this year \u2014 with the stock still down about 22% year-to-date.",
         "rating": "Hold",
         "sector": "Consumer Discretionary",
         "industry": "Automobiles",
@@ -1695,7 +1695,7 @@
         "metric": 0.43,
         "divYield": 4.55,
         "blurb": "AT&T's beta of roughly 0.43 and 4.55% yield reflect its post-spinoff stability, though the dividend has been held flat since the 2022 cut rather than resuming growth.",
-        "streak": "—",
+        "streak": "\u2014",
         "sector": "Communication Services",
         "industry": "Telecom Services",
         "fortune100": true,
@@ -2646,27 +2646,6 @@
         "capTier": null
       }
     },
-    "WBD": {
-      "ticker": "WBD",
-      "name": "Warner Bros. Discovery",
-      "financials": null,
-      "ratios": {},
-      "market": {
-        "ticker": "WBD",
-        "name": "Warner Bros. Discovery",
-        "price": 30.96,
-        "metric_label": "Short % of float",
-        "metric": 2.74,
-        "blurb": "Short interest stays low at roughly 2.7% of float with shares near $30.96, as the stock continues trading essentially on deal terms ahead of the Paramount Skydance acquisition's expected October 6, 2026 close.",
-        "flag": "Short interest declining",
-        "sector": "Communication Services",
-        "industry": "Media & Entertainment",
-        "fortune100": false,
-        "fortune100Rank": null,
-        "score": 0.0,
-        "capTier": null
-      }
-    },
     "AGG": {
       "ticker": "AGG",
       "name": "iShares Core U.S. Aggregate Bond ETF",
@@ -3067,18 +3046,39 @@
         "fortune100Rank": null
       }
     },
-    "PSKY": {
-      "ticker": "PSKY",
-      "name": "Paramount Skydance Corporation",
+    "LYV": {
+      "ticker": "LYV",
+      "name": "Live Nation Entertainment",
       "financials": null,
       "ratios": {},
       "market": {
-        "ticker": "PSKY",
-        "name": "Paramount Skydance Corporation",
-        "price": 9.34,
+        "ticker": "LYV",
+        "name": "Live Nation Entertainment",
+        "price": 166.85,
+        "metric_label": "Short % of float",
+        "metric": 10.4,
+        "blurb": "Replaces Warner Bros. Discovery, which was delisted Oct 6, 2026 after its $110B all-cash acquisition by Paramount Skydance closed. Live Nation carries a real short thesis: the DOJ's ongoing monopoly lawsuit over its Ticketmaster dominance, paired with a rich ~$43B valuation, keeps bears circling even as live-event demand stays strong.",
+        "flag": "Antitrust overhang",
+        "sector": "Communication Services",
+        "industry": "Media & Entertainment",
+        "fortune100": false,
+        "fortune100Rank": null,
+        "score": 28.0,
+        "capTier": null
+      }
+    },
+    "SKYD": {
+      "ticker": "SKYD",
+      "name": "Skydance Corporation",
+      "financials": null,
+      "ratios": {},
+      "market": {
+        "ticker": "SKYD",
+        "name": "Skydance Corporation",
+        "price": 9.98,
         "metric_label": "Short % of float",
         "metric": 15.83,
-        "blurb": "Now trading as PSKY after Paramount's legacy ticker was retired when the Skydance merger closed, shares sit near $9.34 with short interest around 15.8% of float as bears weigh $41 billion in new acquisition debt against the pending Warner Bros. Discovery deal.",
+        "blurb": "Formerly Paramount Skydance (PSKY) -- the $110B Paramount Skydance/Warner Bros. Discovery merger closed Oct 6, 2026, and the combined media giant relisted as Skydance Corporation (SKYD) on the NYSE the same day. Trading data specific to the new combined entity was not yet reliably available at refresh time, so price/short-interest figures are carried over from the pre-close PSKY baseline.",
         "flag": "High short interest",
         "sector": "Communication Services",
         "industry": "Media & Entertainment",
