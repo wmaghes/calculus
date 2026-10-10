@@ -1,0 +1,1902 @@
+{
+  "AMZN": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$638.0B",
+      "revenue_growth": 11.0,
+      "gross_margin": null,
+      "operating_income": "$68.6B",
+      "net_income": "$59.2B",
+      "total_assets": "$624.9B",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "AWS revenue grew to $107.6B from $90.8B, powering operating income to nearly double to $68.6B from $36.9B as the company tightened cost efficiency across North America and International retail segments.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872425000004/amzn-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 21.85,
+      "forward_pe": 32.05,
+      "price_to_book": 5.3,
+      "price_to_sales": 3.81,
+      "week52_low": 196.0,
+      "week52_high": 278.56,
+      "note": "Multiple data providers showed differing 52-week lows ($151-$196) depending on snapshot date; treat the range as approximate."
+    }
+  },
+  "GOOGL": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$350.0B",
+      "revenue_growth": 14.0,
+      "gross_margin": null,
+      "operating_income": "$112.4B",
+      "net_income": "$100.1B",
+      "total_assets": "$450.3B",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": "$95.7B",
+      "note": "Google Cloud revenue grew 31% to $43.2B and was a key profitability driver; net income rose 36% on operating-margin expansion to roughly 32%, with diluted EPS of $8.04.",
+      "source_url": "https://abc.xyz/assets/77/51/9841ad5c4fbe85b4440c47a4df8d/goog-10-k-2024.pdf"
+    },
+    "ratios": {
+      "trailing_pe": 27.93,
+      "forward_pe": 25.21,
+      "price_to_book": 9.29,
+      "price_to_sales": 10.6,
+      "week52_low": 172.77,
+      "week52_high": 408.61,
+      "note": "Sources diverge meaningfully by snapshot date (trailing P/E ranged 16-28x); the $408.61 52-week high was consistent across multiple providers."
+    }
+  },
+  "MSFT": {
+    "financials": {
+      "period": "FY2025 (ended Jun 30, 2025)",
+      "revenue": "$281.7B",
+      "revenue_growth": 15.0,
+      "gross_margin": null,
+      "operating_income": "$128.5B",
+      "net_income": "$101.8B",
+      "total_assets": "$619.0B",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "Operating income rose 17% to $128.5B and net income grew 16% to $101.8B ($13.64 diluted EPS), driven by Microsoft Cloud/Azure growth; operating cash flow jumped to $136.2B from $118.5B a year earlier.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/789019/000095017025100235/msft-20250630.htm"
+    },
+    "ratios": {
+      "trailing_pe": 21.88,
+      "forward_pe": null,
+      "price_to_book": 6.58,
+      "price_to_sales": 8.61,
+      "week52_low": 349.2,
+      "week52_high": 555.45,
+      "note": "The sourced trailing P/E did not reconcile cleanly with the same snapshot's price and EPS figures; older 2025 snapshots showed trailing P/E in the high-30s, so treat this figure with caution."
+    }
+  },
+  "LLY": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$45.0B",
+      "revenue_growth": 32.0,
+      "gross_margin": 81.3,
+      "operating_income": null,
+      "net_income": "$10.6B",
+      "total_assets": "$78.7B",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "Revenue grew 32% YoY driven by GLP-1 drugs Mounjaro and Zepbound; net income roughly doubled to $10.59B ($11.71 diluted EPS) from $5.24B in 2023, and gross margin expanded to 81.3% from 79.2%.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/59478/000005947825000067/lly-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 48.45,
+      "forward_pe": 32.58,
+      "price_to_book": 37.69,
+      "price_to_sales": null,
+      "week52_low": 623.78,
+      "week52_high": 1182.73,
+      "note": "Richly valued on GLP-1 growth expectations; a clean price-to-sales figure was not found in this pass."
+    }
+  },
+  "V": {
+    "financials": {
+      "period": "FY2024 (ended Sep 30, 2024)",
+      "revenue": "$35.9B",
+      "revenue_growth": 10.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": null,
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "Fiscal 2024 net revenue rose 10% to $35.9B, with Q4 alone contributing $5.3B of GAAP net income; full-year balance-sheet and net-income figures were not confidently confirmed from the 10-K income statement in this pass.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1403161/000140316124000058/v-20240930.htm"
+    },
+    "ratios": {
+      "trailing_pe": 31.1,
+      "forward_pe": 24.5,
+      "price_to_book": 19.7,
+      "price_to_sales": 15.4,
+      "week52_low": 293.89,
+      "week52_high": 373.97,
+      "note": "Price-to-book is structurally elevated because large share buybacks have shrunk Visa's book equity."
+    }
+  },
+  "MA": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$28.2B",
+      "revenue_growth": 12.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$12.9B",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "Net revenue grew 12% to $28.2B; GAAP net income rose 15% to $12.9B ($13.89 diluted EPS), while adjusted net income (excluding special items) was $13.5B ($14.60 adjusted diluted EPS).",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1141391/000114139125000011/ma-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 39.58,
+      "forward_pe": 35.47,
+      "price_to_book": 79.15,
+      "price_to_sales": 19.19,
+      "week52_low": 428.86,
+      "week52_high": 594.71,
+      "note": "Price-to-book is extremely high because Mastercard's asset-light network model leaves minimal book equity relative to market cap."
+    }
+  },
+  "CAT": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$64.8B",
+      "revenue_growth": -3.0,
+      "gross_margin": null,
+      "operating_income": "$13.1B",
+      "net_income": "$10.8B",
+      "total_assets": "$87.8B",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": "$6.9B",
+      "note": "2024 sales fell 3% to $64.8B amid softer end-market demand, but operating margin held at 20.2% (operating income derived from that margin) and net income rose to $10.8B from $10.3B; Caterpillar ended the year with $6.9B of enterprise cash.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/18230/000001823025000008/cat-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 35.16,
+      "forward_pe": 25.51,
+      "price_to_book": 19.35,
+      "price_to_sales": 5.1,
+      "week52_low": 459.58,
+      "week52_high": 1073.46,
+      "note": "52-week low varied $405-$460 across sources depending on snapshot date; treat as approximate."
+    }
+  },
+  "GE": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$38.7B",
+      "revenue_growth": 9.0,
+      "gross_margin": null,
+      "operating_income": "$7.3B",
+      "net_income": "$6.6B",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "First full year as a standalone aerospace-only company after the 2024 spin-off of GE Vernova/GE HealthCare; revenue grew 9% to $38.7B across Commercial Engines & Services and Defense & Propulsion Technologies segments. Net earnings attributable to shareholders fell to $6.6B from $9.2B (2023 included a one-time tax benefit), though GAAP continuing-operations profit was $7.6B and operating profit rose 30% to $7.3B.",
+      "source_url": "https://www.ge.com/investor-relations"
+    },
+    "ratios": {
+      "trailing_pe": 41.66,
+      "forward_pe": null,
+      "price_to_book": 20.54,
+      "price_to_sales": null,
+      "week52_low": 261.71,
+      "week52_high": 382.97,
+      "note": "Forward P/E and price-to-sales were not reliably sourced in this pass; trailing multiples are elevated reflecting the aerospace demand recovery and narrow-body engine aftermarket strength."
+    }
+  },
+  "JPM": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$177.6B",
+      "revenue_growth": 12.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$58.5B",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "2024 net income rose 18% to $58.5B ($19.75 diluted EPS) on record net revenue of $177.6B; ROE was 18% and ROTCE 22%, reflecting strong trading, investment-banking fees, and net interest income.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/19617/000001961725000270/jpm-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 15.56,
+      "forward_pe": 13.51,
+      "price_to_book": 2.4,
+      "price_to_sales": 5.1,
+      "week52_low": 280.45,
+      "week52_high": 363.12,
+      "note": "Bank valuation multiples (P/E ~15-16x, P/B ~2.2-2.7x across sources) remain modest relative to the broader market given regulatory capital requirements."
+    }
+  },
+  "AAPL": {
+    "financials": {
+      "period": "FY2024 (ended Sep 28, 2024)",
+      "revenue": "$391.0B",
+      "revenue_growth": 2.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$93.7B",
+      "total_assets": "$365.0B",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "FY2024 net sales rose modestly (+2%) to $391.0B, but net income dipped to $93.7B from $97.0B, partly reflecting a one-time roughly $10.2B income tax charge tied to the EU State Aid ruling recorded during the fiscal year.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/320193/000032019324000123/aapl-20240928.htm"
+    },
+    "ratios": {
+      "trailing_pe": 38.89,
+      "forward_pe": 36.82,
+      "price_to_book": 42.92,
+      "price_to_sales": 10.01,
+      "week52_low": 225.95,
+      "week52_high": 344.57,
+      "note": "Price-to-book is unusually high due to years of large buybacks shrinking Apple's book equity relative to its market cap."
+    }
+  },
+  "COST": {
+    "financials": {
+      "period": "FY2024 (ended Sep 1, 2024)",
+      "revenue": "$249.6B",
+      "revenue_growth": 5.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$7.4B",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "FY2024 net sales grew 5% to $249.6B, with $4.83B of high-margin membership-fee income supporting profitability; net income rose to $7.37B ($16.56 diluted EPS) from $6.29B, helped by a lower effective tax rate (24.4% vs 25.9%) and 30 new warehouse openings.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/909832/000090983224000049/cost-20240901.htm"
+    },
+    "ratios": {
+      "trailing_pe": 46.55,
+      "forward_pe": 40.82,
+      "price_to_book": 12.25,
+      "price_to_sales": 1.4,
+      "week52_low": 844.06,
+      "week52_high": 1096.5,
+      "note": "Low price-to-sales (~1.4x) reflects thin retail gross margins, while the high P/E (~40-55x across snapshots) reflects durable membership-fee profitability and loyalty."
+    }
+  },
+  "TSLA": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$97.7B",
+      "revenue_growth": 1.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$7.1B",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": "$36.6B",
+      "note": "2024 revenue grew under 1% to $97.7B as EV deliveries plateaued, but Energy generation & storage revenue jumped 67% to $10.1B; net income fell to $7.1B from $14.99B mainly because 2023 included a one-time $6.54B U.S. deferred-tax valuation-allowance release with no 2024 equivalent.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828025003063/tsla-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 288.15,
+      "forward_pe": null,
+      "price_to_book": 14.1,
+      "price_to_sales": 15.6,
+      "week52_low": 297.38,
+      "week52_high": 498.83,
+      "note": "Extremely high trailing P/E (reported 288-370x depending on date) reflects the market pricing in future robotaxi/AI ambitions well beyond current auto earnings; price-to-sales is an approximate calculation from market cap and trailing revenue rather than a directly quoted figure."
+    }
+  },
+  "DE": {
+    "financials": {
+      "period": "FY2024 (ended Oct 27, 2024)",
+      "revenue": "$51.7B",
+      "revenue_growth": -16.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$7.1B",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "FY2024 revenue fell 16% to $51.7B amid an agricultural-equipment downcycle (weaker farmer incomes, elevated dealer inventories); net income declined to $7.1B ($25.62 diluted EPS) from a record $10.17B ($34.63) in fiscal 2023.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/315189/000155837024016169/de-20241027x10k.htm"
+    },
+    "ratios": {
+      "trailing_pe": 34.67,
+      "forward_pe": 25.91,
+      "price_to_book": 6.03,
+      "price_to_sales": 3.58,
+      "week52_low": 433.0,
+      "week52_high": 674.19,
+      "note": "A notably lower forward P/E than trailing P/E suggests the market expects the current earnings downcycle to bottom and recover."
+    }
+  },
+  "BA": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$66.5B",
+      "revenue_growth": null,
+      "gross_margin": null,
+      "operating_income": "-$10.7B (loss from operations)",
+      "net_income": "-$11.8B (net loss)",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "Boeing posted an $11.8B net loss for 2024 (its largest since the $11.94B loss in 2020) on $66.5B revenue, driven by the 737 MAX production slowdown following the Alaska Airlines door-plug incident, a roughly 7-week IAM machinists' strike, and continued cost overruns on fixed-price defense programs.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/12927/000001292725000015/ba-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 76.29,
+      "forward_pe": null,
+      "price_to_book": 28.1,
+      "price_to_sales": null,
+      "week52_low": 176.77,
+      "week52_high": 254.35,
+      "note": "Trailing P/E is extremely elevated / not very meaningful given Boeing's still-thin earnings recovery, and P/B is inflated by minimal book equity after years of losses; forward P/E and price-to-sales were not reliably sourced."
+    }
+  },
+  "NEE": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$24.8B",
+      "revenue_growth": -12.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$6.9B",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "2024 operating revenue fell 12% to $24.75B mainly due to lower storm-cost and fuel-cost recovery revenue at Florida Power & Light (FPL); net income declined to $6.95B ($3.37/share) from $7.31B. FPL contributed $4.54B of net income and NextEra Energy Resources (the renewables unit) contributed $2.30B.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/753308/000075330825000011/nee-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 19.9,
+      "forward_pe": null,
+      "price_to_book": 3.2,
+      "price_to_sales": 6.3,
+      "week52_low": 69.24,
+      "week52_high": 98.75,
+      "note": "Forward P/E was not reliably sourced; price-to-sales is a rough calculation from market cap and trailing revenue rather than a directly quoted figure."
+    }
+  },
+  "ADBE": {
+    "financials": {
+      "period": "FY2024 (ended Nov 29, 2024)",
+      "revenue": "$21.5B",
+      "revenue_growth": 11.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$5.6B",
+      "total_assets": "$30.2B",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "FY2024 revenue grew 11% to $21.51B (Creative segment +10% to $12.68B); net income rose only modestly to $5.56B from $5.43B despite the business's growth, largely because of a $1B one-time termination fee paid to Figma after regulators blocked that merger.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/796343/000079634325000004/adbe-20241129.htm"
+    },
+    "ratios": {
+      "trailing_pe": 12.63,
+      "forward_pe": 9.4,
+      "price_to_book": 9.0,
+      "price_to_sales": 4.1,
+      "week52_low": 190.12,
+      "week52_high": 376.16,
+      "note": "Adobe's trailing P/E has compressed sharply (roughly 13-15x across mid-2026 snapshots) versus its historical premium, reflecting market concerns about AI-driven disruption to its Creative Cloud franchise; 52-week high varied $376-$423 depending on source and date."
+    }
+  },
+  "UNH": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$400.3B",
+      "revenue_growth": 8.0,
+      "gross_margin": null,
+      "operating_income": "$32.3B",
+      "net_income": "$14.4B",
+      "total_assets": "$298.3B",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "2024 revenue grew 8% to $400.3B; net earnings attributable to shareholders were $14.4B ($15.51 diluted EPS) on operating earnings of $32.3B, in a year marked by elevated medical-cost trends and disruption from the Change Healthcare cyberattack.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/731766/000073176625000063/unh-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 27.05,
+      "forward_pe": 21.97,
+      "price_to_book": 3.65,
+      "price_to_sales": 0.71,
+      "week52_low": 234.6,
+      "week52_high": 461.62,
+      "note": "Stock has been volatile through 2025-2026 amid medical-cost pressure and related investigations; the forward P/E figure is from a stale late-2025 snapshot and should be treated with caution."
+    }
+  },
+  "GIS": {
+    "financials": {
+      "period": "FY2025 (ended May 25, 2025)",
+      "revenue": "$19.5B",
+      "revenue_growth": -2.0,
+      "gross_margin": null,
+      "operating_income": "$3.3B",
+      "net_income": "$2.3B",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "FY2025 net sales fell ~2% to $19.49B (from $19.86B) on soft volumes and unfavorable price/mix in North America Retail and Pet; net income dropped 8% to $2.3B ($4.10 diluted EPS, $4.21 adjusted), and Q4 net earnings alone fell 47% to $294M, reflecting continued category softness.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/0000040704/000119312525147079/d938443d10k.htm"
+    },
+    "ratios": {
+      "trailing_pe": 9.5,
+      "forward_pe": 11.6,
+      "price_to_book": 2.97,
+      "price_to_sales": null,
+      "week52_low": 31.75,
+      "week52_high": 54.18,
+      "note": "Multiples have compressed sharply (trailing P/E roughly 9-13x depending on source/date) as GIS shares slid on soft volumes; well below GIS's historical ~16-18x range."
+    }
+  },
+  "VZ": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$138.2B",
+      "revenue_growth": 2.5,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$17.6B",
+      "total_assets": "$404.3B",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "FY2025 consolidated revenue rose 2.5% to $138.2B and net income was $17.6B; operating cash flow of $37.1B and free cash flow of $20.1B (both up slightly YoY) remain the key dividend-coverage metrics for this high-yield, heavily levered name.",
+      "source_url": "https://www.verizon.com/about/investors"
+    },
+    "ratios": {
+      "trailing_pe": 10.4,
+      "forward_pe": null,
+      "price_to_book": 1.7,
+      "price_to_sales": null,
+      "week52_low": 38.39,
+      "week52_high": 51.68,
+      "note": "Forward P/E not confidently sourced; trailing P/E near 10x reflects persistent de-rating of legacy telecom multiples despite stable cash flow."
+    }
+  },
+  "O": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$5.7B",
+      "revenue_growth": 9.1,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$1.1B",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "As a net-lease REIT, GAAP net income ($1.06B, $1.17/sh, up from $847.9M) materially understates cash-generating power due to heavy real-estate depreciation. AFFO -- the metric that matters most for this name -- was $4.28 per share for FY2025 (total AFFO $3.89B, up from $3.62B), and revenue grew ~9% to $5.75B.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/726728/000072672826000011/o-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 53.7,
+      "forward_pe": null,
+      "price_to_book": 1.56,
+      "price_to_sales": null,
+      "week52_low": 55.86,
+      "week52_high": 67.94,
+      "note": "Trailing GAAP P/E of ~54x is misleading for a REIT; on a price-to-AFFO basis (roughly 14-15x), Realty Income trades in line with its net-lease peers."
+    }
+  },
+  "KMB": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$20.1B",
+      "revenue_growth": -1.8,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$2.5B",
+      "total_assets": "$16.5B",
+      "total_liabilities": null,
+      "total_debt": "$7.4B",
+      "cash": null,
+      "note": "FY2024 net sales dipped ~1.8% to $20.06B (from $20.43B) on soft organic volume in North America tissue/personal care and a strong dollar weighing on international sales; net income of $2.5B ($7.55 diluted EPS) was supported by the FORCE cost-savings program.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/55785/000005578525000013/kmb-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 15.5,
+      "forward_pe": 14.6,
+      "price_to_book": 22.0,
+      "price_to_sales": null,
+      "week52_low": 92.42,
+      "week52_high": 144.31,
+      "note": "Price-to-book of ~22x looks extreme but mainly reflects a thin book value per share after decades of share buybacks, not overvaluation on a fundamentals basis."
+    }
+  },
+  "UPS": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$91.1B",
+      "revenue_growth": 0.1,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$5.8B",
+      "total_assets": "$70.1B",
+      "total_liabilities": null,
+      "total_debt": "$21.3B",
+      "cash": null,
+      "note": "FY2024 revenue was essentially flat at $91.07B as parcel volumes stayed soft amid post-pandemic e-commerce normalization; net income of roughly $5.8B reflected continued restructuring costs tied to UPS's 'Network of the Future' facility consolidation program.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1090727/000109072725000019/ups-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 19.6,
+      "forward_pe": 14.6,
+      "price_to_book": 6.0,
+      "price_to_sales": null,
+      "week52_low": 82.0,
+      "week52_high": 122.41,
+      "note": null
+    }
+  },
+  "T": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$122.3B",
+      "revenue_growth": -0.1,
+      "gross_margin": null,
+      "operating_income": "$19.0B",
+      "net_income": "$12.3B",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": "$123.5B",
+      "cash": null,
+      "note": "FY2024 operating income fell 18.8% to $19.0B mainly due to a $4.4B goodwill impairment in the Business Wireline unit; net income from continuing operations was $12.3B. Total debt was reduced to $123.5B from $137.3B (net debt down $14.4B to $134.4B) as AT&T continued deleveraging post-WarnerMedia spin-off.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/732717/000073271725000013/t-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 9.5,
+      "forward_pe": null,
+      "price_to_book": 1.8,
+      "price_to_sales": null,
+      "week52_low": 22.95,
+      "week52_high": 29.79,
+      "note": "Sources disagreed on trailing P/E (roughly 9.5x to 14.8x depending on date); used the most recent snapshot found."
+    }
+  },
+  "DUK": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$30.4B",
+      "revenue_growth": 4.5,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$4.6B",
+      "total_assets": "$186.3B",
+      "total_liabilities": null,
+      "total_debt": "$84.3B",
+      "cash": null,
+      "note": "FY2024 consolidated net income rose to $4.6B from $2.9B in 2023 (2023 had been depressed by one-time items), while revenue grew roughly 4.5% to $30.4B on rate case outcomes and volume growth; interest expense climbed to $2.7B (from $2.4B), underscoring the heavy debt load ($84.3B) tied to Duke's grid-modernization and generation capex program typical of regulated utilities.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1326160/000132616025000072/duk-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 20.4,
+      "forward_pe": 19.5,
+      "price_to_book": 2.0,
+      "price_to_sales": null,
+      "week52_low": 111.22,
+      "week52_high": 134.49,
+      "note": "Forward P/E of 19.5 is from an older (mid-2025) snapshot; may not reflect current estimates."
+    }
+  },
+  "SO": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$26.7B",
+      "revenue_growth": 5.8,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$4.4B",
+      "total_assets": "$145.2B",
+      "total_liabilities": null,
+      "total_debt": "$63.5B",
+      "cash": null,
+      "note": "FY2024 revenue grew 5.8% to $26.7B and net income attributable to common rose to $4.4B ($4.02/share) from $3.8B, driven by rate base growth at Georgia Power and Alabama Power; interest expense increased to $2.74B (from $2.45B), reflecting Southern's large nuclear (Plant Vogtle) and grid investment program.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/92122/000009212225000018/so-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 24.1,
+      "forward_pe": null,
+      "price_to_book": 3.0,
+      "price_to_sales": null,
+      "week52_low": 83.09,
+      "week52_high": 100.84,
+      "note": null
+    }
+  },
+  "CVX": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$193.4B",
+      "revenue_growth": -1.8,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$17.7B",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "FY2024 net income fell 17.3% to $17.7B from $21.4B as weaker refining margins and softer oil/gas prices pressured both Upstream and Downstream segments; Chevron continued buybacks despite the earnings decline, while its pending Hess Corporation acquisition (closed mid-2025) was the key strategic overhang during the period.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/93410/000009341025000009/cvx-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 18.3,
+      "forward_pe": null,
+      "price_to_book": 2.0,
+      "price_to_sales": null,
+      "week52_low": 146.49,
+      "week52_high": 214.71,
+      "note": "Trailing P/E readings ranged from ~18x to ~33x across sources/dates; used the most recent snapshot found."
+    }
+  },
+  "MRK": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": null,
+      "revenue_growth": null,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$17.1B",
+      "total_assets": "$117.1B",
+      "total_liabilities": null,
+      "total_debt": "$37.1B",
+      "cash": null,
+      "note": "FY2024 net income rebounded to $17.1B from just $365M in 2023, when results had been swamped by a roughly $5.5-6B acquired in-process R&D charge tied to the Prometheus Biosciences acquisition; total assets grew to $117.1B. Keytruda remains the dominant profit driver, and its ~2028 patent cliff is the key long-term overhang for the stock.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/310158/000162828025007732/mrk-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 14.5,
+      "forward_pe": null,
+      "price_to_book": 6.7,
+      "price_to_sales": null,
+      "week52_low": 76.66,
+      "week52_high": 130.29,
+      "note": "Trailing P/E varied widely across sources (roughly 14.5x to 35x), likely reflecting one-time charges in reported GAAP earnings across different periods; treat with caution."
+    }
+  },
+  "CL": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$20.1B",
+      "revenue_growth": 3.3,
+      "gross_margin": 60.5,
+      "operating_income": "$4.3B",
+      "net_income": null,
+      "total_assets": "$16.0B",
+      "total_liabilities": null,
+      "total_debt": "$7.9B",
+      "cash": null,
+      "note": "FY2024 net sales rose 3.3% to $20.1B with gross margin expanding to 60.5% on pricing and the 'Funding the Growth' productivity program; operating profit was roughly $4.3B. Total debt of about $7.9B against a thin $16.0B asset base is typical of Colgate's capital-light, brand-driven model.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/21665/000002166525000008/cl-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 34.7,
+      "forward_pe": 22.8,
+      "price_to_book": null,
+      "price_to_sales": null,
+      "week52_low": 74.55,
+      "week52_high": 99.33,
+      "note": "Price-to-book omitted as not meaningful: Colgate's book value per share is minimal after decades of buybacks, producing a distorted (400x+) P/B figure in most data feeds."
+    }
+  },
+  "ADM": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$85.5B",
+      "revenue_growth": null,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$1.8B",
+      "total_assets": "$53.3B",
+      "total_liabilities": null,
+      "total_debt": "$11.5B",
+      "cash": null,
+      "note": "FY2024 results were clouded by ADM's accounting investigation into its Nutrition segment (which triggered restated financials and the suspension of its CFO in early 2024); net income fell sharply to roughly $1.8B from the prior year as weaker crush margins and lower commodity prices pressured the Ag Services & Oilseeds and Carbohydrate Solutions segments.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/7084/000000708425000011/adm-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 23.1,
+      "forward_pe": 16.1,
+      "price_to_book": 1.7,
+      "price_to_sales": null,
+      "week52_low": 52.23,
+      "week52_high": 85.37,
+      "note": null
+    }
+  },
+  "ABT": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$42.0B",
+      "revenue_growth": 4.6,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$13.4B",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "FY2024 net sales grew 4.6% to $42.0B. Reported GAAP net earnings jumped to roughly $13.4B from $5.7B in 2023, but that increase was driven substantially by a large tax benefit (a roughly $6.4B credit on the income statement) rather than core operating improvement -- adjusted EPS and segment growth in Medical Devices and Diagnostics are the cleaner read on underlying performance.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1800/000162828025007110/abt-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 26.1,
+      "forward_pe": null,
+      "price_to_book": 3.1,
+      "price_to_sales": null,
+      "week52_low": 81.97,
+      "week52_high": 137.54,
+      "note": "GAAP trailing P/E is depressed by the large one-time tax benefit noted above; a figure based on adjusted earnings would be meaningfully higher."
+    }
+  },
+  "TGT": {
+    "financials": {
+      "period": "FY2024 (ended Feb 1, 2025)",
+      "revenue": "$106.6B",
+      "revenue_growth": -0.8,
+      "gross_margin": null,
+      "operating_income": "$5.6B",
+      "net_income": "$4.1B",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "FY2024 net sales were $106.6B, down 0.8% on a reported basis due to one fewer week versus FY2023's 53-week year, but up about 1% on a comparable 52-week basis; net earnings of $4.09B and EPS of $8.86 reflected continued softness in discretionary categories, partially offset by traffic and digital growth, as Target worked through inventory and markdown pressure carried from the prior year.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/27419/000002741925000018/"
+    },
+    "ratios": {
+      "trailing_pe": 19.4,
+      "forward_pe": null,
+      "price_to_book": 4.0,
+      "price_to_sales": null,
+      "week52_low": 83.44,
+      "week52_high": 150.07,
+      "note": "A separate source showed a 52-week high closer to $170.75; used the more consistently corroborated figure."
+    }
+  },
+  "AFL": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$18.9B",
+      "revenue_growth": 1.2,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$5.4B",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "FY2024 total revenues rose 1.2% to $18.9B while net earnings grew to $5.4B ($9.63 diluted EPS), aided by favorable yen translation on Aflac Japan (which generates the majority of consolidated profits) and continued share buybacks that lifted per-share metrics. Shareholders' equity stood at $26.1B ($47.45/share) at year-end.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/4977/000000497725000047/afl-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 13.2,
+      "forward_pe": null,
+      "price_to_book": 2.15,
+      "price_to_sales": null,
+      "week52_low": 96.95,
+      "week52_high": 119.81,
+      "note": "Forward P/E omitted: only stale 2024-2025 estimates were found."
+    }
+  },
+  "MMM": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$24.6B",
+      "revenue_growth": -0.1,
+      "gross_margin": null,
+      "operating_income": "$4.8B",
+      "net_income": "$4.2B",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": "$13.0B",
+      "cash": null,
+      "note": "FY2024 marked a sharp turnaround from 2023's $7.0B net loss, which had been driven by Combat Arms earplug litigation settlements and restructuring charges; 2024 operating income rebounded to $4.8B (from a $10.7B loss) and net income reached $4.2B. Total debt was cut to $13.0B from $16.0B as 3M continued deleveraging following the 2024 Solventum spinoff.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/66740/000006674025000006/mmm-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 30.4,
+      "forward_pe": null,
+      "price_to_book": 22.9,
+      "price_to_sales": null,
+      "week52_low": 139.34,
+      "week52_high": 177.41,
+      "note": "Price-to-book (~22-23x) is elevated due to thin book equity after years of litigation charges and the Solventum spinoff; not a typical multiple for an industrial name."
+    }
+  },
+  "HON": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$38.5B",
+      "revenue_growth": 5.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$5.7B",
+      "total_assets": "$75.2B",
+      "total_liabilities": null,
+      "total_debt": "$31.1B",
+      "cash": null,
+      "note": "FY2024 revenue grew 5.0% to $38.5B and net income attributable to Honeywell rose to $5.7B ($8.71 diluted EPS). Total assets jumped roughly 22% to $75.2B, largely reflecting active 2024 M&A (including Civitanavi Systems and CAES Systems), which also pushed total debt to about $31.1B as the company funded deals ahead of its planned three-way breakup into Aerospace, Automation, and Advanced Materials.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/773840/000077384025000010/hon-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 23.8,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": null,
+      "week52_low": 179.36,
+      "week52_high": 242.77,
+      "note": "Most recent figures found date to Oct 2025 and may not reflect current pricing; check a live quote, especially given HON's planned corporate breakup."
+    }
+  },
+  "CRWD": {
+    "financials": {
+      "period": "FY2025 (ended Jan 31, 2025)",
+      "revenue": "$3.95B",
+      "revenue_growth": 29.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "-$19.3M (loss)",
+      "total_assets": "$8.70B",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": "$4.32B",
+      "note": "Revenue grew 29% YoY to $3.95B driven by subscription growth, but the company posted a rare GAAP net loss of $19.3M (vs. net income in FY2024), reflecting costs tied to the July 2024 Falcon sensor outage (customer commitments, legal/professional fees). Balance sheet remains fortress-like with $4.32B cash and total assets of $8.70B.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552725000009/crwd-20250131.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": 40.0,
+      "week52_low": 85.68,
+      "week52_high": 226.62,
+      "note": "Richly valued at roughly 37-43x trailing sales across mid/late-2026 snapshots, reflecting premium growth-security-platform positioning; P/E is not meaningful given the near-breakeven GAAP result."
+    }
+  },
+  "NET": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$2.17B",
+      "revenue_growth": 30.0,
+      "gross_margin": null,
+      "operating_income": "-$207.2M",
+      "net_income": "-$102.3M (loss)",
+      "total_assets": "$6.04B",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": "$944M",
+      "note": "FY2025 revenue rose 30% to $2.17B with ~332,000 paying customers (4,298 large customers), but GAAP operating loss was $207.2M (9.6% of revenue) and net loss widened to $102.3M from $78.8M in FY2024. Operating cash flow was strong at $603.1M; cash of $944M plus ~$3.16B in short-term investments gives over $4B of liquidity.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1477333/000147733326000016/cloud-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": 31.2,
+      "week52_low": null,
+      "week52_high": null,
+      "note": "Trades at a premium price-to-sales multiple (roughly 30-40x depending on date/source) typical of high-growth, GAAP-unprofitable infrastructure/security SaaS names; a reliable current 52-week range could not be confirmed via search."
+    }
+  },
+  "SOFI": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$3.61B",
+      "revenue_growth": 38.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$481M",
+      "total_assets": "$50.66B",
+      "total_liabilities": "$40.17B",
+      "total_debt": null,
+      "cash": null,
+      "note": "SoFi delivered a fourth consecutive profitable year with full-year adjusted net revenue up 38% to about $3.6B and full-year GAAP net income of roughly $481M, aided by record member/product growth (Q3 net revenue alone was $961.6M with $139.4M net income). As a bank holding company, total assets of $50.66B are mostly loans and bank-related assets rather than a simple cash balance.",
+      "source_url": "https://investors.sofi.com/"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": 2.0,
+      "price_to_sales": 5.84,
+      "week52_low": 14.88,
+      "week52_high": 32.73,
+      "note": "Valuation (P/B ~2.0x, P/S ~5.8x) reflects a profitable fintech/bank hybrid rather than a pure cash-burning growth story."
+    }
+  },
+  "AFRM": {
+    "financials": {
+      "period": "FY2025 (ended Jun 30, 2025)",
+      "revenue": "$3.22B",
+      "revenue_growth": 38.8,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$52.2M",
+      "total_assets": "$11.2B",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "Affirm turned its first full-year GAAP profit, with net income of $52.2M versus a roughly $500M net loss in FY2024, as revenue grew 38.8% to $3.22B on GMV approaching $36B. Q4 FY2025 alone swung to ~$99M of GAAP net income on 33% revenue growth, aided by scale and improved funding costs.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1820953/000182095325000080/afrm-20250630.htm"
+    },
+    "ratios": {
+      "trailing_pe": 57.75,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": 6.5,
+      "week52_low": 42.1,
+      "week52_high": 100.0,
+      "note": "Now GAAP-profitable but earnings are still small relative to market cap, producing a high trailing P/E; P/S of roughly 6-7x is the more typical lens analysts use given the recent swing to profitability."
+    }
+  },
+  "ASTS": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$70.9M",
+      "revenue_growth": 1511.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "-$341.9M (loss)",
+      "total_assets": "$5.01B",
+      "total_liabilities": "$2.62B",
+      "total_debt": null,
+      "cash": "$2.8B",
+      "note": "AST SpaceMobile generated its first meaningful commercial revenue in 2025 ($70.9M, up from $4.4M in 2024), mostly gateway deliveries and U.S. government contracts (Q4 alone $54.3M), while continuing to burn cash building its BlueBird satellite constellation (net loss attributable to common stockholders $341.9M). Balance sheet was transformed by capital raises: total assets jumped to $5.01B and cash/restricted cash reached $2.8B, funding launch and manufacturing ramp.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1780312/000178031226000006/asts-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": 375.0,
+      "week52_low": 35.82,
+      "week52_high": 133.86,
+      "note": "Extremely elevated price-to-sales (several hundred times trailing revenue) reflects a speculative, pre-scale satellite-to-phone business valued on future constellation economics rather than current sales."
+    }
+  },
+  "LUNR": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$210.1M",
+      "revenue_growth": -7.8,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "-$106.8M (loss)",
+      "total_assets": "$757.2M",
+      "total_liabilities": "$553.5M",
+      "total_debt": null,
+      "cash": "$582.6M",
+      "note": "Revenue dipped slightly to $210.1M from $228.0M in 2024 as lunar mission cadence varied; net loss was $106.8M per the company's own release (some aggregators show a differing ~$83.3M figure, so treat the exact number with caution). Liquidity was bolstered to $582.6M in cash after a $335.5M convertible note raise and warrant proceeds; backlog stood at $213.1M at year-end.",
+      "source_url": "https://investors.intuitivemachines.com/node/10331/html"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": 12.86,
+      "week52_low": 7.78,
+      "week52_high": 38.55,
+      "note": "Highly volatile small-cap space name; price-to-sales has ranged from roughly 5x to 25x across 2026 depending on the stock's swings around mission news and contract awards."
+    }
+  },
+  "BEAM": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$139.7M",
+      "revenue_growth": 118.3,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "-$80.0M (loss)",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": "$294.9M",
+      "note": "License and collaboration revenue more than doubled to $139.7M (from $64M), and the net loss narrowed sharply to roughly $80M from $377M in 2024, likely reflecting large collaboration/milestone payments. The 10-K states $1.2B of combined cash, equivalents and marketable securities (cash alone $294.9M plus ~$950M in securities), which management says funds operations for at least 12 months; accumulated deficit stood at $1.6B.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1745999/000119312526065194/beam-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": 2.3,
+      "price_to_sales": null,
+      "week52_low": 15.6,
+      "week52_high": 38.26,
+      "note": "Clinical-stage gene-editing biotech valued mainly on pipeline optionality (base-editing platform) and cash runway rather than revenue multiples."
+    }
+  },
+  "PATH": {
+    "financials": {
+      "period": "FY2025 (ended Jan 31, 2025)",
+      "revenue": "$1.43B",
+      "revenue_growth": 9.3,
+      "gross_margin": null,
+      "operating_income": "-$163M",
+      "net_income": "-$73.7M (loss)",
+      "total_assets": "$2.87B",
+      "total_liabilities": "$1.02B",
+      "total_debt": null,
+      "cash": "$1.72B",
+      "note": "Revenue grew a modest 9% to $1.43B as subscription services growth offset declining perpetual license revenue; GAAP net loss narrowed to $73.7M from a larger prior-year loss. UiPath carries a strong balance sheet with $1.72B in cash, equivalents and marketable securities against $2.87B total assets, giving ample runway as it pivots toward agentic automation.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1734722/000173472225000007/path-20250131.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": 4.08,
+      "week52_low": 9.2,
+      "week52_high": 19.84,
+      "note": "Multiple has compressed to roughly 4x sales amid decelerating growth and competitive pressure in the RPA/automation market; stock is well off its 52-week high."
+    }
+  },
+  "FSLR": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$5.22B",
+      "revenue_growth": 24.1,
+      "gross_margin": null,
+      "operating_income": "$1.60B",
+      "net_income": "$1.53B",
+      "total_assets": "$13.32B",
+      "total_liabilities": "$3.78B",
+      "total_debt": null,
+      "cash": "$2.80B",
+      "note": "First Solar is a rare profitable name in this batch: net sales rose 24% to $5.22B (16.1 GW produced) and net income reached about $1.53B (diluted EPS $14.21), aided by U.S. domestic-content and Section 45X manufacturing tax credits. Balance sheet is solid with $13.32B total assets, $3.78B total liabilities, and roughly $2.8-2.9B of gross cash.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1274494/000127449426000021/fslr-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 13.0,
+      "forward_pe": 10.0,
+      "price_to_book": null,
+      "price_to_sales": 3.8,
+      "week52_low": 159.85,
+      "week52_high": 320.95,
+      "note": "Trades at a modest double-digit P/E for a profitable, policy-supported U.S. solar manufacturer; valuation reflects both tariff/IRA tailwinds and policy-risk uncertainty."
+    }
+  },
+  "NTLA": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$67.7M",
+      "revenue_growth": 16.9,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "-$412.7M (loss)",
+      "total_assets": "$842M",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": "$155M",
+      "note": "Collaboration revenue grew 16.9% to $67.7M but Intellia remains deeply loss-making (net loss $412.7M, narrower than FY2024's $519.0M) as it advances in vivo CRISPR programs (NTLA-2002, NTLA-2001) through a roughly $65M one-time cost from a portfolio-prioritization and workforce reduction. Cash and equivalents alone were $155M, but total cash/equivalents/marketable securities of $605.1M give management a stated runway into H2 2027; total assets of ~$842M is inferred from balance-sheet identity across adjacent filings, not a directly quoted figure.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1652130/000119312526076550/ntla-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": 2.4,
+      "price_to_sales": 25.8,
+      "week52_low": 7.95,
+      "week52_high": 28.25,
+      "note": "Stock has roughly halved from its 52-week high amid the restructuring and pipeline reprioritization; valued mainly on gene-editing pipeline optionality rather than current revenue."
+    }
+  },
+  "SERV": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$2.65M",
+      "revenue_growth": 46.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "-$101.4M (loss)",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": "$260M",
+      "note": "Still a pre-scale sidewalk-delivery-robot operator: FY2025 revenue was tiny at $2.65M (up 46%) against a gross loss of $15.4M and a widened net loss of $101.4M (vs $39.2M in 2024), reflecting heavy fleet buildout and R&D spend. Liquidity is strong at $260M in cash and marketable securities after a $100M October 2025 registered direct offering; 2026 revenue guidance was raised to ~$26M.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1832483/000183248326000010/patr-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": 85.0,
+      "week52_low": 5.02,
+      "week52_high": 18.64,
+      "note": "Price-to-sales is extreme (well over 50x) because reported revenue is still negligible; the market is pricing future delivery-network scale and cash-rich balance sheet rather than current sales."
+    }
+  },
+  "SOUN": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$168.9M",
+      "revenue_growth": 99.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "-$14.0M (loss)",
+      "total_assets": "$688.2M",
+      "total_liabilities": "$224.4M",
+      "total_debt": null,
+      "cash": "$249M",
+      "note": "Revenue nearly doubled to $168.9M, driven heavily by acquisitions (service/subscription revenue alone rose $77.2M from deal activity). GAAP net loss narrowed sharply to $14.0M, though it was flattered by a non-cash gain on contingent acquisition liabilities; non-GAAP net loss was a much larger $53.9M, which better reflects underlying cash burn. Balance sheet: total assets $688.2M vs total liabilities $224.4M, cash $249M.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1840856/000184085626000006/soun-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": 15.4,
+      "week52_low": 5.83,
+      "week52_high": 22.17,
+      "note": "Trades at roughly 15-20x trailing sales, well above the peer software average cited by valuation screens, reflecting excitement about voice-AI/agentic-AI positioning despite GAAP losses on an underlying basis."
+    }
+  },
+  "AI": {
+    "financials": {
+      "period": "FY2026 (ended Apr 30, 2026)",
+      "revenue": "$250.3M",
+      "revenue_growth": -35.7,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "-$470.4M (loss)",
+      "total_assets": "$816M",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": "$66.2M",
+      "note": "C3.ai's fiscal 2026 was a sharp reversal: revenue fell 35.7% to $250.3M from $389.1M in FY2025 (which itself had grown 25%), and the net loss widened to $470.4M, well above FY2025's roughly $288M loss, amid demand/execution issues flagged by the company and a negative analyst consensus (average rating 'Sell'). Liquidity remains ample for now at $66.2M cash plus $509.3M of marketable securities ($575M+ combined); total assets fell to $816M from $1.03B a year earlier. Guided FY2027 revenue of only $210-240M, implying further declines.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/0001577526/000157752626000078/ai-20260430.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": 5.3,
+      "week52_low": 7.68,
+      "week52_high": 30.11,
+      "note": "Stock has fallen roughly 70% off its 52-week high as revenue declines and losses widen; now trades at a much lower multiple than during its earlier AI-hype peak."
+    }
+  },
+  "ENVX": {
+    "financials": {
+      "period": "FY2025 (ended Dec 28, 2025)",
+      "revenue": "$31.8M",
+      "revenue_growth": 38.0,
+      "gross_margin": null,
+      "operating_income": "-$177.3M",
+      "net_income": "-$156.7M (loss)",
+      "total_assets": "$879.0M",
+      "total_liabilities": "$605.0M",
+      "total_debt": null,
+      "cash": null,
+      "note": "Revenue grew 38% to $31.8M as Enovix ramped early silicon-anode battery shipments, while the net loss narrowed to $156.7M from $222.2M in 2024. The company raised substantial capital during the year (financing activities +$467.4M) to fund its Fab2 manufacturing buildout, pushing total assets to $879.0M against $605.0M of total liabilities; a reliable year-end cash balance could not be confirmed.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1828318/000182831826000006/envx-20251228.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": 31.4,
+      "week52_low": null,
+      "week52_high": null,
+      "note": "Richly valued relative to its still-small revenue base, reflecting investor bets on silicon-anode battery technology scaling; a reliable current 52-week range could not be confirmed via search."
+    }
+  },
+  "QS": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": null,
+      "revenue_growth": null,
+      "gross_margin": null,
+      "operating_income": "-$472.6M",
+      "net_income": "-$435.1M (loss)",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": "$970.8M",
+      "note": "QuantumScape remains pre-commercial with no material product revenue; FY2025 net loss was $435.1M (narrower than $477.9M in 2024), driven by $375.6M of R&D spend on its QSE-5 solid-state battery and pilot-line scale-up. The company ended the year with a large liquidity cushion of $970.8M in cash, equivalents and marketable securities, aided by $264.2M of at-the-market share sales and $19.5M from its PowerCo collaboration.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1811414/000119312526071556/qs-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": 3.42,
+      "price_to_sales": null,
+      "week52_low": 4.77,
+      "week52_high": 19.07,
+      "note": "Valued almost entirely on solid-state battery commercialization potential and cash runway rather than current financials, since there is no meaningful product revenue yet."
+    }
+  },
+  "CHPT": {
+    "financials": {
+      "period": "FY2025 (ended Jan 31, 2025)",
+      "revenue": "$417.1M",
+      "revenue_growth": -17.7,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "-$277.1M (loss)",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": "$225.0M",
+      "note": "Revenue declined 18% to $417.1M as EV-charging demand growth slowed and networked-hardware sales fell to $234.8M, though subscription revenue grew to $144.3M. Net loss narrowed to $277.1M from $457.6M in FY2024 on cost cuts. Cash of $225.0M plus an undrawn $150M revolver gives some near-term cushion, but the stock has fallen to a mega-cap-penny-stock range reflecting ongoing cash-burn concerns.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1777393/000177739325000030/chpt-20250131.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": 0.4,
+      "week52_low": 6.9,
+      "week52_high": 26.0,
+      "note": "Trades at a depressed sub-1x sales multiple (unusual for this cohort) reflecting severe post-SPAC dilution and persistent losses in the EV-charging hardware business; 52-week range reflects a late-2025 snapshot and may be stale."
+    }
+  },
+  "PLUG": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$710M",
+      "revenue_growth": 12.9,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "-$1.63B (loss)",
+      "total_assets": null,
+      "total_liabilities": "$1.59B",
+      "total_debt": null,
+      "cash": "$368.5M",
+      "note": "Revenue grew 12.9% to $710M, but Plug Power posted a massive $1.63B net loss attributable to the company (vs. $2.1B loss in 2024), including about $785.4M of asset impairments tied to its hydrogen production/electrolyzer business. Unrestricted cash fell to $368.5M (plus $187M restricted) against an accumulated deficit of $8.2B; operating cash burn improved to $535.8M from $728.6M, but liquidity and dilution risk remain a central concern for investors as management targets profitability by 2028.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1093691/000110465926022286/plug-20251231x10k.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": 4.8,
+      "week52_low": 1.41,
+      "week52_high": 4.14,
+      "note": "Deep value-destruction story: shares trade near all-time lows (52-week range under $5) given chronic losses, impairments and going-concern-adjacent liquidity questions despite modest revenue growth."
+    }
+  },
+  "BYND": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$275.5M",
+      "revenue_growth": -15.6,
+      "gross_margin": 2.8,
+      "operating_income": "-$333.6M",
+      "net_income": "$219.0M (incl. one-time gain)",
+      "total_assets": "$614.8M",
+      "total_liabilities": "$615.7M",
+      "total_debt": "~$422M",
+      "cash": "$204M",
+      "note": "Revenue fell 15.6% to $275.5M and gross margin collapsed to 2.8%; the reported $219M net income was driven almost entirely by a $548.7M non-cash gain on debt restructuring from the October 2025 Exchange Offer, masking a $333.6M operating loss and $144.9M of negative operating cash flow. Stockholders' equity is now close to zero.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1655210/000165521026000022/bynd-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": 1.1,
+      "week52_low": 0.5,
+      "week52_high": 7.69,
+      "note": "P/B is not meaningful because stockholders' equity is roughly zero following the 2025 debt restructuring; the GAAP net income was a one-time accounting gain, not an operating turnaround."
+    }
+  },
+  "LCID": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$1.35B",
+      "revenue_growth": 68.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "-$2.7B (loss)",
+      "total_assets": "$8.39B",
+      "total_liabilities": "$5.4B",
+      "total_debt": null,
+      "cash": "$998M",
+      "note": "Revenue grew 68% to $1.35B on higher Air and Gravity deliveries (15,841 vehicles), but the net loss stayed roughly flat near $2.7B; total assets declined to $8.4B from $9.6B as cash is consumed, leaving Lucid reliant on continued backing from majority owner Saudi PIF ($4.6B total liquidity at year-end).",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1811210/000162828026011053/lcid-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": 3.19,
+      "price_to_sales": 1.7,
+      "week52_low": 4.47,
+      "week52_high": 33.7,
+      "note": "Unprofitable, so trailing/forward P/E are not meaningful; valuation and survival both hinge on continued Saudi PIF funding support."
+    }
+  },
+  "UPST": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$1.0B",
+      "revenue_growth": 64.0,
+      "gross_margin": null,
+      "operating_income": "$42.6M",
+      "net_income": "$53.6M",
+      "total_assets": "$3.0B",
+      "total_liabilities": "$2.2B",
+      "total_debt": null,
+      "cash": null,
+      "note": "Upstart swung back to GAAP profitability (+$53.6M net income vs a $129M loss in 2024) on 64% revenue growth to $1.0B as loan-funding conditions improved. It remains a volatile name whose AI-underwriting marketplace is highly sensitive to credit cycles and whether bank/credit-union funding partners keep buying its loans.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1647639/000164763926000027/upst-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 55.15,
+      "forward_pe": 44.05,
+      "price_to_book": 3.5,
+      "price_to_sales": 2.49,
+      "week52_low": 23.97,
+      "week52_high": 72.85,
+      "note": "Richly valued relative to traditional lenders given it only recently returned to sustained profitability."
+    }
+  },
+  "HTZ": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$8.50B",
+      "revenue_growth": -6.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "-$703M (loss)",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": "$5.65B (non-vehicle debt)",
+      "cash": "$565M",
+      "note": "Revenue fell about 6% to $8.5B on weaker Americas rental volumes. The net loss narrowed to roughly $703M from $3.1B in 2024, but Hertz remains highly levered with $5.65B of non-vehicle debt (vehicle-fleet debt is additional) against only $565M of unrestricted cash and $1.5B of total liquidity, keeping post-bankruptcy balance-sheet risk in focus.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1657853/000165785326000008/htz-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": null,
+      "week52_low": 1.74,
+      "week52_high": 8.36,
+      "note": "Persistent losses and thin/negative equity make P/E and P/B not meaningful; the stock has collapsed amid heavy leverage and fleet-cost pressure."
+    }
+  },
+  "FUBO": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025) -- distorted by the Jan. 2025 combination with Disney's Hulu + Live TV",
+      "revenue": "$4.9B",
+      "revenue_growth": null,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "-$136.8M (loss)",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "Reported revenue jumped to roughly $4.9B (pro forma ~$6.2B) after fubo combined with Disney's Hulu + Live TV business in January 2025, creating one of the largest live-TV streaming services in the U.S. (nearly 6 million North American subscribers). Reported net loss was about $136.8M (pro forma ~$94M), a big improvement versus pre-merger fubo, but comparability to prior years is limited and a fully confirmed, audited FY2025 balance sheet could not be located via search.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1484769/000149315225020526/ex99-1.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": 8.49,
+      "price_to_sales": 2.05,
+      "week52_low": 2.28,
+      "week52_high": 4.72,
+      "note": "Unprofitable on a GAAP basis; valuation multiples are volatile and inconsistent across data providers following the Hulu + Live TV combination."
+    }
+  },
+  "W": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$12.46B",
+      "revenue_growth": 5.1,
+      "gross_margin": null,
+      "operating_income": "$17M",
+      "net_income": "-$313M (loss)",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": "$1.48B",
+      "note": "Wayfair returned to positive operating income ($17M vs a $461M operating loss in 2024) as net revenue grew 5.1%, and the net loss narrowed to $313M from $492M. A $233M loss on debt extinguishment and $119M of net interest expense show the leveraged balance sheet still weighs on results, though cash and short-term investments of roughly $1.5B (total liquidity $1.9B) ease near-term pressure.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1616707/000161670726000027/w-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": 1.1,
+      "week52_low": 53.07,
+      "week52_high": 119.98,
+      "note": "Unprofitable with a stockholders' deficit (negative book value), so P/E and P/B are not meaningful."
+    }
+  },
+  "SIRI": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$8.56B",
+      "revenue_growth": -2.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$805M",
+      "total_assets": null,
+      "total_liabilities": null,
+      "total_debt": "~$9.7B",
+      "cash": "$94M",
+      "note": "SiriusXM returned to GAAP profitability ($805M net income vs a $2.075B loss in 2024, which had included large impairments), even as revenue slipped 2% to $8.56B on subscriber softness. Leverage remains a key watch item, with net debt/adjusted EBITDA around 3.6x and only $94M of cash against roughly $9.7B of total debt, though free cash flow stayed strong at $1.26B.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/908937/000090893726000006/siri-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": 6.79,
+      "price_to_book": 0.66,
+      "price_to_sales": 0.84,
+      "week52_low": 18.69,
+      "week52_high": 29.18,
+      "note": "Trades at a steep discount to media/subscription peers reflecting ongoing satellite-radio subscriber erosion and a heavy debt load, despite the return to profitability."
+    }
+  },
+  "SKYD": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025) -- pre-merger Paramount Skydance Corporation (ticker PSKY)",
+      "revenue": "$29.21B",
+      "revenue_growth": null,
+      "gross_margin": null,
+      "operating_income": "-$5.27B",
+      "net_income": "-$6.15B (loss)",
+      "total_assets": "$43.34B",
+      "total_liabilities": "~$30.45B (est. from total assets less equity)",
+      "total_debt": null,
+      "cash": null,
+      "note": "IMPORTANT: these figures are from Paramount Skydance Corporation's (ticker PSKY) FY2025 10-K, filed Feb. 25, 2026 -- BEFORE the Oct. 6, 2026 close of the Paramount Skydance/Warner Bros. Discovery merger that created the newly combined entity now trading as SKYD. A standalone 10-K for the new combined SKYD entity does not yet exist, so this is pre-merger legacy-Paramount data, not the combined company. The ~$6.15B net loss reflects roughly $5.27B of operating losses, including about $554M of restructuring charges, as the legacy Paramount business absorbed heavy impairments and merger-related costs ahead of the WBD combination.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/2041610/000204161026000011/psky-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": 0.89,
+      "price_to_sales": 0.48,
+      "week52_low": 8.17,
+      "week52_high": 20.86,
+      "note": "Ratios reflect the pre-merger PSKY entity and trade well below 1x sales/book, consistent with an unprofitable legacy media business ahead of its WBD combination; not necessarily representative of the newly combined SKYD entity's forward valuation."
+    }
+  },
+  "RIVN": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$5.39B",
+      "revenue_growth": 8.4,
+      "gross_margin": null,
+      "operating_income": "-$3.59B",
+      "net_income": "-$3.65B (loss)",
+      "total_assets": "$14.9B",
+      "total_liabilities": "$10.3B",
+      "total_debt": null,
+      "cash": "$6.1B",
+      "note": "Revenue grew 8.4% to $5.39B as Rivian scaled R1 deliveries and grew software/services revenue to $1.55B, and the net loss narrowed to $3.65B from $4.75B in 2024. The company ended the year with about $6.1B of cash and short-term investments ($6.59B total liquidity), providing runway toward the planned mass-market R2 launch, though cumulative losses remain very large relative to revenue.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1874178/000187417826000008/rivn-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": 4.2,
+      "price_to_sales": 3.7,
+      "week52_low": 11.79,
+      "week52_high": 22.69,
+      "note": "Unprofitable; multiples are priced for the anticipated R2 ramp rather than current fundamentals."
+    }
+  },
+  "RIOT": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$647.4M",
+      "revenue_growth": 71.9,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "-$663M (loss)",
+      "total_assets": "$3.9B",
+      "total_liabilities": "~$1.0B",
+      "total_debt": null,
+      "cash": "$233.5M",
+      "note": "Revenue grew 72% to $647.4M on higher bitcoin-mining output and price, but Riot still posted a $663M net loss (-$1.95/share) driven by bitcoin mark-to-market swings and non-cash charges. Interest expense jumped to $24.1M from $2.0M as the company took on more debt to fund expansion, and operating cash flow was negative $572.9M -- underscoring that this remains a highly capital-intensive, bitcoin-price-dependent business.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1167419/000110465926022322/riot-20251231x10k.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": 2.0,
+      "price_to_sales": 9.0,
+      "week52_low": null,
+      "week52_high": null,
+      "note": "Unprofitable; price/sales is well above typical industry multiples per third-party screens, implying the stock is priced for continued bitcoin price appreciation."
+    }
+  },
+  "PTON": {
+    "financials": {
+      "period": "FY2025 (fiscal year ended June 30, 2025)",
+      "revenue": "$2.49B",
+      "revenue_growth": -7.8,
+      "gross_margin": null,
+      "operating_income": "-$36M",
+      "net_income": "-$118.9M (loss)",
+      "total_assets": "$2.13B",
+      "total_liabilities": null,
+      "total_debt": "~$1.3B",
+      "cash": "$1.04B",
+      "note": "Fiscal 2025 revenue fell 7.8% to $2.49B as both subscription and connected-fitness hardware sales declined, but Peloton narrowed losses sharply (operating loss of only about $36M) through cost cuts, and ended the year with a solid $1.04B cash cushion. Stockholders' equity is negative (roughly -$414M) and total debt including capital leases is near $1.8B, so the turnaround remains fragile and dependent on stabilizing its shrinking subscriber base.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1639825/000163982525000138/pton-20250630.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": 0.8,
+      "week52_low": 3.65,
+      "week52_high": 9.2,
+      "note": "Negative stockholders' equity makes P/B not meaningful; stock trades at a steep discount to its historical P/S average amid an unfinished subscriber turnaround."
+    }
+  },
+  "CVNA": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$20.3B",
+      "revenue_growth": 49.0,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$1.9B ($1.41B attributable to Carvana Co.)",
+      "total_assets": "$13.2B",
+      "total_liabilities": "$9.0B",
+      "total_debt": null,
+      "cash": null,
+      "note": "Carvana posted record FY2025 results: revenue up 49% to $20.3B and total net income of $1.9B ($1.41B attributable to Carvana Co. shareholders, GAAP diluted EPS $8.45), extending its sharp turnaround from the 2022-23 near-bankruptcy. The balance sheet still carries about $9.0B of total liabilities, and the company continued actively managing its high-yield notes (e.g., repurchasing/redeeming over $600M of 2028 Senior Secured Notes), so leverage remains a factor even as profitability has returned.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1690820/000169082026000009/cvna-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 37.3,
+      "forward_pe": 42.0,
+      "price_to_book": 15.0,
+      "price_to_sales": 3.1,
+      "week52_low": 54.46,
+      "week52_high": 97.38,
+      "note": "Trades at a steep premium (mid-teens price/book, ~3x sales) reflecting its turnaround narrative; reported multiples vary widely across data providers given rapid share-price swings."
+    }
+  },
+  "JOBY": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "~$53.4M",
+      "revenue_growth": null,
+      "gross_margin": null,
+      "operating_income": "-$720M",
+      "net_income": "-$929.8M (loss)",
+      "total_assets": "$1.8B",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": "$1.4B (cash & short-term investments)",
+      "note": "Pre-commercial eVTOL developer Joby widened its net loss to roughly $929.8M in FY2025 from $608.0M in 2024 as it scales toward commercial air-taxi service. Revenue of about $53M came mostly from the 2024 Blade Air Mobility acquisition, not core eVTOL operations. Liquidity remains strong at roughly $1.4B of cash and short-term investments, plus another $1.2B raised in February 2026, but the company is still years from material eVTOL revenue.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1819848/000181984826000160/joby-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": 5.5,
+      "price_to_sales": null,
+      "week52_low": 6.42,
+      "week52_high": 20.95,
+      "note": "Pre-commercial-revenue company, so P/E and P/S are not meaningful; valuation reflects speculative bets on eVTOL air-taxi commercialization timing rather than current financials."
+    }
+  },
+  "GME": {
+    "financials": {
+      "period": "FY2025 (fiscal year ended Jan. 31, 2026)",
+      "revenue": "$3.63B",
+      "revenue_growth": -5.0,
+      "gross_margin": null,
+      "operating_income": "$232.1M",
+      "net_income": "$418.4M",
+      "total_assets": "$10.39B",
+      "total_liabilities": "$4.94B",
+      "total_debt": "$4.16B",
+      "cash": "$9.0B (cash, equivalents & marketable securities)",
+      "note": "GameStop's core retail business kept shrinking (net sales down ~5% to $3.63B) but the company swung to a $418.4M profit and $232.1M operating income, helped by cost discipline and gains on its large investment portfolio. It also holds $368.4M of bitcoin and related receivables and raised about $4.16B in long-term convertible debt during fiscal 2025, building cash/marketable securities to $9.0B even as the legacy video-game retail story keeps fading -- the valuation is increasingly a bet on capital allocation, not retail turnaround.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1326380/000132638026000013/gme-20260131.htm"
+    },
+    "ratios": {
+      "trailing_pe": 27.0,
+      "forward_pe": null,
+      "price_to_book": 1.9,
+      "price_to_sales": 2.9,
+      "week52_low": 19.93,
+      "week52_high": 35.81,
+      "note": "Meme-stock premium persists despite declining core retail sales; valuation increasingly reflects its cash/bitcoin treasury rather than retail fundamentals."
+    }
+  },
+  "DJT": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$3.7M",
+      "revenue_growth": null,
+      "gross_margin": null,
+      "operating_income": "-$573M",
+      "net_income": "-$712.3M (loss)",
+      "total_assets": "$2.84B",
+      "total_liabilities": "$1.19B",
+      "total_debt": null,
+      "cash": "$165.9M",
+      "note": "Trump Media generated only about $3.7M of revenue in FY2025 against a $712.3M net loss, driven primarily by unrealized mark-to-market losses on its large bitcoin and digital-asset treasury holdings (part of a roughly $3.1B pool of cash, short-term investments and digital assets reported in Q3 2025). The stock's valuation is almost entirely detached from the small underlying Truth Social media business and instead reflects its crypto-treasury strategy and political brand value -- an extreme case of price disconnected from fundamentals.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1849635/000114036126007174/ef20062365_10k.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": 1.66,
+      "price_to_sales": 890.7,
+      "week52_low": null,
+      "week52_high": null,
+      "note": "Price-to-sales is extreme (triple digits) because revenue is minimal relative to market cap; the stock trades almost entirely on its bitcoin treasury and political brand, not operating fundamentals."
+    }
+  },
+  "AMC": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$4.85B",
+      "revenue_growth": 4.6,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "-$632.4M (loss)",
+      "total_assets": "$8.02B",
+      "total_liabilities": null,
+      "total_debt": "$4.04B (corporate borrowings)",
+      "cash": "$428.5M",
+      "note": "Revenue grew modestly (+4.6% to $4.85B) as box office continued recovering, but the net loss widened to $632.4M from $352.6M in 2024, driven mainly by non-cash charges tied to a transformative July 2025 debt refinancing (including new Muvico senior secured notes due 2029). AMC remains deeply leveraged with about $4.0B of corporate borrowings plus roughly $4.0B of discounted lease obligations against only $428.5M of cash, keeping balance-sheet and dilution risk front and center for this heavily shorted meme name.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1411579/000141157926000016/amc-20251231x10k.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": 0.25,
+      "week52_low": 0.93,
+      "week52_high": 3.6,
+      "note": "Negative stockholders' equity makes P/B not meaningful; persistent losses keep P/E not meaningful either."
+    }
+  },
+  "LYV": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$25.2B",
+      "revenue_growth": 8.6,
+      "gross_margin": null,
+      "operating_income": "$1.25B",
+      "net_income": "$496M",
+      "total_assets": "$22.9B",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": "$7.1B",
+      "note": "Live Nation grew revenue about 9% to a record $25.2B in FY2025 across its Concerts, Ticketing, and Sponsorship & Advertising segments, with net income of roughly $496M and operating income near $1.25B. The company holds about $7.1B of cash, but faces significant ongoing legal/regulatory risk from the DOJ's antitrust lawsuit targeting Ticketmaster's market dominance, a key overhang for the stock despite strong operating momentum.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1335258/000133525826000009/lyv-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": 83.16,
+      "price_to_book": null,
+      "price_to_sales": 1.43,
+      "week52_low": 125.34,
+      "week52_high": 188.0,
+      "note": "Trades at a rich multiple (forward P/E near 83x) reflecting its live-events market dominance; P/B is not meaningful since reported book value swings between extreme positive and negative figures across data providers, and the stock carries ongoing DOJ antitrust litigation risk."
+    }
+  },
+  "CALM": {
+    "financials": {
+      "period": "FY2025 (ended May 31, 2025)",
+      "revenue": "$4.26B",
+      "revenue_growth": 83.2,
+      "gross_margin": 43.4,
+      "operating_income": null,
+      "net_income": "$1.2B",
+      "total_assets": "$3.08B",
+      "total_liabilities": "$518.6M",
+      "total_debt": null,
+      "cash": "$499.4M",
+      "note": "Net sales roughly doubled to $4.26B as the average selling price per dozen jumped to $3.134 from $1.932 on reduced supply from avian-flu outbreaks; gross margin surged to 43.4% from 23.3% and net income hit roughly $1.2B ($24.95/diluted share) versus $276.3M a year earlier -- a textbook example of how exposed a single egg producer is to a disease/weather-driven commodity cycle that a diversified fund would smooth out.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/0000016160/000156276225000170/calm2025053110K.htm"
+    },
+    "ratios": {
+      "trailing_pe": 6.15,
+      "forward_pe": null,
+      "price_to_book": 1.35,
+      "price_to_sales": null,
+      "week52_low": 71.92,
+      "week52_high": 126.4,
+      "note": "Egg prices spiked in FY2025 then cooled sharply through 2026, so the trailing P/E compresses quickly as record earnings roll off -- a reminder that single-commodity-producer multiples can look deceptively cheap right as the cycle turns."
+    }
+  },
+  "CHE": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$2.43B",
+      "revenue_growth": 4.1,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$302.0M",
+      "total_assets": "$1.67B",
+      "total_liabilities": "$549.6M",
+      "total_debt": "$141M",
+      "cash": "$178M",
+      "note": "FY2024 net income rose to $302.0M (diluted EPS $19.89) on revenue of about $2.43B, up roughly 4%, split between the VITAS hospice segment and the unrelated Roto-Rooter plumbing/drain-cleaning franchise business -- two unconnected businesses bundled into one stock, a concentration a healthcare- or franchise-sector fund would not carry.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/19584/000156276225000038/che-20241231x10k.htm"
+    },
+    "ratios": {
+      "trailing_pe": 26.8,
+      "forward_pe": null,
+      "price_to_book": 8.3,
+      "price_to_sales": null,
+      "week52_low": 365.21,
+      "week52_high": 557.0,
+      "note": "Trades at roughly 8x book versus an estimated peer median near 3.4x, a premium reflecting defensive, recurring hospice-care and essential-services (drain cleaning) revenue rather than classic cyclicality."
+    }
+  },
+  "SAIA": {
+    "financials": {
+      "period": "FY2025 (ended Dec 31, 2025)",
+      "revenue": "$3.23B",
+      "revenue_growth": 0.8,
+      "gross_margin": null,
+      "operating_income": "$352.2M",
+      "net_income": "$255.0M",
+      "total_assets": "$3.48B",
+      "total_liabilities": "$0.90B",
+      "total_debt": "$219M",
+      "cash": "$20M",
+      "note": "FY2025 revenue was essentially flat at $3.23B, but operating income fell about 27% to $352.2M from $482.2M as LTL trucking pricing and network overcapacity pressured margins even as the terminal-expansion network grew -- a single-carrier freight-cycle exposure. Gross margin isn't a standard reported metric for an asset-based trucker; operating margin (~10.9%) is the more relevant figure.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1177702/000119312526067030/saia-20251231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 33.5,
+      "forward_pe": null,
+      "price_to_book": 3.3,
+      "price_to_sales": null,
+      "week52_low": 229.12,
+      "week52_high": 430.11,
+      "note": "Stock has roughly halved from its 52-week high as freight volumes and pricing softened, underscoring how a single LTL carrier's earnings swing far more than a diversified transportation-sector fund."
+    }
+  },
+  "WING": {
+    "financials": {
+      "period": "FY2024 (ended Dec 28, 2024)",
+      "revenue": "$625.8M",
+      "revenue_growth": 36.0,
+      "gross_margin": null,
+      "operating_income": "$165.6M",
+      "net_income": "$108.7M",
+      "total_assets": "$716.2M",
+      "total_liabilities": "$1.39B",
+      "total_debt": "$1.21B",
+      "cash": "$315.9M",
+      "note": "Revenue grew 36% to $625.8M (mostly royalties and ad-fund fees from ~2,563 franchised units, only 50 company-owned) and net income rose 55% to $108.7M; a $1.21B long-term debt load against $716.2M of assets leaves a $675.6M stockholders' deficit from debt-funded buybacks/dividends -- a leveraged capital structure most diversified restaurant-sector funds would not hold at the single-name level. Consolidated gross margin isn't meaningful since most revenue is royalties/fees, not restaurant sales.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1636222/000163622225000008/wing-20241228.htm"
+    },
+    "ratios": {
+      "trailing_pe": 30.8,
+      "forward_pe": 30.86,
+      "price_to_book": null,
+      "price_to_sales": null,
+      "week52_low": 116.35,
+      "week52_high": 381.45,
+      "note": "Shares fell from roughly $190 in April 2026 to about $129 by July 2026 as same-store-sales growth decelerated; negative book equity makes price-to-book not a meaningful metric."
+    }
+  },
+  "HAFC": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$202.8M (net interest income)",
+      "revenue_growth": -8.4,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$62.2M",
+      "total_assets": "$7.68B",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": null,
+      "note": "Net interest income fell 8.4% to $202.8M (from $221.3M) and net income dropped to $62.2M from $80.0M as deposit costs rose faster than loan yields; with $6.25B of loans funded by $6.44B of deposits on $7.68B of total assets, Hanmi's earnings are a concentrated, undiversified bet on Korean-American community banking and net interest margin. Gross margin is not a meaningful concept for a bank holding company -- net interest income is the comparable driver.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1109242/000095017025029782/hafc-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": 10.7,
+      "forward_pe": null,
+      "price_to_book": 1.2,
+      "price_to_sales": null,
+      "week52_low": 22.85,
+      "week52_high": 33.5,
+      "note": "Trades near 1.2x tangible book (~$27/share); as a single regional bank its profitability depends heavily on net interest margin trends that a diversified bank-sector fund would spread across many lenders."
+    }
+  },
+  "UMH": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$240.6M",
+      "revenue_growth": 8.9,
+      "gross_margin": null,
+      "operating_income": null,
+      "net_income": "$2.5M",
+      "total_assets": "$1.56B",
+      "total_liabilities": "$647.8M",
+      "total_debt": "$614.7M",
+      "cash": null,
+      "note": "GAAP net income attributable to common shareholders was only about $2.5M for FY2024 (depreciation-heavy REIT accounting masks cash performance), but FFO was $66.3M ($0.88/diluted share, up ~30% YoY) and Normalized FFO was $69.5M ($0.93/share) on total revenue of $240.6M, as UMH's manufactured-housing community occupancy and rents kept climbing. FFO/AFFO, not net income, is the metric that matters for this REIT; gross margin is not a standard REIT concept.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/752642/000149315225008351/form10-k.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": null,
+      "price_to_sales": null,
+      "week52_low": 13.93,
+      "week52_high": 17.4,
+      "note": "GAAP P/E is not meaningful given near-zero net income; on FY2024 FFO of $0.88/share and Normalized FFO of $0.93/share, the stock traded around 16-18x FFO -- the more relevant REIT multiple."
+    }
+  },
+  "CEVA": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$106.9M",
+      "revenue_growth": 10.0,
+      "gross_margin": 88.0,
+      "operating_income": null,
+      "net_income": "-$8.8M (loss)",
+      "total_assets": "$308.9M",
+      "total_liabilities": null,
+      "total_debt": null,
+      "cash": "$18.5M",
+      "note": "Revenue grew 10% to $106.9M, with royalty revenue up 18% to $46.9M, but CEVA still posted a GAAP net loss of about $8.8M (narrowed from the prior year) despite gross margins in the high-80s% -- a single semiconductor-IP licensor's profitability depends heavily on customer design-win timing and royalty ramp, a concentration a diversified semiconductor fund avoids. Total liquidity beyond the $18.5M cash balance included $143.1M of marketable securities and $2.0M of short-term deposits.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1173489/000143774925005523/ceva20241231_10k.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": 2.32,
+      "price_to_sales": 4.2,
+      "week52_low": 17.02,
+      "week52_high": 51.6,
+      "note": "Trailing P/E is not meaningful due to the GAAP net loss; the stock has been highly volatile (roughly tripling off its 52-week low), typical of a small, single-name semiconductor-IP licensor."
+    }
+  },
+  "REI": {
+    "financials": {
+      "period": "FY2024 (ended Dec 31, 2024)",
+      "revenue": "$366.3M",
+      "revenue_growth": 1.4,
+      "gross_margin": 78.6,
+      "operating_income": "$132.9M",
+      "net_income": "$67.5M",
+      "total_assets": "$1.41B",
+      "total_liabilities": "$549.5M",
+      "total_debt": "$421.1M",
+      "cash": "$9.6M",
+      "note": "FY2024 revenue of $366.3M was roughly flat YoY, but net income fell to about $67.5M from $104.9M as realized oil/gas prices softened; lease operating expense ran $10.89/boe (total LOE of $78.3M). A small-cap Permian Basin producer's earnings swing directly with commodity prices and well-level economics -- a single-basin concentration risk a diversified energy fund avoids.",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1384195/000162828025010585/rei-20241231.htm"
+    },
+    "ratios": {
+      "trailing_pe": null,
+      "forward_pe": null,
+      "price_to_book": 0.45,
+      "price_to_sales": null,
+      "week52_low": 0.83,
+      "week52_high": 2.0,
+      "note": "Trading near/below book value with no meaningful trailing P/E amid a recent net loss and ~$420M of debt, reflecting commodity-price and single-asset-basin leverage risk uncommon in a diversified energy fund."
+    }
+  }
+}

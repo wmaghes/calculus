@@ -14,10 +14,12 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 RESEARCH_DIR = os.path.join(AGENT_DIR, "dashboard", "research")
 
 # ticker -> full company name, used for page titles and SEC CIK lookup.
-# The first 32 (through XOM) have full SEC-grounded financials/ratios already
-# researched; the rest were added later to widen sector/industry coverage to
-# 100 names and currently carry live market data only (see research_data.json
-# -- financials: null means "not yet researched", not "nothing to find").
+# All 108 individual stocks here now have real 10-K-sourced financials/
+# ratios (the original 32 live in FINANCIALS/RATIOS below; the rest, added
+# later to widen sector/industry coverage to 116 names, live in the
+# WebSearch-gathered data/researched_financials.json that assemble_data.py
+# merges on top). The 8 ETFs/mutual funds correctly carry no financials --
+# a fund doesn't file a 10-K -- and get their own explanation on the page.
 COMPANIES = {
     # Growth
     "NVDA": "NVIDIA Corporation",
