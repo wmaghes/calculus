@@ -218,6 +218,23 @@ RATIOS = {
 }
 
 
+def load_researched_extensions():
+    """Loads data/researched_financials.json, a second batch of real 10-K
+    financials/ratios gathered via WebSearch for the companies added to the
+    watchlist after the original 32 (see config.py's COMPANIES comment).
+    Returns (financials, ratios) dicts to merge on top of FINANCIALS/RATIOS
+    above; missing file means nothing to merge (not an error).
+    """
+    path = os.path.join(config.DATA_DIR, "researched_financials.json")
+    if not os.path.exists(path):
+        return {}, {}
+    with open(path) as f:
+        extra = json.load(f)
+    financials = {t: v["financials"] for t, v in extra.items() if v.get("financials")}
+    ratios = {t: v["ratios"] for t, v in extra.items() if v.get("ratios")}
+    return financials, ratios
+
+
 def main():
     os.makedirs(config.DATA_DIR, exist_ok=True)
 
@@ -228,19 +245,23 @@ def main():
         for item in items:
             scanner_by_ticker[item["ticker"]] = item
 
+    extra_financials, extra_ratios = load_researched_extensions()
+    all_financials = {**FINANCIALS, **extra_financials}
+    all_ratios = {**RATIOS, **extra_ratios}
+
     combined = {}
     for ticker, name in config.COMPANIES.items():
         combined[ticker] = dict(
             ticker=ticker,
             name=name,
-            financials=FINANCIALS.get(ticker, {}),
-            ratios=RATIOS.get(ticker, {}),
+            financials=all_financials.get(ticker, {}),
+            ratios=all_ratios.get(ticker, {}),
             market=scanner_by_ticker.get(ticker, {}),
         )
 
     out_path = os.path.join(config.DATA_DIR, "research_data.json")
     with open(out_path, "w") as f:
-        json.dump(dict(generated="2026-09-30", companies=combined), f, indent=2)
+        json.dump(dict(generated="2026-10-10", companies=combined), f, indent=2)
     print(f"wrote {out_path}")
 
 

@@ -102,7 +102,7 @@ COMPANIES = {
     "NET": "Cloudflare",
     "NTLA": "Intellia Therapeutics",
     "O": "Realty Income",
-    "PSKY": "Paramount Skydance Corporation",
+    "SKYD": "Skydance Corporation",
     "PATH": "UiPath",
     "PLUG": "Plug Power",
     "PTON": "Peloton Interactive",
@@ -123,7 +123,7 @@ COMPANIES = {
     "V": "Visa Inc.",
     "VZ": "Verizon",
     "W": "Wayfair",
-    "WBD": "Warner Bros. Discovery",
+    "LYV": "Live Nation Entertainment",
     # Funds & company-size comparison set (ETFs, mutual funds, small/mid-cap stocks)
     "SPY": "SPDR S&P 500 ETF Trust",
     "QQQ": "Invesco QQQ Trust",

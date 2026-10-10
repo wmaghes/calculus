@@ -114,10 +114,16 @@ def render_financials(company):
             stat("Revenue", fmt(fin.get("revenue"))),
             stat("Revenue growth YoY", pct(fin.get("revenue_growth")), cls=growth_cls if fin.get("revenue_growth") is not None else ""),
             stat("Gross margin", fmt(fin.get("gross_margin"), "%") if fin.get("gross_margin") is not None else "n/a"),
-            stat("Net income", fmt(fin.get("net_income"))),
-            stat("Total assets", fmt(fin.get("total_assets"))),
-            stat("Total debt", fmt(fin.get("total_debt"))),
         ]
+        if fin.get("operating_income") is not None:
+            stats.append(stat("Operating income", fmt(fin.get("operating_income"))))
+        stats.append(stat("Net income", fmt(fin.get("net_income"))))
+        stats.append(stat("Total assets", fmt(fin.get("total_assets"))))
+        if fin.get("total_liabilities") is not None:
+            stats.append(stat("Total liabilities", fmt(fin.get("total_liabilities"))))
+        stats.append(stat("Total debt", fmt(fin.get("total_debt"))))
+        if fin.get("cash") is not None:
+            stats.append(stat("Cash & equivalents", fmt(fin.get("cash"))))
         note = fin.get("note", "")
         source = fin.get("source_url")
         source_html = f'<a href="{source}">SEC filing</a>' if source else "n/a"
