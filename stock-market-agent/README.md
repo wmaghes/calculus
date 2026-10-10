@@ -122,18 +122,30 @@ discovery). The Market Scanner has a search/filter bar (free-text search,
 sector dropdown, a company-size dropdown, a Fortune 100 toggle, and theme
 chips) so the full universe stays navigable instead of just a long scroll.
 
-Of the 116, 100 are individual stocks split across four scored/ranked desks
-(Growth, Stability, Next-Gen Growth, Short Candidates — 25 each). The
-original **32** of those have full SEC-10-K-sourced financials and valuation
-ratios (the Financials tab shows real revenue/margin/balance-sheet figures).
-The other **68** — added later purely for sector/industry diversity and
-Fortune 100 coverage — currently have live market-snapshot data only (price,
-market cap, sector/industry, a key metric, Fortune 100 rank); their
-Financials page says so honestly ("No 10-K figures were confidently sourced
-for this company in this pass") rather than fabricating numbers. Running
-`fetch_10k.py` and `fetch_market_ratios.py` for those 68 (from an environment
-with real internet access) would fill them in using the exact same pipeline
-as the original 32 — `config.COMPANIES` already lists all 116 tickers.
+Of the 116, 108 are individual stocks (100 across the four scored/ranked
+desks — Growth, Stability, Next-Gen Growth, Short Candidates, 25 each — plus
+8 mid/small-cap names on the Funds & Company Size desk); the remaining 8 are
+ETFs/mutual funds, which correctly carry no financials at all (a fund
+doesn't file a 10-K — its page says so and points to its Market Data tab
+instead). All 108 stocks now have real 10-K-sourced financials and valuation
+ratios: the Financials tab shows real revenue, margin, operating income,
+net income, balance-sheet figures (assets/liabilities/debt/cash where
+findable) and a cited descriptive note, each linking to its actual SEC
+filing (an EDGAR document URL where search surfaced one, an investor-relations
+page as an honest fallback where it didn't). The original 32 live directly
+in `research-analyst/assemble_data.py`'s `FINANCIALS`/`RATIOS` dicts; the
+other 76 — added later for sector/industry diversity and Fortune 100
+coverage — live in `research-analyst/data/researched_financials.json`,
+which `assemble_data.py` merges on top at generation time, so growing the
+watchlist again means adding to that JSON rather than a giant Python
+literal. One deliberately honest exception: SKYD (Skydance Corporation)
+shows its predecessor Paramount Skydance's (PSKY) last 10-K, filed before
+the Oct 2026 Warner Bros. Discovery merger closed, with a note explaining
+why — a standalone 10-K for the newly combined company doesn't exist yet,
+so this is pre-merger data, not invented post-merger figures. Running
+`fetch_10k.py` and `fetch_market_ratios.py` (from an environment with real
+internet access) would refresh any of these with live SEC EDGAR/yfinance
+data using the exact same pipeline.
 
 ### Funds & Company Size desk: seeing the risk difference
 
@@ -406,8 +418,27 @@ provides) is out of scope for a static, no-backend, no-account site —
 voice quality here is bounded by whatever voice the visitor's own
 browser/OS ships with, not by anything this project can fix client-side.
 
-**Ask your tutor anything about the role — no account, no API key.** Every
-tutor answers "Ask a question" one of two ways, both offline:
+**Ask your tutor anything about the role — live Claude when this page can
+reach it, a fully offline fallback everywhere else.** Where this page is
+open inside a Claude.ai viewer that grants the Artifact platform's
+`sample` runtime capability, "Ask" calls Claude live — on the *viewer's*
+own Claude account and usage, with a one-time consent prompt, never this
+site's key or a backend of its own (there is none). The prompt hands
+Claude the role's persona plus whatever the two sources below already
+know for free (a real company's current Scanner data, a matching
+knowledge-base note) as grounding, then lets Claude answer with
+everything else it actually knows about the industry — not limited to
+what's pre-written here. The answer streams in live with a "Thinking…"
+state and a Stop button (`tutor.js`'s `getClaudeSample()`/`tryLiveAsk()`),
+and still reads aloud through the same `speakText()` pipeline once it's
+done. Every failure mode — the capability isn't available, the viewer
+declines, a call errors or is rate-limited — falls back to the fully
+offline system below silently; a visitor never sees an error, only an
+answer, just a richer one when live Claude was reachable.
+
+The offline fallback (also what every "Ask" answered before live Claude
+was wired in, and still what answers wherever `window.claude` doesn't
+exist) works one of two ways:
 
 1. **Name one of the 116 real companies this site tracks** (a ticker like
    `NVDA` or the company name, loosely matched — "Tesla" or "tesla's"
@@ -434,10 +465,14 @@ tutor answers "Ask a question" one of two ways, both offline:
    explained plainly (how an LBO or a DCF actually works, how a market
    maker's spread or a long/short book's net exposure works, and more).
 
-Either way there is no live model call and no live internet search —
-nothing leaves the visitor's browser, and every claim beyond what was
-already in the page's own prose or the Scanner's own data is hedged as
-illustrative and logged in `docs/CONTENT_TODO.md` for human verification.
+Either offline path involves no live model call and no live internet
+search — nothing leaves the visitor's browser, and every claim beyond
+what was already in the page's own prose or the Scanner's own data is
+hedged as illustrative and logged in `docs/CONTENT_TODO.md` for human
+verification. (A live Claude answer, when reachable, is of course a real
+model call — on the viewer's own usage, as described above — and isn't
+logged to `CONTENT_TODO.md` since it isn't this site's own pre-written
+content to verify.)
 
 **Types of Securities** (`securities/<id>.html`) explains every instrument
 type traded anywhere on the site in plain language: Common Stock (including
@@ -449,18 +484,23 @@ mode).
 ## Security & scope
 
 This is a static site: no backend, no server-side code, no database, no
-real (server-side) accounts, and no payments. The Simulator's player codes
-(see above) are a local `localStorage` save-game namespace, not a backend
-account system. The only outbound network calls the live pages make on
-their own are to Google Fonts; everything else is either a relative
-`fetch()` to a JSON file checked into this repo, or the browser's own
-built-in Web Speech API for the Career Guide's tutor voices. The Career
-Guide's "Ask a question" boxes are answered entirely from `careers.json`'s
-own built-in knowledge base (see above) — there is no outbound call for
-them at all, no account, and no API key, optional or otherwise. All
-simulator/trading/plan/tutor state lives in the visitor's own browser
-`localStorage` and is never transmitted anywhere else, so there is no
-shared state between visitors and nothing server-side to compromise.
+real (server-side) accounts, and no payments of this site's own. The
+Simulator's player codes (see above) are a local `localStorage` save-game
+namespace, not a backend account system. The only outbound network calls
+the live pages make on their own are to Google Fonts; everything else is
+either a relative `fetch()` to a JSON file checked into this repo, or the
+browser's own built-in Web Speech API for the Career Guide's tutor voices.
+The one exception is the Career Guide's "Ask a question" box, which — only
+where this page is open inside a Claude.ai viewer that grants the Artifact
+platform's `sample` capability — calls Claude live, billed to the
+*viewer's own* Claude account/usage with a one-time consent prompt, never
+to any key or account held by this site. Everywhere else (no such viewer,
+the viewer declines, the call fails) it's answered entirely from
+`careers.json`'s own built-in knowledge base (see above) with no outbound
+call at all. All simulator/trading/plan/tutor state lives in the visitor's
+own browser `localStorage` and is never transmitted anywhere else, so
+there is no shared state between visitors and nothing server-side to
+compromise.
 
 That said, it's worth being concrete about what was actually checked rather
 than asserting "it's safe":

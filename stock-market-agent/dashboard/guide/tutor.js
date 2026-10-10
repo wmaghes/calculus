@@ -1,19 +1,32 @@
 /* ---------- Career Guide tutor system ----------
  * Shared by every role page (dashboard/guide/roles/*.html). Two animated
  * tutor characters (Max / Nova), 10-language narration/subtitles with
- * hard-enforced voice matching, and an "Ask a question" box answered two
- * ways, both offline (no external API call, no account/key of any kind):
- *   1. Name one of the 116 real companies this site tracks (a ticker like
- *      "NVDA" or a company name) and the tutor answers from the Market
- *      Scanner's own data.json -- real price/market-cap/metric/rating,
- *      refreshed daily by this project's own WebSearch-grounded routine
- *      and committed to the repo. Not a per-question internet fetch (this
- *      is a static site with no backend to do that from) and not invented
- *      -- just real, already-gathered data, looked up instead of guessed.
- *   2. Anything else is matched against that role's own built-in
- *      expertise (careers.json's dayToDay/pay/skills content plus a
- *      deeper expertiseQA knowledge base -- comp by level, lifestyle/
- *      hours, core technical mechanics like how an LBO or a DCF works).
+ * hard-enforced voice matching, and an "Ask a question" box that answers
+ * for real:
+ *   - Where this page is open inside a Claude.ai viewer that grants the
+ *     "sample" runtime capability, "Ask" calls Claude live -- on the
+ *     VIEWER's own Claude account/usage, with a one-time consent prompt,
+ *     never this site's API key or a backend of its own (there is none).
+ *     The prompt hands Claude the role's persona plus whatever this site
+ *     already knows for free (a real company's current Scanner data, a
+ *     matching knowledge-base note) as grounding, then lets Claude answer
+ *     with everything else it actually knows about the industry -- real
+ *     recruiting timelines, real firms, real technical mechanics, not
+ *     just what's pre-written here.
+ *   - Everywhere else (no window.claude, the viewer declined, the call
+ *     failed), "Ask" falls back to the fully offline static system this
+ *     page always had, unchanged:
+ *       1. Name one of the 116 real companies this site tracks (a ticker
+ *          like "NVDA" or a company name) and get real price/market-cap/
+ *          metric/rating from the Market Scanner's own data.json, not a
+ *          per-question internet fetch -- refreshed daily by this
+ *          project's own WebSearch-grounded routine and committed to the
+ *          repo.
+ *       2. Anything else is matched against that role's own built-in
+ *          expertise (careers.json's dayToDay/pay/skills content plus a
+ *          deeper expertiseQA knowledge base -- comp by level, lifestyle/
+ *          hours, core technical mechanics like how an LBO or a DCF
+ *          works).
  *
  * The narration-language selector is rendered once, on the Guide landing
  * page (index.html) -- every page here reads the same localStorage key,
@@ -207,12 +220,31 @@ const LANG_VOICE_DB = {
  * gender (checked against LANG_VOICE_DB, a real named-voice catalog
  * sourced from the community-maintained readium/speech project) --
  * narration disables with an honest reason instead of ever guessing.
- * "Ask a question" answers for real if a visitor adds their own
- * Anthropic API key (stored only in their browser, calling Anthropic
- * directly -- never sent anywhere else, never paid for by this site);
- * without a key it falls back to matching the question, in English
- * only, against that role's own content.
+ * "Ask a question" calls Claude live via the Artifact "sample" runtime
+ * capability when this view grants it (on the viewer's own account/
+ * usage, never this site's), grounded in whatever real data this page
+ * already has for free; it falls back to matching the question, in
+ * English only, against that role's own content wherever that capability
+ * isn't available.
  */
+let CLAUDE_SAMPLE_PROMISE = null;
+// Resolves the "sample" capability once (cheap, asks the viewer nothing --
+// consent happens on the first real call, not here) or null wherever this
+// page isn't running inside a Claude.ai viewer that grants it (a plain
+// browser tab, GitHub Pages, a Playwright test, an artifact preview that
+// doesn't support capabilities yet). Every caller treats null the same as
+// "not available right now" and falls back to the static Q&A below --
+// never an error shown to the visitor.
+function getClaudeSample() {
+  if (CLAUDE_SAMPLE_PROMISE) return CLAUDE_SAMPLE_PROMISE;
+  CLAUDE_SAMPLE_PROMISE = (async () => {
+    try {
+      if (!window.claude || typeof window.claude.use !== "function") return null;
+      return (await window.claude.use("sample")) || null;
+    } catch (e) { return null; }
+  })();
+  return CLAUDE_SAMPLE_PROMISE;
+}
 const TUTORS = [
   { id: "max", gender: "male", name: "Max" },
   { id: "nova", gender: "female", name: "Nova" },
@@ -399,12 +431,13 @@ function speakText(entry, text) {
   speakNext();
 }
 
-/* ---------- Q&A engine: English-only keyword match against a role's own
- * built-in expertise, passed in as an explicit {lead, text}[] knowledge
- * base (built by role-page.js from careers.json's prose plus its deeper
- * expertiseQA entries -- comp by level, lifestyle, core technical
- * mechanics). This is the only way "Ask a question" is answered; there
- * is no live API call to fall back from. ---------- */
+/* ---------- Q&A fallback engine: English-only keyword match against a
+ * role's own built-in expertise, passed in as an explicit {lead, text}[]
+ * knowledge base (built by role-page.js from careers.json's prose plus its
+ * deeper expertiseQA entries -- comp by level, lifestyle, core technical
+ * mechanics). This answers "Ask a question" wherever the live "sample"
+ * capability isn't available, and also doubles as grounding context
+ * handed to Claude when it is (see submitAsk below). ---------- */
 const MENTOR_STOPWORDS = new Set(["the", "a", "an", "and", "or", "but", "is", "are", "was", "were", "be", "been",
   "being", "of", "to", "in", "on", "at", "for", "with", "about", "as", "by", "from", "into", "over", "after",
   "before", "between", "this", "that", "these", "those", "it", "its", "i", "you", "your", "they", "them", "their",
@@ -603,7 +636,7 @@ function renderMentorPanel(mountEl, roleId, roleTitle, kb, colorIdx) {
       </div>
       <div class="mentor-voice-note"></div>
       <div class="mentor-ask">
-        <div class="mentor-ask-label">Ask ${escapeMentorHtml(tutor.name)} a question &mdash; name a real company for today's actual numbers, or ask about comp, hours, or how the job's technical side works</div>
+        <div class="mentor-ask-label">Ask ${escapeMentorHtml(tutor.name)} a question &mdash; real Claude knowledge where this page can reach it, grounded in this site's own real company data and notes; a built-in fallback everywhere else</div>
         <div class="mentor-ask-row">
           <input type="text" class="mentor-ask-input" placeholder="e.g. what's NVDA's price today, or how do LBOs work?">
           <button type="button" class="mentor-btn ask-btn">Ask</button>
@@ -649,7 +682,74 @@ function renderMentorPanel(mountEl, roleId, roleTitle, kb, colorIdx) {
     renderAnswer(q, companyAnswer + tieIn, "Real Scanner data, not a guess -- refreshed daily from this site's own data.json, covering the 116 companies tracked here.");
   }
 
+  function renderStaticAnswer(q, hit, kbMatch, prefixNote) {
+    // A specific, multi-concept knowledge-base match wins over a bare
+    // company mention -- e.g. "the JPMorgan London Whale" or "price
+    // targets" (which contains the ticker-adjacent word "target") should
+    // surface the real explanation, not just today's JPM/TGT quote,
+    // which a company mention alone would otherwise return.
+    const kbNote = (prefixNote || "") + "English only -- matched against everything " + tutor.name + " knows about this role.";
+    if (kbMatch && kbMatch.distinct >= 2) { renderAnswer(q, kbMatch.text, kbNote); return; }
+    if (hit) { answerAndMaybeTieIn(q, formatCompanyAnswer(hit), kbMatch); return; }
+    if (kbMatch) { renderAnswer(q, kbMatch.text, kbNote); return; }
+    renderAnswer(q, "I don't have anything on that specific question for this role -- try naming one of the 116 companies this site tracks for real numbers, or ask about comp by level, hours and time off, how I use the market day to day, or the technical mechanics behind the job (like how an LBO or a DCF actually works).", prefixNote || "");
+  }
+
+  // Grounding handed to Claude: whatever this page already knows for
+  // free (a real company's current Scanner data, a matching
+  // knowledge-base note) -- Claude is told explicitly not to limit its
+  // answer to just this, since it knows far more about the industry than
+  // what's pre-written here.
+  function buildLivePrompt(q, hit, kbMatch) {
+    const context = [];
+    if (hit) context.push(formatCompanyAnswer(hit));
+    if (kbMatch) context.push(kbMatch.text);
+    const groundingBlock = context.length
+      ? "\n\nContext this site already has on hand (use it if relevant to the question -- but you know far more about this industry than just these facts, so don't limit your answer to them):\n- " + context.join("\n- ")
+      : "";
+    return `You are ${tutor.name}, a knowledgeable, friendly mentor helping someone explore a career as a ${roleTitle}. `
+      + `Answer their question directly and specifically, drawing on real knowledge of finance, markets, and this profession -- `
+      + `compensation, day-to-day work, recruiting, real firms, how the underlying mechanics actually work, whatever is genuinely relevant. `
+      + `Keep it conversational, like a mentor talking (roughly 3-6 sentences) -- no headers, no bullet lists.`
+      + groundingBlock
+      + `\n\nTheir question: ${q}`;
+  }
+
+  let currentAskAbort = null;
+
+  function tryLiveAsk(q, hit, kbMatch) {
+    return getClaudeSample().then((sample) => {
+      if (!sample) return false; // not available here -- caller falls back
+      const ctl = new AbortController();
+      currentAskAbort = ctl;
+      answerBox.innerHTML = `<div class="mentor-answer-q">You asked: &ldquo;${escapeMentorHtml(q)}&rdquo;</div><span class="mentor-thinking">Thinking&hellip;</span>`;
+      askBtn.textContent = "Stop";
+      askInput.disabled = true;
+      const textEl = () => answerBox.querySelector(".mentor-thinking");
+      return sample(buildLivePrompt(q, hit, kbMatch), {
+        signal: ctl.signal,
+        modelTier: "default",
+        onText: ({ text }) => { const el = textEl(); if (el) el.textContent = text; },
+      }).then((result) => {
+        renderAnswer(q, result.text, "Live answer from Claude" + (hit || kbMatch ? ", grounded in this site's own data" : "") + ".");
+        return true;
+      }).catch((e) => {
+        if (e && e.code === "cancelled") { renderStaticAnswer(q, hit, kbMatch); return true; }
+        // not_granted / sampling_disabled / not_declared / capability_disabled /
+        // capability_removed / rate_limited / session_expired / upstream_error /
+        // refused / empty_completion -- every case just falls back quietly;
+        // the visitor still gets an answer, never an error message.
+        return false;
+      }).finally(() => {
+        currentAskAbort = null;
+        askBtn.textContent = "Ask";
+        askInput.disabled = false;
+      });
+    }).catch(() => false);
+  }
+
   function submitAsk() {
+    if (currentAskAbort) { currentAskAbort.abort(); return; }
     const q = askInput.value.trim();
     if (!q) return;
     answerBox.style.display = "block";
@@ -657,28 +757,13 @@ function renderMentorPanel(mountEl, roleId, roleTitle, kb, colorIdx) {
     loadScannerData().then(() => {
       const hit = findCompanyMention(q);
       const kbMatch = answerMentorQuestionStatic(kb, q);
-      // A specific, multi-concept knowledge-base match wins over a bare
-      // company mention -- e.g. "the JPMorgan London Whale" or "price
-      // targets" (which contains the ticker-adjacent word "target") should
-      // surface the real explanation, not just today's JPM/TGT quote,
-      // which a company mention alone would otherwise return.
-      if (kbMatch && kbMatch.distinct >= 2) {
-        renderAnswer(q, kbMatch.text, "English only -- matched against everything " + tutor.name + " knows about this role.");
-        return;
-      }
-      if (hit) {
-        answerAndMaybeTieIn(q, formatCompanyAnswer(hit), kbMatch);
-        return;
-      }
-      if (kbMatch) {
-        renderAnswer(q, kbMatch.text, "English only -- matched against everything " + tutor.name + " knows about this role.");
-        return;
-      }
-      renderAnswer(q, "I don't have anything on that specific question for this role -- try naming one of the 116 companies this site tracks for real numbers, or ask about comp by level, hours and time off, how I use the market day to day, or the technical mechanics behind the job (like how an LBO or a DCF actually works).", "");
+      return tryLiveAsk(q, hit, kbMatch).then((handled) => {
+        if (!handled) renderStaticAnswer(q, hit, kbMatch);
+      });
     });
   }
   askBtn.addEventListener("click", submitAsk);
-  askInput.addEventListener("keydown", (e) => { if (e.key === "Enter") submitAsk(); });
+  askInput.addEventListener("keydown", (e) => { if (e.key === "Enter" && !currentAskAbort) submitAsk(); });
 }
 
 /* ---------- global controls (rendered on the landing page only) ---------- */

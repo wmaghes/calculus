@@ -182,6 +182,7 @@ footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--border
 }
 .mentor-answer .mentor-answer-q { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; color: var(--ink-faint); margin-bottom: 5px; }
 .mentor-answer .mentor-answer-src { font-family: "IBM Plex Mono", monospace; font-size: 10px; color: var(--ink-faint); margin-top: 6px; }
+.mentor-thinking { color: var(--ink-faint); font-style: italic; }
 .mentor-answer-speak {
   margin-top: 8px; font-family: "IBM Plex Mono", monospace; font-size: 11px; cursor: pointer;
   border: 1px solid var(--border); border-radius: 999px; padding: 4px 10px; background: var(--surface); color: var(--ink);
