@@ -1,0 +1,77 @@
+[
+ {
+  "word": "This",
+  "start": 0.12,
+  "end": 0.344
+ },
+ {
+  "word": "is",
+  "start": 0.375,
+  "end": 0.559
+ },
+ {
+  "word": "a",
+  "start": 0.591,
+  "end": 0.755
+ },
+ {
+  "word": "ten",
+  "start": 0.787,
+  "end": 0.991
+ },
+ {
+  "word": "second",
+  "start": 1.023,
+  "end": 1.286
+ },
+ {
+  "word": "pipeline",
+  "start": 1.318,
+  "end": 1.622
+ },
+ {
+  "word": "test.",
+  "start": 1.654,
+  "end": 1.897
+ },
+ {
+  "word": "Captions",
+  "start": 2.097,
+  "end": 2.401
+ },
+ {
+  "word": "follow",
+  "start": 2.433,
+  "end": 2.696
+ },
+ {
+  "word": "every",
+  "start": 2.728,
+  "end": 2.972
+ },
+ {
+  "word": "word,",
+  "start": 3.004,
+  "end": 3.247
+ },
+ {
+  "word": "right",
+  "start": 3.279,
+  "end": 3.523
+ },
+ {
+  "word": "on",
+  "start": 3.555,
+  "end": 3.739
+ },
+ {
+  "word": "the",
+  "start": 3.771,
+  "end": 3.974
+ },
+ {
+  "word": "beat.",
+  "start": 4.006,
+  "end": 4.25
+ }
+]

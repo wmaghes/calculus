@@ -1,0 +1,36 @@
+{
+  "slug": "",
+  "number": 0,
+  "title": "",
+  "hook": "",
+  "hook_alternatives": [],
+  "lesson": "",
+  "runtime_target_seconds": 180,
+  "approved_script": false,
+  "music": "placeholder-bed.mp3",
+  "narration_file": null,
+  "narration_duration": null,
+  "thumbnail": {"title": "", "kicker": "", "image": null},
+  "acts": [
+    {"act": 1, "name": "Hook and stakes", "start": null, "end": null},
+    {"act": 2, "name": "The journey and the problem", "start": null, "end": null},
+    {"act": 3, "name": "The turning point", "start": null, "end": null},
+    {"act": 4, "name": "Aftermath and lesson", "start": null, "end": null}
+  ],
+  "clips": [
+    {"id": "A", "from_scene": null, "to_scene": null, "start": null, "end": null, "hook": "", "cta": "Full story on the channel"}
+  ],
+  "scenes": [
+    {
+      "id": "s01",
+      "act": 1,
+      "narration": "",
+      "start": null,
+      "end": null,
+      "visual": {"type": "text_card", "text": "", "subtext": ""},
+      "motion": "kenburns",
+      "sfx": null,
+      "source_ref": null
+    }
+  ]
+}

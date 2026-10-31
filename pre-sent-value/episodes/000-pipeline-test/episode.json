@@ -1,0 +1,86 @@
+{
+  "slug": "000-pipeline-test",
+  "number": 0,
+  "title": "Pipeline test",
+  "hook": "This is a ten second pipeline test.",
+  "hook_alternatives": [],
+  "lesson": "Test only.",
+  "runtime_target_seconds": 10,
+  "acts": [
+    {
+      "act": 1,
+      "name": "Test",
+      "start": 0,
+      "end": 4.4
+    }
+  ],
+  "clips": [
+    {
+      "id": "A",
+      "from_scene": "s01",
+      "to_scene": "s02",
+      "start": 0,
+      "end": 4.4,
+      "hook": "Test clip hook",
+      "cta": "Full story on the channel"
+    }
+  ],
+  "narration_duration": 4.4,
+  "scenes": [
+    {
+      "id": "s01",
+      "act": 1,
+      "narration": "This is a ten second pipeline test.",
+      "start": 0,
+      "end": 2.097,
+      "visual": {
+        "type": "map",
+        "graphic": "map_route",
+        "prompt": "Route Thebes to Byblos (demo)",
+        "params": {
+          "route": [
+            "thebes",
+            "tanis",
+            "byblos"
+          ],
+          "markers": [
+            "cyprus"
+          ],
+          "title": "Eastern Mediterranean",
+          "drawStart": 0.05,
+          "drawEnd": 0.95
+        }
+      },
+      "motion": "zoom",
+      "sfx": "whoosh.mp3",
+      "source_ref": null
+    },
+    {
+      "id": "s02",
+      "act": 1,
+      "narration": "Captions follow every word, right on the beat.",
+      "start": 2.097,
+      "end": 4.4,
+      "visual": {
+        "type": "animated_graphic",
+        "graphic": "coin_stacks",
+        "prompt": "coins rising",
+        "params": {
+          "stacks": [
+            2,
+            4,
+            7
+          ],
+          "labels": [
+            "I",
+            "II",
+            "III"
+          ]
+        }
+      },
+      "motion": "kenburns",
+      "sfx": "coin.mp3",
+      "source_ref": null
+    }
+  ]
+}

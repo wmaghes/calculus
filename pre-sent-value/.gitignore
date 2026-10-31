@@ -1,0 +1,22 @@
+# The parent (textbook) repo ignores these globally; re-include them here.
+!*.json
+!*.svg
+!*.png
+!*.jpg
+!*.jpeg
+!*.html
+
+.env
+.venv/
+__pycache__/
+*.pyc
+.cache/
+.pytest_cache/
+remotion/node_modules/
+remotion/.stage/
+remotion/out/
+# rendered media is large; keep it out of git (re-render any time — API calls are cached)
+episodes/*/out/*.mp4
+episodes/*/audio/*.mp3
+# exception: keep the tiny Phase 1 test render so it can be reviewed
+!episodes/000-pipeline-test/out/*.mp4
